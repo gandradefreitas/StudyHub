@@ -1,0 +1,158 @@
+@charset "utf-8";
+
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/* Variáveis */
+:root {
+
+  --fundo-principal: rgb(162 214 249 / 0.57);
+
+  --texto: #222222;
+
+  --texto-inverso: #ffffff;
+
+  --destaque: rgb(31 69 237 / 0.75);
+
+  --destaque-inverso: #1E96FC;
+
+  --fundo-card: #FFC600;
+
+}
+
+/* Body */
+body {
+    background-color: var(--fundo-principal);
+
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+}
+
+/* Componentes globais */
+p {
+    padding: 13px;
+}
+
+a {
+
+    text-decoration: none;
+}
+/* Header */
+
+header {
+
+    background-color: var(--destaque);
+
+}
+
+.container {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 20px;
+}
+
+.item {
+
+    flex: auto;
+}
+
+.botao {
+
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    background-color: var(--destaque);
+
+    color: var(--texto-inverso);
+
+    text-decoration: none;
+
+    border-radius: 8px;
+}
+/* Navegação */
+
+/* Main */
+
+/* Hero */
+#hero {
+
+    background-color: white;
+
+    padding: 50px;
+
+    width: 80%;
+
+    margin: auto;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+}
+/* Sobre */
+#sobre {
+
+    background-color: white;
+
+    padding: 50px;
+
+    width: 80%;
+
+    margin: auto;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+}
+/* Recursos */
+#recursos {
+
+    background-color: white;
+
+    padding: 50px;
+
+    width: 80%;
+
+    margin: auto;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+}
+/* CTA */
+#cta {
+
+    background-color: white;
+
+    padding: 50px;
+
+    width: 80%;
+
+    margin: auto;
+
+    letter-spacing: 1px;
+
+    line-height: 1.4;
+}
+/* Footer */
+footer {
+
+    background-color: var(--destaque);
+
+    padding: 10px;
+
+    text-align: center;
+
+    color: var(--texto-inverso);
+}
+/* Responsividade */
+
+
+
