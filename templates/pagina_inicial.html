@@ -7,97 +7,280 @@
 </head>
 <body>
 
-    <header class="container">
+    <header class="header-container">
 
-        <h1 class="item">StudyHub</h1>
+        <div class="logo">
+
+            <span>📚</span>
+
+            <h1>StudyHub</h1>
+
+        </div>
 
         <nav>
-            <a href="/login" class="botao">Entrar</a>
-            <a href="/cadastro" class="botao">Criar Conta</a>
-        </nav>
-    </header>
 
+            <a href="#sobre">Sobre</a>
+
+            <a href="#recursos">Recursos</a>
+
+            <a href="#cta">Começar</a>
+
+        </nav>
+
+        <div class="header-acoes">
+
+            <a href="/login" class="botao">
+                Entrar
+            </a>
+
+            <a href="/cadastro" class="botao">
+                Criar Conta
+            </a>
+        </div>
+    </header>
 
     <main>
         <section id="hero">
 
-            <h2>Organize seus estudos em um só lugar.</h2>
+            <div class="hero-texto">
 
-            <p>
-                Planeje tarefas, acompanhe seu progresso
-                e mantenha sua rotina de estudos organizada.
-            </p>
+                <h2>Organize seus estudos e alcance seus objetivos.</h2>
 
-            <a href="/cadastro">Começar agora</a>
+                <p>
+                    Planeje sua rotina, organize tarefas, acompanhe seu progresso
+                    e desenvolva hábitos de estudo consistentes em uma única plataforma.
+                </p>
+
+                <div class="hero-botoes">
+
+                    <a href="/cadastro" class="botao">
+                        Criar Conta
+                    </a>
+
+                    <a href="#recursos" class="botao-secundario">
+                        Conhecer Recursos
+                    </a>
+
+                </div>
+
+                <ul class="hero-beneficios">
+
+                    <li>Organize tarefas facilmente</li>
+
+                    <li>Acompanhe sua evolução</li>
+
+                    <li>Planeje sua rotina de estudos</li>
+
+                </ul>
+            </div>
+
+            <div class="hero-preview">
+
+                <div class="dashboard">
+
+                    <h3>StudyHub</h3>
+
+                    <div class="tarefa concluida">
+                        ✔ Matemática
+                    </div>
+
+                    <div class="tarefa concluida">
+                        ✔ História
+                    </div>
+
+                    <div class="tarefa">
+                        ☐ Física
+                    </div>
+
+                    <div class="progresso">
+
+                        <span>Progresso</span>
+
+                        <div class="barra">
+
+                            <div class="barra-preenchida"></div>
+
+                        </div>
+
+                        <small>78% concluído</small>
+
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="sobre">
 
             <h2>O que é o StudyHub?</h2>
 
-            <p>
+            <div class="sobre-destaques">
 
-                O StudyHub é uma plataforma desenvolvida para ajudar estudantes
-                a organizarem suas tarefas, acompanhar seu desempenho e manter
-                uma rotina de estudos eficiente.
+                <article class="sobre-item">
 
-            </p>
+                    <div class="sobre-icone">
+                        📚
+                    </div>
+
+                    <h3>Organização</h3>
+
+                    <p>
+                        Centralize suas tarefas e mantenha seus estudos sempre organizados.
+                    </p>
+
+                </article>
+
+                <article class="sobre-item">
+
+                    <div class="sobre-icone">
+                        ⏰
+                    </div>
+
+                    <h3>Constância</h3>
+
+                    <p>
+                        Desenvolva uma rotina consistente para estudar todos os dias.
+                    </p>
+
+                </article>
+
+                <article class="sobre-item">
+
+                    <div class="sobre-icone">
+                        📈
+                    </div>
+
+                    <h3>Evolução</h3>
+
+                    <p>
+                        Acompanhe seu progresso e visualize sua evolução ao longo do tempo.
+                    </p>
+
+                </article>
+            </div>
         </section>
 
         <section id="recursos">
 
-            <h2>Recursos</h2>
+            <h2>Principais recursos</h2>
+            <div class="cards">
+                <article class="card">
 
-            <article>
+                    <div class="card-icone">
+                        📅
+                    </div>
 
-                <h3>Organização</h3>
+                    <h3>Organização</h3>
 
-                <p>
-                    Gerencie suas tarefas facilmente.
-                </p>
+                    <p>
+                        Gerencie tarefas, disciplinas e compromissos de forma simples.
+                    </p>
+                </article>
 
-            </article>
+                <article class="card">
 
-            <article>
+                    <div class="card-icone">
+                        📈
+                    </div>
 
-                <h3>Produtividade</h3>
+                    <h3>Progresso</h3>
 
-                <p>
-                    Acompanhe o progresso dos seus estudos.
-                </p>
+                    <p>
+                        Acompanhe sua evolução e visualize suas atividades concluídas.
+                    </p>
+                </article>
 
-            </article>
+                <article class="card">
 
-            <article>
+                    <div class="card-icone">
+                        🎯
+                    </div>
 
-                <h3>Planejamento</h3>
+                    <h3>Planejamento</h3>
 
-                <p>
-                    Mantenha sua rotina organizada.
-                </p>
+                    <p>
+                        Organize sua rotina para estudar com mais foco e produtividade.
+                    </p>
 
-            </article>
+                </article>
+            </div>
         </section>
 
         <section id="cta">
 
-            <h2>Pronto para começar?</h2>
+            <div class="cta-conteudo">
 
-            <p>
+                <h2>Comece sua jornada de estudos hoje mesmo.</h2>
 
-                Crie sua conta gratuitamente e organize seus estudos hoje mesmo.
+                <p>
+                    Crie sua conta gratuitamente e descubra uma maneira mais simples
+                    de organizar seus estudos, acompanhar seu progresso e alcançar
+                    seus objetivos.
+                </p>
 
-            </p>
-
-            <a href="/cadastro">Criar Conta</a>
+                <a href="/cadastro" class="botao">
+                    Criar Conta Gratuitamente
+                </a>
+            </div>
         </section>
     </main>
 
     <footer>
 
-        <p>
-            © 2026 StudyHub
-        </p>
+        <div class="footer-conteudo">
+
+            <section class="footer-info">
+
+                <h2>📚 StudyHub</h2>
+
+                <p>
+                    Organize seus estudos de forma simples,
+                    acompanhe seu progresso e desenvolva uma
+                    rotina de estudos eficiente.
+                </p>
+
+            </section>
+
+            <section class="footer-links">
+
+                <h3>Navegação</h3>
+
+                <a href="#">Início</a>
+
+                <a href="#sobre">Sobre</a>
+
+                <a href="#recursos">Recursos</a>
+
+                <a href="#cta">Começar</a>
+
+            </section>
+
+            <section class="footer-redes">
+
+                <h3>Redes Sociais</h3>
+
+                <a href="https://github.com/seuusuario">
+                    GitHub
+                </a>
+
+                <a href="https://linkedin.com/in/seuperfil">
+                    LinkedIn
+                </a>
+
+                <a href="https://youtube.com">
+                    YouTube
+                </a>
+
+            </section>
+
+        </div>
+
+        <div class="footer-copy">
+
+            <p>
+                © 2026 StudyHub • Desenvolvido por Guilherme Freitas
+            </p>
+
+        </div>
     </footer>
 
 </body>
