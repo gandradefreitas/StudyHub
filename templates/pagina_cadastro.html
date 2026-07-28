@@ -30,6 +30,22 @@
                 Organize seus estudos gratuitamente e acompanhe seu progresso.
             </p>
 
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+
+                {% if mensagens %}
+
+                    {% for categoria, mensagem in mensagens %}
+
+                        <p class="mensagem {{ categoria }}">
+                            {{ mensagem }}
+                        </p>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
             <form action="{{ url_for('pagina_cadastro') }}" method="POST">
 
                 <div class="campo">

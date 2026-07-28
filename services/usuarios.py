@@ -11,3 +11,5 @@ def cadastrar_usuario(nome, email, senha):
         email,
         senha_hash
     )
+
+    return True
