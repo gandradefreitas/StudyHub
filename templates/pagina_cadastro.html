@@ -3,8 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Casdastramento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_cadastrar.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <header class="header-cadastro">
+
+        <div class="header-conteudo">
+
+            <a href="{{ url_for('pagina_inicial') }}" class="logo">
+                <i class="bi bi-book-half"></i>
+                <span>StudyHub</span>
+            </a>
+
+        </div>
+
+    </header>
+
+    <main class="cadastro">
+
+        <section class="cadastro-card">
+
+            <h1>Crie sua conta</h1>
+
+            <p>
+                Organize seus estudos gratuitamente e acompanhe seu progresso.
+            </p>
+
+            <form action="{{ url_for('pagina_cadastro') }}" method="POST">
+
+                <div class="campo">
+                    <label for="nome">Nome completo</label>
+                    <input
+                        type="text"
+                        id="nome"
+                        name="nome"
+                        placeholder="Digite seu nome">
+                </div>
+
+                <div class="campo">
+                    <label for="email">E-mail</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail">
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha">
+                </div>
+
+                <div class="campo">
+                    <label for="confirmar">Confirmar senha</label>
+                    <input
+                        type="password"
+                        id="confirmar"
+                        name="confirmar_senha"
+                        placeholder="Repita sua senha">
+                </div>
+
+                <button type="submit">
+                    Criar Conta
+                </button>
+
+            </form>
+
+            <p class="login">
+                Já possui uma conta?
+                <a href="/login">Entrar</a>
+            </p>
+
+        </section>
+
+    </main>
 
 </body>
 </html>

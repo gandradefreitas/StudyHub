@@ -3,8 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <header class="header-login">
 
+        <div class="header-conteudo">
+
+            <a href="{{ url_for('pagina_inicial') }}" class="logo">
+                <i class="bi bi-book-half"></i>
+                <span>StudyHub</span>
+            </a>
+
+        </div>
+
+    </header>
+
+    <main class="login">
+
+        <section class="login-card">
+
+            <h1>Entrar</h1>
+
+            <p>
+                Acesse sua conta e continue seus estudos.
+            </p>
+
+            <form action="{{ url_for('pagina_login') }}" method="POST">
+
+                <div class="campo">
+
+                    <label for="email">E-mail</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="senha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        required>
+
+                </div>
+
+                <button type="submit">
+
+                    Entrar
+
+                </button>
+
+            </form>
+
+            <p class="cadastro">
+
+                Ainda não possui uma conta?
+
+                <a href="{{ url_for('pagina_cadastro') }}">
+                    Criar conta
+                </a>
+
+            </p>
+
+        </section>
+
+    </main>
 </body>
 </html>

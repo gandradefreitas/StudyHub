@@ -1,0 +1,329 @@
+@charset "UTF-8";
+
+/* ==========================
+   VARIÁVEIS
+========================== */
+
+:root {
+
+    /* Cores */
+
+    --cor-primaria: #1F45ED;
+    --cor-secundaria: #1E96FC;
+
+    --cor-fundo: #F5F9FF;
+    --cor-card: #FFFFFF;
+
+    --cor-texto: #222;
+    --cor-texto-secundario: #666;
+    --cor-texto-claro: #FFF;
+
+    --cor-borda: #E5E7EB;
+    --cor-sucesso: #22C55E;
+
+    /* Layout */
+
+    --largura-maxima: 1100px;
+
+    /* Bordas */
+
+    --raio: 16px;
+
+    /* Sombras */
+
+    --sombra: 0 8px 20px rgb(0 0 0 / .08);
+    --sombra-hover: 0 15px 35px rgb(0 0 0 / .15);
+
+    /* Transições */
+
+    --transicao: .3s ease;
+}
+
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family: "Poppins", sans-serif;
+
+    background: var(--cor-fundo);
+
+    color: var(--cor-texto);
+
+    min-height:100vh;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.header-login{
+
+    background: var(--cor-primaria);
+
+    box-shadow: var(--sombra);
+
+    position: sticky;
+
+    top:0;
+
+    z-index:1000;
+}
+
+.header-conteudo{
+
+    height:70px;
+
+    margin:0 auto;
+
+    padding:0 2rem;
+
+    display:flex;
+
+    align-items:center;
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.8rem;
+
+    text-decoration:none;
+}
+
+.logo i{
+
+    color:var(--cor-texto-claro);
+
+    font-size:2rem;
+}
+
+.logo span{
+
+    color:var(--cor-texto-claro);
+
+    font-size:1.5rem;
+
+    font-weight:700;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+.login{
+
+    min-height:calc(100vh - 70px);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:1rem;
+
+    background:var(--cor-fundo);
+}
+
+.login-card{
+
+    width:100%;
+
+    background:var(--cor-card);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    padding:2rem;
+}
+
+.login-card h1{
+
+    text-align:center;
+
+    color:var(--cor-texto);
+
+    font-size:1.8rem;
+
+    margin-bottom:.5rem;
+}
+
+.login-card > p{
+
+    text-align:center;
+
+    color:var(--cor-texto-secundario);
+
+    line-height:1.5;
+
+    margin-bottom:2rem;
+}
+
+.campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:1.25rem;
+}
+
+.campo label{
+
+    margin-bottom:.5rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto);
+}
+
+.campo input{
+
+    width:100%;
+
+    padding:1rem;
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:10px;
+
+    background:var(--cor-card);
+
+    color:var(--cor-texto);
+
+    font-size:1rem;
+
+    transition:var(--transicao);
+}
+
+.campo input::placeholder{
+
+    color:var(--cor-texto-secundario);
+}
+
+.campo input:focus{
+
+    outline:none;
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:0 0 0 4px rgb(31 69 237 / .15);
+}
+
+button{
+
+    width:100%;
+
+    padding:1rem;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:var(--transicao);
+}
+
+button:hover{
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-2px);
+}
+
+.cadastro{
+
+    margin-top:1.5rem;
+
+    text-align:center;
+
+    color:var(--cor-texto-secundario);
+}
+
+.cadastro a{
+
+    color:var(--cor-primaria);
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.cadastro a:hover{
+
+    text-decoration:underline;
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (min-width:768px){
+
+    .login{
+
+        padding:2rem;
+    }
+
+    .login-card{
+
+        max-width:450px;
+
+        padding:2.5rem;
+    }
+
+    .login-card h1{
+
+        font-size:2rem;
+    }
+}
+
+/* ==========================
+   DESKTOP
+========================== */
+
+@media (min-width:1024px){
+
+    .login-card{
+
+        max-width:480px;
+
+        padding:3rem;
+    }
+
+    .login-card h1{
+
+        font-size:2.2rem;
+    }
+
+    .login-card > p{
+
+        font-size:1.05rem;
+    }
+}
+
+
+
+
+
