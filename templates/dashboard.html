@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_dashboard.css') }}">
+
+    <title>Dashboard | StudyHub</title>
+</head>
+<body>
+    <div class="dashboard">
+
+        {% include "componentes/sidebar.html" %}
+
+        <main class="conteudo">
+
+            {% include "componentes/header_dashboard.html" %}
+
+            <section class="boas-vindas">
+
+                <h1>
+                    Bem-vindo, {{ usuario["nome"] }}!
+                </h1>
+
+                <p>
+                    Organize seus estudos e acompanhe seu progresso.
+                </p>
+
+            </section>
+
+            <section class="cards">
+
+                <div class="card">
+
+                    <h3>Tarefas Pendentes</h3>
+
+                    <span>7</span>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Concluídas</h3>
+
+                    <span>18</span>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Sequência</h3>
+
+                    <span>12 dias</span>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Tempo Estudado</h3>
+
+                    <span>16 h</span>
+
+                </div>
+
+            </section>
+
+            <section class="conteudo-grid">
+
+                <div class="painel">
+
+                    <h2>Próximas tarefas</h2>
+
+                    <ul>
+
+                        <li>Revisão de Matemática</li>
+
+                        <li>Lista de Física</li>
+
+                        <li>Python Flask</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="painel">
+
+                    <h2>Atividade recente</h2>
+
+                    <ul>
+
+                        <li>✔ Português concluído</li>
+
+                        <li>✔ Nova tarefa criada</li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

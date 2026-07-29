@@ -32,3 +32,21 @@ def buscar_por_email(email):
     conexao.close()
 
     return usuario
+
+def obter_usuario_por_id(usuario_id):
+
+    conexao = conectar()
+
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM usuarios
+        WHERE id = ?
+    """, (usuario_id,))
+
+    usuario = cursor.fetchone()
+
+    conexao.close()
+
+    return usuario

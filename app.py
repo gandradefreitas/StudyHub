@@ -8,6 +8,7 @@ from flask import (
     flash
 )
 
+from studyhub.database.usuario_repository import obter_usuario_por_id
 from studyhub.controllers.web.cadastro_controller import realizar_cadastro
 from studyhub.controllers.web.login_controller import realizar_login
 
@@ -37,17 +38,15 @@ def pagina_inicial():
 @app.route("/dashboard")
 def dashboard():
 
-    if "usuario" not in session:
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
 
-        return redirect(
-            url_for("pagina_login")
-        )
-
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
     return render_template(
-        "dashboard.html"
+        "dashboard.html",
+        usuario=usuario
     )
-
 
 
 # ==========================
@@ -91,7 +90,7 @@ def pagina_login():
 
         if usuario:
 
-            session["usuario"] = usuario[0]
+            session["usuario_id"] = usuario[0]
 
             session["nome"] = usuario[1]
 

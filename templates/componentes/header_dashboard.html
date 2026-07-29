@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header_dashboard.css') }}">
+    <title>Title</title>
+</head>
+<body>
+<header class="header-dashboard">
+
+    <div>
+        <button id="btn-menu" class="btn-menu">☰</button>
+
+        <input
+            type="text"
+            placeholder="Pesquisar..."
+            disabled>
+
+    </div>
+
+    <div class="perfil">
+
+        <span>{{ usuario["nome"] }}</span>
+
+        <div class="avatar">
+
+            {{ usuario["nome"][0] }}
+
+        </div>
+
+    </div>
+
+</header>
+</body>
+</html>
