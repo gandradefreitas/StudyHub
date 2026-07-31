@@ -68,6 +68,16 @@
 
 }
 
+.header-esquerda{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+}
+
 @media(min-width:768px){
 
     .header-dashboard{
@@ -80,7 +90,7 @@
 
     }
 
-    .btn-menu{
+    .sidebar-fixa .btn-menu{
 
         display:none;
 

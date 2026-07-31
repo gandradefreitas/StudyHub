@@ -1,101 +1,80 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-</head>
-<body>
-    <header class="header-login">
+{% extends "base_publico.html" %}
 
-        <div class="header-conteudo">
+{% block titulo %}
 
-            <a href="{{ url_for('pagina_inicial') }}" class="logo">
-                <i class="bi bi-book-half"></i>
-                <span>StudyHub</span>
-            </a>
+Login | StudyHub
 
-        </div>
+{% endblock %}
 
-    </header>
+{% block css %}
 
-    <main class="login">
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/style_login.css') }}">
 
-        <section class="login-card">
+{% endblock %}
 
-            <h1>Entrar</h1>
+{% block conteudo %}
 
-            <p>
-                Acesse sua conta e continue seus estudos.
-            </p>
+<header class="header-login">
 
-            {% with mensagens = get_flashed_messages(with_categories=true) %}
+    <div class="header-conteudo">
 
-                {% if mensagens %}
+        <a href="{{ url_for('pagina_inicial') }}" class="logo">
 
-                    {% for categoria, mensagem in mensagens %}
+            <i class="bi bi-book-half"></i>
 
-                        <p class="mensagem {{ categoria }}">
-                            {{ mensagem }}
-                        </p>
+            <span>StudyHub</span>
 
-                    {% endfor %}
+        </a>
 
-                {% endif %}
+    </div>
 
-            {% endwith %}
+</header>
 
-            <form action="{{ url_for('pagina_login') }}" method="POST">
+<main class="login">
 
-                <div class="campo">
+    <section class="login-card">
 
-                    <label for="email">E-mail</label>
+        <h1>Entrar</h1>
 
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Digite seu e-mail"
-                        required>
+        <p>Acesse sua conta e continue seus estudos.</p>
 
-                </div>
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
 
-                <div class="campo">
+        {% for categoria, mensagem in mensagens %}
 
-                    <label for="senha">Senha</label>
+        <p class="mensagem {{ categoria }}">{{ mensagem }}</p>
 
-                    <input
-                        type="password"
-                        id="senha"
-                        name="senha"
-                        placeholder="Digite sua senha"
-                        required>
+        {% endfor %}
 
-                </div>
+        {% endwith %}
 
-                <button type="submit">
+        <form method="POST">
 
-                    Entrar
 
-                </button>
+            <div class="campo">
 
-            </form>
+                <label>E-mail</label>
 
-            <p class="cadastro">
+                <input type="email" name="email" required>
 
-                Ainda não possui uma conta?
+            </div>
 
-                <a href="{{ url_for('pagina_cadastro') }}">
-                    Criar conta
-                </a>
 
-            </p>
 
-        </section>
+            <div class="campo">
 
-    </main>
-</body>
-</html>
+                <label>Senha</label>
+
+                <input type="password" name="senha" required>
+
+            </div>
+
+            <button>Entrar</button>
+
+        </form>
+
+    </section>
+
+</main>
+
+{% endblock %}

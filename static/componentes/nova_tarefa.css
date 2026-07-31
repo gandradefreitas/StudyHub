@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+/* ==========================
+   PÁGINA NOVA TAREFA
+========================== */
+
+.formulario{
+
+    width:100%;
+    max-width:600px;
+
+    margin:2rem auto;
+
+    padding:1.5rem;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+}
+
+.formulario p{
+
+    margin-bottom:2rem;
+
+    color:var(--cor-texto-secundario);
+
+    line-height:1.6;
+
+    text-align: center;
+
+}
+
+.formulario h1{
+
+    margin-bottom:1.5rem;
+
+    font-size:2rem;
+
+    text-align:center;
+
+    color:var(--cor-texto);
+
+}
+
+.formulario form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.25rem;
+
+}
+
+.formulario label{
+
+    font-weight:600;
+
+    color:var(--cor-texto);
+
+}
+
+.formulario input{
+
+    width:100%;
+
+    padding:.9rem 1rem;
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:1rem;
+
+    transition:var(--transicao);
+
+}
+
+.formulario input:focus{
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:0 0 0 4px rgb(31 69 237 / .12);
+
+}
+
+.formulario input::placeholder{
+
+    color:var(--cor-texto-secundario);
+
+}
+
+.formulario button{
+
+    padding:1rem;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:var(--transicao);
+
+}
+
+.formulario button:hover{
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--sombra);
+
+}
+
+.formulario button:active{
+
+    transform:translateY(0);
+
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (min-width:768px){
+
+    .formulario{
+
+        margin:3rem auto;
+
+        padding:2rem;
+
+    }
+
+}
+
+/* ==========================
+   DESKTOP
+========================== */
+
+@media (min-width:1024px){
+
+    .formulario{
+
+        max-width:700px;
+
+    }
+
+    .formulario h1{
+
+        font-size:2.3rem;
+
+    }
+
+}

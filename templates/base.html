@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/nova_tarefa.css') }}">
+
+    {% block css %}
+
+    {% endblock %}
+
+    <title>
+        {% block titulo %}
+        StudyHub
+        {% endblock %}
+    </title>
+</head>
+<body class="{{ classe_body | default('sidebar-fixa') }}">
+
+
+    <div class="dashboard">
+
+        {% include "componentes/sidebar.html" %}
+
+        <main class="conteudo">
+
+            {% include "componentes/header_dashboard.html" %}
+
+            {% block conteudo %}
+
+            {% endblock %}
+        </main>
+    </div>
+
+    {% block scripts %}
+
+    {% endblock %}
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+</html>

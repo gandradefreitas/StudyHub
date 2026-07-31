@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/header_dashboard.css') }}">
-    <title>Title</title>
-</head>
-<body>
+
 <header class="header-dashboard">
 
-    <div>
+
+    <div class="header-esquerda">
         <button id="btn-menu" class="btn-menu">☰</button>
 
-        <input
-            type="text"
-            placeholder="Pesquisar..."
-            disabled>
+        {% if mostrar_pesquisa %}
 
+        <input type="text" placeholder="Pesquisar..." disabled>
+
+        {% endif %}
     </div>
+
+    {% if mostrar_perfil %}
 
     <div class="perfil">
 
@@ -30,6 +26,8 @@
 
     </div>
 
+    {% endif %}
+
 </header>
-</body>
-</html>
+
+

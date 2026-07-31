@@ -1,35 +1,6 @@
 @charset "UTF-8";
 
-/* ==========================
-   VARIÁVEIS
-========================== */
-:root {
 
-    /* Cores */
-
-    --cor-primaria: #1F45ED;
-
-    --cor-secundaria: #1E96FC;
-
-    --cor-fundo: #F5F9FF;
-
-    --cor-card: #FFFFFF;
-
-    --cor-texto: #222;
-
-    --cor-texto-secundario: #666;
-
-    --cor-texto-claro: #FFF;
-
-    --cor-borda: #E5E7EB;
-
-    --cor-sucesso: #22C55E;
-
-    --largura-maxima: 1100px;
-    /* Bordas */
-
-    --raio: 16px;
-}
 
 i {
 
@@ -92,15 +63,7 @@ i {
 
     font-weight: 700;
 }
-/* ===========================
-   RESET
-=========================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 /* ==========================
    MENSAGENS
 ========================== */

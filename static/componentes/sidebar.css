@@ -7,6 +7,8 @@
 
     width:260px;
     height:100vh;
+    padding:2rem 1rem;
+
 
     background:var(--cor-primaria);
 
@@ -21,6 +23,18 @@
 .sidebar.ativo{
 
     left:0;
+
+}
+
+.sidebar-fixa .sidebar{
+
+    position: static;
+
+    width: 260px;
+
+    height: auto;
+
+    left: 0;
 
 }
 
@@ -50,6 +64,13 @@
 
     transition:var(--transicao);
 
+    display:flex;
+
+    align-items:center;
+
+    gap:.8rem;
+
+
 }
 
 .sidebar a:hover{
@@ -58,18 +79,3 @@
 
 }
 
-@media(min-width:768px){
-
-    .sidebar{
-
-        position:static;
-
-        width:260px;
-
-        height:auto;
-
-        left:0;
-
-    }
-
-}

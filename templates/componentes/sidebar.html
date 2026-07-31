@@ -1,35 +1,36 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
-    <title>Title</title>
-</head>
-<body>
-    <aside class="sidebar" id="sidebar">
 
-        <div class="logo">
+<aside class="sidebar" id="sidebar">
 
-            <h2>StudyHub</h2>
+    <div class="logo">
+        <h2>StudyHub</h2>
+    </div>
 
-        </div>
+    <nav>
 
-        <nav>
+        <a href="{{ url_for('dashboard') }}">
+            🏠 Dashboard
+        </a>
 
-            <a href="#">🏠 Dashboard</a>
+        <a href="{{ url_for('pagina_tarefas') }}">
+            📝 Tarefas
+        </a>
 
-            <a href="#">📝 Tarefas</a>
+        <a href="#">
+            📅 Calendário
+        </a>
 
-            <a href="#">📅 Calendário</a>
+        <a href="#">
+            📊 Estatísticas
+        </a>
 
-            <a href="#">📊 Estatísticas</a>
+        <a href="#">
+            ⚙ Configurações
+        </a>
 
-            <a href="#">⚙ Configurações</a>
+        <a href="{{ url_for('logout') }}">
+            🚪 Sair
+        </a>
 
-            <a href="/logout">🚪 Sair</a>
+    </nav>
 
-        </nav>
-
-    </aside>
-</body>
-</html>
+</aside>

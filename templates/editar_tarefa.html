@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+
+Editar tarefa | StudyHub
+
+{% endblock %}
+
+{% block conteudo %}
+
+<section class="formulario">
+
+    <h1>Editar tarefa</h1>
+
+    <form method="POST">
+
+        <label>Descrição</label>
+
+        <input type="text" name="descricao" value="{{ tarefa['descricao'] }}" required>
+
+        <button type="submit">
+            Salvar alterações
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}

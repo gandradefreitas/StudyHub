@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+
+Nova tarefa | StudyHub
+
+{% endblock %}
+
+{% block conteudo %}
+
+<section class="formulario">
+
+    <h1>Nova tarefa</h1>
+
+    <p>Adicione uma nova tarefa para acompanhar seus estudos.</p>
+
+    <form method="POST">
+
+        <label for="descricao">
+            Descrição
+        </label>
+
+        <input type="text" id="descricao" name="descricao" placeholder="Ex.: Resolver lista de Matemática" required>
+
+        <button type="submit">
+            Salvar tarefa
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}

@@ -1,17 +1,37 @@
 from studyhub.database.conexao import conectar
 
-def salvar_tarefa(descricao, usuario_id):
+def adicionar_tarefa_controller(usuario_id, descricao):
+
+    descricao = descricao.strip()
+
+    if not descricao:
+
+        return False, "Informe a descrição da tarefa."
+
+    salvar_tarefa(usuario_id, descricao)
+
+    return True, "Tarefa criada com sucesso."
+
+def salvar_tarefa(usuario_id, descricao):
+
     conexao = conectar()
+
     cursor = conexao.cursor()
 
-    cursor.execute("""
-        INSERT INTO tarefas(descricao, usuario_id)
-        VALUES(?, ?)
-    """, (descricao, usuario_id))
+    cursor.execute(
+        """
+        INSERT INTO tarefas (
+            usuario_id,
+            descricao
+        )
+        VALUES (?, ?)
+        """,
+        (usuario_id, descricao)
+    )
 
     conexao.commit()
-    conexao.close()
 
+    conexao.close()
 
 def listar_tarefas(usuario_id):
     conexao = conectar()
@@ -94,3 +114,97 @@ def buscar_tarefa(id_tarefa, usuario_id):
     conexao.close()
 
     return tarefa
+
+
+def obter_tarefas_usuario(usuario_id):
+
+    conexao = conectar()
+
+    cursor = conexao.cursor()
+
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM tarefas
+        WHERE usuario_id = ?
+        """,
+        (usuario_id,)
+    )
+
+
+    tarefas = cursor.fetchall()
+
+
+    conexao.close()
+
+
+    return tarefas
+
+def contar_tarefas_usuario(usuario_id):
+
+    conexao = conectar()
+
+    cursor = conexao.cursor()
+
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+        FROM tarefas
+        WHERE usuario_id = ?
+        AND concluida = 0
+        """,
+        (usuario_id,)
+    )
+
+
+    pendentes = cursor.fetchone()[0]
+
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+        FROM tarefas
+        WHERE usuario_id = ?
+        AND concluida = 1
+        """,
+        (usuario_id,)
+    )
+
+
+    concluidas = cursor.fetchone()[0]
+
+
+    conexao.close()
+
+    return {
+        "pendentes": pendentes,
+        "concluidas": concluidas,
+        "tempo_estudado": 0,
+        "sequencia": 0
+    }
+
+def obter_proximas_tarefas(usuario_id, limite=5):
+
+    conexao = conectar()
+
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM tarefas
+        WHERE usuario_id = ?
+        AND concluida = 0
+        ORDER BY id ASC
+        LIMIT ?
+        """,
+        (usuario_id, limite)
+    )
+
+    tarefas = cursor.fetchall()
+
+    conexao.close()
+
+    return tarefas

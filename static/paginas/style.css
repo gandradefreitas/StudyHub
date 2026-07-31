@@ -1,59 +1,6 @@
 @charset "UTF-8";
 
-/* ==========================
-   RESET
-========================== */
-*,
-*::before,
-*::after {
 
-    box-sizing: border-box;
-
-    margin: 0;
-
-    padding: 0;
-}
-/* ==========================
-   VARIÁVEIS
-========================== */
-:root{
-
-    /* Cores */
-
-    --cor-primaria: #1F45ED;
-
-    --cor-secundaria: #1E96FC;
-
-    --cor-fundo: #F5F9FF;
-
-    --cor-card: #FFFFFF;
-
-    --cor-texto: #222;
-
-    --cor-texto-secundario: #666;
-
-    --cor-texto-claro: #FFF;
-
-    --cor-borda: #E5E7EB;
-
-    --cor-sucesso: #22C55E;
-
-    --largura-maxima: 1100px;
-    /* Bordas */
-
-    --raio: 16px;
-
-    /* Sombras */
-
-    --sombra: 0 8px 20px rgb(0 0 0 / .08);
-
-    --sombra-hover: 0 15px 35px rgb(0 0 0 /.15);
-
-    /* Transições */
-
-    --transicao: .3s ease;
-
-}
 
 ::selection {
 

@@ -1,111 +1,51 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_dashboard.css') }}">
+{% extends "base.html" %}
 
-    <title>Dashboard | StudyHub</title>
-</head>
-<body>
-    <div class="dashboard">
+{% block titulo %}
 
-        {% include "componentes/sidebar.html" %}
+Dashboard | StudyHub
 
-        <main class="conteudo">
+{% endblock %}
 
-            {% include "componentes/header_dashboard.html" %}
+{% block css %}
 
-            <section class="boas-vindas">
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/style_dashboard.css') }}">
 
-                <h1>
-                    Bem-vindo, {{ usuario["nome"] }}!
-                </h1>
+{% endblock %}
 
-                <p>
-                    Organize seus estudos e acompanhe seu progresso.
-                </p>
+{% block conteudo %}
 
-            </section>
+<section class="boas-vindas">
 
-            <section class="cards">
+    <h1>Bem-vindo, {{ usuario["nome"] }}!</h1>
 
-                <div class="card">
+    <p>Organize seus estudos e acompanhe seu progresso.</p>
 
-                    <h3>Tarefas Pendentes</h3>
+</section>
 
-                    <span>7</span>
+<section class="cards">
 
-                </div>
+    <div class="card">
 
-                <div class="card">
+        <h3>Tarefas Pendentes</h3>
 
-                    <h3>Concluídas</h3>
-
-                    <span>18</span>
-
-                </div>
-
-                <div class="card">
-
-                    <h3>Sequência</h3>
-
-                    <span>12 dias</span>
-
-                </div>
-
-                <div class="card">
-
-                    <h3>Tempo Estudado</h3>
-
-                    <span>16 h</span>
-
-                </div>
-
-            </section>
-
-            <section class="conteudo-grid">
-
-                <div class="painel">
-
-                    <h2>Próximas tarefas</h2>
-
-                    <ul>
-
-                        <li>Revisão de Matemática</li>
-
-                        <li>Lista de Física</li>
-
-                        <li>Python Flask</li>
-
-                    </ul>
-
-                </div>
-
-                <div class="painel">
-
-                    <h2>Atividade recente</h2>
-
-                    <ul>
-
-                        <li>✔ Português concluído</li>
-
-                        <li>✔ Nova tarefa criada</li>
-
-                    </ul>
-
-                </div>
-
-            </section>
-
-        </main>
+        <span>{{ estatisticas["pendentes"] }}</span>
 
     </div>
 
+    <div class="card">
+
+        <h3>Concluídas</h3>
+
+        <span>{{ estatisticas["concluidas"] }}</span>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-</body>
-</html>
+
+{% endblock %}

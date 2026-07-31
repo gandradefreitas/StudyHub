@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/tarefas.css') }}">
+
+    <title>Tarefas</title>
+
+</head>
+<body class="sidebar-toggle">
+
+    {% include "componentes/sidebar.html" %}
+
+    <main class="conteudo">
+
+        {% include "componentes/header_dashboard.html" %}
+
+        <section class="cabecalho-tarefas">
+
+            <h1>Minhas Tarefas</h1>
+
+            <a href="{{ url_for('nova_tarefa') }}" class="botao">
+                + Nova tarefa
+            </a>
+
+        </section>
+
+
+        <section class="lista-tarefas">
+
+            {% if tarefas %}
+
+            {% for tarefa in tarefas %}
+
+            <article class="tarefa">
+
+                <div class="tarefa-info">
+
+                    <h3>
+                        {{ tarefa["descricao"] }}
+                    </h3>
+
+                    {% if tarefa["concluida"] == 1 %}
+
+                        <span class="status concluida">
+                            ✅ Concluída
+                        </span>
+
+                    {% else %}
+
+                        <span class="status pendente">
+                            ⏳ Pendente
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="acoes">
+
+                    <a href="{{ url_for('editar_tarefa',id_tarefa=tarefa['id']) }}">
+                        ✏ Editar
+                    </a>
+
+                    <form method="POST"
+                          action="{{ url_for('concluir_tarefa',id_tarefa=tarefa['id']) }}">
+
+                        <button type="submit">
+
+                            {% if tarefa["concluida"] == 0 %}
+                                ✔ Concluir
+                            {% else %}
+                                ↩ Marcar como pendente
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+                    <form method="POST"
+                          action="{{ url_for('excluir_tarefa',id_tarefa=tarefa['id']) }}">
+
+                        <button type="submit" onclick="return confirm('Deseja realmente excluir esta tarefa?')">
+                            🗑 Excluir
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+            {% else %}
+
+            <p class="sem-tarefas">Nenhuma tarefa cadastrada.</p>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
