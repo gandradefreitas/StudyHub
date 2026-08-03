@@ -23,5 +23,29 @@ def criar_tabelas():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS estudos(
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            usuario_id INTEGER NOT NULL,
+
+            inicio DATETIME NOT NULL,
+
+            fim DATETIME,
+
+            duracao INTEGER DEFAULT 0,
+            
+            ativa INTEGER DEFAULT 1,
+
+            FOREIGN KEY(usuario_id)
+            REFERENCES usuarios(id)
+
+        )
+    """)
+
     conexao.commit()
     conexao.close()
+
+if __name__ == "__main__":
+    criar_tabelas()

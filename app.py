@@ -1,4 +1,6 @@
 from flask import Flask,render_template,request,redirect,url_for,session,flash
+from studyhub.controllers.estudo_controller import iniciar_estudo_controller, finalizar_estudo_controller, \
+    obter_estudo_ativo_controller, obter_horas_estudadas_controller
 from studyhub.controllers.web.tarefa_controller import  editar_tarefa_controller, excluir_tarefa_controller
 from studyhub.database.usuario_repository import obter_usuario_por_id
 from studyhub.database.tarefa_repository import listar_tarefas, buscar_tarefa
@@ -37,10 +39,15 @@ def dashboard():
         session["usuario_id"]
     )
 
+    horas_estudadas = obter_horas_estudadas_controller(
+        session["usuario_id"]
+    )
+
     return render_template(
         "dashboard.html",
         **dados,
-        classe_body="sidebar-fixa",
+        horas_estudadas=horas_estudadas,
+        classe_body="sidebar-toggle",
         mostrar_pesquisa=True,
         mostrar_perfil=True
     )
@@ -210,7 +217,8 @@ def editar_tarefa(id_tarefa):
     return render_template(
         "editar_tarefa.html",
         usuario=usuario,
-        tarefa=tarefa
+        tarefa=tarefa,
+        classe_body="sidebar-toggle"
     )
 
 @app.route("/tarefas/<int:id_tarefa>/excluir", methods=["GET", "POST"])
@@ -230,6 +238,54 @@ def excluir_tarefa(id_tarefa):
     )
 
     return redirect(url_for("pagina_tarefas"))
+
+@app.route("/estudos")
+def pagina_estudos():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    usuario = obter_usuario_por_id(
+        session["usuario_id"]
+    )
+
+    estudo_ativo = obter_estudo_ativo_controller(session["usuario_id"])
+
+    return render_template(
+        "estudos.html",
+        estudo_ativo=estudo_ativo,
+        classe_body="sidebar-toggle",
+        usuario=usuario,
+
+    )
+
+@app.route("/estudos/iniciar", methods=["POST"])
+def iniciar_estudo():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    sucesso, mensagem = iniciar_estudo_controller(
+        session["usuario_id"]
+    )
+
+    flash(mensagem)
+
+    return redirect(url_for("pagina_estudos"))
+
+@app.route("/estudos/finalizar", methods=["POST"])
+def finalizar_estudo():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    sucesso, mensagem = finalizar_estudo_controller(
+        session["usuario_id"]
+    )
+
+    flash(mensagem)
+
+    return redirect(url_for("pagina_estudos"))
 # ==========================
 # CADASTRO
 # ==========================

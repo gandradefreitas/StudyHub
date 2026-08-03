@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='paginas/tarefas.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <title>Tarefas</title>
 
@@ -24,7 +25,7 @@
             <h1>Minhas Tarefas</h1>
 
             <a href="{{ url_for('nova_tarefa') }}" class="botao">
-                + Nova tarefa
+                Nova tarefa
             </a>
 
         </section>
@@ -47,13 +48,15 @@
                     {% if tarefa["concluida"] == 1 %}
 
                         <span class="status concluida">
-                            ✅ Concluída
+                            <i class="bi bi-check-circle-fill"></i>
+                            Concluída
                         </span>
 
                     {% else %}
 
                         <span class="status pendente">
-                            ⏳ Pendente
+                            <i class="bi bi-hourglass-split"></i>
+                            Pendente
                         </span>
 
                     {% endif %}
@@ -63,7 +66,8 @@
                 <div class="acoes">
 
                     <a href="{{ url_for('editar_tarefa',id_tarefa=tarefa['id']) }}">
-                        ✏ Editar
+                        <i class="bi bi-pencil-square"></i>
+                         Editar
                     </a>
 
                     <form method="POST"
@@ -72,9 +76,11 @@
                         <button type="submit">
 
                             {% if tarefa["concluida"] == 0 %}
-                                ✔ Concluir
+                                <i class="bi bi-check2-square"></i>
+                                 Concluir
                             {% else %}
-                                ↩ Marcar como pendente
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                                 Marcar como pendente
                             {% endif %}
 
                         </button>

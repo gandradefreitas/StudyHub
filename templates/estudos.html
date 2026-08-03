@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/estudos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <title>Title</title>
+</head>
+<body class="sidebar-toggle">
+    {% include "componentes/sidebar.html" %}
+
+    <div class="dashboard">
+
+
+        <main class="conteudo">
+            {% include "componentes/header_dashboard.html" %}
+            <div class="card">
+                <h1>Estudos</h1>
+
+                <h3>Cronômetro</h3>
+
+                {% if estudo_ativo %}
+
+                <div
+                    id="cronometro"
+                    data-inicio="{{ estudo_ativo['inicio'] }}">
+                    00:00:00
+                </div>
+
+                {% endif %}
+
+                <div class="acoes">
+
+                    {% if estudo_ativo %}
+
+                    <form action="{{ url_for('finalizar_estudo') }}" method="POST">
+                        <button type="submit" class="btn-finalizar">
+                            Finalizar estudo
+                        </button>
+                    </form>
+
+                    {% else %}
+
+                    <p class="sem-estudo">Nenhuma sessão de estudo ativa.</p>
+
+                    <form action="{{ url_for('iniciar_estudo') }}" method="POST">
+                        <button type="submit" class="btn-iniciar">
+                            Iniciar estudo
+                        </button>
+                    </form>
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/cronometro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

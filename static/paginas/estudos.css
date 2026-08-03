@@ -1,0 +1,206 @@
+@charset "UTF-8";
+
+/* ==========================
+   Página
+========================== */
+.dashboard{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+.conteudo{
+
+    flex:1;
+
+    padding:1.5rem;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    background:var(--cor-fundo);
+
+    padding:2rem 1rem;
+
+}
+
+/* ==========================
+   Card
+========================== */
+
+.card{
+
+    width:100%;
+
+    max-width:650px;
+
+    margin:0 auto;
+
+    background:var(--cor-card);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    padding:2rem;
+
+    text-align:center;
+
+    transition:var(--transicao);
+
+}
+
+.card:hover{
+
+    box-shadow:var(--sombra-hover);
+
+}
+
+/* ==========================
+   Título
+========================== */
+
+h1{
+
+    text-align:center;
+
+    margin-bottom:1.5rem;
+
+    color:var(--cor-primaria);
+
+    font-size:2rem;
+
+}
+
+h3{
+
+    color:var(--cor-texto-secundario);
+
+    font-weight:600;
+
+    margin-bottom:1.5rem;
+
+}
+
+/* ==========================
+   Cronômetro
+========================== */
+
+#cronometro{
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    color:var(--cor-primaria);
+
+    letter-spacing:2px;
+
+    margin:2rem 0;
+
+}
+
+/* ==========================
+   Estado sem sessão
+========================== */
+
+.sem-estudo{
+
+    color:var(--cor-texto-secundario);
+
+    margin:2rem 0;
+
+}
+
+/* ==========================
+   Botões
+========================== */
+
+.acoes form{
+
+    width:100%;
+
+}
+
+.acoes button{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:1rem;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    font-size:1rem;
+
+    transition:var(--transicao);
+
+}
+
+.btn-iniciar{
+
+    background:var(--cor-sucesso);
+
+    color:black;
+
+}
+
+.btn-finalizar{
+
+    background:#ef4444;
+
+    color:black;
+
+}
+
+.acoes button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 16px rgb(0 0 0 /.15);
+
+}
+
+/* ==========================
+   Tablet
+========================== */
+
+@media (min-width:768px){
+
+    .card{
+
+        padding:3rem;
+
+    }
+
+    #cronometro{
+
+        font-size:4rem;
+
+    }
+
+}
+
+/* ==========================
+   Desktop
+========================== */
+
+@media (min-width:1024px){
+
+    #cronometro{
+
+        font-size:5rem;
+
+    }
+
+}

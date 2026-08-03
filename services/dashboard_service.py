@@ -1,4 +1,5 @@
 from studyhub.database.usuario_repository import obter_usuario_por_id
+from studyhub.services.estudo_service import obter_horas_estudadas
 
 from studyhub.database.tarefa_repository import (
     contar_tarefas_usuario,
@@ -11,6 +12,8 @@ def carregar_dashboard(usuario_id):
     usuario = obter_usuario_por_id(usuario_id)
 
     estatisticas = contar_tarefas_usuario(usuario_id)
+
+    estatisticas["horas_estudadas"] = obter_horas_estudadas(usuario_id)
 
     tarefas = obter_proximas_tarefas(usuario_id)
 
