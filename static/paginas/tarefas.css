@@ -1,84 +1,42 @@
-/* ==========================
-   PÁGINA DE TAREFAS
-========================== */
+@charset "UTF-8";
 
-.main-tarefas{
+
+/* =========================================================
+   PÁGINA DE TAREFAS
+========================================================= */
+
+.tarefas-page {
 
     width:100%;
+
     max-width:var(--largura-maxima);
 
     margin:0 auto;
 
-    padding:1.5rem;
+    padding:
+        clamp(1rem, 3vw, 1.5rem);
+
+    box-sizing:border-box;
 
 }
 
-/* ==========================
+.tarefas-page .header-dashboard {
+
+    width:100vw;
+
+    margin-left:calc(50% - 50vw);
+
+    padding-left:12px;
+    padding-right:12px;
+
+}
+
+
+/* =========================================================
    CABEÇALHO
-========================== */
+========================================================= */
 
-.header-tarefas{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1rem;
-
-    margin-bottom:2rem;
-
-}
-
-.header-tarefas h1{
-
-    font-size:2rem;
-
-    color:var(--cor-texto);
-
-}
-
-.header-tarefas p{
-
-    color:var(--cor-texto-secundario);
-
-    line-height:1.5;
-
-}
-
-.btn-nova-tarefa{
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    width:100%;
-
-    padding:.9rem;
-
-    background:var(--cor-primaria);
-
-    color:var(--cor-texto-claro);
-
-    border-radius:var(--raio);
-
-    font-weight:600;
-
-    transition:var(--transicao);
-
-}
-
-.btn-nova-tarefa:hover{
-
-    background:var(--cor-secundaria);
-
-}
-
-/* ==========================
-   LISTA
-========================== */
-
-.lista-tarefas{
+.tarefas-cabecalho {
 
     display:flex;
 
@@ -86,23 +44,14 @@
 
     gap:1.25rem;
 
-}
+    margin-bottom:1.5rem;
 
-/* ==========================
-   CARD
-========================== */
+    padding:
+        clamp(1.25rem, 4vw, 1.75rem);
 
-.tarefa{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1.5rem;
+    box-sizing:border-box;
 
     background:var(--cor-card);
-
-    padding:1.25rem;
 
     border:1px solid var(--cor-borda);
 
@@ -110,261 +59,109 @@
 
     box-shadow:var(--sombra);
 
-    transition:var(--transicao);
-
 }
 
-.tarefa:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:var(--sombra-hover);
-
-}
-
-.tarefa-info{
+.tarefas-cabecalho-info {
 
     display:flex;
 
     flex-direction:column;
 
-    gap:.8rem;
+    min-width:0;
 
 }
 
-.tarefa-info h3{
+.tarefas-subtitulo {
 
-    font-size:1.1rem;
+    margin:0 0 .35rem;
 
-    color:var(--cor-texto);
+    font-size:.72rem;
 
-}
+    font-weight:700;
 
-.status{
+    letter-spacing:.08em;
 
-    width:max-content;
+    text-transform:uppercase;
 
-    padding:.35rem .9rem;
-
-    border-radius:999px;
-
-    font-size:.85rem;
-
-    font-weight:600;
+    color:var(--cor-primaria);
 
 }
 
-.status.pendente{
-
-    background:#FFF7E6;
-
-    color:#B45309;
-
-}
-
-.status.concluida{
-
-    background:#DCFCE7;
-
-    color:#15803D;
-
-}
-
-/* ==========================
-   AÇÕES
-========================== */
-
-.acoes{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
-    gap:.75rem;
-
-}
-
-.acoes a,
-.acoes button{
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    width:100%;
-
-    padding:.8rem;
-
-    border-radius:12px;
-
-    font-weight:600;
-
-    transition:var(--transicao);
-
-}
-
-.acoes a{
-
-    background:transparent;
-
-    border:1px solid var(--cor-borda);
-
-    color:var(--cor-texto);
-
-}
-
-.acoes a:hover{
-
-    background:#F3F4F6;
-
-}
-
-.acoes form{
+.tarefas-cabecalho h1 {
 
     margin:0;
 
-}
+    color:var(--cor-texto);
 
-.acoes form:first-of-type button{
+    font-size:clamp(1.5rem, 5vw, 2.2rem);
 
-    background:var(--cor-sucesso);
-
-    color:white;
-
-    border:none;
+    line-height:1.2;
 
 }
 
-.acoes form:first-of-type button:hover{
+.tarefas-cabecalho p {
 
-    filter:brightness(.95);
+    max-width:650px;
 
-}
-
-.acoes form:last-of-type button{
-
-    background:#EF4444;
-
-    color:white;
-
-    border:none;
-
-}
-
-.acoes form:last-of-type button:hover{
-
-    background:#DC2626;
-
-}
-
-/* ==========================
-   ESTADO VAZIO
-========================== */
-
-.sem-tarefas{
-
-    background:var(--cor-card);
-
-    border:1px dashed var(--cor-borda);
-
-    border-radius:var(--raio);
-
-    padding:3rem 2rem;
-
-    text-align:center;
+    margin:.4rem 0 0;
 
     color:var(--cor-texto-secundario);
 
-}
+    font-size:.88rem;
 
-.sem-tarefas h2{
-
-    margin-bottom:.75rem;
-
-    color:var(--cor-texto);
+    line-height:1.5;
 
 }
 
-/* ==========================
-   TABLET
-========================== */
 
-@media (min-width:768px){
+/* =========================================================
+   BOTÃO NOVA TAREFA
+========================================================= */
 
-    .header-tarefas{
-
-        flex-direction:row;
-
-        justify-content:space-between;
-
-        align-items:center;
-
-    }
-
-    .btn-nova-tarefa{
-
-        width:auto;
-
-        padding:.9rem 1.4rem;
-
-    }
-
-    .tarefa{
-
-        flex-direction:row;
-
-        justify-content:space-between;
-
-        align-items:center;
-
-    }
-
-    .acoes{
-
-        display:flex;
-
-        flex-wrap:wrap;
-
-    }
-
-    .acoes a,
-    .acoes button{
-
-        width:auto;
-
-    }
-
-}
-
-.botao{
+.tarefas-botao-nova {
 
     display:inline-flex;
 
-    justify-content:center;
     align-items:center;
+
+    justify-content:center;
 
     gap:.5rem;
 
-    padding:.85rem 1.4rem;
+    min-height:42px;
+
+    padding:.7rem 1rem;
+
+    box-sizing:border-box;
 
     background:var(--cor-primaria);
 
     color:var(--cor-texto-claro);
 
-    border-radius:12px;
+    border:1px solid transparent;
+
+    border-radius:10px;
+
+    font-family:inherit;
+
+    font-size:.85rem;
 
     font-weight:600;
 
     text-decoration:none;
 
-    transition:var(--transicao);
+    cursor:pointer;
 
     box-shadow:var(--sombra);
 
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
 }
 
-.botao:hover{
+.tarefas-botao-nova:hover {
 
     background:var(--cor-secundaria);
 
@@ -374,13 +171,33 @@
 
 }
 
-.botao:active{
+.tarefas-botao-nova:active {
 
     transform:translateY(0);
 
 }
 
-.cabecalho-tarefas{
+
+/* =========================================================
+   LISTA DE TAREFAS
+========================================================= */
+
+.tarefas-lista {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.75rem;
+
+}
+
+
+/* =========================================================
+   CARD DA TAREFA
+========================================================= */
+
+.tarefa-card {
 
     display:flex;
 
@@ -388,38 +205,558 @@
 
     gap:1rem;
 
-    margin-bottom:2rem;
+    padding:
+        1rem
+        clamp(1rem, 3vw, 1.4rem);
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
 
 }
 
-@media (min-width:768px){
+.tarefa-card:hover {
 
-    .cabecalho-tarefas{
+    transform:translateY(-2px);
+
+    border-color:color-mix(
+        in srgb,
+        var(--cor-primaria) 25%,
+        var(--cor-borda)
+    );
+
+    box-shadow:var(--sombra-hover);
+
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DA TAREFA
+========================================================= */
+
+.tarefa-informacoes {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.65rem;
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.tarefa-informacoes h3 {
+
+    margin:0;
+
+    color:var(--cor-texto);
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    line-height:1.4;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.tarefa-status {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.4rem;
+
+    width:max-content;
+
+    max-width:100%;
+
+    padding:.3rem .7rem;
+
+    box-sizing:border-box;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+}
+
+.tarefa-status-concluida {
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.tarefa-status-pendente {
+
+    background:#fff7e6;
+
+    color:#b45309;
+
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.tarefa-acoes {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.6rem;
+
+}
+
+.tarefa-acoes form {
+
+    width:100%;
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   BOTÕES DAS AÇÕES
+========================================================= */
+
+.tarefa-acoes a,
+.tarefa-acoes button {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.4rem;
+
+    width:100%;
+
+    min-height:40px;
+
+    padding:.6rem .85rem;
+
+    box-sizing:border-box;
+
+    border-radius:9px;
+
+    font-family:inherit;
+
+    font-size:.83rem;
+
+    font-weight:600;
+
+    line-height:1;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .2s ease;
+
+}
+
+
+/* =========================================================
+   AÇÃO - EDITAR
+========================================================= */
+
+.tarefa-acao-editar {
+
+    background:transparent;
+
+    border:1px solid var(--cor-borda);
+
+    color:var(--cor-texto);
+
+    text-decoration:none;
+
+}
+
+.tarefa-acao-editar:hover {
+
+    background:var(--cor-fundo-secundario);
+
+    border-color:var(--cor-primaria);
+
+    color:var(--cor-primaria);
+
+}
+
+
+/* =========================================================
+   AÇÃO - CONCLUIR
+========================================================= */
+
+.tarefa-acao-concluir {
+
+    border:1px solid transparent;
+
+    background:var(--cor-sucesso);
+
+    color:var(--cor-texto-claro);
+
+}
+
+.tarefa-acao-concluir:hover {
+
+    filter:brightness(.95);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   AÇÃO - EXCLUIR
+========================================================= */
+
+.tarefa-acao-excluir {
+
+    border:1px solid transparent;
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+.tarefa-acao-excluir:hover {
+
+    background:#dc2626;
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   ESTADO VAZIO
+========================================================= */
+
+.tarefas-vazio {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+        clamp(2.5rem, 8vw, 3.5rem)
+        1.25rem;
+
+    box-sizing:border-box;
+
+    text-align:center;
+
+    background:var(--cor-card);
+
+    border:1px dashed var(--cor-borda);
+
+    border-radius:var(--raio);
+
+}
+
+.tarefas-vazio > i {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:52px;
+
+    height:52px;
+
+    margin-bottom:1rem;
+
+    border-radius:14px;
+
+    background:var(--cor-fundo);
+
+    color:var(--cor-primaria);
+
+    font-size:1.5rem;
+
+}
+
+.tarefas-vazio h2 {
+
+    margin:0 0 .5rem;
+
+    color:var(--cor-texto);
+
+    font-size:1.15rem;
+
+    line-height:1.3;
+
+}
+
+.tarefas-vazio p {
+
+    max-width:420px;
+
+    margin:0 0 1.5rem;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.88rem;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .tarefas-page {
+
+        padding:2rem;
+
+    }
+
+    .tarefas-cabecalho {
 
         flex-direction:row;
 
+        align-items:center;
+
         justify-content:space-between;
 
+        gap:2rem;
+
+        margin-bottom:2rem;
+
+    }
+
+    .tarefas-cabecalho-info {
+
+        flex:1;
+
+    }
+
+    .tarefas-botao-nova {
+
+        width:auto;
+
+        flex-shrink:0;
+
+    }
+
+    .tarefa-card {
+
+        flex-direction:row;
+
         align-items:center;
+
+        justify-content:space-between;
+
+        gap:2rem;
+
+    }
+
+    .tarefa-acoes {
+
+        flex-direction:row;
+
+        align-items:center;
+
+        justify-content:flex-end;
+
+        flex-shrink:0;
+
+    }
+
+    .tarefa-acoes a,
+    .tarefa-acoes button {
+
+        width:auto;
+
+        min-width:90px;
+
+        white-space:nowrap;
 
     }
 
 }
-/* ==========================
+
+
+/* =========================================================
    DESKTOP
-========================== */
+========================================================= */
 
-@media (min-width:1024px){
+@media (min-width:1024px) {
 
-    .header-tarefas h1{
+    .tarefas-page {
 
-        font-size:2.3rem;
+        padding:
+            2rem
+            2.5rem;
 
     }
 
-    .tarefa{
+    .tarefas-cabecalho {
 
-        padding:1.5rem;
+        padding:
+            1.75rem
+            2rem;
+
+    }
+
+    .tarefa-card {
+
+        padding:
+            1.15rem
+            1.5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .tarefas-page {
+
+        padding-left:3rem;
+
+        padding-right:3rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR PEQUENO
+========================================================= */
+
+@media (max-width:380px) {
+
+    .tarefas-page {
+
+        padding:.65rem;
+
+    }
+
+    .tarefas-cabecalho {
+
+        padding:1rem;
+
+        border-radius:12px;
+
+    }
+
+    .tarefas-cabecalho h1 {
+
+        font-size:1.4rem;
+
+    }
+
+    .tarefas-cabecalho p {
+
+        font-size:.83rem;
+
+    }
+
+    .tarefa-card {
+
+        padding:.9rem;
+
+    }
+
+    .tarefa-acoes a,
+    .tarefa-acoes button {
+
+        min-height:42px;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .tarefa-card:hover {
+
+        transform:none;
+
+        border-color:var(--cor-borda);
+
+        box-shadow:var(--sombra);
+
+    }
+
+    .tarefas-botao-nova:hover {
+
+        transform:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .tarefa-card,
+    .tarefas-botao-nova,
+    .tarefa-acoes a,
+    .tarefa-acoes button {
+
+        transition:none;
 
     }
 

@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% with mensagens = get_flashed_messages(with_categories=true) %}
 
-</body>
-</html>
+    {% if mensagens %}
+
+        <div class="mensagens-flash">
+
+            {% for categoria, mensagem in mensagens %}
+
+                <div class="flash-mensagem {{ categoria }}">
+
+                    {% if categoria == "mensagem-sucesso" %}
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    {% elif categoria == "mensagem-erro" %}
+
+                        <i class="bi bi-exclamation-circle-fill"></i>
+
+                    {% else %}
+
+                        <i class="bi bi-info-circle-fill"></i>
+
+                    {% endif %}
+
+
+                    <span>
+                        {{ mensagem }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}

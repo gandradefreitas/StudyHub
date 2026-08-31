@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/provas/prova.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <title>Avaliação</title>
+</head>
+<body  data-tema="{{ usuario['tema'] }}">
+
+    {% include "componentes/sidebar.html" %}
+
+    {% include "componentes/header_dashboard.html" %}
+    <main class="pagina-prova">
+        {% if prova.dia == "Primeiro Dia" %}
+        <section class="selecao-lingua" id="selecao-lingua">
+
+            <div class="card-selecao-lingua">
+
+                <div class="cabecalho-selecao-lingua">
+
+                    <span class="etapa-prova">
+                        ENEM 2025
+                    </span>
+
+                    <h1>Escolha sua língua estrangeira</h1>
+
+                    <p>
+                        Selecione a língua estrangeira que deseja
+                        utilizar nesta prova.
+                    </p>
+
+                </div>
+
+                <div class="opcoes-lingua">
+
+                    <label class="opcao-lingua">
+
+                        <input
+                            type="radio"
+                            name="lingua"
+                            value="ingles"
+                        >
+
+                        <span class="conteudo-opcao-lingua">
+
+                            <span class="icone-lingua">
+                                EN
+                            </span>
+
+                            <span class="texto-lingua">
+                                <strong>Inglês</strong>
+                                <small>English</small>
+                            </span>
+
+                            <span class="indicador-lingua"></span>
+
+                        </span>
+
+                    </label>
+
+
+                    <label class="opcao-lingua">
+
+                        <input
+                            type="radio"
+                            name="lingua"
+                            value="espanhol"
+                        >
+
+                        <span class="conteudo-opcao-lingua">
+
+                            <span class="icone-lingua">
+                                ES
+                            </span>
+
+                            <span class="texto-lingua">
+                                <strong>Espanhol</strong>
+                                <small>Español</small>
+                            </span>
+
+                            <span class="indicador-lingua"></span>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+                <button
+                    id="confirmar-lingua"
+                    class="btn-primario"
+                    disabled
+                >
+                    Continuar
+                </button>
+
+            </div>
+
+        </section>
+        {% endif %}
+
+        <section class="conteudo-prova prova-oculta">
+            <!-- Cabeçalho -->
+            <section class="cabecalho-prova">
+
+                <div>
+                    <h1>{{ prova.nome }}</h1>
+                    <p>
+                        {{ prova.dia }}
+                        •
+                        {% if prova.dia == "Primeiro Dia" %}
+                            Linguagens • Ciências Humanas
+                        {% else %}
+                            Ciências da Natureza • Matemática
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="status-prova">
+                    <span>
+                        Questão
+                        <strong id="contador-questao">1</strong> de <strong id="total-questoes">90</strong>
+                    </span>
+                </div>
+
+            </section>
+            <!-- Questão -->
+            <section class="questao">
+
+                <h2 id="numero-questao">
+                    Questão {{ questao_atual.numero }}
+                </h2>
+
+                <div id="conteudo-questao"></div>
+
+            </section>
+            <!-- Alternativas -->
+            <section class="alternativas" id="alternativas"></section>
+
+            <!-- Navegação -->
+            <section class="navegacao-prova">
+                <button class="btn-revisao" id="marcar-revisao">
+                    ⚑ Marcar revisão
+                </button>
+
+                <button class="btn-secundario" id="anterior">
+                    ← Anterior
+                </button>
+
+                <button class="btn-primario" id="proxima">
+                    Próxima →
+                </button>
+
+            </section>
+
+        </section>
+
+        <aside class="painel-lateral prova-oculta">
+
+            <h2>Tempo restante</h2>
+
+            <div class="cronometro">
+
+                05:30:00
+
+            </div>
+
+            <h3>Questões</h3>
+
+            <div class="grade-questoes"  id="grade-questoes"></div>
+
+            <button class="btn-finalizar" id="finalizar">
+
+                Finalizar prova
+
+            </button>
+        </aside>
+
+    </main>
+<script>
+
+    const questoes = {{ prova.questoes | tojson }};
+
+</script>
+
+<script>
+
+    const tempoProva = "{{ prova.tempo }}";
+
+</script>
+
+<script>
+    const STATIC_URL = "{{ url_for('static', filename='') }}";
+</script>
+
+<script>
+    const prova = {
+        id: {{ prova.id }},
+        dia: "{{ prova.dia }}"
+    };
+</script>
+
+<script src="{{ url_for('static', filename='js/provas/prova.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

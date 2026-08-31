@@ -1,39 +1,29 @@
 @charset "UTF-8";
 
-/* ==========================
-   Página
-========================== */
-.dashboard{
 
-    display:flex;
+/* =========================================================
+   PÁGINA DE ESTUDOS
+========================================================= */
 
-    min-height:100vh;
+.estudos {
 
-}
-
-.conteudo{
-
-    flex:1;
-
-    padding:1.5rem;
-
-}
-
-body{
+    width:100%;
 
     min-height:100vh;
 
-    background:var(--cor-fundo);
+    box-sizing:border-box;
 
-    padding:2rem 1rem;
+    padding:
+        clamp(1rem, 3vw, 2rem);
 
 }
 
-/* ==========================
-   Card
-========================== */
 
-.card{
+/* =========================================================
+   CARD DE ESTUDOS
+========================================================= */
+
+.estudos-card {
 
     width:100%;
 
@@ -41,165 +31,412 @@ body{
 
     margin:0 auto;
 
+    box-sizing:border-box;
+
+    padding:
+        clamp(1.25rem, 5vw, 3rem);
+
     background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
 
     border-radius:var(--raio);
 
     box-shadow:var(--sombra);
 
-    padding:2rem;
-
     text-align:center;
 
-    transition:var(--transicao);
+    transition:
+        box-shadow .2s ease,
+        transform .2s ease;
 
 }
 
-.card:hover{
+.estudos-card:hover {
 
     box-shadow:var(--sombra-hover);
 
 }
 
-/* ==========================
-   Título
-========================== */
 
-h1{
+/* =========================================================
+   CABEÇALHO
+========================================================= */
 
-    text-align:center;
+.estudos-cabecalho {
 
-    margin-bottom:1.5rem;
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+.estudos-legenda {
+
+    margin-bottom:.35rem;
 
     color:var(--cor-primaria);
 
-    font-size:2rem;
-
-}
-
-h3{
-
-    color:var(--cor-texto-secundario);
-
-    font-weight:600;
-
-    margin-bottom:1.5rem;
-
-}
-
-/* ==========================
-   Cronômetro
-========================== */
-
-#cronometro{
-
-    font-size:3rem;
+    font-size:.72rem;
 
     font-weight:700;
 
-    color:var(--cor-primaria);
+    letter-spacing:.08em;
 
-    letter-spacing:2px;
-
-    margin:2rem 0;
+    text-transform:uppercase;
 
 }
 
-/* ==========================
-   Estado sem sessão
-========================== */
+.estudos-cabecalho h1 {
 
-.sem-estudo{
+    margin:0 0 1.25rem;
+
+    color:var(--cor-primaria);
+
+    font-size:clamp(1.5rem, 5vw, 2rem);
+
+    line-height:1.2;
+
+}
+
+.estudos-cabecalho p {
+
+    max-width:500px;
+
+    margin:0;
 
     color:var(--cor-texto-secundario);
 
-    margin:2rem 0;
+    font-size:.9rem;
+
+    line-height:1.5;
 
 }
 
-/* ==========================
-   Botões
-========================== */
 
-.acoes form{
+/* =========================================================
+   CRONÔMETRO
+========================================================= */
+
+.estudos-cronometro {
+
+    width:100%;
+
+    margin:
+        clamp(1.5rem, 6vw, 2rem) 0;
+
+    box-sizing:border-box;
+
+    color:var(--cor-primaria);
+
+    font-size:clamp(2.5rem, 12vw, 5rem);
+
+    font-weight:700;
+
+    line-height:1;
+
+    letter-spacing:
+        clamp(1px, .5vw, 2px);
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================================================
+   ESTADO SEM SESSÃO
+========================================================= */
+
+.estudos-sem-sessao {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.75rem;
+
+    margin:
+        1.5rem 0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+}
+
+.estudos-sem-sessao i {
+
+    color:var(--cor-primaria);
+
+    font-size:1.8rem;
+
+}
+
+.estudos-sem-sessao p {
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.estudos-acoes {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.75rem;
 
     width:100%;
 
 }
 
-.acoes button{
+.estudos-acoes form {
 
     width:100%;
+
+    margin:0;
+
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.estudos-botao {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+
+    min-height:48px;
+
+    padding:.85rem 1rem;
+
+    box-sizing:border-box;
 
     border:none;
 
     border-radius:12px;
 
-    padding:1rem;
-
     cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:.95rem;
 
     font-weight:600;
 
-    font-size:1rem;
+    line-height:1.2;
 
-    transition:var(--transicao);
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
 
 }
 
-.btn-iniciar{
+
+/* =========================================================
+   BOTÃO - INICIAR
+========================================================= */
+
+.estudos-botao-iniciar {
 
     background:var(--cor-sucesso);
 
-    color:black;
+    color:#000;
 
 }
 
-.btn-finalizar{
+
+/* =========================================================
+   BOTÃO - FINALIZAR
+========================================================= */
+
+.estudos-botao-finalizar {
 
     background:#ef4444;
 
-    color:black;
+    color:#000;
 
 }
 
-.acoes button:hover{
+
+/* =========================================================
+   HOVER DOS BOTÕES
+========================================================= */
+
+.estudos-botao:hover {
 
     transform:translateY(-2px);
 
-    box-shadow:0 8px 16px rgb(0 0 0 /.15);
+    box-shadow:
+        0 8px 16px rgb(0 0 0 / .15);
 
 }
 
-/* ==========================
-   Tablet
-========================== */
 
-@media (min-width:768px){
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
 
-    .card{
+@media (max-width:380px) {
+
+    .estudos {
+
+        padding:.75rem;
+
+    }
+
+    .estudos-card {
+
+        padding:1.25rem 1rem;
+
+        border-radius:12px;
+
+    }
+
+    .estudos-cabecalho h1 {
+
+        font-size:1.4rem;
+
+    }
+
+    .estudos-cabecalho p {
+
+        font-size:.85rem;
+
+    }
+
+    .estudos-cronometro {
+
+        margin:1.5rem 0;
+
+        font-size:clamp(2.2rem, 14vw, 3rem);
+
+    }
+
+    .estudos-botao {
+
+        min-height:46px;
+
+        padding:.8rem;
+
+        font-size:.9rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .estudos {
+
+        padding:2rem;
+
+    }
+
+    .estudos-card {
 
         padding:3rem;
 
     }
 
-    #cronometro{
+}
 
-        font-size:4rem;
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1024px) {
+
+    .estudos {
+
+        padding:2.5rem;
+
+    }
+
+    .estudos-cronometro {
+
+        font-size:5rem;
 
     }
 
 }
 
-/* ==========================
-   Desktop
-========================== */
 
-@media (min-width:1024px){
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
 
-    #cronometro{
+@media (min-width:1400px) {
 
-        font-size:5rem;
+    .estudos {
+
+        padding:3rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .estudos-card:hover {
+
+        transform:none;
+
+    }
+
+    .estudos-botao:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .estudos-card,
+    .estudos-botao {
+
+        transition:none;
 
     }
 

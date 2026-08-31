@@ -1,0 +1,624 @@
+@charset "UTF-8";
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
+
+.container {
+
+    width:100%;
+
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:
+        clamp(1rem, 3vw, 2rem);
+
+    box-sizing:border-box;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.cabecalho-historico {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1.5rem;
+
+    margin-bottom:2rem;
+
+    padding:
+        clamp(1.25rem, 4vw, 2rem);
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:16px;
+
+    box-shadow:var(--sombra);
+
+}
+
+.subtitulo-pagina {
+
+    display:block;
+
+    margin:0 0 .4rem;
+
+    font-size:.72rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:var(--cor-primaria);
+
+}
+
+.cabecalho-historico h1 {
+
+    margin:0;
+
+    color:var(--cor-texto);
+
+    font-size:clamp(1.5rem, 4vw, 1.9rem);
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.cabecalho-historico p {
+
+    max-width:650px;
+
+    margin:.4rem 0 0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.botao-voltar,
+.botao-iniciar {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    min-height:42px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    border-radius:10px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.botao-voltar:hover,
+.botao-iniciar:hover {
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-1px);
+
+    box-shadow:0 4px 10px rgb(0 0 0 / .08);
+
+}
+
+
+/* =========================================================
+   CARD DO HISTÓRICO
+========================================================= */
+
+.historico-card {
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    overflow:hidden;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:16px;
+
+    box-shadow:var(--sombra);
+
+}
+
+
+/* =========================================================
+   TABELA - CONTAINER
+========================================================= */
+
+.tabela-wrapper {
+
+    width:100%;
+
+    overflow-x:auto;
+
+    overscroll-behavior-x:contain;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+/* =========================================================
+   TABELA
+========================================================= */
+
+.historico-card table {
+
+    width:100%;
+
+    min-width:700px;
+
+    border-collapse:collapse;
+
+    border-spacing:0;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DA TABELA
+========================================================= */
+
+.historico-card thead {
+
+    background:var(--cor-card);
+
+}
+
+.historico-card th {
+
+    padding:.85rem 1rem;
+
+    text-align:left;
+
+    font-size:.72rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.04em;
+
+    white-space:nowrap;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   CÉLULAS
+========================================================= */
+
+.historico-card td {
+
+    padding:1rem;
+
+    border-top:1px solid var(--cor-borda);
+
+    color:var(--cor-texto);
+
+    font-size:.85rem;
+
+    line-height:1.4;
+
+}
+
+
+/* =========================================================
+   LINHAS
+========================================================= */
+
+.historico-card tbody tr {
+
+    transition:background-color .2s ease;
+
+}
+
+.historico-card tbody tr:hover {
+
+    background-color:var(--cor-fundo);
+
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.data-prova {
+
+    color:var(--cor-texto-secundario);
+
+    white-space:nowrap;
+
+}
+
+.nome-prova {
+
+    font-weight:600;
+
+}
+
+.tempo-prova {
+
+    color:var(--cor-texto-secundario);
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================================================
+   RESULTADO - ACERTOS / ERROS
+========================================================= */
+
+.resultado {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:38px;
+
+    min-height:30px;
+
+    padding:0 .5rem;
+
+    box-sizing:border-box;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    line-height:1;
+
+}
+
+.resultado.acerto {
+
+    background:#ecfdf3;
+
+    color:#15803d;
+
+}
+
+.resultado.erro {
+
+    background:#fef2f2;
+
+    color:#dc2626;
+
+}
+
+
+/* =========================================================
+   APROVEITAMENTO
+========================================================= */
+
+.aproveitamento {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:.4rem .65rem;
+
+    border-radius:8px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================================================
+   HISTÓRICO VAZIO
+========================================================= */
+
+.historico-vazio {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+        clamp(2.5rem, 8vw, 3.75rem)
+        1.5rem;
+
+    box-sizing:border-box;
+
+    text-align:center;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:16px;
+
+    box-shadow:var(--sombra);
+
+}
+
+.historico-vazio-icone {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:56px;
+
+    height:56px;
+
+    margin-bottom:1.1rem;
+
+    border-radius:14px;
+
+    background:var(--cor-fundo);
+
+    color:var(--cor-primaria);
+
+    font-size:1.5rem;
+
+}
+
+.historico-vazio h2 {
+
+    margin:0 0 .5rem;
+
+    color:var(--cor-texto);
+
+    font-size:1.2rem;
+
+    line-height:1.3;
+
+}
+
+.historico-vazio p {
+
+    max-width:420px;
+
+    margin:0 0 1.5rem;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.85rem;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width:900px) {
+
+    .cabecalho-historico {
+
+        gap:1rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width:700px) {
+
+    .container {
+
+        padding:.75rem;
+
+    }
+
+    .cabecalho-historico {
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:1.25rem;
+
+        margin-bottom:1.25rem;
+
+        padding:1.25rem;
+
+        border-radius:14px;
+
+    }
+
+    .cabecalho-historico h1 {
+
+        font-size:1.45rem;
+
+    }
+
+    .cabecalho-historico p {
+
+        font-size:.85rem;
+
+    }
+
+    .botao-voltar,
+    .botao-iniciar {
+
+        width:100%;
+
+    }
+
+    .historico-card {
+
+        border-radius:12px;
+
+    }
+
+    .historico-card th {
+
+        padding:.75rem .85rem;
+
+        font-size:.68rem;
+
+    }
+
+    .historico-card td {
+
+        padding:.8rem .85rem;
+
+        font-size:.82rem;
+
+    }
+
+    .historico-vazio {
+
+        border-radius:12px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .container {
+
+        padding:.5rem;
+
+    }
+
+    .cabecalho-historico {
+
+        padding:1rem;
+
+    }
+
+    .cabecalho-historico h1 {
+
+        font-size:1.35rem;
+
+    }
+
+    .historico-card table {
+
+        min-width:650px;
+
+    }
+
+    .historico-vazio {
+
+        padding:2.5rem 1rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .botao-voltar:hover,
+    .botao-iniciar:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .botao-voltar,
+    .botao-iniciar,
+    .historico-card tbody tr {
+
+        transition:none;
+
+    }
+
+}

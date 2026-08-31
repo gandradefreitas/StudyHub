@@ -19,7 +19,8 @@
         {% endblock %}
     </title>
 </head>
-<body class="{{ classe_body | default('sidebar-fixa') }}">
+<body class="{{ classe_body | default('sidebar-fixa') }}"
+      data-tema="{{ usuario['tema'] if usuario else 'sistema' }}">
 
 
     <div class="dashboard">
@@ -36,10 +37,11 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     {% block scripts %}
 
     {% endblock %}
-
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 </body>

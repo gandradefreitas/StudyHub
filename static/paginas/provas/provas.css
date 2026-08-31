@@ -1,0 +1,538 @@
+@charset "UTF-8";
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
+
+.container-provas {
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:0 auto;
+
+    padding:
+        clamp(1rem, 3vw, 2rem);
+
+    box-sizing:border-box;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DA PÁGINA
+========================================================= */
+
+.cabecalho-provas {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1.5rem;
+
+    margin-bottom:2rem;
+
+    padding:
+        clamp(1.25rem, 4vw, 2rem);
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:16px;
+
+    box-shadow:var(--sombra);
+
+}
+
+.cabecalho-provas-texto {
+
+    display:flex;
+
+    flex:1;
+
+    flex-direction:column;
+
+    min-width:0;
+
+}
+
+.subtitulo-provas {
+
+    margin:0 0 .4rem;
+
+    font-size:.72rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:var(--cor-primaria);
+
+}
+
+.cabecalho-provas h1 {
+
+    margin:0;
+
+    color:var(--cor-texto);
+
+    font-size:clamp(1.5rem, 4vw, 2rem);
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.cabecalho-provas p {
+
+    max-width:650px;
+
+    margin:.4rem 0 0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   BOTÃO DE HISTÓRICO
+========================================================= */
+
+.botao-historico {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    min-height:42px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    border-radius:10px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.botao-historico:hover {
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   LISTA DE PROVAS
+========================================================= */
+
+.lista-provas {
+
+    display:grid;
+
+    gap:1rem;
+
+    margin-top:0;
+
+}
+
+
+/* =========================================================
+   CARD DE PROVA
+========================================================= */
+
+.card-prova {
+
+    padding:
+        clamp(1rem, 3vw, 1.4rem);
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-left:5px solid var(--cor-primaria);
+
+    border-radius:12px;
+
+    box-shadow:var(--sombra);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+
+}
+
+.card-prova:hover {
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--sombra-hover);
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DO CARD
+========================================================= */
+
+.cabecalho-prova {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1rem;
+
+    margin-bottom:1rem;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:max-content;
+
+    padding:.35rem .75rem;
+
+    box-sizing:border-box;
+
+    border-radius:999px;
+
+    background:color-mix(
+        in srgb,
+        var(--cor-sucesso) 15%,
+        transparent
+    );
+
+    color:var(--cor-sucesso);
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DA PROVA
+========================================================= */
+
+.informacoes-prova {
+
+    min-width:0;
+
+}
+
+.informacoes-prova p {
+
+    margin:.5rem 0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+}
+
+.informacoes-prova p:last-child {
+
+    margin-bottom:0;
+
+}
+
+
+/* =========================================================
+   AÇÕES DA PROVA
+========================================================= */
+
+.acoes-prova {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.75rem;
+
+    margin-top:1.25rem;
+
+}
+
+
+/* =========================================================
+   BOTÃO INICIAR
+========================================================= */
+
+.botao-iniciar {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:42px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    border-radius:8px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.botao-iniciar:hover {
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width:900px) {
+
+    .container-provas {
+
+        max-width:100%;
+
+    }
+
+    .cabecalho-provas {
+
+        gap:1rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width:600px) {
+
+    .container-provas {
+
+        padding:.75rem;
+
+    }
+
+    .cabecalho-provas {
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:1.25rem;
+
+        margin-bottom:1.25rem;
+
+        padding:1.25rem;
+
+        border-radius:14px;
+
+    }
+
+    .cabecalho-provas h1 {
+
+        font-size:1.5rem;
+
+    }
+
+    .cabecalho-provas p {
+
+        font-size:.85rem;
+
+    }
+
+    .botao-historico {
+
+        width:100%;
+
+    }
+
+    .lista-provas {
+
+        gap:.75rem;
+
+    }
+
+    .card-prova {
+
+        border-left-width:4px;
+
+        border-radius:10px;
+
+    }
+
+    .cabecalho-prova {
+
+        align-items:flex-start;
+
+        flex-wrap:wrap;
+
+    }
+
+    .acoes-prova {
+
+        width:100%;
+
+    }
+
+    .botao-iniciar {
+
+        width:100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .container-provas {
+
+        padding:.5rem;
+
+    }
+
+    .cabecalho-provas {
+
+        padding:1rem;
+
+    }
+
+    .cabecalho-provas h1 {
+
+        font-size:1.4rem;
+
+    }
+
+    .card-prova {
+
+        padding:1rem;
+
+    }
+
+    .status {
+
+        font-size:.72rem;
+
+    }
+
+    .informacoes-prova p {
+
+        font-size:.83rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .card-prova:hover,
+    .botao-historico:hover,
+    .botao-iniciar:hover {
+
+        transform:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .card-prova,
+    .botao-historico,
+    .botao-iniciar {
+
+        transition:none;
+
+    }
+
+}

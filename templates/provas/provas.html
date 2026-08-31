@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/provas/provas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <title>Title</title>
+</head>
+<body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
+
+    {% include "componentes/sidebar.html" %}
+
+    {% include "componentes/header_dashboard.html" %}
+
+    <main class="container-provas">
+
+        <section class="cabecalho-provas">
+            <div class="cabecalho-provas-texto">
+                <span class="subtitulo-provas">SIMULADOS</span>
+                <h1>Provas</h1>
+                <p>Escolha uma prova para iniciar seus estudos.</p>
+            </div>
+
+            <a href="{{ url_for('historico_provas') }}" class="botao-historico">
+                Ver histórico
+            </a>
+        </section>
+
+        <section class="lista-provas">
+
+            {% for prova in provas %}
+
+            <article class="card-prova">
+
+                <div class="cabecalho-prova">
+
+                    <h2>{{ prova.nome }}</h2>
+
+                    <span class="status">Disponível</span>
+
+                </div>
+
+                <div class="informacoes-prova">
+
+                    <p><strong>Dia:</strong> {{ prova.dia }}</p>
+
+                    <p><strong>Questões:</strong> {{ prova.total_questoes }}</p>
+
+                    <p><strong>Duração:</strong> {{ prova.tempo }}</p>
+
+                </div>
+
+                <div class="acoes-prova">
+
+                    <a
+                        href="{{ url_for('visualizar_prova', id_prova=prova.id) }}"
+                        class="botao-iniciar">
+
+                        Iniciar prova
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

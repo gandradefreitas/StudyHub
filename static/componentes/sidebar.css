@@ -1,81 +1,100 @@
-.sidebar{
+/* ========================================
+   SIDEBAR
+======================================== */
 
-    position:fixed;
+.sidebar {
+    position: fixed;
 
-    top:0;
-    left:-270px;
+    top: 0;
+    left: -270px;
 
-    width:260px;
-    height:100vh;
-    padding:2rem 1rem;
+    width: 260px;
+    height: 100vh;
 
+    padding: 2rem 1rem;
 
-    background:var(--cor-primaria);
-
-    transition:var(--transicao);
-
-    z-index:1000;
+    background: var(--cor-primaria);
 
     color: var(--cor-texto-claro);
 
+    transition: var(--transicao);
+
+    z-index: 1000;
 }
 
-.sidebar.ativo{
-
-    left:0;
-
+.sidebar .bi {
+    color: var(--cor-texto-claro);
 }
 
-.sidebar-fixa .sidebar{
+/* ========================================
+   SIDEBAR ATIVA
+======================================== */
 
+.sidebar.ativo {
+    left: 0;
+}
+
+
+/* ========================================
+   SIDEBAR FIXA
+======================================== */
+
+.sidebar-fixa .sidebar {
     position: static;
-
-    width: 260px;
-
-    height: auto;
 
     left: 0;
 
+    width: 260px;
+    height: auto;
 }
 
-.logo{
 
-    text-align:center;
+/* ========================================
+   LOGO
+======================================== */
 
-    margin-bottom:2rem;
+.logo {
+    margin-bottom: 2rem;
 
+    text-align: center;
 }
 
-.sidebar nav{
 
-    display:flex;
+/* ========================================
+   NAVEGAÇÃO
+======================================== */
 
-    flex-direction:column;
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
 
-    gap:.8rem;
-
+    gap: .8rem;
 }
 
-.sidebar a{
 
-    padding:.9rem 1rem;
+/* ========================================
+   LINKS
+======================================== */
 
-    border-radius:var(--raio);
+.sidebar a {
+    display: flex;
 
-    transition:var(--transicao);
+    align-items: center;
 
-    display:flex;
+    gap: .8rem;
 
-    align-items:center;
+    padding: .9rem 1rem;
 
-    gap:.8rem;
+    border-radius: var(--raio);
 
-
+    transition: var(--transicao);
 }
 
-.sidebar a:hover{
 
-    background:rgb(255 255 255 /.15);
+/* ========================================
+   HOVER DOS LINKS
+======================================== */
 
+.sidebar a:hover {
+    background: rgb(255 255 255 / .15);
 }
-

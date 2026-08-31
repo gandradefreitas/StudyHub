@@ -1,0 +1,1178 @@
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.cabecalho-configuracoes {
+
+    padding: 1.5rem 0 2rem;
+
+}
+
+.cabecalho-configuracoes-info {
+
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+
+}
+
+.subtitulo-configuracoes {
+
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+
+    color: var(--cor-primaria);
+
+}
+
+.cabecalho-configuracoes h1 {
+
+    margin: 0;
+
+    font-size: 1.7rem;
+    line-height: 1.25;
+
+    color: var(--cor-texto);
+
+}
+
+.cabecalho-configuracoes p {
+
+    max-width: 650px;
+    margin: 0;
+
+    font-size: .9rem;
+    line-height: 1.5;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.conteudo-configuracoes {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   SEÇÕES
+========================================================= */
+
+.secao-configuracoes {
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 1.25rem;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: var(--raio);
+
+    box-shadow: var(--sombra);
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DAS SEÇÕES
+========================================================= */
+
+.cabecalho-secao-configuracoes {
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: .85rem;
+
+    margin-bottom: 1.5rem;
+
+}
+
+.cabecalho-secao-configuracoes h2 {
+
+    margin: 0 0 .3rem;
+
+    font-size: 1.05rem;
+    line-height: 1.3;
+
+    color: var(--cor-texto);
+
+}
+
+.cabecalho-secao-configuracoes p {
+
+    margin: 0;
+
+    font-size: .8rem;
+    line-height: 1.5;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   ÍCONE DA SEÇÃO
+========================================================= */
+
+.icone-secao-configuracoes {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-primaria);
+
+}
+
+.icone-secao-configuracoes i {
+
+    font-size: 1.1rem;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO DAS SEÇÕES
+========================================================= */
+
+.conteudo-secao-configuracoes {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.25rem;
+
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.campo-configuracao {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: .45rem;
+
+}
+
+.campo-configuracao label {
+
+    font-size: .85rem;
+    font-weight: 600;
+
+    color: var(--cor-texto);
+
+}
+
+.descricao-campo-configuracao {
+
+    margin: -.1rem 0 .2rem;
+
+    font-size: .75rem;
+    line-height: 1.45;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.campo-configuracao input,
+.campo-configuracao select {
+
+    width: 100%;
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    padding: .65rem .75rem;
+
+    font-family: inherit;
+    font-size: .85rem;
+
+    color: var(--cor-texto);
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+.campo-configuracao input:focus,
+.campo-configuracao select:focus {
+
+    border-color: var(--cor-primaria);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--cor-primaria) 12%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   CAMPO COM UNIDADE
+========================================================= */
+
+.campo-com-unidade {
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: .5rem;
+
+}
+
+.campo-com-unidade input {
+
+    width: 100%;
+    max-width: none;
+
+}
+
+.campo-com-unidade span {
+
+    font-size: .8rem;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   GRID DE METAS
+========================================================= */
+
+.grid-metas-configuracoes {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 1.25rem;
+
+}
+
+
+/* =========================================================
+   OPÇÕES DE TEMA
+========================================================= */
+
+.opcoes-tema-configuracoes {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: .75rem;
+
+    margin-top: .25rem;
+
+}
+
+
+.opcao-tema-configuracoes {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .65rem;
+
+    min-height: 52px;
+
+    box-sizing: border-box;
+
+    padding: .75rem;
+
+    cursor: pointer;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 10px;
+
+    font-size: .85rem;
+
+    color: var(--cor-texto);
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        transform .2s ease;
+
+}
+
+
+.opcao-tema-configuracoes:hover {
+
+    border-color: var(--cor-primaria);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* Radio */
+
+.opcao-tema-configuracoes input[type="radio"] {
+
+    width: auto;
+
+    min-width: auto;
+
+    min-height: auto;
+
+    margin: 0;
+
+    padding: 0;
+
+    flex-shrink: 0;
+
+    accent-color: var(--cor-primaria);
+
+}
+
+
+/* Ícone */
+
+.icone-opcao-tema-configuracoes {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 8px;
+
+    background: var(--cor-card);
+
+    color: var(--cor-primaria);
+
+}
+
+
+.icone-opcao-tema-configuracoes i {
+
+    font-size: .95rem;
+
+}
+
+
+/* Texto */
+
+.opcao-tema-configuracoes > span:last-child {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 30px;
+
+}
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.acao-configuracao {
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: .75rem;
+
+}
+
+.acao-dados-configuracoes {
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 1rem;
+
+}
+
+.informacao-acao-configuracao {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: .3rem;
+
+    min-width: 0;
+
+}
+
+.informacao-acao-configuracao h3 {
+
+    margin: 0;
+
+    font-size: .9rem;
+
+    color: var(--cor-texto);
+
+}
+
+.informacao-acao-configuracao p {
+
+    max-width: 650px;
+
+    margin: 0;
+
+    font-size: .8rem;
+    line-height: 1.5;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.botao-configuracao,
+.botao-configuracao-secundario,
+.botao-configuracao-perigo {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .45rem;
+
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    padding: .65rem 1rem;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease,
+        filter .2s ease;
+
+}
+
+.botao-configuracao:hover,
+.botao-configuracao-secundario:hover,
+.botao-configuracao-perigo:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   BOTÃO PRINCIPAL
+========================================================= */
+
+.botao-configuracao {
+
+    color: white;
+
+    background: var(--cor-primaria);
+
+    border: 1px solid var(--cor-primaria);
+
+}
+
+.botao-configuracao:hover {
+
+    filter: brightness(.95);
+
+}
+
+
+/* =========================================================
+   BOTÃO SECUNDÁRIO
+========================================================= */
+
+.botao-configuracao-secundario {
+
+    color: var(--cor-texto);
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+}
+
+.botao-configuracao-secundario:hover {
+
+    border-color: var(--cor-primaria);
+
+}
+
+
+/* =========================================================
+   BOTÃO DE PERIGO
+========================================================= */
+
+.botao-configuracao-perigo {
+
+    color: var(--cor-erro);
+
+    background: transparent;
+
+    border: 1px solid var(--cor-erro);
+
+    white-space: nowrap;
+
+}
+
+.botao-configuracao-perigo:hover {
+
+    color: white;
+
+    background: var(--cor-erro);
+
+    border-color: var(--cor-erro);
+
+}
+
+
+/* =========================================================
+   DIVISOR
+========================================================= */
+
+.divisor-configuracoes {
+
+    width: 100%;
+    height: 1px;
+
+    background: var(--cor-borda);
+
+}
+
+
+/* =========================================================
+   ZONA DE PERIGO
+========================================================= */
+
+.secao-perigo-configuracoes {
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--cor-erro) 35%,
+            var(--cor-borda)
+        );
+
+    background:
+        color-mix(
+            in srgb,
+            var(--cor-erro) 2%,
+            var(--cor-card)
+        );
+
+}
+
+
+/* Cabeçalho da zona de perigo */
+
+.secao-perigo-configuracoes
+.cabecalho-secao-configuracoes {
+
+    margin-bottom: 1.25rem;
+
+}
+
+
+/* Ícone */
+
+.secao-perigo-configuracoes
+.icone-perigo {
+
+    color: var(--cor-erro);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--cor-erro) 10%,
+            var(--cor-fundo-secundario)
+        );
+
+}
+
+
+/* Título */
+
+.secao-perigo-configuracoes
+.cabecalho-secao-configuracoes h2 {
+
+    color: var(--cor-texto);
+
+}
+
+
+/* Descrição */
+
+.secao-perigo-configuracoes
+.cabecalho-secao-configuracoes p {
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   AÇÃO DENTRO DA ZONA DE PERIGO
+========================================================= */
+
+.secao-perigo-configuracoes
+.acao-dados-configuracoes {
+
+    padding: 1rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--cor-erro) 3%,
+            var(--cor-card)
+        );
+
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--cor-erro) 18%,
+            var(--cor-borda)
+        );
+
+    border-radius: 10px;
+
+}
+
+
+/* Título */
+
+.secao-perigo-configuracoes
+.informacao-acao-configuracao h3 {
+
+    font-size: .95rem;
+
+    color: var(--cor-texto);
+
+}
+
+
+/* Descrição */
+
+.secao-perigo-configuracoes
+.informacao-acao-configuracao p {
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   CAMPO DE EXCLUSÃO DA CONTA
+========================================================= */
+
+.campo-exclusao-conta {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: .45rem;
+
+    width: 100%;
+    min-width: 0;
+
+}
+
+.campo-exclusao-conta label {
+
+    font-size: .78rem;
+    font-weight: 600;
+
+    color: var(--cor-texto);
+
+}
+
+.campo-exclusao-conta input {
+
+    width: 100%;
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    padding: .65rem .75rem;
+
+    font-family: inherit;
+    font-size: .85rem;
+
+    color: var(--cor-texto);
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.campo-exclusao-conta input:focus {
+
+    border-color: var(--cor-erro);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--cor-erro) 12%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   MODAIS
+========================================================= */
+
+.modal-configuracoes {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 1rem;
+
+    background: rgba(0, 0, 0, .45);
+
+    backdrop-filter: blur(3px);
+
+}
+
+.modal-configuracoes[hidden] {
+
+    display: none;
+
+}
+
+.conteudo-modal-configuracoes {
+
+    width: 100%;
+    max-width: 440px;
+
+    max-height: calc(100vh - 2rem);
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    padding: 1.5rem;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 14px;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
+
+}
+
+
+/* =========================================================
+   ÍCONE DO MODAL
+========================================================= */
+
+.icone-modal-perigo {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 1rem;
+
+    border-radius: 12px;
+
+    color: var(--cor-erro);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--cor-erro) 10%,
+            var(--cor-fundo-secundario)
+        );
+
+}
+
+.icone-modal-perigo i {
+
+    font-size: 1.2rem;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO DO MODAL
+========================================================= */
+
+.conteudo-modal-configuracoes h2 {
+
+    margin: 0 0 .6rem;
+
+    font-size: 1.15rem;
+
+    color: var(--cor-texto);
+
+}
+
+.conteudo-modal-configuracoes > p {
+
+    margin: 0 0 1.25rem;
+
+    font-size: .85rem;
+    line-height: 1.6;
+
+    color: var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   FORMULÁRIO DO MODAL
+========================================================= */
+
+.conteudo-modal-configuracoes form {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+}
+
+.conteudo-modal-configuracoes label {
+
+    font-size: .8rem;
+    font-weight: 600;
+
+    color: var(--cor-texto);
+
+}
+
+.conteudo-modal-configuracoes input {
+
+    width: 100%;
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    margin-top: .4rem;
+
+    padding: .65rem .75rem;
+
+    font-family: inherit;
+    font-size: .85rem;
+
+    color: var(--cor-texto);
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    outline: none;
+
+}
+
+.conteudo-modal-configuracoes input:focus {
+
+    border-color: var(--cor-erro);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--cor-erro) 12%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   AÇÕES DO MODAL
+========================================================= */
+
+.acoes-modal-configuracoes {
+
+    display: flex;
+    flex-direction: column-reverse;
+
+    gap: .6rem;
+
+    margin-top: .25rem;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 600px) {
+
+    .cabecalho-configuracoes {
+
+        padding: 2rem 0;
+
+    }
+
+    .secao-configuracoes {
+
+        padding: 1.5rem;
+
+    }
+
+    .opcoes-tema-configuracoes {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+    .grid-metas-configuracoes {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 1.25rem;
+
+    }
+
+    .opcoes-tema {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+    .campo-com-unidade {
+
+        flex-direction: row;
+
+        align-items: center;
+
+    }
+
+    .campo-com-unidade input {
+
+        max-width: 180px;
+
+    }
+
+    .acao-dados-configuracoes {
+
+        flex-direction: row;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+    }
+
+    .acoes-modal-configuracoes {
+
+        flex-direction: row;
+
+        justify-content: flex-end;
+
+    }
+
+}
+
+.header-dashboard {
+
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+}
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1024px) {
+
+    .cabecalho-configuracoes {
+
+        padding: 2.25rem 0;
+
+    }
+
+    .cabecalho-configuracoes h1 {
+
+        font-size: 2rem;
+
+    }
+
+    .conteudo-configuracoes {
+
+        gap: 1.5rem;
+
+    }
+
+    .secao-configuracoes {
+
+        padding: 1.75rem;
+
+    }
+
+    .cabecalho-secao-configuracoes {
+
+        margin-bottom: 1.5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width: 1400px) {
+
+    .secao-configuracoes {
+
+        padding: 2rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .cabecalho-configuracoes h1 {
+
+        font-size: 1.5rem;
+
+    }
+
+    .secao-configuracoes {
+
+        padding: 1rem;
+
+    }
+
+    .cabecalho-secao-configuracoes {
+
+        gap: .7rem;
+
+    }
+
+    .icone-secao-configuracoes {
+
+        width: 36px;
+        height: 36px;
+
+    }
+
+    .opcao-tema {
+
+        padding: .65rem;
+
+    }
+
+    .conteudo-modal-configuracoes {
+
+        padding: 1.25rem;
+
+    }
+
+}

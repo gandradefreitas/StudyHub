@@ -1,106 +1,118 @@
-.header-dashboard{
+/* ========================================
+   HEADER DO DASHBOARD
+======================================== */
+
+.header-dashboard {
 
     display:flex;
 
-    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
 
-    gap:1rem 0;
+    width:100%;
 
     margin-bottom:2rem;
 
 }
 
-.btn-menu{
 
-    background:none;
+/* ========================================
+   BUSCA
+======================================== */
 
-    border:none;
+.header-dashboard input {
+    width: 100%;
 
-    font-size:2rem;
+    padding: .8rem 1rem;
 
-    cursor:pointer;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
 
+    outline: none;
 }
 
-.header-dashboard input{
 
-    width:100%;
+/* ========================================
+   PERFIL
+======================================== */
 
-    padding:.8rem 1rem;
+.perfil {
+    display: flex;
+    align-items: center;
 
-    border:1px solid var(--cor-borda);
+    gap: .7rem;
 
-    border-radius:var(--raio);
+    padding: .35rem .5rem .35rem .75rem;
 
-    outline:none;
+    border-radius: 12px;
 
+    color: var(--cor-texto);
+
+    text-decoration: none;
+
+    transition: var(--transicao);
 }
 
-.perfil{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:flex-end;
-
-    gap:.8rem;
-
+.perfil:hover {
+    background: var(--cor-fundo-secundario);
 }
 
-.avatar{
 
-    width:45px;
+/* ========================================
+   NOME
+======================================== */
 
-    aspect-ratio:1;
+.perfil-nome {
+    font-size: .9rem;
+    font-weight: 600;
 
-    border-radius:50%;
-
-    background:var(--cor-secundaria);
-
-    color:var(--cor-texto-claro);
-
-    display:grid;
-
-    place-items:center;
-
-    font-weight:bold;
-
+    color: var(--cor-texto);
 }
 
-.header-esquerda{
 
-    display:flex;
+/* ========================================
+   AVATAR
+======================================== */
 
-    align-items:center;
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    gap:1rem;
+    width: 38px;
+    height: 38px;
 
+    border-radius: 50%;
+
+    background: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+
+    font-size: .9rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
 }
 
-@media(min-width:768px){
 
-    .header-dashboard{
+/* ========================================
+   TABLET / DESKTOP
+======================================== */
 
-        flex-direction:row;
+@media (min-width: 768px) {
 
-        justify-content:space-between;
+    .header-dashboard {
+        flex-direction: row;
 
-        align-items:center;
-
+        justify-content: space-between;
+        align-items: center;
     }
 
-    .sidebar-fixa .btn-menu{
-
-        display:none;
-
+    .sidebar-fixa .btn-menu {
+        display: none;
     }
 
-
-    .header-dashboard input{
-
-        width:320px;
-
+    .header-dashboard input {
+        width: 320px;
     }
 
 }

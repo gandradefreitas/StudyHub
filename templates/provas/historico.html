@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Histórico de Provas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/provas/historico.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='global.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+
+</head>
+
+<body class="{{ classe_body }}" data-tema="{{ usuario['tema'] }}">
+
+    {% include "componentes/sidebar.html" %}
+    {% include "componentes/header_dashboard.html" %}
+
+    <main class="container">
+
+        <section class="cabecalho-historico">
+            <div>
+                <span class="subtitulo-pagina">DESEMPENHO</span>
+                <h1>Histórico de Provas</h1>
+                <p>Acompanhe seu desempenho nos simulados realizados.</p>
+            </div>
+
+            <a href="{{ url_for('pagina_provas') }}" class="botao-voltar">
+                Voltar para provas
+            </a>
+        </section>
+
+        {% if historico %}
+
+        <section class="historico-card">
+
+            <div class="tabela-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Prova</th>
+                            <th>Acertos</th>
+                            <th>Erros</th>
+                            <th>Aproveitamento</th>
+                            <th>Tempo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for resultado in historico %}
+
+                        <tr>
+
+                            <td class="data-prova">
+                                {{ resultado["data_realizacao"] }}
+                            </td>
+
+                            <td class="nome-prova">
+                                {{ resultado["prova"] }}
+                            </td>
+
+                            <td>
+                                <span class="resultado acerto">
+                                    {{ resultado["acertos"] }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="resultado erro">
+                                    {{ resultado["erros"] }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="aproveitamento">
+                                    {{ resultado["porcentagem"] }}%
+                                </span>
+                            </td>
+
+                            <td class="tempo-prova">
+                                {{ resultado["tempo_gasto"] }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        {% else %}
+
+        <section class="historico-vazio">
+
+            <div class="historico-vazio-icone">
+                📊
+            </div>
+
+            <h2>Nenhuma prova realizada</h2>
+
+            <p>
+                Quando você finalizar uma prova, seu resultado aparecerá aqui.
+            </p>
+
+            <a href="{{ url_for('pagina_provas') }}" class="botao-iniciar">
+                Fazer uma prova
+            </a>
+
+        </section>
+
+        {% endif %}
+
+    </main>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

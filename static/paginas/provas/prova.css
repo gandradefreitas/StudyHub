@@ -1,0 +1,1550 @@
+
+@charset "UTF-8";
+
+/* =========================================================
+   VARIÁVEIS LOCAIS
+========================================================= */
+
+.pagina-prova {
+
+    --prova-radius: 14px;
+    --prova-radius-small: 10px;
+    --prova-sombra:
+        0 4px 20px rgb(0 0 0 / 0.06);
+
+    --prova-sombra-hover:
+        0 6px 22px rgb(0 0 0 / 0.10);
+
+}
+
+
+
+/* =========================================================
+   ESTRUTURA PRINCIPAL
+========================================================= */
+
+.pagina-prova {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 24px;
+
+    width: 100%;
+
+    max-width: 1450px;
+
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    padding:
+        24px
+        clamp(16px, 3vw, 32px);
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+========================================================= */
+
+.conteudo-prova {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding: clamp(20px, 3vw, 32px);
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: var(--prova-radius);
+
+    box-shadow: var(--prova-sombra);
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DA PROVA
+========================================================= */
+
+.cabecalho-prova {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--cor-borda);
+
+}
+
+
+.cabecalho-prova h1 {
+
+    margin: 0 0 7px;
+
+    color: var(--cor-texto);
+
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+}
+
+
+.cabecalho-prova p {
+
+    margin: 0;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: .9rem;
+
+    line-height: 1.5;
+
+}
+
+
+.status-prova {
+
+    flex-shrink: 0;
+
+    padding: 10px 14px;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 10px;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: .85rem;
+
+    white-space: nowrap;
+
+}
+
+
+.status-prova strong {
+
+    color: var(--cor-texto);
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   QUESTÃO
+========================================================= */
+
+.questao {
+
+    margin-bottom: 28px;
+
+}
+
+
+.questao h2 {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 34px;
+
+    margin: 0 0 18px;
+
+    padding: 6px 11px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo-secundario);
+
+    border-radius: 8px;
+
+    color: var(--cor-texto);
+
+    font-size: .9rem;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+}
+
+
+/* =========================================================
+   ENUNCIADO
+========================================================= */
+
+.enunciado {
+
+    margin: 0;
+
+    color: var(--cor-texto);
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* =========================================================
+   PERGUNTA
+========================================================= */
+
+.pergunta {
+
+    margin-top: 24px;
+
+    color: var(--cor-texto);
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* =========================================================
+   IMAGENS DA QUESTÃO
+========================================================= */
+
+.container-imagem {
+
+    display: flex;
+
+    justify-content: center;
+
+    width: 100%;
+
+    margin: 24px 0;
+
+    box-sizing: border-box;
+
+}
+
+
+.imagem-questao {
+
+    display: block;
+
+    max-width: 100%;
+
+    height: auto;
+
+    margin: 0 auto;
+
+    border-radius: 8px;
+
+}
+
+
+.imagem-alternativa {
+
+    display: block;
+
+    width: auto;
+
+    max-width: 100%;
+
+    max-height: 200px;
+
+    height: auto;
+
+    margin: 0 auto;
+
+    border-radius: 6px;
+
+}
+
+
+/* =========================================================
+   ALTERNATIVAS
+========================================================= */
+
+.alternativas {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+.alternativa {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 15px 16px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: var(--prova-radius-small);
+
+    color: var(--cor-texto);
+
+    cursor: pointer;
+
+    transition:
+        border-color .2s ease,
+        background-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+
+}
+
+
+/* =========================================================
+   HOVER DAS ALTERNATIVAS
+========================================================= */
+
+.alternativa:hover {
+
+    background: var(--cor-fundo-secundario);
+
+    border-color: var(--cor-primaria);
+
+    box-shadow: 0 3px 12px rgb(0 0 0 / .06);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   LETRA DA ALTERNATIVA
+========================================================= */
+
+.letra-alternativa {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+
+    height: 34px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 50%;
+
+    color: var(--cor-texto);
+
+    font-size: .85rem;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+}
+
+
+.conteudo-alternativa {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding-top: 5px;
+
+    color: var(--cor-texto);
+
+    line-height: 1.65;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+.navegacao-prova {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 32px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid var(--cor-borda);
+
+}
+
+
+.navegacao-prova .btn-revisao {
+
+    margin-right: auto;
+
+}
+
+
+/* =========================================================
+   BOTÕES DA PROVA
+========================================================= */
+
+.navegacao-prova button,
+.btn-finalizar {
+
+    min-height: 44px;
+
+    padding: 10px 16px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 9px;
+
+    color: var(--cor-texto);
+
+    font: inherit;
+
+    font-size: .88rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+
+}
+
+
+.navegacao-prova button:hover,
+.btn-finalizar:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+.navegacao-prova button:active,
+.btn-finalizar:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   PAINEL LATERAL
+========================================================= */
+
+.painel-lateral {
+
+    flex: 0 0 300px;
+
+    width: 300px;
+
+    max-height: calc(100vh - 48px);
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: var(--prova-radius);
+
+    box-shadow: var(--prova-sombra);
+
+    scrollbar-width: thin;
+
+}
+
+
+.painel-lateral h2 {
+
+    margin: 0;
+
+    color: var(--cor-texto);
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+}
+
+
+.painel-lateral h3 {
+
+    margin: 26px 0 12px;
+
+    color: var(--cor-texto);
+
+    font-size: .9rem;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   CRONÔMETRO
+========================================================= */
+
+.cronometro {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 76px;
+
+    margin: 14px 0 22px;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 12px;
+
+    color: var(--cor-texto);
+
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    font-size: clamp(1.5rem, 4vw, 2rem);
+
+    font-weight: 700;
+
+    letter-spacing: .04em;
+
+    line-height: 1;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   GRADE DE QUESTÕES
+========================================================= */
+
+.grade-questoes {
+
+    display: grid;
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 7px;
+
+    margin: 0 0 22px;
+
+}
+
+
+.numero-questao,
+.grade-questoes button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo-secundario);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 8px;
+
+    color: var(--cor-texto);
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-size: .82rem;
+
+    font-weight: 600;
+
+    transition:
+        transform .2s ease,
+        filter .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.numero-questao:hover,
+.grade-questoes button:hover {
+
+    transform: translateY(-1px);
+
+    filter: brightness(.97);
+
+}
+
+
+/* =========================================================
+   ESTADOS DAS QUESTÕES
+========================================================= */
+
+/* QUESTÃO RESPONDIDA */
+
+.numero-questao.questao-respondida {
+
+    background: var(--cor-sucesso);
+
+    border-color: var(--cor-sucesso);
+
+    color: var(--cor-texto-claro);
+
+}
+
+
+/* QUESTÃO MARCADA PARA REVISÃO */
+
+.numero-questao.questao-revisao {
+
+    background: var(--cor-atencao);
+
+    border-color: var(--cor-atencao);
+
+    color: #111;
+
+}
+
+
+/* QUESTÃO ATUAL
+   Deve sempre ficar azul,
+   independentemente de estar respondida
+   ou marcada para revisão.
+*/
+
+.numero-questao.questao-atual {
+
+    background: var(--cor-primaria);
+
+    border-color: var(--cor-primaria);
+
+    color: var(--cor-texto-claro);
+
+    box-shadow:
+        0 0 0 2px color-mix(
+            in srgb,
+            var(--cor-primaria) 15%,
+            transparent
+        );
+
+}
+
+/* =========================================================
+   BOTÃO FINALIZAR
+========================================================= */
+
+.btn-finalizar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 12px 16px;
+
+    box-sizing: border-box;
+
+    border: none;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-weight: 600;
+
+}
+
+/* =========================================================
+   BOTÃO PRIMÁRIO
+========================================================= */
+
+.btn-primario {
+
+    background: var(--cor-primaria);
+
+    border: 1px solid var(--cor-primaria);
+
+    color: var(--cor-texto-claro);
+
+}
+
+
+/* =========================================================
+   SELEÇÃO DE IDIOMA
+========================================================= */
+
+.selecao-lingua {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 100dvh;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-fundo);
+
+}
+
+
+/* =========================================================
+   CARD DE SELEÇÃO DE IDIOMA
+========================================================= */
+
+.card-selecao-lingua {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    padding: clamp(24px, 5vw, 40px);
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 40px rgb(0 0 0 / .08);
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DA SELEÇÃO
+========================================================= */
+
+.cabecalho-selecao-lingua {
+
+    margin-bottom: 28px;
+
+}
+
+
+.etapa-prova {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    padding: 6px 11px;
+
+    background: var(--cor-primaria);
+
+    border-radius: 999px;
+
+    color: var(--cor-texto-claro);
+
+    font-size: .72rem;
+
+    font-weight: 700;
+
+    letter-spacing: .03em;
+
+}
+
+
+.cabecalho-selecao-lingua h1 {
+
+    margin: 0 0 9px;
+
+    color: var(--cor-texto);
+
+    font-size: clamp(1.4rem, 5vw, 1.75rem);
+
+    line-height: 1.25;
+
+}
+
+
+.cabecalho-selecao-lingua p {
+
+    max-width: 400px;
+
+    margin: 0 auto;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: .9rem;
+
+    line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   OPÇÕES DE IDIOMA
+========================================================= */
+
+.opcoes-lingua {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-bottom: 24px;
+
+    text-align: left;
+
+}
+
+
+.opcao-lingua {
+
+    position: relative;
+
+    display: block;
+
+    cursor: pointer;
+
+}
+
+
+.opcao-lingua input {
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   CARD DA OPÇÃO
+========================================================= */
+
+.conteudo-opcao-lingua {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 78px;
+
+    padding: 12px 14px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 12px;
+
+    transition:
+        border-color .2s ease,
+        background-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+
+}
+
+
+.opcao-lingua:hover .conteudo-opcao-lingua {
+
+    background: var(--cor-fundo-secundario);
+
+    border-color: var(--cor-primaria);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   ÍCONE DO IDIOMA
+========================================================= */
+
+.icone-lingua {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 44px;
+
+    height: 44px;
+
+    background: var(--cor-fundo-secundario);
+
+    border-radius: 10px;
+
+    color: var(--cor-texto);
+
+    font-size: .8rem;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   TEXTO DO IDIOMA
+========================================================= */
+
+.texto-lingua {
+
+    display: flex;
+
+    flex: 1;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 3px;
+
+}
+
+
+.texto-lingua strong {
+
+    overflow: hidden;
+
+    color: var(--cor-texto);
+
+    font-size: .95rem;
+
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.texto-lingua small {
+
+    overflow: hidden;
+
+    color: var(--cor-texto-secundario);
+
+    font-size: .78rem;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   INDICADOR DE SELEÇÃO
+========================================================= */
+
+.indicador-lingua {
+
+    position: relative;
+
+    flex-shrink: 0;
+
+    width: 20px;
+
+    height: 20px;
+
+    box-sizing: border-box;
+
+    background: var(--cor-card);
+
+    border: 2px solid var(--cor-borda);
+
+    border-radius: 50%;
+
+    transition:
+        border-color .2s ease,
+        background-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+/* =========================================================
+   IDIOMA SELECIONADO
+========================================================= */
+
+.opcao-lingua input:checked + .conteudo-opcao-lingua {
+
+    background: var(--cor-fundo-secundario);
+
+    border-color: var(--cor-primaria);
+
+    box-shadow:
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--cor-primaria) 12%,
+            transparent
+        );
+
+}
+
+
+.opcao-lingua input:checked + .conteudo-opcao-lingua
+.indicador-lingua {
+
+    background: var(--cor-primaria);
+
+    border-color: var(--cor-primaria);
+
+    box-shadow:
+        inset 0 0 0 4px var(--cor-card);
+
+}
+
+
+/* =========================================================
+   FOCO ACESSÍVEL
+========================================================= */
+
+.opcao-lingua input:focus-visible
++ .conteudo-opcao-lingua {
+
+    outline: 3px solid color-mix(
+        in srgb,
+        var(--cor-primaria) 25%,
+        transparent
+    );
+
+    outline-offset: 3px;
+
+}
+
+
+/* =========================================================
+   BOTÃO CONFIRMAR IDIOMA
+========================================================= */
+
+#confirmar-lingua {
+
+    width: 100%;
+
+    min-height: 46px;
+
+}
+
+
+#confirmar-lingua:disabled {
+
+    cursor: not-allowed;
+
+    opacity: .5;
+
+}
+
+
+/* =========================================================
+   ESTADO OCULTO DA PROVA
+========================================================= */
+
+.prova-oculta {
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .pagina-prova {
+
+        gap: 16px;
+
+        padding:
+            20px;
+
+    }
+
+    .painel-lateral {
+
+        flex-basis: 260px;
+
+        width: 260px;
+
+    }
+
+}
+
+
+/* =========================================================
+   LAYOUT INTERMEDIÁRIO
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .pagina-prova {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .conteudo-prova {
+
+        width: 100%;
+
+    }
+
+    .painel-lateral {
+
+        width: 100%;
+
+        max-height: none;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .pagina-prova {
+
+        gap: 12px;
+
+        margin: 0;
+
+        padding: 12px;
+
+    }
+
+
+    .conteudo-prova,
+    .painel-lateral {
+
+        padding: 16px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .cabecalho-prova {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-bottom: 22px;
+
+        padding-bottom: 16px;
+
+    }
+
+
+    .status-prova {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        text-align: center;
+
+    }
+
+
+    .questao {
+
+        margin-bottom: 22px;
+
+    }
+
+
+    .enunciado,
+    .pergunta {
+
+        font-size: .92rem;
+
+        line-height: 1.7;
+
+    }
+
+
+    .alternativas {
+
+        gap: 9px;
+
+    }
+
+
+    .alternativa {
+
+        gap: 11px;
+
+        padding: 12px;
+
+    }
+
+
+    .letra-alternativa {
+
+        width: 31px;
+
+        height: 31px;
+
+        font-size: .8rem;
+
+    }
+
+
+    .conteudo-alternativa {
+
+        padding-top: 3px;
+
+        font-size: .9rem;
+
+        line-height: 1.6;
+
+    }
+
+
+    .imagem-alternativa {
+
+        max-height: 150px;
+
+    }
+
+
+    .navegacao-prova {
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        margin-top: 24px;
+
+        padding-top: 18px;
+
+    }
+
+
+    .navegacao-prova .btn-revisao {
+
+        width: 100%;
+
+        margin-right: 0;
+
+    }
+
+
+    .navegacao-prova .btn-secundario,
+    .navegacao-prova .btn-primario {
+
+        flex: 1;
+
+    }
+
+
+    .grade-questoes {
+
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+
+        gap: 5px;
+
+    }
+
+
+    .numero-questao,
+    .grade-questoes button {
+
+        min-height: 40px;
+
+        font-size: .78rem;
+
+    }
+
+
+    .selecao-lingua {
+
+        padding: 16px;
+
+    }
+
+
+    .card-selecao-lingua {
+
+        padding: 24px 16px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .cabecalho-selecao-lingua {
+
+        margin-bottom: 22px;
+
+    }
+
+
+    .conteudo-opcao-lingua {
+
+        min-height: 70px;
+
+        padding: 11px;
+
+    }
+
+
+    .icone-lingua {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .pagina-prova {
+
+        padding: 8px;
+
+    }
+
+
+    .conteudo-prova,
+    .painel-lateral {
+
+        padding: 13px;
+
+    }
+
+
+    .cabecalho-prova h1 {
+
+        font-size: 1.25rem;
+
+    }
+
+
+    .grade-questoes {
+
+        gap: 4px;
+
+    }
+
+
+    .numero-questao,
+    .grade-questoes button {
+
+        min-height: 37px;
+
+        font-size: .72rem;
+
+    }
+
+
+    .conteudo-opcao-lingua {
+
+        gap: 10px;
+
+        padding: 9px;
+
+    }
+
+
+    .icone-lingua {
+
+        width: 37px;
+
+        height: 37px;
+
+    }
+
+
+    .texto-lingua strong {
+
+        font-size: .88rem;
+
+    }
+
+
+    .texto-lingua small {
+
+        font-size: .7rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover: none) {
+
+    .alternativa:hover,
+    .opcao-lingua:hover .conteudo-opcao-lingua,
+    .numero-questao:hover,
+    .grade-questoes button:hover,
+    .btn-finalizar:hover,
+    .navegacao-prova button:hover {
+
+        transform: none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .alternativa,
+    .numero-questao,
+    .grade-questoes button,
+    .conteudo-opcao-lingua,
+    .indicador-lingua,
+    .btn-finalizar,
+    .navegacao-prova button {
+
+        transition: none;
+
+    }
+
+}
+

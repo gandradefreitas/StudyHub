@@ -1,58 +1,858 @@
 {% extends "base.html" %}
 
+
 {% block titulo %}
 
 Dashboard | StudyHub
 
 {% endblock %}
 
+
 {% block css %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='paginas/style_dashboard.css') }}">
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/style_dashboard.css') }}"
+>
 
 {% endblock %}
+
 
 {% block conteudo %}
 
-<section class="boas-vindas">
+<main class="dashboard-page">
 
-    <h1>Bem-vindo, {{ usuario["nome"] }}!</h1>
 
-    <p>Organize seus estudos e acompanhe seu progresso.</p>
+    <!-- =========================================
+         BOAS-VINDAS
+    ========================================== -->
 
-</section>
+    <section class="dashboard-boas-vindas">
 
-<section class="cards">
+        <div class="dashboard-boas-vindas-conteudo">
 
-    <div class="card">
+            <span class="dashboard-boas-vindas-data">
+                Seu painel de estudos
+            </span>
 
-        <h3>Tarefas Pendentes</h3>
+            <h1>
+                Olá, {{ usuario["nome"] }}! 👋
+            </h1>
 
-        <span>{{ estatisticas["pendentes"] }}</span>
+            <p>
+                Acompanhe seus estudos, tarefas e progresso.
+            </p>
 
-    </div>
+        </div>
 
-    <div class="card">
+    </section>
 
-        <h3>Concluídas</h3>
 
-        <span>{{ estatisticas["concluidas"] }}</span>
+    <!-- =========================================
+         CARDS DE RESUMO
+    ========================================== -->
 
-    </div>
+    <section class="dashboard-resumo">
 
-    <div class="card">
 
-        <h3>Horas Estudadas</h3>
+        <!-- TEMPO DE ESTUDO -->
 
-        <span>{{ horas_estudadas }}</span>
-    </div>
+        <article class="dashboard-card-resumo">
 
-</section>
+            <div class="dashboard-card-resumo-icone dashboard-icone-estudo">
+
+                <i class="bi bi-clock"></i>
+
+            </div>
+
+            <div class="dashboard-card-resumo-conteudo">
+
+                <span class="dashboard-card-resumo-label">
+                    Tempo de estudo
+                </span>
+
+                <strong class="dashboard-card-resumo-valor">
+                    {{ horas_estudadas }}
+                </strong>
+
+                <span class="dashboard-card-resumo-info">
+                    Tempo acumulado
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- TAREFAS PENDENTES -->
+
+        <article class="dashboard-card-resumo">
+
+            <div class="dashboard-card-resumo-icone dashboard-icone-tarefas">
+
+                <i class="bi bi-list-check"></i>
+
+            </div>
+
+            <div class="dashboard-card-resumo-conteudo">
+
+                <span class="dashboard-card-resumo-label">
+                    Tarefas pendentes
+                </span>
+
+                <strong class="dashboard-card-resumo-valor">
+                    {{ estatisticas["pendentes"] }}
+                </strong>
+
+                <span class="dashboard-card-resumo-info">
+                    Para concluir
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- TAREFAS CONCLUÍDAS -->
+
+        <article class="dashboard-card-resumo">
+
+            <div class="dashboard-card-resumo-icone dashboard-icone-concluidas">
+
+                <i class="bi bi-check-circle"></i>
+
+            </div>
+
+            <div class="dashboard-card-resumo-conteudo">
+
+                <span class="dashboard-card-resumo-label">
+                    Tarefas concluídas
+                </span>
+
+                <strong class="dashboard-card-resumo-valor">
+                    {{ estatisticas["concluidas"] }}
+                </strong>
+
+                <span class="dashboard-card-resumo-info">
+                    Atividades realizadas
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- DESEMPENHO -->
+
+        <article class="dashboard-card-resumo">
+
+            <a
+                href="{{ url_for('pagina_estatisticas') }}"
+                class="dashboard-card-resumo-link"
+            >
+
+                <div class="dashboard-card-resumo-icone dashboard-icone-desempenho">
+
+                    <i class="bi bi-graph-up"></i>
+
+                </div>
+
+
+                <div class="dashboard-card-resumo-conteudo">
+
+                    <span class="dashboard-card-resumo-label">
+                        Desempenho
+                    </span>
+
+
+                    <strong class="dashboard-card-resumo-valor">
+
+                        {% if resumo["acertos"] + resumo["erros"] > 0 %}
+
+                            {{ desempenho }}%
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </strong>
+
+
+                    <span class="dashboard-card-resumo-info">
+
+                        {% if resumo["acertos"] + resumo["erros"] > 0 %}
+
+                            Taxa de acerto
+
+                        {% else %}
+
+                            Nenhuma questão respondida
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </a>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- =========================================
+         CONTEÚDO PRINCIPAL
+    ========================================== -->
+
+    <section class="dashboard-conteudo-principal">
+
+
+        <!-- PROGRESSO -->
+
+        <article class="dashboard-painel dashboard-painel-progresso">
+
+            <div class="dashboard-painel-cabecalho">
+
+                <div>
+
+                    <span class="dashboard-painel-legenda">
+                        DESEMPENHO
+                    </span>
+
+                    <h2>
+                        Seu progresso
+                    </h2>
+
+                </div>
+
+                <a
+                    href="{{ url_for('pagina_estatisticas') }}"
+                    class="dashboard-link-painel"
+                >
+                    Ver estatísticas
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="dashboard-grafico-progresso">
+
+                <canvas id="graficoProgresso"></canvas>
+
+            </div>
+
+        </article>
+
+
+        <!-- PRÓXIMAS ATIVIDADES -->
+
+        <article class="dashboard-painel dashboard-painel-atividades">
+
+            <div class="dashboard-painel-cabecalho">
+
+                <div>
+
+                    <span class="dashboard-painel-legenda">
+                        Organização
+                    </span>
+
+                    <h2>
+                        Próximas atividades
+                    </h2>
+
+                </div>
+
+                <a
+                    href="{{ url_for('pagina_tarefas') }}"
+                    class="dashboard-link-painel"
+                >
+                    Ver tarefas
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            {% if tarefas %}
+
+                <div class="dashboard-lista-atividades">
+
+                    {% for tarefa in tarefas %}
+
+                        <a
+                            href="{{ url_for('pagina_tarefas') }}"
+                            class="dashboard-atividade"
+                        >
+
+                            <div class="dashboard-atividade-icone">
+
+                                <i class="bi bi-check2-square"></i>
+
+                            </div>
+
+
+                            <div class="dashboard-atividade-informacoes">
+
+                                <h3>
+                                    {{ tarefa[1] }}
+                                </h3>
+
+                                <span>
+                                    Tarefa pendente
+                                </span>
+
+                            </div>
+
+
+                            <i class="bi bi-arrow-right dashboard-atividade-seta"></i>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="dashboard-atividades-vazio">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    <p>
+                        Nenhuma atividade próxima.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </article>
+
+
+    </section>
+
+
+    <!-- =========================================
+         METAS + PRÓXIMA PROVA
+    ========================================== -->
+
+    <section class="dashboard-conteudo-secundario">
+
+
+        <!-- METAS -->
+
+        <article class="dashboard-painel dashboard-painel-metas">
+
+            <div class="dashboard-painel-cabecalho">
+
+                <div>
+
+                    <span class="dashboard-painel-legenda">
+                        Objetivos
+                    </span>
+
+                    <h2>
+                        Metas de hoje
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-meta">
+
+                <div class="dashboard-meta-cabecalho">
+
+                    <span>
+                        Tempo de estudo
+                    </span>
+
+                    <strong>
+                        {{ metas.estudo_atual_formatado }}
+                        /
+                        {{ metas.estudo_meta_formatado }}
+                    </strong>
+
+                </div>
+
+
+                <div class="dashboard-barra-progresso">
+
+                    <div
+                        class="dashboard-barra-progresso-preenchimento {% if metas.estudo_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
+                        style="width: {{ metas.estudo_porcentagem }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-meta">
+
+                <div class="dashboard-meta-cabecalho">
+
+                    <span>
+                        Questões
+                    </span>
+
+                    <strong>
+                        {{ metas.questoes_atual }}
+                        /
+                        {{ metas.questoes_meta }}
+                    </strong>
+
+                </div>
+
+
+                <div class="dashboard-barra-progresso">
+
+                    <div
+                        class="dashboard-barra-progresso-preenchimento {% if metas.questoes_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
+                        style="width: {{ metas.questoes_porcentagem }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- PRÓXIMA PROVA -->
+
+        <article class="dashboard-painel dashboard-painel-prova">
+
+            <div class="dashboard-painel-cabecalho">
+
+                <div>
+
+                    <span class="dashboard-painel-legenda">
+                        Preparação
+                    </span>
+
+                    <h2>
+                        Próxima prova
+                    </h2>
+
+                </div>
+
+                <i class="bi bi-file-earmark-text dashboard-icone-painel"></i>
+
+            </div>
+
+
+            {% if proxima_prova %}
+
+            <div class="dashboard-prova-conteudo">
+
+                <span class="dashboard-prova-label">
+                    {{ proxima_prova["nome"] }}
+                </span>
+
+                <h3>
+                    {{ proxima_prova["dia"] }}
+                </h3>
+
+                <p>
+                    Tempo disponível:
+                    {{ proxima_prova["tempo"] }}
+                </p>
+
+                <a
+                    href="{{ url_for(
+                        'pagina_provas',
+                        id_prova=proxima_prova['id']
+                    ) }}"
+                    class="dashboard-botao-painel"
+                >
+                    Fazer prova
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="dashboard-prova-conteudo">
+
+                <span class="dashboard-prova-label">
+                    Tudo em dia
+                </span>
+
+                <h3>
+                    Todas as provas concluídas
+                </h3>
+
+                <p>
+                    Você já realizou todas as provas disponíveis.
+                </p>
+
+                <a
+                    href="{{ url_for('pagina_provas') }}"
+                    class="dashboard-botao-painel"
+                >
+                    Ver provas
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+
+    </section>
+
+
+    <!-- =========================================
+         PROGRESSO GERAL
+    ========================================== -->
+
+    <section class="dashboard-painel dashboard-painel-progresso-geral">
+
+        <div class="dashboard-painel-cabecalho">
+
+            <div>
+
+                <span class="dashboard-painel-legenda">
+                    Visão geral
+                </span>
+
+                <h2>
+                    Seu progresso no StudyHub
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-progresso-geral-grid">
+
+
+            <div class="dashboard-indicador-progresso">
+
+                <span>
+                    Questões resolvidas
+                </span>
+
+                <strong>
+                    {{ resumo["acertos"] + resumo["erros"] }}
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-indicador-progresso">
+
+                <span>
+                    Provas realizadas
+                </span>
+
+                <strong>
+                    {{ resumo["provas"] }}
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-indicador-progresso">
+
+                <span>
+                    Taxa de acerto
+                </span>
+
+                <strong>
+                    {{ desempenho }}%
+                </strong>
+
+            </div>
+
+
+            <div class="dashboard-indicador-progresso">
+
+                <span>
+                    Tempo estudado
+                </span>
+
+                <strong>
+                    {{ horas_estudadas }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
 
 {% endblock %}
 
+
 {% block scripts %}
 
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const canvas = document.getElementById(
+        "graficoProgresso"
+    );
+
+    if (!canvas) {
+        return;
+    }
+
+
+    carregarGraficoProgresso();
+
+
+    async function carregarGraficoProgresso() {
+
+        try {
+
+            const resposta = await fetch(
+                "{{ url_for('estatisticas_evolucao') }}?dias=7"
+            );
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Erro ao carregar evolução."
+                );
+
+            }
+
+
+            const dados = await resposta.json();
+
+
+            criarGrafico(dados);
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar gráfico:",
+                erro
+            );
+
+        }
+
+    }
+
+
+    function criarGrafico(dados) {
+
+        const labels = dados.map(
+            item => formatarData(item.data)
+        );
+
+
+        const valores = dados.map(
+            item => item.duracao / 60
+        );
+
+
+        new Chart(canvas, {
+
+            type: "bar",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    {
+
+                        label: "Horas estudadas",
+
+                        data: valores,
+
+                        backgroundColor: "#1F45ED",
+
+                        hoverBackgroundColor: "#1E96FC",
+
+                        borderRadius: 7,
+
+                        borderSkipped: false
+
+                    }
+
+                ]
+
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    },
+
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                const segundos =
+                                    dados[
+                                        context.dataIndex
+                                    ].duracao;
+
+
+                                return formatarDuracao(
+                                    segundos
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+
+                            display: false
+
+                        }
+
+                    },
+
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            stepSize: 15,
+
+                            callback: function(valor) {
+
+                                return valor + " min";
+
+                            }
+
+                        },
+
+                        grid: {
+
+                            color:
+                                "rgba(0, 0, 0, 0.06)"
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+    function formatarData(data) {
+
+        const partes = data.split("-");
+
+        const dia = partes[2];
+
+        const mes = partes[1];
+
+
+        const meses = [
+
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Set",
+            "Out",
+            "Nov",
+            "Dez"
+
+        ];
+
+
+        return `${dia} ${meses[
+            Number(mes) - 1
+        ]}`;
+
+    }
+
+
+    function formatarDuracao(segundos) {
+
+        const horas = Math.floor(
+            segundos / 3600
+        );
+
+
+        const minutos = Math.floor(
+            (segundos % 3600) / 60
+        );
+
+
+        if (horas > 0) {
+
+            return `${horas}h ${minutos}min`;
+
+        }
+
+
+        return `${minutos}min`;
+
+    }
+
+});
+
+</script>
 
 {% endblock %}

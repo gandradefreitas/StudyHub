@@ -52,6 +52,7 @@ def listar_tarefas(usuario_id):
 def atualizar_tarefa(id_tarefa, nova_tarefa, usuario_id):
 
     conexao = conectar()
+
     cursor = conexao.cursor()
 
     cursor.execute(
@@ -60,28 +61,106 @@ def atualizar_tarefa(id_tarefa, nova_tarefa, usuario_id):
         SET descricao = ?
         WHERE id = ? AND usuario_id = ?
         """,
-        (nova_tarefa, id_tarefa, usuario_id)
+        (
+            nova_tarefa,
+            id_tarefa,
+            usuario_id
+        )
     )
 
     conexao.commit()
+
     conexao.close()
 
-def atualizar_status(id_tarefa, concluida, usuario_id):
+def atualizar_status(
+    id_tarefa,
+    concluida,
+    usuario_id
+):
 
     conexao = conectar()
+
     cursor = conexao.cursor()
+
+
+    if concluida == 1:
+
+        cursor.execute(
+            """
+            UPDATE tarefas
+            SET
+                concluida = ?,
+                data_conclusao = DATE('now', 'localtime')
+            WHERE id = ?
+            AND usuario_id = ?
+            """,
+            (
+                concluida,
+                id_tarefa,
+                usuario_id
+            )
+        )
+
+
+    else:
+
+        cursor.execute(
+            """
+            UPDATE tarefas
+            SET
+                concluida = ?,
+                data_conclusao = NULL
+            WHERE id = ?
+            AND usuario_id = ?
+            """,
+            (
+                concluida,
+                id_tarefa,
+                usuario_id
+            )
+        )
+
+
+    conexao.commit()
+
+    conexao.close()
+
+def obter_tarefas_por_data(
+    usuario_id,
+    data
+):
+
+    conexao = conectar()
+
+    cursor = conexao.cursor()
+
 
     cursor.execute(
         """
-        UPDATE tarefas
-        SET concluida = ?
-        WHERE id = ? AND usuario_id = ?
+        SELECT
+            id,
+            descricao,
+            data_conclusao
+        FROM tarefas
+        WHERE usuario_id = ?
+        AND concluida = 1
+        AND data_conclusao = ?
+        ORDER BY id
         """,
-        (concluida, id_tarefa, usuario_id)
+        (
+            usuario_id,
+            data
+        )
     )
 
-    conexao.commit()
+
+    tarefas = cursor.fetchall()
+
+
     conexao.close()
+
+
+    return tarefas
 
 def remover_tarefa(id_tarefa, usuario_id):
 
@@ -185,7 +264,7 @@ def contar_tarefas_usuario(usuario_id):
         "sequencia": 0
     }
 
-def obter_proximas_tarefas(usuario_id, limite=5):
+def obter_proximas_tarefas(usuario_id, limite=3):
 
     conexao = conectar()
 
@@ -193,7 +272,12 @@ def obter_proximas_tarefas(usuario_id, limite=5):
 
     cursor.execute(
         """
-        SELECT *
+        SELECT
+            id,
+            descricao,
+            concluida,
+            usuario_id,
+            data_conclusao
         FROM tarefas
         WHERE usuario_id = ?
         AND concluida = 0
@@ -202,6 +286,33 @@ def obter_proximas_tarefas(usuario_id, limite=5):
         """,
         (usuario_id, limite)
     )
+
+    tarefas = cursor.fetchall()
+
+    conexao.close()
+
+    return tarefas
+
+def obter_tarefas_por_mes(usuario_id, ano, mes):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT
+            data_conclusao AS data
+        FROM tarefas
+        WHERE usuario_id = ?
+        AND concluida = 1
+        AND strftime('%Y', data_conclusao) = ?
+        AND strftime('%m', data_conclusao) = ?
+        GROUP BY data_conclusao
+        ORDER BY data_conclusao
+    """, (
+        usuario_id,
+        str(ano),
+        f"{mes:02d}"
+    ))
 
     tarefas = cursor.fetchall()
 

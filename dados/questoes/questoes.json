@@ -1,0 +1,40 @@
+[
+    {
+        "numero": 1,
+        "area": "Linguagens",
+        "lingua": "ingles",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "...",
+        "imagem": "imagens/questoes/questao_01.png",
+        "alternativas": [
+            "...",
+            "...",
+            "...",
+            "...",
+            "..."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 2,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H6",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "Esta é uma questão de teste para verificar a navegação entre questões.",
+        "imagem": null,
+        "alternativas": [
+            "Alternativa A da questão 2.",
+            "Alternativa B da questão 2.",
+            "Alternativa C da questão 2.",
+            "Alternativa D da questão 2.",
+            "Alternativa E da questão 2."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    }
+]

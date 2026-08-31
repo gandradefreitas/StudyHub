@@ -1,0 +1,1332 @@
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.cabecalho-calendario {
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:1.5rem;
+
+    margin-bottom:1.875rem;
+
+}
+
+
+.cabecalho-calendario-info {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.375rem;
+
+    min-width:0;
+
+}
+
+
+.subtitulo-calendario {
+
+    font-size:.75rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:var(--cor-primaria);
+
+}
+
+
+.cabecalho-calendario h1 {
+
+    margin:0;
+
+    font-size:1.8rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.cabecalho-calendario p {
+
+    margin:0;
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.conteudo-calendario {
+
+    display:grid;
+
+    grid-template-columns:minmax(0,1fr);
+
+    gap:1.5rem;
+
+}
+
+
+/* =========================================================
+   CALENDÁRIO
+========================================================= */
+
+.calendario-container {
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:1.5rem;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    overflow:hidden;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DO MÊS
+========================================================= */
+
+.cabecalho-calendario-mes {
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:1rem;
+
+    margin-bottom:1.5rem;
+
+}
+
+
+.cabecalho-calendario-mes h2 {
+
+    margin:0;
+
+    font-size:1.25rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+.botao-navegacao-calendario {
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    width:38px;
+    height:38px;
+
+    padding:0;
+
+    border:1px solid transparent;
+
+    border-radius:8px;
+
+    background:transparent;
+
+    color:var(--cor-texto);
+
+    cursor:pointer;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+
+}
+
+
+.botao-navegacao-calendario:hover {
+
+    background:var(--cor-fundo-secundario);
+
+    border-color:var(--cor-borda);
+
+    color:var(--cor-primaria);
+
+}
+
+
+.botao-navegacao-calendario:focus-visible {
+
+    outline:none;
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--cor-primaria) 12%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   DIAS DA SEMANA
+========================================================= */
+
+.calendario-dias-semana {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,minmax(0,1fr));
+
+    margin-bottom:.5rem;
+
+}
+
+
+.calendario-dias-semana span {
+
+    padding:.5rem 0;
+
+    text-align:center;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   GRADE DO CALENDÁRIO
+========================================================= */
+
+.calendario-dias {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,minmax(0,1fr));
+
+    gap:.375rem;
+
+}
+
+
+/* =========================================================
+   DIA
+========================================================= */
+
+.dia {
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:.2rem;
+
+    min-width:0;
+
+    min-height:52px;
+
+    padding:.25rem;
+
+    box-sizing:border-box;
+
+    border:1px solid transparent;
+
+    border-radius:8px;
+
+    background:transparent;
+
+    color:var(--cor-texto);
+
+    font-family:inherit;
+
+    font-size:.95rem;
+
+    cursor:pointer;
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+
+}
+
+
+.dia:hover {
+
+    background:var(--cor-fundo-secundario);
+
+}
+
+
+.dia-hoje {
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-weight:700;
+
+}
+
+
+.dia-hoje:hover {
+
+    background:var(--cor-primaria);
+
+}
+
+
+.dia-outro-mes {
+
+    cursor:default;
+
+    color:var(--cor-texto-secundario);
+
+    opacity:.5;
+
+}
+
+
+/* =========================================================
+   DIA SELECIONADO
+========================================================= */
+
+.dia-selecionado {
+
+    outline:2px solid var(--cor-primaria);
+
+    outline-offset:-2px;
+
+}
+
+
+.dia-hoje.dia-selecionado {
+
+    outline:2px solid var(--cor-texto-claro);
+
+}
+
+
+/* =========================================================
+   NÚMERO DO DIA
+========================================================= */
+
+.numero-dia {
+
+    line-height:1;
+
+}
+
+
+/* =========================================================
+   INDICADORES
+========================================================= */
+
+.indicadores-dia {
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:3px;
+
+    min-height:5px;
+
+}
+
+
+.indicador {
+
+    display:block;
+
+    width:5px;
+    height:5px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+}
+
+
+.indicador-estudo {
+
+    background:#4f8cff;
+
+}
+
+
+.indicador-tarefa {
+
+    background:#8b5cf6;
+
+}
+
+
+.indicador-prova {
+
+    background:#22c55e;
+
+}
+
+
+.indicador-anotacao {
+
+    background:#f59e0b;
+
+}
+
+
+/* =========================================================
+   DETALHES DO DIA
+========================================================= */
+
+.detalhes-dia {
+
+    min-height:200px;
+
+    box-sizing:border-box;
+
+    padding:1.5rem;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+}
+
+
+.detalhes-dia-vazio {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    height:100%;
+
+    min-height:180px;
+
+    text-align:center;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.detalhes-dia-vazio i {
+
+    margin-bottom:.75rem;
+
+    font-size:2rem;
+
+}
+
+
+.detalhes-dia-vazio h2 {
+
+    margin:0 0 .5rem;
+
+    font-size:1.1rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.detalhes-dia-vazio p {
+
+    max-width:300px;
+
+    margin:0;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO DOS DETALHES
+========================================================= */
+
+.detalhes-dia-conteudo h2 {
+
+    margin:.375rem 0 1.5rem;
+
+    font-size:1.4rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+/* =========================================================
+   RESUMO DO DIA
+========================================================= */
+
+.resumo-dia {
+
+    margin-bottom:1.25rem;
+
+    padding:.875rem 1rem;
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+}
+
+
+.resumo-dia-titulo {
+
+    display:block;
+
+    margin-bottom:.625rem;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.resumo-lista {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:.5rem;
+
+}
+
+
+.resumo-item {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.375rem;
+
+    padding:.375rem .625rem;
+
+    border-radius:8px;
+
+    font-size:.82rem;
+
+    font-weight:500;
+
+}
+
+
+.resumo-prova {
+
+    background:rgba(34,197,94,.12);
+
+    color:#16a34a;
+
+}
+
+
+.resumo-tarefa {
+
+    background:rgba(59,130,246,.12);
+
+    color:#2563eb;
+
+}
+
+
+.resumo-estudo {
+
+    background:rgba(139,92,246,.12);
+
+    color:#7c3aed;
+
+}
+
+
+.resumo-anotacao {
+
+    background:rgba(245,158,11,.12);
+
+    color:#d97706;
+
+}
+
+
+.resumo-vazio {
+
+    margin:0;
+
+    font-size:.85rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   ATIVIDADES
+========================================================= */
+
+.atividades-dia {
+
+    padding-top:1.25rem;
+
+    border-top:1px solid var(--cor-borda);
+
+}
+
+
+.atividade-secao {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.625rem;
+
+    margin-bottom:1.25rem;
+
+}
+
+
+.titulo-atividade {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.5rem;
+
+    margin-bottom:.25rem;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto);
+
+}
+
+
+.titulo-atividade i {
+
+    font-size:1rem;
+
+    color:var(--cor-primaria);
+
+}
+
+
+.lista-atividade {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.625rem;
+
+}
+
+
+.item-atividade {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.625rem;
+
+    padding:.625rem .75rem;
+
+    background:var(--cor-fundo-secundario);
+
+    border-radius:8px;
+
+    font-size:.9rem;
+
+}
+
+
+.item-atividade span {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.5rem;
+
+    min-width:0;
+
+}
+
+
+.item-atividade i {
+
+    flex-shrink:0;
+
+    font-size:1rem;
+
+}
+
+
+/* =========================================================
+   PROVAS
+========================================================= */
+
+.prova-calendario {
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    gap:1rem;
+
+    padding:.75rem;
+
+    background:var(--cor-fundo-secundario);
+
+    border-radius:8px;
+
+}
+
+
+.prova-calendario-info {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.1875rem;
+
+    min-width:0;
+
+}
+
+
+.prova-calendario-info strong {
+
+    overflow:hidden;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto);
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+.prova-calendario-info span {
+
+    font-size:.8rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.prova-calendario-porcentagem {
+
+    flex-shrink:0;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    color:var(--cor-texto);
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================================================
+   CAMPO DE ANOTAÇÃO
+========================================================= */
+
+.campo-anotacao {
+
+    width:100%;
+
+    min-height:130px;
+
+    box-sizing:border-box;
+
+    padding:.875rem 1rem;
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:10px;
+
+    background:var(--cor-fundo);
+
+    color:var(--cor-texto);
+
+    font-family:inherit;
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    resize:vertical;
+
+    outline:none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+
+.campo-anotacao::placeholder {
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.campo-anotacao:focus {
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--cor-primaria) 12%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   BOTÃO DE ANOTAÇÃO
+========================================================= */
+
+.botao-salvar-anotacao {
+
+    align-self:flex-start;
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:.5rem;
+
+    padding:.5625rem .9375rem;
+
+    border:1px solid var(--cor-primaria);
+
+    border-radius:8px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-family:inherit;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s ease,
+        opacity .15s ease,
+        box-shadow .15s ease;
+
+}
+
+
+.botao-salvar-anotacao:hover {
+
+    opacity:.9;
+
+    box-shadow:
+        0 4px 12px
+        color-mix(
+            in srgb,
+            var(--cor-primaria) 20%,
+            transparent
+        );
+
+}
+
+
+.botao-salvar-anotacao:active {
+
+    transform:translateY(1px);
+
+}
+
+
+.botao-salvar-anotacao i {
+
+    font-size:.95rem;
+
+}
+
+
+/* =========================================================
+   MENSAGEM DA ANOTAÇÃO
+========================================================= */
+
+.mensagem-anotacao {
+
+    display:none;
+
+    align-items:center;
+
+    gap:.5rem;
+
+    padding:.5625rem .75rem;
+
+    border:1px solid
+        color-mix(
+            in srgb,
+            var(--cor-sucesso) 30%,
+            var(--cor-borda)
+        );
+
+    border-radius:8px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--cor-sucesso) 12%,
+            var(--cor-card)
+        );
+
+    color:var(--cor-sucesso);
+
+    font-size:.85rem;
+
+    font-weight:500;
+
+}
+
+
+.mensagem-anotacao-visivel {
+
+    display:flex;
+
+}
+
+
+.mensagem-anotacao::before {
+
+    content:"✓";
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    width:18px;
+    height:18px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    color:white;
+
+    font-size:.7rem;
+
+    font-weight:700;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .cabecalho-calendario h1 {
+
+        font-size:2rem;
+
+    }
+
+
+    .conteudo-calendario {
+
+        grid-template-columns:
+            minmax(0,1.5fr)
+            minmax(280px,1fr);
+
+    }
+
+
+    .detalhes-dia {
+
+        min-height:100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1100px) {
+
+    .conteudo-calendario {
+
+        grid-template-columns:
+            minmax(0,1.7fr)
+            minmax(320px,1fr);
+
+        gap:1.5rem;
+
+    }
+
+
+    .calendario-container,
+    .detalhes-dia {
+
+        padding:1.75rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:767px) {
+
+    .cabecalho-calendario {
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:.75rem;
+
+        margin-bottom:1.25rem;
+
+    }
+
+
+    .cabecalho-calendario h1 {
+
+        font-size:1.5rem;
+
+    }
+
+
+    .cabecalho-calendario p {
+
+        font-size:.85rem;
+
+    }
+
+
+    .calendario-container {
+
+        padding:1rem;
+
+        border-radius:12px;
+
+    }
+
+
+    .cabecalho-calendario-mes {
+
+        margin-bottom:1rem;
+
+    }
+
+
+    .cabecalho-calendario-mes h2 {
+
+        font-size:1.1rem;
+
+    }
+
+
+    .botao-navegacao-calendario {
+
+        width:36px;
+        height:36px;
+
+    }
+
+
+    .calendario-dias-semana span {
+
+        font-size:.7rem;
+
+    }
+
+
+    .calendario-dias {
+
+        gap:.2rem;
+
+    }
+
+
+    .dia {
+
+        min-height:44px;
+
+        border-radius:7px;
+
+        font-size:.82rem;
+
+    }
+
+
+    .indicador {
+
+        width:4px;
+        height:4px;
+
+    }
+
+
+    .detalhes-dia {
+
+        padding:1rem;
+
+        border-radius:12px;
+
+    }
+
+
+    .detalhes-dia-conteudo h2 {
+
+        font-size:1.2rem;
+
+        margin-bottom:1.25rem;
+
+    }
+
+
+    .resumo-lista {
+
+        gap:.4rem;
+
+    }
+
+
+    .resumo-item {
+
+        font-size:.75rem;
+
+        padding:.35rem .5rem;
+
+    }
+
+
+    .prova-calendario {
+
+        align-items:flex-start;
+
+    }
+
+
+    .prova-calendario-porcentagem {
+
+        font-size:.8rem;
+
+    }
+
+
+    .campo-anotacao {
+
+        min-height:120px;
+
+    }
+
+
+    .botao-salvar-anotacao {
+
+        width:100%;
+
+    }
+
+}
+
+.calendario-detalhes-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    height: 100%;
+    padding: 40px 20px;
+}
+
+.calendario-detalhes-vazio i {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.calendario-detalhes-vazio h2 {
+    margin: 0 0 10px;
+}
+
+.calendario-detalhes-vazio p {
+    margin: 0;
+    max-width: 400px;
+}
+
+.header-dashboard {
+
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+}
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .calendario-container {
+
+        padding:.75rem;
+
+    }
+
+
+    .cabecalho-calendario-mes h2 {
+
+        font-size:1rem;
+
+    }
+
+
+    .botao-navegacao-calendario {
+
+        width:34px;
+        height:34px;
+
+    }
+
+
+    .calendario-dias {
+
+        gap:.15rem;
+
+    }
+
+
+    .dia {
+
+        min-height:40px;
+
+        font-size:.75rem;
+
+    }
+
+
+    .calendario-dias-semana span {
+
+        font-size:.65rem;
+
+    }
+
+
+    .indicadores-dia {
+
+        gap:2px;
+
+    }
+
+
+    .indicador {
+
+        width:3px;
+        height:3px;
+
+    }
+
+}

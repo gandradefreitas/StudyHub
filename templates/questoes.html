@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='global.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='paginas/questoes.css') }}"
+    >
+
+    <title>Questões</title>
+
+</head>
+
+
+<body
+    class="sidebar-toggle"
+    data-tema="{{ usuario['tema'] }}"
+>
+
+
+    {% include "componentes/sidebar.html" %}
+
+
+    <main class="questoes">
+
+        {% include "componentes/header_dashboard.html" %}
+
+
+        <section class="questoes-card" data-questao="{{ questao.numero }}" data-resposta="{{ questao.resposta }}" data-comentario="{{ questao.comentario }}" data-bloqueada="{{ questao_bloqueada | lower }}"
+            data-proxima-tentativa="{{ proxima_tentativa or '' }}" data-resposta-usuario="{{ ultima_resposta['resposta'] if ultima_resposta else '' }}"
+            data-resposta-correta="{{ questao.resposta }}">
+
+
+            <!-- =====================================================
+                 CABEÇALHO DA PÁGINA
+            ====================================================== -->
+
+            <div class="questoes-cabecalho">
+
+                <span class="questoes-legenda">
+                    QUESTÕES
+                </span>
+
+                <h1>
+                    Pratique seus conhecimentos
+                </h1>
+
+                <p>
+                    Resolva questões e acompanhe seu desempenho.
+                </p>
+
+            </div>
+
+
+            <!-- =====================================================
+                 QUESTÃO
+            ====================================================== -->
+
+            <div class="questoes-conteudo">
+
+
+                <!-- TOPO -->
+
+                <div class="questoes-topo">
+
+                    <div class="questoes-identificacao">
+
+                        <span class="questoes-numero">
+                            Questão {{ questao.numero }}
+                        </span>
+
+                        <span class="questoes-area">
+                            {{ questao.area }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="questoes-estudo">
+
+                        {% if estudo_ativo %}
+
+                            <span
+                                class="questoes-cronometro"
+                                id="cronometro-questoes"
+                                data-inicio="{{ estudo_ativo['inicio'] }}"
+                            >
+                                00:00:00
+                            </span>
+
+                            <button
+                                type="button"
+                                id="botao-finalizar-estudo"
+                                class="questoes-botao-estudo"
+                            >
+                                Finalizar estudo
+                            </button>
+
+                        {% else %}
+
+                            <span
+                                class="questoes-cronometro"
+                                id="cronometro-questoes"
+                            >
+                                00:00:00
+                            </span>
+
+                            <button
+                                type="button"
+                                id="botao-iniciar-estudo"
+                                class="questoes-botao-estudo"
+                            >
+                                Iniciar estudo
+                            </button>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- CLASSIFICAÇÃO -->
+
+                <div class="questoes-classificacao">
+
+
+                    <span class="questoes-tag">
+                        {{ questao.lingua }}
+                    </span>
+
+
+                    <span class="questoes-tag">
+                        Habilidade {{ questao.habilidade }}
+                    </span>
+
+
+                    <span class="questoes-tag">
+                        Competência {{ questao.competencia }}
+                    </span>
+
+
+                    <span class="questoes-tag questoes-tag-dificuldade">
+                        {{ questao.dificuldade }}
+                    </span>
+
+
+                </div>
+
+
+                <!-- ENUNCIADO -->
+
+                <div class="questoes-enunciado">
+
+                    {% if questao.imagem %}
+
+                        <div class="questoes-imagem">
+
+                            <img
+                                src="{{ url_for('static', filename=questao.imagem) }}"
+                                alt="Imagem da questão {{ questao.numero }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <p>{{ questao.enunciado }}</p>
+
+                </div>
+
+
+                <!-- ALTERNATIVAS -->
+
+                <div class="questoes-alternativas">
+
+                    {% for alternativa in questao.alternativas %}
+
+                        <label class="questoes-alternativa">
+
+                            <input
+                                type="radio"
+                                name="questao"
+                                value="{{ 'ABCDE'[loop.index0] }}"
+                                {% if questao_bloqueada %}
+                                    disabled
+                                {% endif %}
+                            >
+
+                            <span class="questoes-letra">
+                                {{ "ABCDE"[loop.index0] }}
+                            </span>
+
+                            <span class="questoes-texto">
+                                {{ alternativa }}
+                            </span>
+
+                        </label>
+
+                    {% endfor %}
+
+                </div>
+
+                <div
+                    id="resultado-questao"
+                    class="questoes-resultado"
+                    hidden
+                >
+                </div>
+
+                <div
+                    id="bloqueio-questao"
+                    class="questoes-resultado"
+                    hidden
+                >
+                </div>
+
+
+
+                <!-- NAVEGAÇÃO -->
+
+                <div class="questoes-navegacao">
+
+
+                    {% if tem_anterior %}
+
+                        <a
+                            href="{{ url_for('questoes', numero=questao.numero - 1) }}"
+                            class="questoes-botao questoes-botao-anterior"
+                        >
+                            Anterior
+                        </a>
+
+                    {% endif %}
+
+                    <button
+                        type="button"
+                        class="questoes-botao questoes-botao-responder"
+                        id="botao-responder"
+                        {% if questao_bloqueada %}
+                            disabled
+                        {% endif %}
+                    >
+                        {% if questao_bloqueada %}
+                            Questão bloqueada
+                        {% else %}
+                            Responder
+                        {% endif %}
+                    </button>
+
+
+                    {% if tem_proxima %}
+
+                        <a
+                            href="{{ url_for('questoes', numero=questao.numero + 1) }}"
+                            class="questoes-botao questoes-botao-proxima"
+                        >
+                            Próxima
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/questoes.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/cronometro.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+
+</body>
+
+</html>

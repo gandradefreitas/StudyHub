@@ -5,24 +5,25 @@
     <div class="header-esquerda">
         <button id="btn-menu" class="btn-menu">☰</button>
 
-        {% if mostrar_pesquisa %}
-
-        <input type="text" placeholder="Pesquisar..." disabled>
-
-        {% endif %}
     </div>
 
     {% if mostrar_perfil %}
 
     <div class="perfil">
 
-        <span>{{ usuario["nome"] }}</span>
+        <a href="{{ url_for('pagina_configuracoes') }}" class="perfil">
 
-        <div class="avatar">
+            <span class="perfil-nome">
+                {{ usuario["nome"] }}
+            </span>
 
-            {{ usuario["nome"][0] }}
+            <div class="avatar">
 
-        </div>
+                {{ usuario["nome"][0] }}
+
+            </div>
+
+        </a>
 
     </div>
 

@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "nome": "ENEM 2025",
+        "dia": "Primeiro Dia",
+        "tempo": "05:30:00",
+        "arquivo": "enem/2025_dia1.json"
+    },
+    {
+        "id": 2,
+        "nome": "ENEM 2025",
+        "dia": "Segundo Dia",
+        "tempo": "05:00:00",
+        "arquivo": "enem/2025_dia2.json"
+    }
+]

@@ -1,0 +1,1214 @@
+@charset "UTF-8";
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.cabecalho-estatisticas {
+
+    padding:1.5rem 0 2rem;
+
+}
+
+
+.cabecalho-estatisticas-info {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.375rem;
+
+    min-width:0;
+
+}
+
+
+.subtitulo-estatisticas {
+
+    font-size:.75rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:var(--cor-primaria);
+
+}
+
+
+.cabecalho-estatisticas h1 {
+
+    margin:0;
+
+    font-size:1.7rem;
+
+    line-height:1.25;
+
+    color:var(--cor-texto);
+
+}
+
+
+.cabecalho-estatisticas p {
+
+    max-width:650px;
+
+    margin:0;
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   CONTEÚDO PRINCIPAL
+========================================================= */
+
+.conteudo-estatisticas {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.25rem;
+
+}
+
+
+/* =========================================================
+   RESUMO
+========================================================= */
+
+.resumo-estatisticas {
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:.75rem;
+
+}
+
+
+.card-estatistica {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.875rem;
+
+    min-width:0;
+
+    padding:1rem;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+}
+
+
+.icone-card-estatistica {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:42px;
+
+    height:42px;
+
+    flex-shrink:0;
+
+    border-radius:10px;
+
+    background:var(--cor-fundo-secundario);
+
+}
+
+
+.icone-card-estatistica i {
+
+    font-size:1.2rem;
+
+}
+
+
+.card-estatistica:nth-child(1),
+.icone-card-estatistica {
+
+    color:var(--cor-primaria);
+
+}
+
+
+.card-estatistica:nth-child(2),
+.icone-card-estatistica {
+
+    color:var(--cor-primaria);
+
+}
+
+
+.card-estatistica:nth-child(3),
+.icone-card-estatistica {
+
+    color:var(--cor-sucesso);
+
+}
+
+
+.card-estatistica:nth-child(4),
+.icone-card-estatistica {
+
+    color:var(--cor-primaria);
+
+}
+
+
+.conteudo-card-estatistica {
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-width:0;
+
+}
+
+
+.rotulo-card-estatistica {
+
+    display:block;
+
+    margin-bottom:.25rem;
+
+    font-size:.8rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.valor-card-estatistica {
+
+    display:block;
+
+    font-size:1.35rem;
+
+    line-height:1.2;
+
+    font-weight:700;
+
+    color:var(--cor-texto);
+
+}
+
+
+/* =========================================================
+   SEÇÕES
+========================================================= */
+
+.secao-estatisticas {
+
+    min-width:0;
+
+    padding:1.25rem;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+}
+
+
+.cabecalho-secao-estatisticas {
+
+    margin-bottom:1.25rem;
+
+}
+
+
+.cabecalho-secao-estatisticas h2 {
+
+    margin:0 0 .3125rem;
+
+    font-size:1.1rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.cabecalho-secao-estatisticas p {
+
+    margin:0;
+
+    font-size:.85rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   GRÁFICO
+========================================================= */
+
+.grafico-estatisticas-estudos {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:100%;
+
+    height:240px;
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   GRID DE DESEMPENHO
+========================================================= */
+
+.grid-desempenho-estatisticas {
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:1.25rem;
+
+}
+
+
+/* =========================================================
+   RESUMO DE QUESTÕES
+========================================================= */
+
+.resumo-questoes-estatisticas {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:.75rem;
+
+}
+
+
+.indicador-questoes-estatisticas {
+
+    min-width:0;
+
+    padding:1rem;
+
+    background:var(--cor-fundo-secundario);
+
+    border-radius:10px;
+
+}
+
+
+.indicador-questoes-estatisticas span {
+
+    display:block;
+
+    margin-bottom:.375rem;
+
+    font-size:.8rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.indicador-questoes-estatisticas strong {
+
+    font-size:1.3rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.valor-acertos {
+
+    color:var(--cor-sucesso);
+
+}
+
+
+.valor-erros {
+
+    color:var(--cor-erro);
+
+}
+
+
+.valor-aproveitamento {
+
+    color:var(--cor-primaria);
+
+}
+
+
+/* =========================================================
+   DISTRIBUIÇÃO DAS QUESTÕES
+========================================================= */
+
+.distribuicao-questoes-estatisticas {
+
+    margin-top:1.75rem;
+
+}
+
+
+.barra-distribuicao-questoes-estatisticas {
+
+    display:flex;
+
+    width:100%;
+
+    height:10px;
+
+    overflow:hidden;
+
+    border-radius:999px;
+
+    background:var(--cor-fundo-secundario);
+
+}
+
+
+.barra-distribuicao-questoes-estatisticas > div {
+
+    height:100%;
+
+    min-width:0;
+
+    transition:width .4s ease;
+
+}
+
+
+.barra-questoes-acertos {
+
+    background:var(--cor-sucesso);
+
+}
+
+
+.barra-questoes-erros {
+
+    background:var(--cor-erro);
+
+}
+
+
+.barra-questoes-nao-respondidas {
+
+    background:var(--cor-borda);
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:.75rem 1rem;
+
+    margin-top:.875rem;
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas span {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.375rem;
+
+    font-size:.8rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas i {
+
+    font-size:.45rem;
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas,
+span:nth-child(1) i {
+
+    color:var(--cor-sucesso);
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas,
+span:nth-child(2) i {
+
+    color:var(--cor-erro);
+
+}
+
+
+.legenda-distribuicao-questoes-estatisticas,
+span:nth-child(3) i {
+
+    color:var(--cor-borda);
+
+}
+
+
+/* =========================================================
+   DESEMPENHO POR ÁREA
+========================================================= */
+
+.desempenho-areas-estatisticas {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1rem;
+
+}
+
+
+.item-desempenho-area {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.4375rem;
+
+    min-width:0;
+
+}
+
+
+.cabecalho-area {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:.75rem;
+
+}
+
+
+.nome-area {
+
+    min-width:0;
+
+    overflow:hidden;
+
+    font-size:.85rem;
+
+    color:var(--cor-texto);
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+.cabecalho-area strong {
+
+    flex-shrink:0;
+
+    font-size:.85rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.barra-desempenho {
+
+    width:100%;
+
+    height:7px;
+
+    overflow:hidden;
+
+    background:var(--cor-fundo-secundario);
+
+    border-radius:999px;
+
+}
+
+
+.progresso-desempenho {
+
+    height:100%;
+
+    border-radius:inherit;
+
+    background:var(--cor-sucesso);
+
+    transition:width .4s ease;
+
+}
+
+
+.detalhes-area {
+
+    font-size:.75rem;
+
+    line-height:1.4;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   HISTÓRICO DE PROVAS
+========================================================= */
+
+.historico-provas-estatisticas {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.625rem;
+
+}
+
+
+.prova-estatistica {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1rem;
+
+    min-width:0;
+
+    padding:.875rem 1rem;
+
+    background:var(--cor-fundo-secundario);
+
+    border-radius:10px;
+
+}
+
+
+.prova-estatistica-info {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.25rem;
+
+    min-width:0;
+
+}
+
+
+.prova-estatistica-info strong {
+
+    overflow:hidden;
+
+    font-size:.9rem;
+
+    color:var(--cor-texto);
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+.prova-estatistica-info span {
+
+    font-size:.75rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.prova-estatistica-resultado {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-end;
+
+    gap:.1875rem;
+
+    flex-shrink:0;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+}
+
+
+.prova-estatistica-resultado span {
+
+    font-size:.75rem;
+
+    font-weight:400;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+.resultado-bom {
+
+    color:var(--cor-sucesso);
+
+}
+
+
+.resultado-medio {
+
+    color:var(--cor-atencao);
+
+}
+
+
+.resultado-baixo {
+
+    color:var(--cor-erro);
+
+}
+
+
+/* =========================================================
+   ANÁLISE
+========================================================= */
+
+.analise-desempenho-estatisticas {
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:.75rem;
+
+}
+
+
+.card-analise {
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:.875rem;
+
+    min-width:0;
+
+    padding:1rem;
+
+    background:var(--cor-fundo-secundario);
+
+    border-left:3px solid transparent;
+
+    border-radius:10px;
+
+}
+
+
+.card-analise:nth-child(1) {
+
+    border-left-color:var(--cor-sucesso);
+
+}
+
+
+.card-analise:nth-child(2) {
+
+    border-left-color:var(--cor-erro);
+
+}
+
+
+.card-analise:nth-child(1),
+.icone-analise {
+
+    color:var(--cor-sucesso);
+
+}
+
+
+.card-analise:nth-child(2),
+.icone-analise {
+
+    color:var(--cor-erro);
+
+}
+
+
+.icone-analise {
+
+    flex-shrink:0;
+
+    font-size:1.3rem;
+
+}
+
+
+.card-analise h3 {
+
+    margin:0 0 .3125rem;
+
+    font-size:.95rem;
+
+    color:var(--cor-texto);
+
+}
+
+
+.card-analise p {
+
+    margin:0;
+
+    font-size:.8rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:600px) {
+
+    .resumo-estatisticas {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .analise-desempenho-estatisticas {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1000px) {
+
+    .cabecalho-estatisticas {
+
+        padding:2rem 0;
+
+    }
+
+
+    .cabecalho-estatisticas h1 {
+
+        font-size:2rem;
+
+    }
+
+
+    .resumo-estatisticas {
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+    }
+
+
+    .grid-desempenho-estatisticas {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .secao-estatisticas {
+
+        padding:1.5rem;
+
+    }
+
+
+    .grafico-estatisticas-estudos {
+
+        height:300px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .conteudo-estatisticas {
+
+        gap:1.5rem;
+
+    }
+
+
+    .grid-desempenho-estatisticas {
+
+        gap:1.5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width:599px) {
+
+    .cabecalho-estatisticas {
+
+        padding:1.25rem 0 1.5rem;
+
+    }
+
+
+    .cabecalho-estatisticas h1 {
+
+        font-size:1.5rem;
+
+    }
+
+
+    .cabecalho-estatisticas p {
+
+        font-size:.85rem;
+
+    }
+
+
+    .conteudo-estatisticas {
+
+        gap:1rem;
+
+    }
+
+
+    .secao-estatisticas {
+
+        padding:1rem;
+
+        border-radius:12px;
+
+    }
+
+
+    .cabecalho-secao-estatisticas {
+
+        margin-bottom:1rem;
+
+    }
+
+
+    .cabecalho-secao-estatisticas h2 {
+
+        font-size:1rem;
+
+    }
+
+
+    .cabecalho-secao-estatisticas p {
+
+        font-size:.8rem;
+
+    }
+
+
+    .grafico-estatisticas-estudos {
+
+        height:220px;
+
+    }
+
+
+    .resumo-questoes-estatisticas {
+
+        gap:.625rem;
+
+    }
+
+
+    .indicador-questoes-estatisticas {
+
+        padding:.8rem;
+
+    }
+
+
+    .indicador-questoes-estatisticas strong {
+
+        font-size:1.15rem;
+
+    }
+
+
+    .prova-estatistica {
+
+        align-items:flex-start;
+
+        padding:.75rem;
+
+    }
+
+
+    .prova-estatistica-resultado {
+
+        font-size:.9rem;
+
+    }
+
+
+    .legenda-distribuicao-questoes-estatisticas {
+
+        gap:.5rem .75rem;
+
+    }
+
+
+    .legenda-distribuicao-questoes-estatisticas span {
+
+        font-size:.75rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .card-estatistica {
+
+        padding:.875rem;
+
+    }
+
+
+    .icone-card-estatistica {
+
+        width:38px;
+
+        height:38px;
+
+    }
+
+
+    .valor-card-estatistica {
+
+        font-size:1.2rem;
+
+    }
+
+
+    .resumo-questoes-estatisticas {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .grafico-estatisticas-estudos {
+
+        height:200px;
+
+    }
+
+
+    .prova-estatistica {
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:.625rem;
+
+    }
+
+
+    .prova-estatistica-resultado {
+
+        align-items:flex-start;
+
+    }
+
+}
+
+/* =========================================================
+   NAVEGAÇÃO DO GRÁFICO
+========================================================= */
+
+.navegacao-grafico-estudos {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.botao-navegacao-grafico {
+
+    width: 36px;
+
+    height: 36px;
+
+    padding: 0;
+
+    border: 1px solid var(--cor-borda);
+
+    border-radius: 8px;
+
+    background: var(--cor-card);
+
+    color: var(--cor-texto);
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.botao-navegacao-grafico:hover {
+
+    background: var(--cor-fundo-secundario);
+
+    border-color: var(--cor-primaria);
+
+    color: var(--cor-primaria);
+
+}
+
+
+.botao-navegacao-grafico:active {
+
+    transform: scale(0.94);
+
+}
+
+
+.botao-navegacao-grafico i {
+
+    font-size: 16px;
+
+}
+
+
+.mes-atual-grafico {
+
+    min-width: 120px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: var(--cor-texto);
+
+}
+
+.header-dashboard {
+
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+}

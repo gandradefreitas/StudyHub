@@ -1,172 +1,178 @@
 @charset "UTF-8";
 
-/* ==========================
+
+/* ========================================
    PÁGINA NOVA TAREFA
-========================== */
+======================================== */
 
-.formulario{
+.formulario {
+    width: 100%;
+    max-width: 600px;
 
-    width:100%;
-    max-width:600px;
+    margin: 2rem auto;
+    padding: 1.5rem;
 
-    margin:2rem auto;
+    background: var(--cor-card);
 
-    padding:1.5rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
 
-    background:var(--cor-card);
-
-    border:1px solid var(--cor-borda);
-
-    border-radius:var(--raio);
-
-    box-shadow:var(--sombra);
-
+    box-shadow: var(--sombra);
 }
 
-.formulario p{
 
-    margin-bottom:2rem;
+/* ========================================
+   TEXTO
+======================================== */
 
-    color:var(--cor-texto-secundario);
+.formulario p {
+    margin-bottom: 2rem;
 
-    line-height:1.6;
+    color: var(--cor-texto-secundario);
+
+    line-height: 1.6;
+
+    text-align: center;
+}
+
+.formulario h1 {
+    margin-bottom: 1.5rem;
+
+    font-size: 2rem;
 
     text-align: center;
 
+    color: var(--cor-texto);
 }
 
-.formulario h1{
 
-    margin-bottom:1.5rem;
+/* ========================================
+   FORMULÁRIO
+======================================== */
 
-    font-size:2rem;
+.formulario form {
+    display: flex;
+    flex-direction: column;
 
-    text-align:center;
-
-    color:var(--cor-texto);
-
+    gap: 1.25rem;
 }
 
-.formulario form{
 
-    display:flex;
+/* ========================================
+   LABELS
+======================================== */
 
-    flex-direction:column;
+.formulario label {
+    font-weight: 600;
 
-    gap:1.25rem;
-
+    color: var(--cor-texto);
 }
 
-.formulario label{
 
-    font-weight:600;
+/* ========================================
+   INPUT
+======================================== */
 
-    color:var(--cor-texto);
+.formulario input {
+    width: 100%;
 
+    padding: .9rem 1rem;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 1rem;
+
+    transition: var(--transicao);
 }
 
-.formulario input{
 
-    width:100%;
+/* Estado de foco */
 
-    padding:.9rem 1rem;
+.formulario input:focus {
+    border-color: var(--cor-primaria);
 
-    border:1px solid var(--cor-borda);
-
-    border-radius:12px;
-
-    outline:none;
-
-    font-size:1rem;
-
-    transition:var(--transicao);
-
+    box-shadow: 0 0 0 4px rgb(31 69 237 / .12);
 }
 
-.formulario input:focus{
 
-    border-color:var(--cor-primaria);
+/* Placeholder */
 
-    box-shadow:0 0 0 4px rgb(31 69 237 / .12);
-
+.formulario input::placeholder {
+    color: var(--cor-texto-secundario);
 }
 
-.formulario input::placeholder{
 
-    color:var(--cor-texto-secundario);
+/* ========================================
+   BOTÃO
+======================================== */
 
+.formulario button {
+    padding: 1rem;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--cor-primaria);
+
+    color: var(--cor-texto-claro);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transicao);
 }
 
-.formulario button{
 
-    padding:1rem;
+/* Hover */
 
-    border:none;
+.formulario button:hover {
+    background: var(--cor-secundaria);
 
-    border-radius:12px;
+    transform: translateY(-2px);
 
-    background:var(--cor-primaria);
-
-    color:var(--cor-texto-claro);
-
-    font-size:1rem;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:var(--transicao);
-
+    box-shadow: var(--sombra);
 }
 
-.formulario button:hover{
 
-    background:var(--cor-secundaria);
+/* Clique */
 
-    transform:translateY(-2px);
-
-    box-shadow:var(--sombra);
-
+.formulario button:active {
+    transform: translateY(0);
 }
 
-.formulario button:active{
 
-    transform:translateY(0);
-
-}
-
-/* ==========================
+/* ========================================
    TABLET
-========================== */
+======================================== */
 
-@media (min-width:768px){
+@media (min-width: 768px) {
 
-    .formulario{
+    .formulario {
+        margin: 3rem auto;
 
-        margin:3rem auto;
-
-        padding:2rem;
-
+        padding: 2rem;
     }
 
 }
 
-/* ==========================
+
+/* ========================================
    DESKTOP
-========================== */
+======================================== */
 
-@media (min-width:1024px){
+@media (min-width: 1024px) {
 
-    .formulario{
-
-        max-width:700px;
-
+    .formulario {
+        max-width: 700px;
     }
 
-    .formulario h1{
-
-        font-size:2.3rem;
-
+    .formulario h1 {
+        font-size: 2.3rem;
     }
 
 }

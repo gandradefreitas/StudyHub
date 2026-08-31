@@ -10,12 +10,22 @@
 
         <a href="{{ url_for('dashboard') }}">
             <i class="bi bi-house-door-fill"></i>
-            Dashboard
+            Menu
         </a>
 
-        <a href="{{ url_for('pagina_estudos') }}">
+        <a href="{{ url_for('questoes_inicio') }}">
             <i class="bi bi-stopwatch"></i>
             Estudos
+        </a>
+
+        <a href="{{ url_for('pagina_provas') }}">
+            <i class="bi bi-file-earmark-text"></i>
+            Provas
+        </a>
+
+        <a href="{{ url_for('historico_provas') }}">
+            <i class="bi bi-clock-history"></i>
+            Histórico
         </a>
 
         <a href="{{ url_for('pagina_tarefas') }}">
@@ -23,17 +33,17 @@
             Tarefas
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('pagina_calendario') }}">
             <i class="bi bi-calendar3"></i>
             Calendário
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('pagina_estatisticas') }}">
             <i class="bi bi-bar-chart-line"></i>
             Estatísticas
         </a>
 
-        <a href="#">
+        <a href="{{ url_for('pagina_configuracoes') }}">
             <i class="bi bi-gear"></i>
             Configurações
         </a>

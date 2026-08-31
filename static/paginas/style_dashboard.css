@@ -1,76 +1,105 @@
-.dashboard{
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard-page {
+
+    width:100%;
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:
+        clamp(1rem, 3vw, 2.5rem);
+
+    box-sizing:border-box;
+
+}
+
+.perfil {
 
     display:flex;
 
-    flex-direction:column;
+    align-items:center;
 
-    min-height:100vh;
+    gap:.7rem;
 
-}
+    margin-left:auto;
 
-.conteudo{
+    padding:.35rem .5rem .35rem .75rem;
 
-    flex:1;
+    border-radius:12px;
 
-    padding:1.5rem;
+    color:var(--cor-texto);
 
-}
-
-.boas-vindas{
-
-    margin-bottom:2rem;
-
-}
-
-.cards{
-
-    display:grid;
-
-    grid-template-columns:1fr;
-
-    gap:1rem;
-
-    margin-bottom:2rem;
-
-}
-
-.card{
-
-    background:var(--cor-card);
-
-    padding:1.5rem;
-
-    border-radius:var(--raio);
-
-    box-shadow:var(--sombra);
+    text-decoration:none;
 
     transition:var(--transicao);
 
 }
 
-.card:hover{
+/* =========================================================
+   BOAS-VINDAS
+========================================================= */
 
-    box-shadow:var(--sombra-hover);
+.dashboard-boas-vindas {
+
+    margin-bottom:clamp(1.5rem, 3vw, 2rem);
 
 }
 
-.card h3{
+.dashboard-boas-vindas-conteudo {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.35rem;
+
+}
+
+.dashboard-boas-vindas-data {
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-boas-vindas-conteudo h1 {
+
+    margin:0;
+
+    font-size:clamp(1.5rem, 4vw, 2rem);
+
+    line-height:1.2;
+
+    color:var(--cor-texto);
+
+}
+
+.dashboard-boas-vindas-conteudo p {
+
+    margin:0;
+
+    max-width:650px;
+
+    font-size:.9rem;
+
+    line-height:1.5;
 
     color:var(--cor-texto-secundario);
 
-    margin-bottom:.8rem;
-
 }
 
-.card span{
 
-    font-size:2rem;
+/* =========================================================
+   RESUMO
+========================================================= */
 
-    font-weight:bold;
-
-}
-
-.conteudo-grid{
+.dashboard-resumo {
 
     display:grid;
 
@@ -78,13 +107,199 @@
 
     gap:1rem;
 
+    margin-bottom:1.5rem;
+
 }
 
-.painel{
+.dashboard-card-resumo {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    min-width:0;
+
+    min-height:120px;
+
+    padding:1.15rem;
+
+    box-sizing:border-box;
 
     background:var(--cor-card);
 
-    padding:1.5rem;
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+
+}
+
+.dashboard-card-resumo:hover {
+
+    transform:translateY(-2px);
+
+    box-shadow:var(--sombra-hover);
+
+}
+
+.dashboard-card-resumo-icone {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:13px;
+
+    font-size:1.2rem;
+
+}
+
+.dashboard-icone-estudo {
+
+    background:#E8EEFF;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-icone-tarefas {
+
+    background:#E8F3FF;
+
+    color:var(--cor-secundaria);
+
+}
+
+.dashboard-icone-concluidas {
+
+    background:#EAF9F0;
+
+    color:var(--cor-sucesso);
+
+}
+
+.dashboard-icone-desempenho {
+
+    background:#FFF5D9;
+
+    color:var(--cor-atencao);
+
+}
+
+.dashboard-card-resumo-conteudo {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.2rem;
+
+    min-width:0;
+
+}
+
+.dashboard-card-resumo-label {
+
+    font-size:.8rem;
+
+    line-height:1.3;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+.dashboard-card-resumo-valor {
+
+    font-size:clamp(1.35rem, 4vw, 1.6rem);
+
+    line-height:1.2;
+
+    color:var(--cor-texto);
+
+    overflow-wrap:anywhere;
+
+}
+
+.dashboard-card-resumo-info {
+
+    font-size:.72rem;
+
+    line-height:1.4;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+========================================================= */
+
+.dashboard-conteudo-principal {
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:1.5rem;
+
+    margin-bottom:1.5rem;
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   GRID SECUNDÁRIO
+========================================================= */
+
+.dashboard-conteudo-secundario {
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:1.5rem;
+
+    margin-bottom:1.5rem;
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   PAINÉIS
+========================================================= */
+
+.dashboard-painel {
+
+    min-width:0;
+
+    box-sizing:border-box;
+
+    padding:clamp(1rem, 3vw, 1.75rem);
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
 
     border-radius:var(--raio);
 
@@ -92,45 +307,823 @@
 
 }
 
-.painel h2{
+.dashboard-painel-cabecalho {
+
+    display:flex;
+
+    align-items:flex-start;
+
+    justify-content:space-between;
+
+    gap:1rem;
+
+    margin-bottom:1.25rem;
+
+}
+
+.dashboard-painel-legenda {
+
+    display:block;
+
+    margin-bottom:.25rem;
+
+    font-size:.7rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.06em;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-painel-cabecalho h2 {
+
+    margin:0;
+
+    font-size:clamp(1rem, 2vw, 1.15rem);
+
+    line-height:1.3;
+
+    color:var(--cor-texto);
+
+}
+
+.dashboard-link-painel {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.35rem;
+
+    min-height:36px;
+
+    padding:.35rem .25rem;
+
+    white-space:nowrap;
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+    color:var(--cor-primaria);
+
+    text-decoration:none;
+
+}
+
+.dashboard-link-painel:hover {
+
+    text-decoration:underline;
+
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.dashboard-progresso-vazio {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:220px;
+
+    padding:1.5rem;
+
+    box-sizing:border-box;
+
+    text-align:center;
+
+    border:1px dashed var(--cor-borda);
+
+    border-radius:14px;
+
+    background:var(--cor-fundo);
+
+}
+
+.dashboard-progresso-vazio-icone {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:50px;
+
+    height:50px;
+
+    margin-bottom:1rem;
+
+    border-radius:50%;
+
+    background:var(--cor-fundo-secundario);
+
+    color:var(--cor-primaria);
+
+    font-size:1.3rem;
+
+}
+
+.dashboard-progresso-vazio h3 {
+
+    margin:0 0 .5rem;
+
+    font-size:1rem;
+
+}
+
+.dashboard-progresso-vazio p {
+
+    max-width:350px;
+
+    margin:0;
+
+    font-size:.83rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+
+/* =========================================================
+   ATIVIDADES
+========================================================= */
+
+.dashboard-atividades-vazio {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:220px;
+
+    padding:1rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-texto-secundario);
+
+    text-align:center;
+
+}
+
+.dashboard-atividades-vazio i {
+
+    margin-bottom:.8rem;
+
+    font-size:2rem;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-atividades-vazio p {
+
+    margin:0;
+
+    font-size:.85rem;
+
+}
+
+
+/* =========================================================
+   LISTA DE ATIVIDADES
+========================================================= */
+
+.dashboard-lista-atividades {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.65rem;
+
+    padding-top:.25rem;
+
+}
+
+.dashboard-atividade {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.75rem;
+
+    min-width:0;
+
+    padding:.85rem;
+
+    box-sizing:border-box;
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+    background:var(--cor-fundo-secundario);
+
+    text-decoration:none;
+
+    color:inherit;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+.dashboard-atividade:hover {
+
+    transform:translateY(-2px);
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:0 6px 16px rgba(0,0,0,.06);
+
+}
+
+.dashboard-atividade-seta {
+
+    margin-left:auto;
+
+    flex-shrink:0;
+
+    font-size:.85rem;
+
+    color:var(--cor-texto-secundario);
+
+    transition:
+        transform .2s ease,
+        color .2s ease;
+
+}
+
+.dashboard-atividade:hover .dashboard-atividade-seta {
+
+    color:var(--cor-primaria);
+
+    transform:translateX(3px);
+
+}
+
+.dashboard-atividade-icone {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:10px;
+
+    background:var(--cor-primaria);
+
+    color:#fff;
+
+}
+
+.dashboard-atividade-icone i {
+
+    font-size:1.05rem;
+
+}
+
+.dashboard-atividade-informacoes {
+
+    min-width:0;
+
+    flex:1;
+
+}
+
+.dashboard-atividade-informacoes h3 {
+
+    margin:0;
+
+    overflow:hidden;
+
+    font-size:.88rem;
+
+    font-weight:600;
+
+    line-height:1.3;
+
+    color:var(--cor-texto);
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+.dashboard-atividade-informacoes span {
+
+    display:block;
+
+    margin-top:.25rem;
+
+    overflow:hidden;
+
+    font-size:.73rem;
+
+    line-height:1.3;
+
+    color:var(--cor-texto-secundario);
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+/* =========================================================
+   METAS
+========================================================= */
+
+.dashboard-meta {
+
+    margin-bottom:1.5rem;
+
+}
+
+.dashboard-meta:last-child {
+
+    margin-bottom:0;
+
+}
+
+.dashboard-meta-cabecalho {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:.75rem;
+
+    margin-bottom:.6rem;
+
+}
+
+.dashboard-meta-cabecalho span {
+
+    min-width:0;
+
+    font-size:.82rem;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+.dashboard-meta-cabecalho strong {
+
+    flex-shrink:0;
+
+    font-size:.82rem;
+
+    color:var(--cor-texto);
+
+}
+
+.dashboard-barra-progresso {
+
+    width:100%;
+
+    height:8px;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:var(--cor-fundo-secundario);
+
+}
+
+.dashboard-barra-progresso-preenchimento {
+
+    width:0;
+
+    height:100%;
+
+    border-radius:inherit;
+
+    background:var(--cor-primaria);
+
+    transition:width .4s ease;
+
+}
+
+.dashboard-barra-progresso-preenchimento.dashboard-meta-concluida {
+
+    background:#22c55e;
+
+}
+
+
+/* =========================================================
+   PROVA
+========================================================= */
+
+.dashboard-icone-painel {
+
+    font-size:1.4rem;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-prova-conteudo {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.dashboard-prova-label {
+
+    margin-bottom:.5rem;
+
+    font-size:.7rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.05em;
+
+    color:var(--cor-primaria);
+
+}
+
+.dashboard-prova-conteudo h3 {
+
+    margin:0 0 .5rem;
+
+    font-size:clamp(1rem, 2vw, 1.15rem);
+
+    line-height:1.3;
+
+}
+
+.dashboard-prova-conteudo p {
+
+    margin:0 0 1.25rem;
+
+    font-size:.83rem;
+
+    line-height:1.5;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+.dashboard-botao-painel {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.5rem;
+
+    min-height:42px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    border-radius:10px;
+
+    background:var(--cor-primaria);
+
+    color:var(--cor-texto-claro);
+
+    font-size:.83rem;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+
+}
+
+.dashboard-botao-painel:hover {
+
+    background:var(--cor-secundaria);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   PROGRESSO GERAL
+========================================================= */
+
+.dashboard-painel-progresso-geral {
 
     margin-bottom:1rem;
 
 }
 
-.painel li{
+.dashboard-progresso-geral-grid {
 
-    margin-bottom:.7rem;
+    display:grid;
 
-}
+    grid-template-columns:repeat(2, minmax(0, 1fr));
 
-@media(min-width:768px){
+    gap:1px;
 
-    .dashboard{
+    overflow:hidden;
 
-        flex-direction:row;
+    border:1px solid var(--cor-borda);
 
-    }
-
-    .cards{
-
-        grid-template-columns:repeat(2,1fr);
-
-    }
+    border-radius:12px;
 
 }
 
-@media(min-width:1100px){
+.dashboard-indicador-progresso {
 
-    .cards{
+    display:flex;
 
-        grid-template-columns:repeat(4,1fr);
+    flex-direction:column;
+
+    gap:.35rem;
+
+    min-width:0;
+
+    padding:.9rem;
+
+    background:var(--cor-fundo);
+
+}
+
+.dashboard-indicador-progresso span {
+
+    font-size:.72rem;
+
+    line-height:1.3;
+
+    color:var(--cor-texto-secundario);
+
+}
+
+.dashboard-indicador-progresso strong {
+
+    font-size:1.05rem;
+
+    line-height:1.2;
+
+    color:var(--cor-texto);
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* =========================================================
+   GRÁFICO DE PROGRESSO
+========================================================= */
+
+.dashboard-grafico-progresso {
+
+    position:relative;
+
+    width:100%;
+
+    height:clamp(200px, 35vw, 260px);
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .dashboard-page {
+
+        padding:.9rem;
 
     }
 
-    .conteudo-grid{
+    .dashboard-card-resumo {
 
-        grid-template-columns:2fr 1fr;
+        gap:.75rem;
+
+        padding:1rem;
+
+        min-height:105px;
+
+    }
+
+    .dashboard-card-resumo-icone {
+
+        width:42px;
+
+        height:42px;
+
+        border-radius:11px;
+
+        font-size:1.05rem;
+
+    }
+
+    .dashboard-painel-cabecalho {
+
+        gap:.5rem;
+
+    }
+
+    .dashboard-link-painel {
+
+        font-size:.72rem;
+
+    }
+
+    .dashboard-progresso-geral-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+    .dashboard-indicador-progresso {
+
+        padding:.8rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (min-width:481px) {
+
+    .dashboard-resumo {
+
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .dashboard-page {
+
+        padding:2rem;
+
+    }
+
+    .dashboard-resumo {
+
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+
+    }
+
+    .dashboard-conteudo-secundario {
+
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+
+    }
+
+    .dashboard-progresso-geral-grid {
+
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET GRANDE / NOTEBOOK
+========================================================= */
+
+@media (min-width:1000px) {
+
+    .dashboard-conteudo-principal {
+
+        grid-template-columns:minmax(0, 2fr) minmax(280px, 1fr);
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1200px) {
+
+    .dashboard-page {
+
+        padding:2.5rem;
+
+    }
+
+    .dashboard-resumo {
+
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .dashboard-page {
+
+        padding-left:3rem;
+
+        padding-right:3rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE / DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .dashboard-card-resumo:hover,
+    .dashboard-atividade:hover,
+    .dashboard-botao-painel:hover {
+
+        transform:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .dashboard-card-resumo,
+    .dashboard-atividade,
+    .dashboard-atividade-seta,
+    .dashboard-barra-progresso-preenchimento,
+    .dashboard-botao-painel {
+
+        transition:none;
 
     }
 

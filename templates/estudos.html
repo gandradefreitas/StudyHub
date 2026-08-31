@@ -1,63 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/estudos.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
-    <title>Title</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='global.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='paginas/estudos.css') }}"
+    >
+
+    <title>Estudos</title>
+
 </head>
-<body class="sidebar-toggle">
+
+
+<body
+    class="sidebar-toggle"
+    data-tema="{{ usuario['tema'] }}"
+>
+
+
     {% include "componentes/sidebar.html" %}
 
-    <div class="dashboard">
+    {% include "componentes/header_dashboard.html" %}
+    <main class="estudos">
 
 
-        <main class="conteudo">
-            {% include "componentes/header_dashboard.html" %}
-            <div class="card">
-                <h1>Estudos</h1>
 
-                <h3>Cronômetro</h3>
 
-                {% if estudo_ativo %}
+        <section class="estudos-card">
+
+
+            <div class="estudos-cabecalho">
+
+                <span class="estudos-legenda">
+                    ESTUDOS
+                </span>
+
+                <h1>
+                    Cronômetro
+                </h1>
+
+                <p>
+                    Registre seu tempo de estudo e acompanhe sua dedicação.
+                </p>
+
+            </div>
+
+
+            {% if estudo_ativo %}
 
                 <div
-                    id="cronometro"
-                    data-inicio="{{ estudo_ativo['inicio'] }}">
+                    id="cronometro-estudos"
+                    class="estudos-cronometro"
+                    data-inicio="{{ estudo_ativo['inicio'] }}"
+                >
                     00:00:00
                 </div>
 
-                {% endif %}
 
-                <div class="acoes">
+                <div class="estudos-acoes">
 
-                    {% if estudo_ativo %}
+                    <form
+                        action="{{ url_for('finalizar_estudo') }}"
+                        method="POST"
+                    >
 
-                    <form action="{{ url_for('finalizar_estudo') }}" method="POST">
-                        <button type="submit" class="btn-finalizar">
+                        <button
+                            type="submit"
+                            class="estudos-botao estudos-botao-finalizar"
+                        >
+
                             Finalizar estudo
+
                         </button>
+
                     </form>
 
-                    {% else %}
-
-                    <p class="sem-estudo">Nenhuma sessão de estudo ativa.</p>
-
-                    <form action="{{ url_for('iniciar_estudo') }}" method="POST">
-                        <button type="submit" class="btn-iniciar">
-                            Iniciar estudo
-                        </button>
-                    </form>
-
-                    {% endif %}
                 </div>
 
-            </div>
-        </main>
-    </div>
-    <script src="{{ url_for('static', filename='js/cronometro.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+            {% else %}
+
+
+                <div class="estudos-sem-sessao">
+
+                    <i class="bi bi-clock"></i>
+
+                    <p>
+                        Nenhuma sessão de estudo ativa.
+                    </p>
+
+                </div>
+
+
+                <div class="estudos-acoes">
+
+                    <form
+                        action="{{ url_for('iniciar_estudo') }}"
+                        method="POST"
+                    >
+
+                        <button
+                            type="submit"
+                            class="estudos-botao estudos-botao-iniciar"
+                        >
+
+                            Iniciar estudo
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+    </main>
+
+
+    <script
+        src="{{ url_for('static', filename='js/cronometro.js') }}"
+    ></script>
+
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+
 </body>
+
 </html>
