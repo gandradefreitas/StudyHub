@@ -6,14 +6,14 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "...",
-        "imagem": "imagens/questoes/questao_01.png",
+        "enunciado": "Read the following text.\n\n\"Many people believe that technology makes our lives easier. Smartphones, for example, allow us to communicate instantly, access information and perform everyday tasks. However, spending too much time connected can also affect our concentration and relationships. For this reason, using technology responsibly is becoming increasingly important.\"\n\nAccording to the text, what is one of the concerns related to excessive use of technology?",
+        "imagem": null,
         "alternativas": [
-            "...",
-            "...",
-            "...",
-            "...",
-            "..."
+            "The difficulty of accessing information through smartphones.",
+            "The impossibility of communicating with other people.",
+            "The reduction in the availability of technological devices.",
+            "The increase in the cost of everyday communication.",
+            "The negative effects on concentration and relationships."
         ],
         "resposta": "E",
         "comentario": ""
@@ -25,16 +25,930 @@
         "habilidade": "H6",
         "competencia": "C3",
         "dificuldade": "Fácil",
-        "enunciado": "Esta é uma questão de teste para verificar a navegação entre questões.",
+        "enunciado": "Uma loja está oferecendo um desconto de 20% em todos os seus produtos. João encontrou uma mochila que custava R$ 150,00 antes da promoção. Considerando o desconto oferecido pela loja, qual será o preço da mochila após a aplicação do desconto?",
         "imagem": null,
         "alternativas": [
-            "Alternativa A da questão 2.",
-            "Alternativa B da questão 2.",
-            "Alternativa C da questão 2.",
-            "Alternativa D da questão 2.",
-            "Alternativa E da questão 2."
+            "R$ 100,00.",
+            "R$ 110,00.",
+            "R$ 120,00.",
+            "R$ 130,00.",
+            "R$ 140,00."
         ],
         "resposta": "C",
         "comentario": ""
+    },
+    {
+        "numero": 3,
+        "area": "Linguagens",
+        "lingua": "espanhol",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Lee el siguiente texto.\n\n\"En los últimos años, muchas personas han cambiado sus hábitos de consumo. En lugar de comprar productos nuevos constantemente, algunas prefieren reparar, reutilizar o intercambiar objetos que todavía pueden ser utilizados. Esta práctica contribuye a reducir la cantidad de residuos y también puede representar una forma de ahorrar dinero.\"\n\nSegún el texto, una consecuencia positiva de cambiar los hábitos de consumo es:",
+        "imagem": null,
+        "alternativas": [
+            "aumentar la cantidad de productos desechados.",
+            "reducir los gastos y la producción de residuos.",
+            "estimular la compra constante de productos nuevos.",
+            "impedir que las personas intercambien objetos.",
+            "aumentar el consumo de recursos naturales."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 4,
+        "area": "Linguagens",
+        "lingua": null,
+        "habilidade": "H18",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Leia o trecho a seguir.\n\n\"A cidade acordava lentamente. Nas primeiras horas da manhã, as ruas ainda estavam quase vazias, enquanto algumas lojas começavam a abrir suas portas. O som distante dos ônibus misturava-se ao canto dos pássaros, criando uma espécie de contraste entre a movimentação urbana e a tranquilidade daquele momento.\"\n\nNo trecho, a descrição do ambiente tem como principal função:",
+        "imagem": null,
+        "alternativas": [
+            "apresentar dados estatísticos sobre o trânsito da cidade.",
+            "defender a redução do transporte público nas áreas urbanas.",
+            "caracterizar o espaço e criar uma atmosfera de tranquilidade.",
+            "criticar diretamente o comportamento dos moradores.",
+            "explicar as causas do crescimento das cidades."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 5,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H17",
+        "competencia": "C7",
+        "dificuldade": "Fácil",
+        "enunciado": "Durante uma aula de Química, um estudante colocou uma pequena quantidade de bicarbonato de sódio em um recipiente e adicionou vinagre. Imediatamente, observou a formação de várias bolhas e a liberação de um gás.\n\nA formação de bolhas observada no experimento indica principalmente que:",
+        "imagem": null,
+        "alternativas": [
+            "houve apenas uma mudança de estado físico da matéria.",
+            "o bicarbonato desapareceu sem sofrer nenhuma transformação.",
+            "ocorreu uma reação química com formação de uma substância gasosa.",
+            "o vinagre sofreu congelamento devido à reação.",
+            "a mistura passou a possuir apenas substâncias sólidas."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 6,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H20",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Um ciclista percorre uma estrada em linha reta mantendo velocidade constante de 10 m/s durante 2 minutos. Desconsiderando qualquer parada durante o percurso, qual é a distância total percorrida pelo ciclista?",
+        "imagem": null,
+        "alternativas": [
+            "200 m.",
+            "600 m.",
+            "1 000 m.",
+            "1 200 m.",
+            "2 000 m."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 7,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Uma empresa cobra uma taxa fixa de R$ 15,00 pela entrega de um produto, além de R$ 3,00 por quilômetro percorrido pelo entregador. Se uma entrega percorreu 8 quilômetros, qual foi o valor total pago pela entrega, considerando apenas a taxa fixa e o custo por quilômetro?",
+        "imagem": null,
+        "alternativas": [
+            "R$ 24,00.",
+            "R$ 30,00.",
+            "R$ 36,00.",
+            "R$ 39,00.",
+            "R$ 45,00."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 8,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H11",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "Durante a Revolução Industrial, iniciada na Inglaterra no século XVIII, ocorreram profundas transformações na produção e nas relações de trabalho. A utilização de máquinas e a concentração de trabalhadores nas fábricas modificaram a organização da sociedade e da economia.\n\nUma das principais consequências sociais desse processo foi:",
+        "imagem": null,
+        "alternativas": [
+            "a redução da urbanização e o retorno da população ao campo.",
+            "o desaparecimento das diferenças entre trabalhadores e proprietários.",
+            "o crescimento das cidades e a formação de uma classe de trabalhadores assalariados.",
+            "a substituição completa do trabalho humano por máquinas desde o início da industrialização.",
+            "a diminuição da produção industrial devido à utilização de novas tecnologias."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 9,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H23",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Em uma sociedade, diferentes grupos possuem valores, costumes, crenças e formas de interpretar o mundo. A convivência entre essas diferenças pode gerar conflitos, mas também permite a construção de novas formas de interação social.\n\nNa perspectiva sociológica, o reconhecimento da diversidade cultural contribui para:",
+        "imagem": null,
+        "alternativas": [
+            "considerar apenas uma cultura como válida para toda a sociedade.",
+            "eliminar completamente as diferenças existentes entre os grupos sociais.",
+            "compreender que os comportamentos e valores podem variar de acordo com o contexto social e cultural.",
+            "afirmar que todas as sociedades possuem exatamente os mesmos costumes.",
+            "impedir que diferentes grupos mantenham suas próprias tradições."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 10,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H18",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "Uma amostra de água foi colocada em um recipiente aberto e deixada sob o sol durante algumas horas. Ao final do período, parte da água havia desaparecido, embora nenhum líquido tenha sido retirado do recipiente.\n\nO fenômeno observado ocorre devido à:",
+        "imagem": null,
+        "alternativas": [
+            "condensação da água.",
+            "solidificação da água.",
+            "evaporação da água.",
+            "fusão da água.",
+            "sublimação do recipiente."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 11,
+        "area": "Linguagens",
+        "lingua": "portugues",
+        "habilidade": "H15",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Leia o trecho.\n\n\"Embora a internet tenha ampliado o acesso à informação, isso não significa que todo conteúdo encontrado nas redes seja confiável. Por essa razão, verificar a fonte, comparar informações e observar a data de publicação são atitudes importantes para quem deseja se informar de maneira responsável.\"\n\nA principal finalidade do texto é:",
+        "imagem": null,
+        "alternativas": [
+            "defender o abandono das redes sociais.",
+            "apresentar cuidados para avaliar informações disponíveis na internet.",
+            "demonstrar que todas as informações da internet são falsas.",
+            "explicar como funcionam os mecanismos de busca.",
+            "criticar pessoas que utilizam computadores."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 12,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H15",
+        "competencia": "C5",
+        "dificuldade": "Fácil",
+        "enunciado": "Uma caixa contém 5 bolas vermelhas, 3 bolas azuis e 2 bolas verdes. Uma bola será retirada ao acaso, sem que o conteúdo da caixa seja observado. Qual é a probabilidade de a bola retirada ser azul?",
+        "imagem": null,
+        "alternativas": [
+            "10%.",
+            "20%.",
+            "30%.",
+            "40%.",
+            "50%."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 13,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H13",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "A Independência do Brasil, proclamada em 1822, ocorreu em um contexto marcado por conflitos entre os interesses das elites locais e as decisões tomadas pela Coroa portuguesa. Apesar da ruptura política, algumas estruturas sociais permaneceram praticamente inalteradas.\n\nEntre essas permanências, destaca-se:",
+        "imagem": null,
+        "alternativas": [
+            "a abolição imediata da escravidão.",
+            "a implantação de uma república democrática.",
+            "a manutenção da escravidão e da concentração de terras.",
+            "a distribuição de terras entre todos os trabalhadores.",
+            "o fim imediato dos privilégios das elites agrárias."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 14,
+        "area": "Linguagens",
+        "lingua": "ingles",
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Read the following text.\n\n\"Public libraries are changing. In addition to books, many libraries now offer computers, internet access, educational activities and spaces for community events. These changes show that libraries can continue to play an important role even as people increasingly use digital resources.\"\n\nAccording to the text, modern libraries:",
+        "imagem": null,
+        "alternativas": [
+            "have stopped providing books to visitors.",
+            "are becoming less useful because of the internet.",
+            "only provide computers and technological resources.",
+            "have expanded their services to meet new community needs.",
+            "are exclusively used for educational activities."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 15,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H21",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Um automóvel parte do repouso e aumenta sua velocidade de maneira uniforme. Após 10 segundos, sua velocidade passa a ser de 20 m/s.\n\nConsiderando que a aceleração seja constante, qual é a aceleração média do automóvel nesse intervalo?",
+        "imagem": null,
+        "alternativas": [
+            "0,5 m/s².",
+            "1 m/s².",
+            "2 m/s².",
+            "10 m/s².",
+            "20 m/s²."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 16,
+        "area": "Linguagens",
+        "lingua": "espanhol",
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Fácil",
+        "enunciado": "Lee el siguiente texto.\n\n\"María salió temprano de casa porque tenía una entrevista de trabajo. Antes de llegar al lugar, pasó por una cafetería y tomó un café. Después continuó su camino y llegó diez minutos antes de la hora marcada.\"\n\n¿Por qué María salió temprano de casa?",
+        "imagem": null,
+        "alternativas": [
+            "Porque quería visitar a un amigo.",
+            "Porque tenía una entrevista de trabajo.",
+            "Porque necesitaba comprar una computadora.",
+            "Porque había perdido su teléfono.",
+            "Porque quería desayunar en una cafetería."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 17,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H24",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Para o sociólogo Émile Durkheim, os indivíduos vivem em uma sociedade que possui normas, valores e instituições capazes de influenciar seus comportamentos. Esses elementos existem independentemente da vontade de cada indivíduo e exercem influência sobre suas ações.\n\nO conceito utilizado por Durkheim para caracterizar esses elementos é:",
+        "imagem": null,
+        "alternativas": [
+            "fato social.",
+            "mais-valia.",
+            "luta de classes.",
+            "capital cultural.",
+            "alienação."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 18,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Fácil",
+        "enunciado": "Uma pessoa deseja cercar um terreno retangular de 12 metros de comprimento e 8 metros de largura. Quantos metros de cerca serão necessários para contornar completamente o terreno?",
+        "imagem": null,
+        "alternativas": [
+            "20 m.",
+            "32 m.",
+            "40 m.",
+            "48 m.",
+            "96 m."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 19,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Em uma reação química, os reagentes são transformados em produtos. Em um sistema fechado, a quantidade total de matéria permanece constante durante a reação.\n\nEssa afirmação está relacionada diretamente à:",
+        "imagem": null,
+        "alternativas": [
+            "Lei da Conservação das Massas.",
+            "Lei de Boyle.",
+            "Lei da Gravitação Universal.",
+            "Lei de Ohm.",
+            "Lei da Reflexão."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 20,
+        "area": "Linguagens",
+        "lingua": "portugues",
+        "habilidade": "H21",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "Leia a frase.\n\n\"O trânsito estava tão lento que parecia que os carros haviam esquecido como andar.\"\n\nA expressão destacada utiliza uma figura de linguagem para produzir um efeito de exagero. Essa figura é denominada:",
+        "imagem": null,
+        "alternativas": [
+            "metáfora.",
+            "hipérbole.",
+            "antítese.",
+            "eufemismo.",
+            "personificação."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 21,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H14",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "A Revolução Francesa teve início em 1789 e questionou estruturas políticas e sociais do Antigo Regime. Entre seus princípios, ganhou destaque a defesa da igualdade jurídica e da liberdade.\n\nUm dos grupos sociais que teve papel importante no processo revolucionário foi:",
+        "imagem": null,
+        "alternativas": [
+            "a burguesia.",
+            "a aristocracia feudal exclusivamente.",
+            "os monarcas absolutistas.",
+            "o clero sem qualquer divisão interna.",
+            "os imperadores romanos."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 22,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H19",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Uma função afim é definida por f(x) = 2x + 5. Qual é o valor de f(7)?",
+        "imagem": null,
+        "alternativas": [
+            "12.",
+            "14.",
+            "17.",
+            "19.",
+            "21."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 23,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H8",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Um estudante misturou água e óleo em um recipiente e observou que, após algum tempo, os dois líquidos formaram camadas distintas.\n\nIsso ocorre principalmente porque água e óleo:",
+        "imagem": null,
+        "alternativas": [
+            "possuem exatamente a mesma densidade.",
+            "são gases à temperatura ambiente.",
+            "não apresentam diferença em suas propriedades químicas.",
+            "possuem diferentes densidades e não são miscíveis.",
+            "sofrem uma reação química imediatamente."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 24,
+        "area": "Linguagens",
+        "lingua": "ingles",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Fácil",
+        "enunciado": "Read the following notice.\n\n\"Please keep the park clean. Use the trash bins provided and do not leave plastic bottles or food wrappers on the grass. A clean park is better for everyone.\"\n\nThe main purpose of the notice is to:",
+        "imagem": null,
+        "alternativas": [
+            "announce the closing of the park.",
+            "encourage visitors to keep the park clean.",
+            "explain how to build a park.",
+            "prohibit visitors from bringing food.",
+            "describe the history of the park."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 25,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H12",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "A escravidão foi uma instituição fundamental para a organização econômica do Brasil durante grande parte de sua história. Pessoas africanas e seus descendentes foram submetidos a diferentes formas de exploração e resistência.\n\nA abolição legal da escravidão no Brasil ocorreu em:",
+        "imagem": null,
+        "alternativas": [
+            "1500.",
+            "1750.",
+            "1822.",
+            "1888.",
+            "1930."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 26,
+        "area": "Linguagens",
+        "lingua": null,
+        "habilidade": "H16",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Leia o trecho.\n\n\"Pedro estudou durante várias semanas para a prova. No entanto, quando recebeu o resultado, percebeu que havia cometido erros justamente nos conteúdos que considerava mais fáceis.\"\n\nA expressão \"No entanto\" estabelece uma relação de:",
+        "imagem": null,
+        "alternativas": [
+            "causa.",
+            "conclusão.",
+            "oposição.",
+            "explicação.",
+            "finalidade."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 27,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H10",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Uma sala retangular possui 6 metros de comprimento e 4 metros de largura. Para colocar um piso, é necessário calcular a área total da sala. Qual é essa área?",
+        "imagem": null,
+        "alternativas": [
+            "10 m².",
+            "20 m².",
+            "24 m².",
+            "30 m².",
+            "40 m²."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 28,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Fácil",
+        "enunciado": "Um objeto possui massa de 200 g e ocupa um volume de 50 cm³. Considerando a definição de densidade, qual é a densidade desse objeto?",
+        "imagem": null,
+        "alternativas": [
+            "2 g/cm³.",
+            "4 g/cm³.",
+            "5 g/cm³.",
+            "10 g/cm³.",
+            "20 g/cm³."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 29,
+        "area": "Linguagens",
+        "lingua": "espanhol",
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Fácil",
+        "enunciado": "Lee el siguiente texto.\n\n\"El transporte público puede ayudar a disminuir el número de automóviles en las calles. Cuando más personas utilizan autobuses, trenes o metros, se reduce la cantidad de vehículos particulares circulando al mismo tiempo.\"\n\nSegún el texto, el transporte público puede:",
+        "imagem": null,
+        "alternativas": [
+            "aumentar necesariamente el número de automóviles.",
+            "reducir la cantidad de vehículos particulares en circulación.",
+            "impedir completamente el uso de automóviles.",
+            "eliminar todos los problemas de las ciudades.",
+            "hacer que las personas dejen de viajar."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 30,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H23",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Em uma sociedade marcada pela desigualdade econômica, pessoas pertencentes a diferentes classes sociais podem possuir oportunidades distintas de acesso à educação, saúde, moradia e outros recursos.\n\nDo ponto de vista sociológico, essa situação demonstra que:",
+        "imagem": null,
+        "alternativas": [
+            "todos os indivíduos possuem necessariamente as mesmas oportunidades.",
+            "as condições sociais podem influenciar as oportunidades dos indivíduos.",
+            "as diferenças econômicas não possuem relação com a sociedade.",
+            "a desigualdade social existe apenas em sociedades antigas.",
+            "a posição econômica de uma pessoa nunca influencia sua trajetória."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 31,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H20",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Uma lâmpada ligada a uma tomada funciona devido à passagem de corrente elétrica pelo circuito. A resistência elétrica de um componente representa a dificuldade oferecida à passagem da corrente.\n\nDe acordo com a Lei de Ohm, se a resistência permanecer constante e a tensão aplicada aumentar, a corrente elétrica:",
+        "imagem": null,
+        "alternativas": [
+            "diminuirá.",
+            "permanecerá necessariamente igual a zero.",
+            "aumentará.",
+            "mudará de sentido obrigatoriamente.",
+            "deixará de depender da tensão."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 32,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H16",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "Um produto custa R$ 80,00 e sofreu um aumento de 25%. Qual será seu novo preço?",
+        "imagem": null,
+        "alternativas": [
+            "R$ 90,00.",
+            "R$ 95,00.",
+            "R$ 100,00.",
+            "R$ 105,00.",
+            "R$ 120,00."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 33,
+        "area": "Linguagens",
+        "lingua": null,
+        "habilidade": "H18",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Leia o trecho.\n\n\"O menino abriu a janela. Lá fora, a chuva caía sem pressa, cobrindo as ruas com uma fina camada de água. Ele respirou profundamente e decidiu permanecer em casa naquela tarde.\"\n\nA descrição da chuva contribui para:",
+        "imagem": null,
+        "alternativas": [
+            "apresentar uma explicação científica sobre a formação das chuvas.",
+            "caracterizar o ambiente e justificar a decisão do personagem.",
+            "informar a previsão meteorológica para os próximos dias.",
+            "defender a necessidade de construir novas ruas.",
+            "explicar os efeitos econômicos das chuvas."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 34,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H15",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "A Segunda Guerra Mundial ocorreu entre 1939 e 1945 e envolveu diversos países. O conflito provocou milhões de mortes e profundas transformações políticas e econômicas no mundo.\n\nUm dos acontecimentos que marcou o final da guerra na Europa foi:",
+        "imagem": null,
+        "alternativas": [
+            "a queda de Roma no século V.",
+            "a Revolução Francesa.",
+            "a rendição da Alemanha nazista.",
+            "a independência dos Estados Unidos.",
+            "a chegada dos portugueses ao Brasil."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 35,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H19",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "Um corpo de massa 2 kg sofre uma força resultante de 10 N. Considerando a segunda lei de Newton, qual é a aceleração produzida nesse corpo?",
+        "imagem": null,
+        "alternativas": [
+            "2 m/s².",
+            "5 m/s².",
+            "8 m/s².",
+            "10 m/s².",
+            "20 m/s²."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 36,
+        "area": "Linguagens",
+        "lingua": "ingles",
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Read the following text.\n\n\"Learning a new language takes time and practice. Making mistakes is a natural part of the process. Instead of avoiding difficult situations, learners can use their mistakes to understand what they need to improve.\"\n\nAccording to the text, mistakes:",
+        "imagem": null,
+        "alternativas": [
+            "should always be avoided when learning a language.",
+            "show that learning a language is impossible.",
+            "can help learners identify what they need to improve.",
+            "are caused only by a lack of intelligence.",
+            "make practice unnecessary."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 37,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H17",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Uma sequência numérica é formada pelos números 3, 7, 11, 15, 19, ...\n\nMantendo o mesmo padrão, qual será o próximo termo da sequência?",
+        "imagem": null,
+        "alternativas": [
+            "21.",
+            "22.",
+            "23.",
+            "24.",
+            "25."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 38,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H16",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "A urbanização brasileira se intensificou principalmente ao longo do século XX, acompanhando mudanças econômicas e a expansão das atividades industriais e de serviços.\n\nUma consequência desse processo foi:",
+        "imagem": null,
+        "alternativas": [
+            "a redução absoluta da população urbana.",
+            "o crescimento das cidades e da população urbana.",
+            "o desaparecimento das atividades industriais.",
+            "o abandono completo das áreas metropolitanas.",
+            "a interrupção das migrações internas."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 39,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H3",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "Um estudante colocou um cubo de gelo em um copo e observou que, após algum tempo, ele se transformou em água líquida.\n\nA transformação observada é denominada:",
+        "imagem": null,
+        "alternativas": [
+            "evaporação.",
+            "condensação.",
+            "sublimação.",
+            "fusão.",
+            "solidificação."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 40,
+        "area": "Linguagens",
+        "lingua": "espanhol",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Lee el siguiente texto.\n\n\"En muchas ciudades, las bicicletas se han convertido en una alternativa para desplazarse. Además de no producir emisiones durante su uso, pueden contribuir a la reducción del tráfico y favorecer la práctica de actividad física.\"\n\nSegún el texto, una ventaja del uso de bicicletas es:",
+        "imagem": null,
+        "alternativas": [
+            "aumento de las emisiones contaminantes.",
+            "reducción del tráfico y posibilidad de realizar actividad física.",
+            "necesidad de utilizar más combustible.",
+            "aumento obligatorio del tiempo de desplazamiento.",
+            "eliminación de todos los medios de transporte."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 41,
+        "area": "Linguagens",
+        "lingua": null,
+        "habilidade": "H27",
+        "competencia": "C8",
+        "dificuldade": "Média",
+        "enunciado": "Leia a frase.\n\n\"Os alunos estudaram bastante, portanto estavam preparados para a avaliação.\"\n\nO termo \"portanto\" estabelece uma relação de:",
+        "imagem": null,
+        "alternativas": [
+            "oposição.",
+            "causa.",
+            "condição.",
+            "conclusão.",
+            "comparação."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 42,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Uma turma possui 30 estudantes. Desses, 18 são mulheres. Qual é a porcentagem da turma formada por mulheres?",
+        "imagem": null,
+        "alternativas": [
+            "40%.",
+            "50%.",
+            "60%.",
+            "70%.",
+            "80%."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 43,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H23",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Um objeto de metal é colocado sob o Sol e, após algum tempo, sua temperatura aumenta. Esse fenômeno ocorre porque o objeto recebe energia térmica do ambiente.\n\nA transferência de calor diretamente por meio de ondas eletromagnéticas é denominada:",
+        "imagem": null,
+        "alternativas": [
+            "condução.",
+            "convecção.",
+            "irradiação.",
+            "solidificação.",
+            "vaporização."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 44,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H25",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "A cultura de uma sociedade é construída por meio de práticas, valores, símbolos, conhecimentos e costumes compartilhados pelos seus integrantes. Esses elementos podem se modificar ao longo do tempo.\n\nA partir dessa perspectiva, é correto afirmar que a cultura:",
+        "imagem": null,
+        "alternativas": [
+            "é exatamente igual em todas as sociedades.",
+            "é imutável e não sofre influência histórica.",
+            "é construída socialmente e pode se transformar.",
+            "depende exclusivamente de fatores biológicos.",
+            "existe apenas em sociedades urbanas."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 45,
+        "area": "Linguagens",
+        "lingua": "ingles",
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Read the following text.\n\n\"Water is essential for life, but it is also a limited resource. Simple actions, such as turning off the tap while brushing your teeth and repairing leaks, can help reduce unnecessary water consumption.\"\n\nThe text encourages people to:",
+        "imagem": null,
+        "alternativas": [
+            "use more water in their daily activities.",
+            "avoid repairing leaking pipes.",
+            "adopt simple actions to reduce water consumption.",
+            "stop using water completely.",
+            "replace water with other liquids."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 46,
+        "area": "Matemática",
+        "lingua": null,
+        "habilidade": "H12",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "Uma dívida de R$ 500,00 será dividida igualmente entre 4 pessoas. Quanto cada pessoa deverá pagar?",
+        "imagem": null,
+        "alternativas": [
+            "R$ 100,00.",
+            "R$ 115,00.",
+            "R$ 120,00.",
+            "R$ 125,00.",
+            "R$ 150,00."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 47,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H24",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Uma pessoa empurra uma caixa sobre um piso horizontal. Enquanto a caixa se movimenta, uma força de atrito atua no sentido contrário ao movimento.\n\nA principal consequência dessa força sobre o movimento da caixa é:",
+        "imagem": null,
+        "alternativas": [
+            "favorecer sempre a aceleração da caixa.",
+            "opor-se ao movimento relativo entre as superfícies.",
+            "eliminar completamente a massa da caixa.",
+            "aumentar obrigatoriamente a velocidade da caixa.",
+            "transformar a caixa em um corpo sem peso."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 48,
+        "area": "Ciências Humanas",
+        "lingua": null,
+        "habilidade": "H22",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "No início do século XX, movimentos de trabalhadores passaram a reivindicar melhores condições de trabalho, redução da jornada e aumento dos salários. Essas reivindicações estavam relacionadas às condições enfrentadas pelos trabalhadores nas sociedades industrializadas.\n\nEsses movimentos demonstram:",
+        "imagem": null,
+        "alternativas": [
+            "a inexistência de conflitos entre trabalhadores e empregadores.",
+            "a organização coletiva dos trabalhadores em defesa de seus interesses.",
+            "a rejeição de qualquer forma de organização social.",
+            "o desaparecimento das desigualdades econômicas.",
+            "a ausência de transformações nas relações de trabalho."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 49,
+        "area": "Linguagens",
+        "lingua": "portugues",
+        "habilidade": "H19",
+        "competencia": "C5",
+        "dificuldade": "Fácil",
+        "enunciado": "Leia o trecho.\n\n\"A menina correu para alcançar o ônibus. Quando chegou ao ponto, porém, o veículo já havia partido.\"\n\nA palavra \"porém\" poderia ser substituída, sem alteração significativa do sentido, por:",
+        "imagem": null,
+        "alternativas": [
+            "portanto.",
+            "porque.",
+            "entretanto.",
+            "assim.",
+            "consequentemente."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 50,
+        "area": "Ciências da Natureza",
+        "lingua": null,
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Uma substância apresenta pH igual a 3 em uma solução aquosa. Considerando a escala de pH, essa solução é classificada como:",
+        "imagem": null,
+        "alternativas": [
+            "fortemente básica.",
+            "fracamente básica.",
+            "neutra.",
+            "ácida.",
+            "sem propriedades químicas."
+        ],
+        "resposta": "D",
+        "comentario": ""
     }
+
+
 ]
