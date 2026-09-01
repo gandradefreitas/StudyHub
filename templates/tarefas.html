@@ -1,89 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='global.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/flash_messages.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='paginas/tarefas.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    >
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/tarefas.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Tarefas</title>
-
 </head>
-
-
-<body
-    class="sidebar-toggle"
-    data-tema="{{ usuario['tema'] }}"
->
+<body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
     {% include "componentes/sidebar.html" %}
 
     {% include "componentes/header_dashboard.html" %}
+
     <main class="tarefas-page">
-
-
-
 
         <section class="tarefas-cabecalho">
 
             <div class="tarefas-cabecalho-info">
 
-                <span class="tarefas-subtitulo">
-                    ORGANIZAÇÃO
-                </span>
+                <span class="tarefas-subtitulo">ORGANIZAÇÃO</span>
 
+                <h1>Minhas Tarefas</h1>
 
-                <h1>
-                    Minhas Tarefas
-                </h1>
-
-
-                <p>
-                    Organize suas atividades e acompanhe seu progresso.
-                </p>
+                <p>Organize suas atividades e acompanhe seu progresso.</p>
 
             </div>
 
-
-            <a
-                href="{{ url_for('nova_tarefa') }}"
-                class="tarefas-botao-nova"
-            >
+            <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova">
                 <i class="bi bi-plus-lg"></i>
                 Nova tarefa
             </a>
 
         </section>
-
 
         <section class="tarefas-lista">
 
@@ -95,10 +47,7 @@
 
                         <div class="tarefa-informacoes">
 
-                            <h3>
-                                {{ tarefa["descricao"] }}
-                            </h3>
-
+                            <h3>{{ tarefa["descricao"] }}</h3>
 
                             {% if tarefa["concluida"] == 1 %}
 
@@ -128,10 +77,7 @@
                         <div class="tarefa-acoes">
 
 
-                            <a
-                                href="{{ url_for('editar_tarefa', id_tarefa=tarefa['id']) }}"
-                                class="tarefa-acao tarefa-acao-editar"
-                            >
+                            <a href="{{ url_for('editar_tarefa', id_tarefa=tarefa['id']) }}" class="tarefa-acao tarefa-acao-editar">
 
                                 <i class="bi bi-pencil-square"></i>
 
@@ -140,15 +86,9 @@
                             </a>
 
 
-                            <form
-                                method="POST"
-                                action="{{ url_for('concluir_tarefa', id_tarefa=tarefa['id']) }}"
-                            >
+                            <form method="POST" action="{{ url_for('concluir_tarefa', id_tarefa=tarefa['id']) }}">
 
-                                <button
-                                    type="submit"
-                                    class="tarefa-acao tarefa-acao-concluir"
-                                >
+                                <button type="submit" class="tarefa-acao tarefa-acao-concluir">
 
                                     {% if tarefa["concluida"] == 0 %}
 
@@ -169,14 +109,9 @@
                             </form>
 
 
-                            <form
-                                method="POST"
-                                action="{{ url_for('excluir_tarefa', id_tarefa=tarefa['id']) }}"
-                            >
+                            <form method="POST" action="{{ url_for('excluir_tarefa', id_tarefa=tarefa['id']) }}">
 
-                                <button
-                                    type="submit"
-                                    class="tarefa-acao tarefa-acao-excluir"
+                                <button type="submit" class="tarefa-acao tarefa-acao-excluir"
                                     onclick="return confirm('Deseja realmente excluir esta tarefa?')"
                                 >
 
@@ -195,29 +130,17 @@
 
                 {% endfor %}
 
-
             {% else %}
-
 
                 <div class="tarefas-vazio">
 
                     <i class="bi bi-check2-square"></i>
 
+                    <h2>Nenhuma tarefa cadastrada</h2>
 
-                    <h2>
-                        Nenhuma tarefa cadastrada
-                    </h2>
+                    <p>Crie sua primeira tarefa para começar a organizar suas atividades.</p>
 
-
-                    <p>
-                        Crie sua primeira tarefa para começar a organizar suas atividades.
-                    </p>
-
-
-                    <a
-                        href="{{ url_for('nova_tarefa') }}"
-                        class="tarefas-botao-nova"
-                    >
+                    <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova">
 
                         <i class="bi bi-plus-lg"></i>
 
@@ -226,7 +149,6 @@
                     </a>
 
                 </div>
-
 
             {% endif %}
 
@@ -240,5 +162,4 @@
     ></script>
 
 </body>
-
 </html>

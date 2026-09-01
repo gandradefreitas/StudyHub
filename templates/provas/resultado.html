@@ -1,53 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='global.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='paginas/provas/resultado.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    >
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/provas/resultado.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Resultado da prova</title>
-
 </head>
 
-
-<body
-    class="sidebar-toggle"
-    data-tema="{{ usuario['tema'] }}"
->
-
+<body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
 {% include "componentes/sidebar.html" %}
 
 {% include "componentes/header_dashboard.html" %}
 
-
 <main class="resultado-prova">
-
 
     <!-- =====================================================
          RESULTADO PRINCIPAL
@@ -55,14 +24,9 @@
 
     <section class="card-resultado">
 
-
-        <h1>
-            Resultado da prova
-        </h1>
-
+        <h1>Resultado da prova</h1>
 
         <div class="resultado-dados">
-
 
             <!-- DESEMPENHO -->
 
@@ -83,33 +47,21 @@
                 {% endif %}
 
 
-                <div
-                    id="grafico"
-                    class="grafico-desempenho"
-                    data-porcentagem="{{ resultado.porcentagem }}"
+                <div id="grafico" class="grafico-desempenho" data-porcentagem="{{ resultado.porcentagem }}"
                     style="
                         --porcentagem: 0;
                         --cor: {{ cor }};
                     "
                 >
-
-                    <div class="valor-desempenho">
-
-                        {{ resultado.porcentagem }}%
-
-                    </div>
+                    <div class="valor-desempenho">{{ resultado.porcentagem }}%</div>
 
                 </div>
 
             </div>
 
-
             <!-- NOME DA PROVA -->
 
-            <h2>
-                ENEM 2025
-            </h2>
-
+            <h2>ENEM 2025</h2>
 
             <!-- MENSAGEM -->
 
@@ -156,11 +108,7 @@
 
                 Aproveitamento:
 
-                <strong>
-
-                    {{ resultado.porcentagem }}%
-
-                </strong>
+                <strong>{{ resultado.porcentagem }}%</strong>
 
             </p>
 
@@ -171,17 +119,11 @@
 
                 Tempo utilizado:
 
-                <strong>
-
-                    {{ resultado.tempo_gasto }}
-
-                </strong>
+                <strong>{{ resultado.tempo_gasto }}</strong>
 
             </p>
 
-
         </div>
-
 
         <!-- =================================================
              ESTATÍSTICAS
@@ -189,48 +131,31 @@
 
         <div class="cards-estatisticas">
 
-
             <div class="card-estatistica">
 
-                <span>
-                    Acertos
-                </span>
+                <span>Acertos</span>
 
-                <strong>
-                    {{ resultado.acertos }}
-                </strong>
+                <strong>{{ resultado.acertos }}</strong>
 
             </div>
 
-
             <div class="card-estatistica">
 
-                <span>
-                    Erros
-                </span>
+                <span>Erros</span>
 
-                <strong>
-                    {{ resultado.erros }}
-                </strong>
+                <strong>{{ resultado.erros }}</strong>
 
             </div>
 
-
             <div class="card-estatistica">
 
-                <span>
-                    Não respondidas
-                </span>
+                <span>Não respondidas</span>
 
-                <strong>
-                    {{ resultado.nao_respondidas }}
-                </strong>
+                <strong>{{ resultado.nao_respondidas }}</strong>
 
             </div>
-
 
         </div>
-
 
     </section>
 
@@ -365,11 +290,7 @@
 
     <section class="acoes-resultado">
 
-
-        <a
-            href="{{ url_for('pagina_provas') }}"
-            class="botao-resultado botao-secundario"
-        >
+        <a href="{{ url_for('pagina_provas') }}" class="botao-resultado botao-secundario">
 
             <i class="bi bi-arrow-left-circle"></i>
 
@@ -377,25 +298,18 @@
 
         </a>
 
-
         {% if resultado.get('prova_id') %}
 
-            <a
-                href="{{ url_for('visualizar_prova', id_prova=resultado['prova_id']) }}"
-                class="botao-resultado botao-principal"
-            >
+            <a href="{{ url_for('visualizar_prova', id_prova=resultado['prova_id']) }}" class="botao-resultado botao-principal">
                 <i class="bi bi-arrow-repeat"></i>
                 Refazer prova
             </a>
 
         {% endif %}
 
-
     </section>
 
-
 </main>
-
 
 <script
     src="{{ url_for('static', filename='js/provas/resultado.js') }}"
@@ -405,7 +319,5 @@
     src="{{ url_for('static', filename='js/dashboard.js') }}"
 ></script>
 
-
 </body>
-
 </html>

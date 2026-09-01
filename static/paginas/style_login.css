@@ -4,7 +4,7 @@
    RESET
 ========================== */
 
-body{
+body {
 
     font-family: "Poppins", sans-serif;
 
@@ -19,7 +19,7 @@ body{
    HEADER
 ========================== */
 
-.header-login{
+.header-login {
 
     background: var(--cor-primaria);
 
@@ -32,7 +32,7 @@ body{
     z-index:1000;
 }
 
-.header-conteudo{
+.header-conteudo {
 
     height:70px;
 
@@ -45,7 +45,7 @@ body{
     align-items:center;
 }
 
-.logo{
+.logo {
 
     display:flex;
 
@@ -56,14 +56,14 @@ body{
     text-decoration:none;
 }
 
-.logo i{
+.logo i {
 
     color:var(--cor-texto-claro);
 
     font-size:2rem;
 }
 
-.logo span{
+.logo span {
 
     color:var(--cor-texto-claro);
 
@@ -71,6 +71,7 @@ body{
 
     font-weight:700;
 }
+
 /* ==========================
    MENSAGENS
 ========================== */
@@ -95,8 +96,6 @@ body{
 
 }
 
-
-
 /* ERRO */
 
 .mensagem-erro {
@@ -109,8 +108,6 @@ body{
 
 }
 
-
-
 /* SUCESSO */
 
 .mensagem-sucesso {
@@ -122,8 +119,6 @@ body{
     border: 1px solid rgb(34 197 94 / .3);
 
 }
-
-
 
 @keyframes aparecer {
 
@@ -145,11 +140,12 @@ body{
     }
 
 }
+
 /* ==========================
    MOBILE
 ========================== */
 
-.login{
+.login {
 
     min-height:calc(100vh - 70px);
 
@@ -164,7 +160,7 @@ body{
     background:var(--cor-fundo);
 }
 
-.login-card{
+.login-card {
 
     width:100%;
 
@@ -177,7 +173,7 @@ body{
     padding:2rem;
 }
 
-.login-card h1{
+.login-card h1 {
 
     text-align:center;
 
@@ -188,7 +184,7 @@ body{
     margin-bottom:.5rem;
 }
 
-.login-card > p{
+.login-card > p {
 
     text-align:center;
 
@@ -199,7 +195,7 @@ body{
     margin-bottom:2rem;
 }
 
-.campo{
+.campo {
 
     display:flex;
 
@@ -208,7 +204,7 @@ body{
     margin-bottom:1.25rem;
 }
 
-.campo label{
+.campo label {
 
     margin-bottom:.5rem;
 
@@ -217,7 +213,7 @@ body{
     color:var(--cor-texto);
 }
 
-.campo input{
+.campo input {
 
     width:100%;
 
@@ -236,12 +232,12 @@ body{
     transition:var(--transicao);
 }
 
-.campo input::placeholder{
+.campo input::placeholder {
 
     color:var(--cor-texto-secundario);
 }
 
-.campo input:focus{
+.campo input:focus {
 
     outline:none;
 
@@ -250,7 +246,7 @@ body{
     box-shadow:0 0 0 4px rgb(31 69 237 / .15);
 }
 
-button{
+button {
 
     width:100%;
 
@@ -273,14 +269,14 @@ button{
     transition:var(--transicao);
 }
 
-button:hover{
+button:hover {
 
     background:var(--cor-secundaria);
 
     transform:translateY(-2px);
 }
 
-.cadastro{
+.cadastro {
 
     margin-top:1.5rem;
 
@@ -289,7 +285,7 @@ button:hover{
     color:var(--cor-texto-secundario);
 }
 
-.cadastro a{
+.cadastro a {
 
     color:var(--cor-primaria);
 
@@ -298,7 +294,7 @@ button:hover{
     font-weight:600;
 }
 
-.cadastro a:hover{
+.cadastro a:hover {
 
     text-decoration:underline;
 }
@@ -307,7 +303,7 @@ button:hover{
    TABLET
 ========================== */
 
-@media (min-width:768px){
+@media (min-width:768px) {
 
     .login{
 
@@ -331,7 +327,7 @@ button:hover{
    DESKTOP
 ========================== */
 
-@media (min-width:1024px){
+@media (min-width:1024px) {
 
     .login-card{
 
@@ -350,8 +346,3 @@ button:hover{
         font-size:1.05rem;
     }
 }
-
-
-
-
-

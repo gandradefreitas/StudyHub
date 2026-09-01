@@ -19,9 +19,7 @@
         {% endblock %}
     </title>
 </head>
-<body class="{{ classe_body | default('sidebar-fixa') }}"
-      data-tema="{{ usuario['tema'] if usuario else 'sistema' }}">
-
+<body class="{{ classe_body | default('sidebar-fixa') }}" data-tema="{{ usuario['tema'] if usuario else 'sistema' }}">
 
     <div class="dashboard">
 
@@ -42,7 +40,8 @@
     {% block scripts %}
 
     {% endblock %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 </body>
 </html>

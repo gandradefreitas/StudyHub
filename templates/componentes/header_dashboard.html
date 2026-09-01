@@ -1,10 +1,7 @@
-
 <header class="header-dashboard">
-
 
     <div class="header-esquerda">
         <button id="btn-menu" class="btn-menu">☰</button>
-
     </div>
 
     {% if mostrar_perfil %}
@@ -13,15 +10,9 @@
 
         <a href="{{ url_for('pagina_configuracoes') }}" class="perfil">
 
-            <span class="perfil-nome">
-                {{ usuario["nome"] }}
-            </span>
+            <span class="perfil-nome">{{ usuario["nome"] }}</span>
 
-            <div class="avatar">
-
-                {{ usuario["nome"][0] }}
-
-            </div>
+            <div class="avatar">{{ usuario["nome"][0] }}</div>
 
         </a>
 

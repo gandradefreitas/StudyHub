@@ -1,27 +1,20 @@
 {% extends "base.html" %}
 
-
 {% block titulo %}
 
 Dashboard | StudyHub
 
 {% endblock %}
 
-
 {% block css %}
 
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='paginas/style_dashboard.css') }}"
->
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/style_dashboard.css') }}">
 
 {% endblock %}
-
 
 {% block conteudo %}
 
 <main class="dashboard-page">
-
 
     <!-- =========================================
          BOAS-VINDAS
@@ -35,18 +28,13 @@ Dashboard | StudyHub
                 Seu painel de estudos
             </span>
 
-            <h1>
-                Olá, {{ usuario["nome"] }}! 👋
-            </h1>
+            <h1>Olá, {{ usuario["nome"] }}! 👋</h1>
 
-            <p>
-                Acompanhe seus estudos, tarefas e progresso.
-            </p>
+            <p>Acompanhe seus estudos, tarefas e progresso.</p>
 
         </div>
 
     </section>
-
 
     <!-- =========================================
          CARDS DE RESUMO
@@ -83,7 +71,6 @@ Dashboard | StudyHub
 
         </article>
 
-
         <!-- TAREFAS PENDENTES -->
 
         <article class="dashboard-card-resumo">
@@ -111,7 +98,6 @@ Dashboard | StudyHub
             </div>
 
         </article>
-
 
         <!-- TAREFAS CONCLUÍDAS -->
 
@@ -141,15 +127,11 @@ Dashboard | StudyHub
 
         </article>
 
-
         <!-- DESEMPENHO -->
 
         <article class="dashboard-card-resumo">
 
-            <a
-                href="{{ url_for('pagina_estatisticas') }}"
-                class="dashboard-card-resumo-link"
-            >
+            <a href="{{ url_for('pagina_estatisticas') }}" class="dashboard-card-resumo-link">
 
                 <div class="dashboard-card-resumo-icone dashboard-icone-desempenho">
 
@@ -203,13 +185,11 @@ Dashboard | StudyHub
 
     </section>
 
-
     <!-- =========================================
          CONTEÚDO PRINCIPAL
     ========================================== -->
 
     <section class="dashboard-conteudo-principal">
-
 
         <!-- PROGRESSO -->
 
@@ -223,24 +203,17 @@ Dashboard | StudyHub
                         DESEMPENHO
                     </span>
 
-                    <h2>
-                        Seu progresso
-                    </h2>
+                    <h2>Seu progresso</h2>
 
                 </div>
 
-                <a
-                    href="{{ url_for('pagina_estatisticas') }}"
-                    class="dashboard-link-painel"
-                >
+                <a href="{{ url_for('pagina_estatisticas') }}" class="dashboard-link-painel">
                     Ver estatísticas
 
                     <i class="bi bi-arrow-right"></i>
-
                 </a>
 
             </div>
-
 
             <div class="dashboard-grafico-progresso">
 
@@ -263,24 +236,17 @@ Dashboard | StudyHub
                         Organização
                     </span>
 
-                    <h2>
-                        Próximas atividades
-                    </h2>
+                    <h2>Próximas atividades</h2>
 
                 </div>
 
-                <a
-                    href="{{ url_for('pagina_tarefas') }}"
-                    class="dashboard-link-painel"
-                >
+                <a href="{{ url_for('pagina_tarefas') }}" class="dashboard-link-painel">
                     Ver tarefas
 
                     <i class="bi bi-arrow-right"></i>
-
                 </a>
 
             </div>
-
 
             {% if tarefas %}
 
@@ -288,10 +254,7 @@ Dashboard | StudyHub
 
                     {% for tarefa in tarefas %}
 
-                        <a
-                            href="{{ url_for('pagina_tarefas') }}"
-                            class="dashboard-atividade"
-                        >
+                        <a href="{{ url_for('pagina_tarefas') }}" class="dashboard-atividade">
 
                             <div class="dashboard-atividade-icone">
 
@@ -299,19 +262,13 @@ Dashboard | StudyHub
 
                             </div>
 
-
                             <div class="dashboard-atividade-informacoes">
 
-                                <h3>
-                                    {{ tarefa[1] }}
-                                </h3>
+                                <h3>{{ tarefa[1] }}</h3>
 
-                                <span>
-                                    Tarefa pendente
-                                </span>
+                                <span>Tarefa pendente</span>
 
                             </div>
-
 
                             <i class="bi bi-arrow-right dashboard-atividade-seta"></i>
 
@@ -327,9 +284,7 @@ Dashboard | StudyHub
 
                     <i class="bi bi-calendar-check"></i>
 
-                    <p>
-                        Nenhuma atividade próxima.
-                    </p>
+                    <p>Nenhuma atividade próxima.</p>
 
                 </div>
 
@@ -337,16 +292,13 @@ Dashboard | StudyHub
 
         </article>
 
-
     </section>
-
 
     <!-- =========================================
          METAS + PRÓXIMA PROVA
     ========================================== -->
 
     <section class="dashboard-conteudo-secundario">
-
 
         <!-- METAS -->
 
@@ -360,22 +312,17 @@ Dashboard | StudyHub
                         Objetivos
                     </span>
 
-                    <h2>
-                        Metas de hoje
-                    </h2>
+                    <h2>Metas de hoje</h2>
 
                 </div>
 
             </div>
 
-
             <div class="dashboard-meta">
 
                 <div class="dashboard-meta-cabecalho">
 
-                    <span>
-                        Tempo de estudo
-                    </span>
+                    <span>Tempo de estudo</span>
 
                     <strong>
                         {{ metas.estudo_atual_formatado }}
@@ -385,11 +332,9 @@ Dashboard | StudyHub
 
                 </div>
 
-
                 <div class="dashboard-barra-progresso">
 
-                    <div
-                        class="dashboard-barra-progresso-preenchimento {% if metas.estudo_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
+                    <div class="dashboard-barra-progresso-preenchimento {% if metas.estudo_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
                         style="width: {{ metas.estudo_porcentagem }}%;"
                     ></div>
 
@@ -397,14 +342,11 @@ Dashboard | StudyHub
 
             </div>
 
-
             <div class="dashboard-meta">
 
                 <div class="dashboard-meta-cabecalho">
 
-                    <span>
-                        Questões
-                    </span>
+                    <span>Questões</span>
 
                     <strong>
                         {{ metas.questoes_atual }}
@@ -414,11 +356,9 @@ Dashboard | StudyHub
 
                 </div>
 
-
                 <div class="dashboard-barra-progresso">
 
-                    <div
-                        class="dashboard-barra-progresso-preenchimento {% if metas.questoes_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
+                    <div class="dashboard-barra-progresso-preenchimento {% if metas.questoes_porcentagem >= 100 %}dashboard-meta-concluida{% endif %}"
                         style="width: {{ metas.questoes_porcentagem }}%;"
                     ></div>
 
@@ -427,7 +367,6 @@ Dashboard | StudyHub
             </div>
 
         </article>
-
 
         <!-- PRÓXIMA PROVA -->
 
@@ -441,16 +380,13 @@ Dashboard | StudyHub
                         Preparação
                     </span>
 
-                    <h2>
-                        Próxima prova
-                    </h2>
+                    <h2>Próxima prova</h2>
 
                 </div>
 
                 <i class="bi bi-file-earmark-text dashboard-icone-painel"></i>
 
             </div>
-
 
             {% if proxima_prova %}
 
@@ -460,30 +396,17 @@ Dashboard | StudyHub
                     {{ proxima_prova["nome"] }}
                 </span>
 
-                <h3>
-                    {{ proxima_prova["dia"] }}
-                </h3>
+                <h3>{{ proxima_prova["dia"] }}</h3>
 
-                <p>
-                    Tempo disponível:
-                    {{ proxima_prova["tempo"] }}
-                </p>
+                <p>Tempo disponível: {{ proxima_prova["tempo"] }}</p>
 
-                <a
-                    href="{{ url_for(
-                        'pagina_provas',
-                        id_prova=proxima_prova['id']
-                    ) }}"
-                    class="dashboard-botao-painel"
-                >
+                <a href="{{ url_for('pagina_provas',id_prova=proxima_prova['id']) }}" class="dashboard-botao-painel">
                     Fazer prova
 
                     <i class="bi bi-arrow-right"></i>
-
                 </a>
 
             </div>
-
 
             {% else %}
 
@@ -493,22 +416,14 @@ Dashboard | StudyHub
                     Tudo em dia
                 </span>
 
-                <h3>
-                    Todas as provas concluídas
-                </h3>
+                <h3>Todas as provas concluídas</h3>
 
-                <p>
-                    Você já realizou todas as provas disponíveis.
-                </p>
+                <p>Você já realizou todas as provas disponíveis.</p>
 
-                <a
-                    href="{{ url_for('pagina_provas') }}"
-                    class="dashboard-botao-painel"
-                >
+                <a href="{{ url_for('pagina_provas') }}" class="dashboard-botao-painel">
                     Ver provas
 
                     <i class="bi bi-arrow-right"></i>
-
                 </a>
 
             </div>
@@ -517,9 +432,7 @@ Dashboard | StudyHub
 
         </article>
 
-
     </section>
-
 
     <!-- =========================================
          PROGRESSO GERAL
@@ -535,23 +448,17 @@ Dashboard | StudyHub
                     Visão geral
                 </span>
 
-                <h2>
-                    Seu progresso no StudyHub
-                </h2>
+                <h2>Seu progresso no StudyHub</h2>
 
             </div>
 
         </div>
 
-
         <div class="dashboard-progresso-geral-grid">
-
 
             <div class="dashboard-indicador-progresso">
 
-                <span>
-                    Questões resolvidas
-                </span>
+                <span>Questões resolvidas</span>
 
                 <strong>
                     {{ resumo["acertos"] + resumo["erros"] }}
@@ -559,55 +466,37 @@ Dashboard | StudyHub
 
             </div>
 
-
             <div class="dashboard-indicador-progresso">
 
-                <span>
-                    Provas realizadas
-                </span>
+                <span>Provas realizadas</span>
 
-                <strong>
-                    {{ resumo["provas"] }}
-                </strong>
+                <strong>{{ resumo["provas"] }}</strong>
 
             </div>
 
-
             <div class="dashboard-indicador-progresso">
 
-                <span>
-                    Taxa de acerto
-                </span>
+                <span>Taxa de acerto</span>
 
-                <strong>
-                    {{ desempenho }}%
-                </strong>
+                <strong>{{ desempenho }}%</strong>
 
             </div>
 
-
             <div class="dashboard-indicador-progresso">
 
-                <span>
-                    Tempo estudado
-                </span>
+                <span>Tempo estudado</span>
 
-                <strong>
-                    {{ horas_estudadas }}
-                </strong>
+                <strong>{{ horas_estudadas }}</strong>
 
             </div>
-
 
         </div>
 
     </section>
 
-
 </main>
 
 {% endblock %}
-
 
 {% block scripts %}
 
@@ -615,35 +504,25 @@ Dashboard | StudyHub
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const canvas = document.getElementById(
-        "graficoProgresso"
-    );
+    const canvas = document.getElementById("graficoProgresso");
 
     if (!canvas) {
         return;
     }
 
-
     carregarGraficoProgresso();
-
 
     async function carregarGraficoProgresso() {
 
         try {
 
-            const resposta = await fetch(
-                "{{ url_for('estatisticas_evolucao') }}?dias=7"
-            );
-
+            const resposta = await fetch("{{ url_for('estatisticas_evolucao') }}?dias=7");
 
             if (!resposta.ok) {
 
-                throw new Error(
-                    "Erro ao carregar evolução."
-                );
+                throw new Error("Erro ao carregar evolução.");
 
             }
-
 
             const dados = await resposta.json();
 
@@ -653,27 +532,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (erro) {
 
-            console.error(
-                "Erro ao carregar gráfico:",
-                erro
-            );
+            console.error("Erro ao carregar gráfico:", erro);
 
         }
 
     }
 
-
     function criarGrafico(dados) {
 
-        const labels = dados.map(
-            item => formatarData(item.data)
-        );
+        const labels = dados.map(item => formatarData(item.data));
 
-
-        const valores = dados.map(
-            item => item.duracao / 60
-        );
-
+        const valores = dados.map(item => item.duracao / 60);
 
         new Chart(canvas, {
 
@@ -729,14 +598,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             label: function(context) {
 
                                 const segundos =
-                                    dados[
-                                        context.dataIndex
-                                    ].duracao;
+                                    dados[context.dataIndex].duracao;
 
-
-                                return formatarDuracao(
-                                    segundos
-                                );
+                                return formatarDuracao(segundos);
 
                             }
 
@@ -821,23 +685,17 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
 
 
-        return `${dia} ${meses[
-            Number(mes) - 1
-        ]}`;
+        return `${dia} ${meses[Number(mes) - 1]}`;
 
     }
 
 
     function formatarDuracao(segundos) {
 
-        const horas = Math.floor(
-            segundos / 3600
-        );
+        const horas = Math.floor(segundos / 3600);
 
 
-        const minutos = Math.floor(
-            (segundos % 3600) / 60
-        );
+        const minutos = Math.floor((segundos % 3600) / 60);
 
 
         if (horas > 0) {

@@ -1,59 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='global.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/flash_messages.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='paginas/configuracoes.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    >
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/configuracoes.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Configurações</title>
-
 </head>
 
-
-<body
-    class="sidebar-toggle"
-    data-tema="{{ usuario['tema'] }}"
->
+<body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
     {% include "componentes/flash_messages.html" %}
     {% include "componentes/sidebar.html" %}
 
-
     <main class="conteudo-configuracoes-pagina">
 
-
         {% include "componentes/header_dashboard.html" %}
-
 
         <!-- =========================================
              CABEÇALHO
@@ -63,22 +28,15 @@
 
             <div class="cabecalho-configuracoes-info">
 
-                <span class="subtitulo-configuracoes">
-                    PREFERÊNCIAS
-                </span>
+                <span class="subtitulo-configuracoes">PREFERÊNCIAS</span>
 
-                <h1>
-                    Configurações
-                </h1>
+                <h1>Configurações</h1>
 
-                <p>
-                    Gerencie sua conta e personalize sua experiência no StudyHub.
-                </p>
+                <p>Gerencie sua conta e personalize sua experiência no StudyHub.</p>
 
             </div>
 
         </section>
-
 
         <!-- =========================================
              CONTEÚDO
@@ -102,70 +60,39 @@
 
                     </div>
 
-
                     <div>
 
-                        <h2>
-                            Conta
-                        </h2>
+                        <h2>Conta</h2>
 
-                        <p>
-                            Gerencie suas informações pessoais.
-                        </p>
+                        <p>Gerencie suas informações pessoais.</p>
 
                     </div>
 
                 </div>
 
-
                 <div class="conteudo-secao-configuracoes">
 
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('atualizar_conta_configuracoes') }}"
-                    >
+                    <form method="POST" action="{{ url_for('atualizar_conta_configuracoes') }}">
 
                         <div class="campo-configuracao">
 
-                            <label for="nome">
-                                Nome
-                            </label>
+                            <label for="nome">Nome</label>
 
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                value="{{ usuario['nome'] }}"
-                                required
-                            >
+                            <input type="text" id="nome" name="nome" value="{{ usuario['nome'] }}" required>
 
                         </div>
-
 
                         <div class="campo-configuracao">
 
-                            <label for="email">
-                                E-mail
-                            </label>
+                            <label for="email">E-mail</label>
 
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value="{{ usuario['email'] }}"
-                                required
-                            >
+                            <input type="email" id="email" name="email" value="{{ usuario['email'] }}" required>
 
                         </div>
-
 
                         <div class="acao-configuracao">
 
-                            <button
-                                type="submit"
-                                class="botao-configuracao"
-                            >
+                            <button type="submit" class="botao-configuracao">
 
                                 <i class="bi bi-check-lg"></i>
 
@@ -177,82 +104,46 @@
 
                     </form>
 
-
                     <div class="divisor-configuracoes"></div>
 
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('alterar_senha_configuracoes') }}"
-                    >
+                    <form method="POST" action="{{ url_for('alterar_senha_configuracoes') }}">
 
                         <div class="informacao-acao-configuracao">
 
-                            <h3>
-                                Alterar senha
-                            </h3>
+                            <h3>Alterar senha</h3>
 
-                            <p>
-                                Atualize sua senha para manter sua conta segura.
-                            </p>
+                            <p>Atualize sua senha para manter sua conta segura.</p>
 
                         </div>
 
 
                         <div class="campo-configuracao">
 
-                            <label for="senha-atual">
-                                Senha atual
-                            </label>
+                            <label for="senha-atual">Senha atual</label>
 
-                            <input
-                                type="password"
-                                id="senha-atual"
-                                name="senha_atual"
-                                required
-                            >
+                            <input type="password" id="senha-atual" name="senha_atual" required>
 
                         </div>
-
 
                         <div class="campo-configuracao">
 
-                            <label for="nova-senha">
-                                Nova senha
-                            </label>
+                            <label for="nova-senha">Nova senha</label>
 
-                            <input
-                                type="password"
-                                id="nova-senha"
-                                name="nova_senha"
-                                required
-                            >
+                            <input type="password" id="nova-senha" name="nova_senha" required>
 
                         </div>
-
 
                         <div class="campo-configuracao">
 
-                            <label for="confirmar-senha">
-                                Confirmar nova senha
-                            </label>
+                            <label for="confirmar-senha">Confirmar nova senha</label>
 
-                            <input
-                                type="password"
-                                id="confirmar-senha"
-                                name="confirmar_senha"
-                                required
-                            >
+                            <input type="password" id="confirmar-senha" name="confirmar_senha" required>
 
                         </div>
-
 
                         <div class="acao-configuracao">
 
-                            <button
-                                type="submit"
-                                class="botao-configuracao-secundario"
-                            >
+                            <button type="submit" class="botao-configuracao-secundario">
 
                                 <i class="bi bi-key"></i>
 
@@ -264,19 +155,15 @@
 
                     </form>
 
-
                 </div>
 
-
             </section>
-
 
             <!-- =========================================
                  APARÊNCIA
             ========================================== -->
 
             <section class="secao-configuracoes">
-
 
                 <div class="cabecalho-secao-configuracoes">
 
@@ -286,50 +173,33 @@
 
                     </div>
 
-
                     <div>
 
-                        <h2>
-                            Aparência
-                        </h2>
+                        <h2>Aparência</h2>
 
-                        <p>
-                            Personalize a aparência do StudyHub.
-                        </p>
+                        <p>Personalize a aparência do StudyHub.</p>
 
                     </div>
 
                 </div>
 
-
                 <div class="conteudo-secao-configuracoes">
-
 
                     <div class="campo-configuracao">
 
-                        <label for="tema">
-                            Tema
-                        </label>
+                        <label for="tema">Tema</label>
 
                         <p class="descricao-campo-configuracao">
                             Escolha como o StudyHub deve aparecer.
                         </p>
 
-
-                        <form
-                            method="POST"
-                            action="{{ url_for('atualizar_aparencia_configuracoes') }}"
-                        >
+                        <form method="POST" action="{{ url_for('atualizar_aparencia_configuracoes') }}">
 
                             <div class="opcoes-tema-configuracoes">
 
-
                                 <label class="opcao-tema-configuracoes">
 
-                                    <input
-                                        type="radio"
-                                        name="tema"
-                                        value="claro"
+                                    <input type="radio" name="tema" value="claro"
 
                                         {% if usuario['tema'] == 'claro' %}
                                             checked
@@ -340,19 +210,13 @@
                                         <i class="bi bi-sun"></i>
                                     </span>
 
-                                    <span>
-                                        Claro
-                                    </span>
+                                    <span>Claro</span>
 
                                 </label>
 
-
                                 <label class="opcao-tema-configuracoes">
 
-                                    <input
-                                        type="radio"
-                                        name="tema"
-                                        value="escuro"
+                                    <input type="radio" name="tema" value="escuro"
 
                                         {% if usuario['tema'] == 'escuro' %}
                                             checked
@@ -363,19 +227,13 @@
                                         <i class="bi bi-moon"></i>
                                     </span>
 
-                                    <span>
-                                        Escuro
-                                    </span>
+                                    <span>Escuro</span>
 
                                 </label>
 
-
                                 <label class="opcao-tema-configuracoes">
 
-                                    <input
-                                        type="radio"
-                                        name="tema"
-                                        value="sistema"
+                                    <input type="radio" name="tema" value="sistema"
 
                                         {% if usuario['tema'] == 'sistema' %}
                                             checked
@@ -386,22 +244,15 @@
                                         <i class="bi bi-display"></i>
                                     </span>
 
-                                    <span>
-                                        Sistema
-                                    </span>
+                                    <span>Sistema</span>
 
                                 </label>
 
-
                             </div>
-
 
                             <div class="acao-configuracao">
 
-                                <button
-                                    type="submit"
-                                    class="botao-configuracao"
-                                >
+                                <button type="submit" class="botao-configuracao">
 
                                     <i class="bi bi-check-lg"></i>
 
@@ -413,22 +264,17 @@
 
                         </form>
 
-
                     </div>
-
 
                 </div>
 
-
             </section>
-
 
             <!-- =========================================
                  METAS
             ========================================== -->
 
             <section class="secao-configuracoes">
-
 
                 <div class="cabecalho-secao-configuracoes">
 
@@ -438,76 +284,41 @@
 
                     </div>
 
-
                     <div>
 
-                        <h2>
-                            Metas
-                        </h2>
+                        <h2>Metas</h2>
 
-                        <p>
-                            Defina seus objetivos diários de estudo.
-                        </p>
+                        <p>Defina seus objetivos diários de estudo.</p>
 
                     </div>
 
                 </div>
 
-
-                <form
-                    action="{{ url_for('atualizar_metas_configuracoes_rota') }}"
-                    method="POST"
-                    class="conteudo-secao-configuracoes"
-                >
-
+                <form action="{{ url_for('atualizar_metas_configuracoes_rota') }}" method="POST" class="conteudo-secao-configuracoes">
 
                     <div class="grid-metas-configuracoes">
 
-
                         <div class="campo-configuracao">
 
-                            <label>
-                                Meta diária de estudo
-                            </label>
+                            <label>Meta diária de estudo</label>
 
                             <p class="descricao-campo-configuracao">
                                 Quanto tempo você pretende estudar por dia?
                             </p>
 
-
                             <div class="campo-com-unidade">
 
-                                <input
-                                    type="number"
-                                    id="meta-estudo-horas"
-                                    name="meta_estudo_horas"
-                                    min="0"
-                                    max="24"
-                                    value="{{ configuracoes['meta_estudo'] // 60 }}"
-                                >
+                                <input type="number" id="meta-estudo-horas" name="meta_estudo_horas" min="0" max="24" value="{{ configuracoes['meta_estudo'] // 60 }}">
 
-                                <span>
-                                    horas
-                                </span>
+                                <span>horas</span>
 
+                                <input type="number" id="meta-estudo-minutos" name="meta_estudo_minutos" min="0" max="59" value="{{ configuracoes['meta_estudo'] % 60 }}">
 
-                                <input
-                                    type="number"
-                                    id="meta-estudo-minutos"
-                                    name="meta_estudo_minutos"
-                                    min="0"
-                                    max="59"
-                                    value="{{ configuracoes['meta_estudo'] % 60 }}"
-                                >
-
-                                <span>
-                                    minutos
-                                </span>
+                                <span>minutos</span>
 
                             </div>
 
                         </div>
-
 
                         <div class="campo-configuracao">
 
@@ -519,35 +330,21 @@
                                 Quantas questões você pretende resolver por dia?
                             </p>
 
-
                             <div class="campo-com-unidade">
 
-                                <input
-                                    type="number"
-                                    id="meta-questoes"
-                                    name="meta_questoes"
-                                    min="1"
-                                    value="{{ configuracoes['meta_questoes'] }}"
-                                >
+                                <input type="number" id="meta-questoes" name="meta_questoes" min="1" value="{{ configuracoes['meta_questoes'] }}">
 
-                                <span>
-                                    questões
-                                </span>
+                                <span>questões</span>
 
                             </div>
 
                         </div>
 
-
                     </div>
-
 
                     <div class="acao-configuracao">
 
-                        <button
-                            type="submit"
-                            class="botao-configuracao"
-                        >
+                        <button type="submit" class="botao-configuracao">
 
                             <i class="bi bi-check-lg"></i>
 
@@ -557,19 +354,15 @@
 
                     </div>
 
-
                 </form>
 
-
             </section>
-
 
             <!-- =========================================
                  DADOS
             ========================================== -->
 
             <section class="secao-configuracoes">
-
 
                 <div class="cabecalho-secao-configuracoes">
 
@@ -579,49 +372,31 @@
 
                     </div>
 
-
                     <div>
 
-                        <h2>
-                            Dados
-                        </h2>
+                        <h2>Dados</h2>
 
-                        <p>
-                            Gerencie os dados armazenados no StudyHub.
-                        </p>
+                        <p>Gerencie os dados armazenados no StudyHub.</p>
 
                     </div>
 
                 </div>
 
-
                 <div class="conteudo-secao-configuracoes">
-
 
                     <div class="acao-dados-configuracoes">
 
                         <div class="informacao-acao-configuracao">
 
-                            <h3>
-                                Exportar dados
-                            </h3>
+                            <h3>Exportar dados</h3>
 
-                            <p>
-                                Baixe uma cópia dos seus dados armazenados no StudyHub.
-                            </p>
+                            <p>Baixe uma cópia dos seus dados armazenados no StudyHub.</p>
 
                         </div>
 
+                        <form action="{{ url_for('exportar_dados') }}" method="GET">
 
-                        <form
-                            action="{{ url_for('exportar_dados') }}"
-                            method="GET"
-                        >
-
-                            <button
-                                type="submit"
-                                class="botao-configuracao-secundario"
-                            >
+                            <button type="submit" class="botao-configuracao-secundario">
 
                                 <i class="bi bi-download"></i>
 
@@ -633,30 +408,20 @@
 
                     </div>
 
-
                     <div class="divisor-configuracoes"></div>
-
 
                     <div class="acao-dados-configuracoes">
 
                         <div class="informacao-acao-configuracao">
 
-                            <h3>
-                                Limpar histórico
-                            </h3>
+                            <h3>Limpar histórico</h3>
 
-                            <p>
-                                Remova seu histórico de estudos e atividades.
-                            </p>
+                            <p>Remova seu histórico de estudos e atividades.</p>
 
                         </div>
 
 
-                        <button
-                            type="button"
-                            id="botao-limpar-historico"
-                            class="botao-configuracao-perigo"
-                        >
+                        <button type="button" id="botao-limpar-historico" class="botao-configuracao-perigo">
 
                             <i class="bi bi-trash"></i>
 
@@ -666,22 +431,15 @@
 
                     </div>
 
-
                 </div>
 
-
             </section>
-
 
             <!-- =========================================
                  MODAL — LIMPAR HISTÓRICO
             ========================================== -->
 
-            <div
-                id="modal-limpar-historico"
-                class="modal-configuracoes"
-                hidden
-            >
+            <div id="modal-limpar-historico" class="modal-configuracoes" hidden>
 
                 <div class="conteudo-modal-configuracoes">
 
@@ -691,10 +449,7 @@
 
                     </div>
 
-
-                    <h2>
-                        Limpar histórico?
-                    </h2>
+                    <h2>Limpar histórico?</h2>
 
 
                     <p>
@@ -703,27 +458,16 @@
                         Essa ação não poderá ser desfeita.
                     </p>
 
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('limpar_historico_rota') }}"
-                    >
+                    <form method="POST" action="{{ url_for('limpar_historico_rota') }}">
 
                         <div class="acoes-modal-configuracoes">
 
-                            <button
-                                type="button"
-                                id="botao-cancelar-historico"
-                                class="botao-configuracao-secundario"
-                            >
+                            <button type="button" id="botao-cancelar-historico" class="botao-configuracao-secundario">
                                 Cancelar
                             </button>
 
 
-                            <button
-                                type="submit"
-                                class="botao-configuracao-perigo"
-                            >
+                            <button type="submit" class="botao-configuracao-perigo">
 
                                 <i class="bi bi-trash"></i>
 
@@ -739,65 +483,43 @@
 
             </div>
 
-
             <!-- =========================================
                  ZONA DE PERIGO
             ========================================== -->
 
-            <section
-                class="secao-configuracoes secao-perigo-configuracoes"
-            >
-
+            <section class="secao-configuracoes secao-perigo-configuracoes">
 
                 <div class="cabecalho-secao-configuracoes">
 
-                    <div
-                        class="icone-secao-configuracoes icone-perigo"
-                    >
+                    <div class="icone-secao-configuracoes icone-perigo">
 
                         <i class="bi bi-exclamation-triangle"></i>
 
                     </div>
 
-
                     <div>
 
-                        <h2>
-                            Zona de perigo
-                        </h2>
+                        <h2>Zona de perigo</h2>
 
-                        <p>
-                            Ações permanentes relacionadas à sua conta.
-                        </p>
+                        <p>Ações permanentes relacionadas à sua conta.</p>
 
                     </div>
 
                 </div>
 
-
                 <div class="conteudo-secao-configuracoes">
-
 
                     <div class="acao-dados-configuracoes">
 
                         <div class="informacao-acao-configuracao">
 
-                            <h3>
-                                Excluir conta
-                            </h3>
+                            <h3>Excluir conta</h3>
 
-                            <p>
-                                Exclui permanentemente sua conta e todos os dados associados.
-                            </p>
+                            <p>Exclui permanentemente sua conta e todos os dados associados.</p>
 
                         </div>
 
-
-                        <button
-                            type="button"
-                            id="botao-excluir-conta"
-                            class="botao-configuracao-perigo"
-                        >
+                        <button type="button" id="botao-excluir-conta" class="botao-configuracao-perigo">
 
                             <i class="bi bi-person-x"></i>
 
@@ -807,22 +529,15 @@
 
                     </div>
 
-
                 </div>
 
-
             </section>
-
 
             <!-- =========================================
                  MODAL — EXCLUIR CONTA
             ========================================== -->
 
-            <div
-                id="modal-excluir-conta"
-                class="modal-configuracoes"
-                hidden
-            >
+            <div id="modal-excluir-conta" class="modal-configuracoes" hidden>
 
                 <div class="conteudo-modal-configuracoes">
 
@@ -832,11 +547,7 @@
 
                     </div>
 
-
-                    <h2>
-                        Excluir conta?
-                    </h2>
-
+                    <h2>Excluir conta?</h2>
 
                     <p>
                         Essa ação é permanente e não poderá ser desfeita.
@@ -844,11 +555,7 @@
                         resultados e respostas de provas serão apagados.
                     </p>
 
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('excluir_conta_configuracoes') }}"
-                    >
+                    <form method="POST" action="{{ url_for('excluir_conta_configuracoes') }}">
 
                         <label for="senha-exclusao">
 
@@ -856,31 +563,15 @@
 
                         </label>
 
-
-                        <input
-                            type="password"
-                            id="senha-exclusao"
-                            name="senha_atual"
-                            required
-                            autocomplete="current-password"
-                        >
-
+                        <input type="password" id="senha-exclusao" name="senha_atual" required autocomplete="current-password">
 
                         <div class="acoes-modal-configuracoes">
 
-                            <button
-                                type="button"
-                                id="botao-cancelar-exclusao"
-                                class="botao-configuracao-secundario"
-                            >
+                            <button type="button" id="botao-cancelar-exclusao" class="botao-configuracao-secundario">
                                 Cancelar
                             </button>
 
-
-                            <button
-                                type="submit"
-                                class="botao-configuracao-perigo"
-                            >
+                            <button type="submit" class="botao-configuracao-perigo">
 
                                 <i class="bi bi-person-x"></i>
 
@@ -896,12 +587,9 @@
 
             </div>
 
-
         </section>
 
-
     </main>
-
 
     <script
         src="{{ url_for('static', filename='js/dashboard.js') }}"
@@ -916,7 +604,5 @@
         src="{{ url_for('static', filename='js/flash_messages.js') }}"
     ></script>
 
-
 </body>
-
 </html>

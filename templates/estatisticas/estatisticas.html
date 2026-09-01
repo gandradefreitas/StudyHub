@@ -1,59 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='global.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/sidebar.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/header_dashboard.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='componentes/flash_messages.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='paginas/estatisticas.css') }}"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    >
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/estatisticas.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Estatísticas</title>
-
 </head>
 
-
-<body
-    class="sidebar-toggle"
-    data-tema="{{ usuario['tema'] }}"
->
-
+<body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
     {% include "componentes/sidebar.html" %}
 
-
     <main class="conteudo-estatisticas-pagina">
 
-
         {% include "componentes/header_dashboard.html" %}
-
 
         <!-- =========================================
              CABEÇALHO
@@ -63,22 +27,15 @@
 
             <div class="cabecalho-estatisticas-info">
 
-                <span class="subtitulo-estatisticas">
-                    DESEMPENHO
-                </span>
+                <span class="subtitulo-estatisticas">DESEMPENHO</span>
 
-                <h1>
-                    Estatísticas
-                </h1>
+                <h1>Estatísticas</h1>
 
-                <p>
-                    Acompanhe sua evolução e seu desempenho nos estudos.
-                </p>
+                <p>Acompanhe sua evolução e seu desempenho nos estudos.</p>
 
             </div>
 
         </section>
-
 
         <!-- =========================================
              CONTEÚDO
@@ -86,13 +43,11 @@
 
         <section class="conteudo-estatisticas">
 
-
             <!-- =========================================
                  RESUMO
             ========================================== -->
 
             <div class="resumo-estatisticas">
-
 
                 <article class="card-estatistica">
 
@@ -108,17 +63,13 @@
                             Horas estudadas
                         </span>
 
-                        <strong
-                            id="estatisticas-horas-estudadas"
-                            class="valor-card-estatistica"
-                        >
+                        <strong id="estatisticas-horas-estudadas" class="valor-card-estatistica">
                             0h 00min
                         </strong>
 
                     </div>
 
                 </article>
-
 
                 <article class="card-estatistica">
 
@@ -134,17 +85,13 @@
                             Questões resolvidas
                         </span>
 
-                        <strong
-                            id="estatisticas-questoes-resolvidas"
-                            class="valor-card-estatistica"
-                        >
+                        <strong id="estatisticas-questoes-resolvidas" class="valor-card-estatistica">
                             0
                         </strong>
 
                     </div>
 
                 </article>
-
 
                 <article class="card-estatistica">
 
@@ -160,17 +107,13 @@
                             Taxa de acerto
                         </span>
 
-                        <strong
-                            id="estatisticas-taxa-acerto"
-                            class="valor-card-estatistica"
-                        >
+                        <strong id="estatisticas-taxa-acerto" class="valor-card-estatistica">
                             0%
                         </strong>
 
                     </div>
 
                 </article>
-
 
                 <article class="card-estatistica">
 
@@ -186,10 +129,7 @@
                             Provas realizadas
                         </span>
 
-                        <strong
-                            id="estatisticas-provas-realizadas"
-                            class="valor-card-estatistica"
-                        >
+                        <strong id="estatisticas-provas-realizadas" class="valor-card-estatistica">
                             0
                         </strong>
 
@@ -197,9 +137,7 @@
 
                 </article>
 
-
             </div>
-
 
             <!-- =========================================
                  EVOLUÇÃO DOS ESTUDOS
@@ -211,43 +149,25 @@
 
                     <div>
 
-                        <h2>
-                            Evolução dos estudos
-                        </h2>
+                        <h2>Evolução dos estudos</h2>
 
-                        <p>
-                            Veja quanto tempo você estudou ao longo dos dias.
-                        </p>
+                        <p>Veja quanto tempo você estudou ao longo dos dias.</p>
 
                     </div>
 
-
                     <div class="navegacao-grafico-estudos">
 
-                        <button
-                            type="button"
-                            id="botao-mes-anterior"
-                            class="botao-navegacao-grafico"
-                            aria-label="Mês anterior"
-                        >
+                        <button type="button" id="botao-mes-anterior" class="botao-navegacao-grafico" aria-label="Mês anterior">
                             <i class="bi bi-chevron-left"></i>
                         </button>
 
 
-                        <strong
-                            id="mes-atual-grafico"
-                            class="mes-atual-grafico"
-                        >
+                        <strong id="mes-atual-grafico" class="mes-atual-grafico">
                             Agosto 2026
                         </strong>
 
 
-                        <button
-                            type="button"
-                            id="botao-mes-proximo"
-                            class="botao-navegacao-grafico"
-                            aria-label="Próximo mês"
-                        >
+                        <button type="button" id="botao-mes-proximo" class="botao-navegacao-grafico" aria-label="Próximo mês">
                             <i class="bi bi-chevron-right"></i>
                         </button>
 
@@ -255,24 +175,19 @@
 
                 </div>
 
-
                 <div class="grafico-estatisticas-estudos">
 
-                    <canvas
-                        id="grafico-estatisticas-estudos"
-                    ></canvas>
+                    <canvas id="grafico-estatisticas-estudos"></canvas>
 
                 </div>
 
             </section>
-
 
             <!-- =========================================
                  DESEMPENHO
             ========================================== -->
 
             <div class="grid-desempenho-estatisticas">
-
 
                 <!-- DESEMPENHO EM QUESTÕES -->
 
@@ -282,126 +197,82 @@
 
                         <div>
 
-                            <h2>
-                                Desempenho em questões
-                            </h2>
+                            <h2>Desempenho em questões</h2>
 
-                            <p>
-                                Seu aproveitamento nas questões resolvidas.
-                            </p>
+                            <p>Seu aproveitamento nas questões resolvidas.</p>
 
                         </div>
 
                     </div>
 
-
                     <div class="resumo-questoes-estatisticas">
 
-
                         <div class="indicador-questoes-estatisticas">
 
-                            <span>
-                                Resolvidas
-                            </span>
+                            <span>Resolvidas</span>
 
-                            <strong
-                                id="estatisticas-total-questoes"
-                                class="valor-resolvidas"
-                            >
+                            <strong id="estatisticas-total-questoes" class="valor-resolvidas">
                                 0
                             </strong>
 
                         </div>
 
-
                         <div class="indicador-questoes-estatisticas">
 
-                            <span>
-                                Acertos
-                            </span>
+                            <span>Acertos</span>
 
-                            <strong
-                                id="estatisticas-total-acertos"
-                                class="valor-acertos"
-                            >
+                            <strong id="estatisticas-total-acertos" class="valor-acertos">
                                 0
                             </strong>
 
                         </div>
 
-
                         <div class="indicador-questoes-estatisticas">
 
-                            <span>
-                                Erros
-                            </span>
+                            <span>Erros</span>
 
-                            <strong
-                                id="estatisticas-total-erros"
-                                class="valor-erros"
-                            >
+                            <strong id="estatisticas-total-erros" class="valor-erros">
                                 0
                             </strong>
 
                         </div>
 
-
                         <div class="indicador-questoes-estatisticas">
 
-                            <span>
-                                Aproveitamento
-                            </span>
+                            <span>Aproveitamento</span>
 
-                            <strong
-                                id="estatisticas-aproveitamento"
-                                class="valor-aproveitamento"
-                            >
+                            <strong id="estatisticas-aproveitamento" class="valor-aproveitamento">
                                 0%
                             </strong>
 
                         </div>
 
-
                     </div>
-
 
                     <div class="distribuicao-questoes-estatisticas">
 
 
                         <div class="barra-distribuicao-questoes-estatisticas">
 
-                            <div
-                                id="estatisticas-barra-acertos"
-                                class="barra-questoes-acertos"
-                            ></div>
+                            <div id="estatisticas-barra-acertos" class="barra-questoes-acertos"></div>
 
-                            <div
-                                id="estatisticas-barra-erros"
-                                class="barra-questoes-erros"
-                            ></div>
+                            <div id="estatisticas-barra-erros" class="barra-questoes-erros"></div>
 
-                            <div
-                                id="estatisticas-barra-nao-respondidas"
-                                class="barra-questoes-nao-respondidas"
-                            ></div>
+                            <div id="estatisticas-barra-nao-respondidas" class="barra-questoes-nao-respondidas"></div>
 
                         </div>
 
-
                         <div class="legenda-distribuicao-questoes-estatisticas">
 
-                            <span>
-                                <i class="bi bi-circle-fill"></i>
+                            <span><i class="bi bi-circle-fill"></i>
                                 Acertos
                             </span>
 
-                            <span>
-                                <i class="bi bi-circle-fill"></i>
+                            <span><i class="bi bi-circle-fill"></i>
                                 Erros
                             </span>
 
-                            <span>
-                                <i class="bi bi-circle-fill"></i>
+                            <span><i class="bi bi-circle-fill"></i>
                                 Não respondidas
                             </span>
 
@@ -411,7 +282,6 @@
 
                 </section>
 
-
                 <!-- DESEMPENHO POR ÁREA -->
 
                 <section class="secao-estatisticas">
@@ -420,23 +290,15 @@
 
                         <div>
 
-                            <h2>
-                                Desempenho por área
-                            </h2>
+                            <h2>Desempenho por área</h2>
 
-                            <p>
-                                Veja onde você apresenta melhor desempenho.
-                            </p>
+                            <p>Veja onde você apresenta melhor desempenho.</p>
 
                         </div>
 
                     </div>
 
-
-                    <div
-                        id="estatisticas-desempenho-areas"
-                        class="desempenho-areas-estatisticas"
-                    >
+                    <div id="estatisticas-desempenho-areas" class="desempenho-areas-estatisticas">
 
                         <!-- Preenchido pelo JavaScript -->
 
@@ -444,9 +306,7 @@
 
                 </section>
 
-
             </div>
-
 
             <!-- =========================================
                  ANÁLISE
@@ -458,30 +318,21 @@
 
                     <div>
 
-                        <h2>
-                            Seu desempenho
-                        </h2>
+                        <h2>Seu desempenho</h2>
 
-                        <p>
-                            Um resumo dos seus pontos fortes e áreas de atenção.
-                        </p>
+                        <p>Um resumo dos seus pontos fortes e áreas de atenção.</p>
 
                     </div>
 
                 </div>
 
-
-                <div
-                    id="estatisticas-analise-desempenho"
-                    class="analise-desempenho-estatisticas"
-                >
+                <div id="estatisticas-analise-desempenho" class="analise-desempenho-estatisticas">
 
                     <!-- Preenchido pelo JavaScript -->
 
                 </div>
 
             </section>
-
 
             <!-- =========================================
                  PROVAS
@@ -493,23 +344,15 @@
 
                     <div>
 
-                        <h2>
-                            Desempenho nas provas
-                        </h2>
+                        <h2>Desempenho nas provas</h2>
 
-                        <p>
-                            Acompanhe seu histórico de provas realizadas.
-                        </p>
+                        <p>Acompanhe seu histórico de provas realizadas.</p>
 
                     </div>
 
                 </div>
 
-
-                <div
-                    id="estatisticas-historico-provas"
-                    class="historico-provas-estatisticas"
-                >
+                <div id="estatisticas-historico-provas" class="historico-provas-estatisticas">
 
                     <!-- Preenchido pelo JavaScript -->
 
@@ -517,9 +360,7 @@
 
             </section>
 
-
         </section>
-
 
     </main>
 
@@ -536,7 +377,5 @@
         src="{{ url_for('static', filename='js/estatisticas.js') }}"
     ></script>
 
-
 </body>
-
 </html>
