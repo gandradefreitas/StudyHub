@@ -1,14 +1,6 @@
-from database.conexao import conectar
+from studyhub.database.conexao import conectar
 
-
-def registrar_resposta_questao(
-    usuario_id,
-    questao_numero,
-    resposta,
-    correta,
-    data_resposta,
-    proxima_tentativa
-):
+def registrar_resposta_questao(usuario_id,questao_numero,resposta,correta,data_resposta,proxima_tentativa):
 
     conexao = conectar()
 
@@ -55,10 +47,7 @@ def registrar_resposta_questao(
 
     conexao.close()
 
-def obter_ultima_resposta_questao(
-    usuario_id,
-    questao_numero
-):
+def obter_ultima_resposta_questao(usuario_id,questao_numero):
 
     conexao = conectar()
 

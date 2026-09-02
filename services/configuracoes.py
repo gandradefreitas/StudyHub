@@ -1,24 +1,7 @@
-from studyhub.database.usuario_repository import (
-    obter_usuario_por_id,
-    obter_configuracoes,
-    atualizar_usuario,
-    atualizar_senha,
-    salvar_tema,
-    salvar_metas,
-    excluir_usuario
-)
-from studyhub.security.validacoes import (
-    validar_nome,
-    validar_email
-)
-from studyhub.security.hash import (
-    gerar_hash,
-    verificar_senha
-)
-
-from studyhub.security.validacoes import (
-    validar_senha
-)
+from studyhub.database.usuario_repository import (obter_usuario_por_id,obter_configuracoes,atualizar_usuario,atualizar_senha,salvar_tema,salvar_metas,excluir_usuario)
+from studyhub.security.validacoes import (validar_nome,validar_email)
+from studyhub.security.hash import (gerar_hash,verificar_senha)
+from studyhub.security.validacoes import (validar_senha)
 
 TEMAS_PERMITIDOS = {
     "claro",
@@ -28,13 +11,9 @@ TEMAS_PERMITIDOS = {
 
 def obter_dados_configuracoes(usuario_id):
 
-    usuario = obter_usuario_por_id(
-        usuario_id
-    )
+    usuario = obter_usuario_por_id(usuario_id)
 
-    configuracoes = obter_configuracoes(
-        usuario_id
-    )
+    configuracoes = obter_configuracoes(usuario_id)
 
     return {
         "usuario": usuario,
@@ -55,34 +34,20 @@ def atualizar_dados_conta(usuario_id, nome, email):
         return False, mensagem
 
 
-    atualizar_usuario(
-        usuario_id,
-        nome,
-        email
-    )
+    atualizar_usuario(usuario_id,nome,email)
 
     return True, "Dados atualizados com sucesso."
 
-def alterar_senha_usuario(
-    usuario_id,
-    senha_atual,
-    nova_senha,
-    confirmar_senha
-):
+def alterar_senha_usuario(usuario_id,senha_atual,nova_senha,confirmar_senha):
 
-    usuario = obter_usuario_por_id(
-        usuario_id
-    )
+    usuario = obter_usuario_por_id(usuario_id)
 
     if not usuario:
 
         return False, "Usuário não encontrado."
 
 
-    senha_correta = verificar_senha(
-        senha_atual,
-        usuario["senha"]
-    )
+    senha_correta = verificar_senha(senha_atual,usuario["senha"])
 
     if not senha_correta:
 
@@ -94,25 +59,17 @@ def alterar_senha_usuario(
         return False, "As novas senhas não coincidem."
 
 
-    valido, mensagem = validar_senha(
-        nova_senha
-    )
+    valido, mensagem = validar_senha(nova_senha)
 
     if not valido:
 
         return False, mensagem
 
 
-    senha_hash = gerar_hash(
-        nova_senha
-    )
+    senha_hash = gerar_hash(nova_senha)
 
 
-    atualizar_senha(
-        usuario_id,
-        senha_hash
-    )
-
+    atualizar_senha(usuario_id,senha_hash)
 
     return True, "Senha alterada com sucesso."
 
@@ -122,20 +79,11 @@ def alterar_tema(usuario_id, tema):
 
         return False, "Tema inválido."
 
-
-    salvar_tema(
-        usuario_id,
-        tema
-    )
-
+    salvar_tema(usuario_id,tema)
 
     return True, "Aparência atualizada com sucesso."
 
-def atualizar_metas(
-    usuario_id,
-    meta_estudo,
-    meta_questoes
-):
+def atualizar_metas(usuario_id,meta_estudo,meta_questoes):
 
     try:
 
@@ -156,44 +104,28 @@ def atualizar_metas(
 
         return False, "A meta de questões deve ser maior que zero."
 
-
-    salvar_metas(
-        usuario_id,
-        meta_estudo,
-        meta_questoes
-    )
-
+    salvar_metas(usuario_id,meta_estudo,meta_questoes)
 
     return True, "Metas atualizadas com sucesso."
 
 
-def excluir_conta_usuario(
-    usuario_id,
-    senha_atual
-):
+def excluir_conta_usuario(usuario_id,senha_atual):
 
-    usuario = obter_usuario_por_id(
-        usuario_id
-    )
+    usuario = obter_usuario_por_id(usuario_id)
 
     if not usuario:
 
         return False, "Usuário não encontrado."
 
 
-    senha_correta = verificar_senha(
-        senha_atual,
-        usuario["senha"]
-    )
+    senha_correta = verificar_senha(senha_atual,usuario["senha"])
 
     if not senha_correta:
 
         return False, "A senha atual está incorreta."
 
 
-    sucesso = excluir_usuario(
-        usuario_id
-    )
+    sucesso = excluir_usuario(usuario_id )
 
     if not sucesso:
 

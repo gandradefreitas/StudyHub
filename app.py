@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response
 import json
-from controllers.web.configuracoes_controller import carregar_configuracoes, atualizar_conta, alterar_senha, \
+from studyhub.controllers.web.configuracoes_controller import carregar_configuracoes, atualizar_conta, alterar_senha, \
     atualizar_metas_configuracoes
-from database.conexao import conectar
+from studyhub.database.conexao import conectar
 from studyhub.controllers.estudo_controller import iniciar_estudo_controller, finalizar_estudo_controller, \
     obter_estudo_ativo_controller
 from studyhub.controllers.web.tarefa_controller import  editar_tarefa_controller, excluir_tarefa_controller
@@ -12,47 +12,27 @@ from studyhub.controllers.web.tarefa_controller import adicionar_tarefa_controll
 from studyhub.services.dashboard_service import carregar_dashboard
 from studyhub.controllers.web.cadastro_controller import realizar_cadastro
 from studyhub.controllers.web.login_controller import realizar_login
-from services.provas_service import obter_prova
-from services.provas_service import listar_provas
-from controllers.resultados_controller import obter_historico
-from database.estudos_repository import obter_estudos_por_data, obter_total_segundos
-from database.tarefa_repository import obter_tarefas_por_data
+from studyhub.services.provas_service import obter_prova
+from studyhub.services.provas_service import listar_provas
+from studyhub.controllers.resultados_controller import obter_historico
+from studyhub.database.estudos_repository import obter_estudos_por_data, obter_total_segundos
+from studyhub.database.tarefa_repository import obter_tarefas_por_data
 from studyhub.database.resultados_repository import obter_resultados_por_data, converter_tempo_para_segundos, \
     obter_provas_por_periodo, obter_segundos_provas
 from studyhub.services.provas_service import obter_catalogo_por_id
-from studyhub.database.anotacao_repository import (
-    obter_anotacao_por_data,
-    salvar_anotacao
-)
-from datetime import datetime
-from database.questoes_repository import (
-    obter_ultima_resposta_questao
-)
-from studyhub.controllers.dados_controller import (
-    obter_dados_exportacao,
-    limpar_historico
-)
-from database.estudos_repository import (
-    obter_estudos_por_periodo
-)
-from datetime import date, timedelta
-from database.resultados_repository import (
-    obter_resumo_usuario,
-    listar_resultados_usuario
-)
+from studyhub.database.anotacao_repository import (obter_anotacao_por_data,salvar_anotacao)
+from datetime import datetime, date, timedelta
+from studyhub.database.questoes_repository import (obter_ultima_resposta_questao)
+from studyhub.controllers.dados_controller import (obter_dados_exportacao,limpar_historico)
+from studyhub.database.estudos_repository import (obter_estudos_por_periodo)
+from studyhub.database.resultados_repository import (obter_resumo_usuario,listar_resultados_usuario)
 from studyhub.database.estudos_repository import obter_estudos_por_mes
 from studyhub.database.tarefa_repository import obter_tarefas_por_mes
 from studyhub.database.resultados_repository import obter_resultados_por_mes
 from studyhub.database.anotacao_repository import obter_anotacoes_por_mes
-from database.resultados_repository import (
-    salvar_resultado,
-    salvar_respostas_prova,
-    obter_desempenho_por_area
-)
-from studyhub.controllers.web.configuracoes_controller import (
-    atualizar_tema,
-excluir_conta as excluir_conta_controller
-)
+from studyhub.database.resultados_repository import (salvar_resultado,salvar_respostas_prova,obter_desempenho_por_area)
+from studyhub.controllers.web.configuracoes_controller import (atualizar_tema,excluir_conta as excluir_conta_controller)
+
 app = Flask(__name__)
 
 app.secret_key = "studyhub-chave-desenvolvimento"
@@ -63,9 +43,7 @@ def contexto_usuario():
     if "usuario_id" not in session:
         return {}
 
-    usuario = obter_usuario_por_id(
-        session["usuario_id"]
-    )
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
     return {
         "usuario": usuario
@@ -77,9 +55,7 @@ def contexto_usuario():
 @app.route("/")
 def pagina_inicial():
 
-    return render_template(
-        "pagina_inicial.html"
-    )
+    return render_template("pagina_inicial.html")
 
 # ==========================
 # DASHBOARD
@@ -89,13 +65,9 @@ def pagina_inicial():
 def dashboard():
 
     if "usuario_id" not in session:
-        return redirect(
-            url_for("pagina_login")
-        )
+        return redirect(url_for("pagina_login"))
 
-    dados = carregar_dashboard(
-        session["usuario_id"]
-    )
+    dados = carregar_dashboard(session["usuario_id"])
 
     return render_template(
         "dashboard.html",
@@ -132,10 +104,7 @@ def pagina_login():
         email = request.form.get("email")
         senha = request.form.get("senha")
 
-        usuario, mensagem = realizar_login(
-            email,
-            senha
-        )
+        usuario, mensagem = realizar_login(email,senha)
 
         if usuario:
 
@@ -169,13 +138,9 @@ def pagina_tarefas():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    usuario = obter_usuario_por_id(
-        session["usuario_id"]
-    )
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
-    tarefas = listar_tarefas(
-        session["usuario_id"]
-    )
+    tarefas = listar_tarefas(session["usuario_id"])
 
     return render_template(
         "tarefas.html",
@@ -190,18 +155,13 @@ def nova_tarefa():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    usuario = obter_usuario_por_id(
-        session["usuario_id"]
-    )
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
     if request.method == "POST":
 
         descricao = request.form.get("descricao")
 
-        resultado, mensagem = adicionar_tarefa_controller(
-            session["usuario_id"],
-            descricao
-        )
+        resultado, mensagem = adicionar_tarefa_controller(session["usuario_id"],descricao)
 
         flash(
             mensagem,
@@ -225,10 +185,7 @@ def concluir_tarefa(id_tarefa):
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    resultado, mensagem = concluir_tarefa_controller(
-        session["usuario_id"],
-        id_tarefa
-    )
+    resultado, mensagem = concluir_tarefa_controller(session["usuario_id"],id_tarefa)
 
     flash(
         mensagem,
@@ -249,11 +206,7 @@ def editar_tarefa(id_tarefa):
 
         nova_descricao = request.form.get("descricao")
 
-        resultado, mensagem = editar_tarefa_controller(
-            session["usuario_id"],
-            id_tarefa,
-            nova_descricao
-        )
+        resultado, mensagem = editar_tarefa_controller(session["usuario_id"],id_tarefa,nova_descricao)
 
         flash(
             mensagem,
@@ -262,10 +215,7 @@ def editar_tarefa(id_tarefa):
 
         return redirect(url_for("pagina_tarefas"))
 
-    tarefa = buscar_tarefa(
-        id_tarefa,
-        session["usuario_id"]
-    )
+    tarefa = buscar_tarefa(id_tarefa,session["usuario_id"])
 
     return render_template(
         "editar_tarefa.html",
@@ -280,10 +230,7 @@ def excluir_tarefa(id_tarefa):
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    resultado, mensagem = excluir_tarefa_controller(
-        session["usuario_id"],
-        id_tarefa
-    )
+    resultado, mensagem = excluir_tarefa_controller(session["usuario_id"],id_tarefa)
 
     flash(
         mensagem,
@@ -298,9 +245,7 @@ def pagina_estudos():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    usuario = obter_usuario_por_id(
-        session["usuario_id"]
-    )
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
     estudo_ativo = obter_estudo_ativo_controller(session["usuario_id"])
 
@@ -324,11 +269,7 @@ def iniciar_estudo_ajax():
             "erro": "Usuário não autenticado."
         }), 401
 
-
-    sucesso, mensagem = iniciar_estudo_controller(
-        usuario_id
-    )
-
+    sucesso, mensagem = iniciar_estudo_controller(usuario_id)
 
     if not sucesso:
 
@@ -337,11 +278,7 @@ def iniciar_estudo_ajax():
             "erro": mensagem
         }), 400
 
-
-    estudo = obter_estudo_ativo_controller(
-        usuario_id
-    )
-
+    estudo = obter_estudo_ativo_controller(usuario_id)
 
     return jsonify({
 
@@ -364,11 +301,7 @@ def finalizar_estudo_ajax():
             "erro": "Usuário não autenticado."
         }), 401
 
-
-    sucesso, mensagem = finalizar_estudo_controller(
-        usuario_id
-    )
-
+    sucesso, mensagem = finalizar_estudo_controller(usuario_id)
 
     if not sucesso:
 
@@ -394,9 +327,7 @@ def finalizar_estudo_automatico():
             "erro": "Usuário não autenticado."
         }), 401
 
-    sucesso, mensagem = finalizar_estudo_controller(
-        session["usuario_id"]
-    )
+    sucesso, mensagem = finalizar_estudo_controller(session["usuario_id"])
 
     return jsonify({
         "sucesso": sucesso,
@@ -409,9 +340,7 @@ def pagina_provas():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    usuario = obter_usuario_por_id(
-        session["usuario_id"]
-    )
+    usuario = obter_usuario_por_id(session["usuario_id"])
 
     provas = listar_provas()
 
@@ -440,7 +369,6 @@ def visualizar_prova(id_prova):
 
     )
 
-
 @app.route("/provas/resultado", methods=["GET", "POST"])
 def resultado_prova():
 
@@ -461,12 +389,7 @@ def resultado_prova():
                 "erro": "Nenhum dado foi recebido."
             }), 400
 
-
-        porcentagem = round(
-            (dados["acertos"] / dados["total"]) * 100,
-            2
-        )
-
+        porcentagem = round((dados["acertos"] / dados["total"]) * 100, 2)
 
         resultado = {
 
@@ -651,15 +574,9 @@ def calendario_estudos():
             "erro": "Data não informada."
         }), 400
 
-
-    estudos = obter_estudos_por_data(
-        usuario_id,
-        data
-    )
-
+    estudos = obter_estudos_por_data(usuario_id,data)
 
     resultado = []
-
 
     for estudo in estudos:
 
@@ -670,7 +587,6 @@ def calendario_estudos():
             "duracao": estudo["duracao"]
 
         })
-
 
     return jsonify(resultado)
 
@@ -695,15 +611,9 @@ def calendario_tarefas():
             "erro": "Data não informada."
         }), 400
 
-
-    tarefas = obter_tarefas_por_data(
-        usuario_id,
-        data
-    )
-
+    tarefas = obter_tarefas_por_data(usuario_id,data)
 
     resultado = []
-
 
     for tarefa in tarefas:
 
@@ -714,7 +624,6 @@ def calendario_tarefas():
             "data_conclusao": tarefa["data_conclusao"]
 
         })
-
 
     return jsonify(resultado)
 
@@ -739,31 +648,18 @@ def calendario_provas():
             "erro": "Data não informada."
         }), 400
 
-
-    resultados = obter_resultados_por_data(
-        usuario_id,
-        data
-    )
-
+    resultados = obter_resultados_por_data(usuario_id,data)
 
     resultado = []
 
-
     for resultado_prova in resultados:
 
-        id_prova = int(
-            resultado_prova["prova_id"]
-        )
+        id_prova = int(resultado_prova["prova_id"])
 
-
-        catalogo = obter_catalogo_por_id(
-            id_prova
-        )
-
+        catalogo = obter_catalogo_por_id(id_prova)
 
         if catalogo is None:
             continue
-
 
         resultado.append({
 
@@ -793,7 +689,6 @@ def calendario_provas():
 
         })
 
-
     return jsonify(resultado)
 
 @app.route("/calendario/anotacao")
@@ -817,12 +712,7 @@ def calendario_anotacao():
             "erro": "Data não informada."
         }), 400
 
-
-    anotacao = obter_anotacao_por_data(
-        usuario_id,
-        data
-    )
-
+    anotacao = obter_anotacao_por_data(usuario_id,data)
 
     if anotacao is None:
 
@@ -830,7 +720,6 @@ def calendario_anotacao():
             "existe": False,
             "texto": ""
         })
-
 
     return jsonify({
 
@@ -856,13 +745,10 @@ def salvar_calendario_anotacao():
             "erro": "Usuário não autenticado."
         }), 401
 
-
     dados = request.get_json()
-
 
     data = dados.get("data")
     texto = dados.get("texto", "").strip()
-
 
     if not data:
 
@@ -870,20 +756,13 @@ def salvar_calendario_anotacao():
             "erro": "Data não informada."
         }), 400
 
-
     if not texto:
 
         return jsonify({
             "erro": "A anotação não pode estar vazia."
         }), 400
 
-
-    salvar_anotacao(
-        usuario_id,
-        data,
-        texto
-    )
-
+    salvar_anotacao(usuario_id,data,texto)
 
     return jsonify({
         "sucesso": True,
@@ -910,17 +789,10 @@ def indicadores_calendario():
             "erro": "Mês e ano são obrigatórios."
         }), 400
 
-
     indicadores = {}
 
-
     # Estudos
-    estudos = obter_estudos_por_mes(
-        usuario_id,
-        ano,
-        mes
-    )
-
+    estudos = obter_estudos_por_mes(usuario_id,ano,mes)
 
     for estudo in estudos:
 
@@ -931,14 +803,8 @@ def indicadores_calendario():
 
         indicadores[data]["estudo"] = True
 
-
     # Tarefas
-    tarefas = obter_tarefas_por_mes(
-        usuario_id,
-        ano,
-        mes
-    )
-
+    tarefas = obter_tarefas_por_mes(usuario_id,ano,mes)
 
     for tarefa in tarefas:
 
@@ -949,14 +815,8 @@ def indicadores_calendario():
 
         indicadores[data]["tarefa"] = True
 
-
     # Provas
-    provas = obter_resultados_por_mes(
-        usuario_id,
-        ano,
-        mes
-    )
-
+    provas = obter_resultados_por_mes(usuario_id,ano,mes)
 
     for prova in provas:
 
@@ -967,14 +827,8 @@ def indicadores_calendario():
 
         indicadores[data]["prova"] = True
 
-
     # Anotações
-    anotacoes = obter_anotacoes_por_mes(
-        usuario_id,
-        ano,
-        mes
-    )
-
+    anotacoes = obter_anotacoes_por_mes(usuario_id,ano,mes)
 
     for anotacao in anotacoes:
 
@@ -984,7 +838,6 @@ def indicadores_calendario():
             indicadores[data] = {}
 
         indicadores[data]["anotacao"] = True
-
 
     return jsonify(indicadores)
 
@@ -1010,26 +863,13 @@ def estatisticas_resumo():
         }), 401
 
 
-    resultado = obter_resumo_usuario(
-        usuario_id
-    )
+    resultado = obter_resumo_usuario(usuario_id)
 
+    segundos_estudo = obter_total_segundos(usuario_id)
 
-    segundos_estudo = obter_total_segundos(
-        usuario_id
-    )
+    segundos_provas = obter_segundos_provas(usuario_id)
 
-
-    segundos_provas = obter_segundos_provas(
-        usuario_id
-    )
-
-
-    total_segundos = (
-        segundos_estudo +
-        segundos_provas
-    )
-
+    total_segundos = (segundos_estudo + segundos_provas)
 
     provas = resultado["provas"]
     questoes = resultado["questoes"]
@@ -1037,20 +877,15 @@ def estatisticas_resumo():
     erros = resultado["erros"]
     nao_respondidas = resultado["nao_respondidas"]
 
-
     respondidas = acertos + erros
-
 
     if respondidas > 0:
 
-        porcentagem = (
-            acertos / respondidas
-        ) * 100
+        porcentagem = (acertos / respondidas) * 100
 
     else:
 
         porcentagem = 0
-
 
     return jsonify({
 
@@ -1128,49 +963,25 @@ def estatisticas_evolucao():
     # PRIMEIRO E ÚLTIMO DIA DO MÊS
     # =========================================
 
-    inicio = date(
-        ano,
-        mes,
-        1
-    )
-
+    inicio = date(ano,mes,1)
 
     if mes == 12:
 
-        proximo_mes = date(
-            ano + 1,
-            1,
-            1
-        )
+        proximo_mes = date(ano + 1,1,1)
 
     else:
 
-        proximo_mes = date(
-            ano,
-            mes + 1,
-            1
-        )
+        proximo_mes = date(ano,mes + 1,1)
 
-
-    fim = (
-        proximo_mes
-        - timedelta(days=1)
-    )
-
+    fim = (proximo_mes - timedelta(days=1))
 
     # =========================================
     # ESTUDOS
     # =========================================
 
-    estudos = obter_estudos_por_periodo(
-        usuario_id,
-        inicio.isoformat(),
-        fim.isoformat()
-    )
-
+    estudos = obter_estudos_por_periodo(usuario_id,inicio.isoformat(),fim.isoformat())
 
     estudos_por_data = {}
-
 
     for estudo in estudos:
 
@@ -1183,31 +994,17 @@ def estatisticas_evolucao():
     # PROVAS
     # =========================================
 
-    provas = obter_provas_por_periodo(
-        usuario_id,
-        inicio.isoformat(),
-        fim.isoformat()
-    )
-
+    provas = obter_provas_por_periodo(usuario_id,inicio.isoformat(),fim.isoformat())
 
     provas_por_data = {}
-
 
     for prova in provas:
 
         data = prova["data"]
 
+        segundos = converter_tempo_para_segundos(prova["tempo_gasto"])
 
-        segundos = converter_tempo_para_segundos(
-            prova["tempo_gasto"]
-        )
-
-
-        provas_por_data[data] = (
-            provas_por_data.get(data, 0)
-            + segundos
-        )
-
+        provas_por_data[data] = (provas_por_data.get(data, 0) + segundos)
 
     # =========================================
     # RESULTADO
@@ -1215,38 +1012,17 @@ def estatisticas_evolucao():
 
     resultado = []
 
-
     data_atual = inicio
-
 
     while data_atual <= fim:
 
-        data_formatada = (
-            data_atual.isoformat()
-        )
+        data_formatada = (data_atual.isoformat())
 
+        duracao_estudos = (estudos_por_data.get(data_formatada,0))
 
-        duracao_estudos = (
-            estudos_por_data.get(
-                data_formatada,
-                0
-            )
-        )
+        duracao_provas = (provas_por_data.get(data_formatada,0))
 
-
-        duracao_provas = (
-            provas_por_data.get(
-                data_formatada,
-                0
-            )
-        )
-
-
-        duracao_total = (
-            duracao_estudos
-            + duracao_provas
-        )
-
+        duracao_total = (duracao_estudos + duracao_provas)
 
         resultado.append({
 
@@ -1274,29 +1050,18 @@ def estatisticas_provas():
         }), 401
 
 
-    resultados = listar_resultados_usuario(
-        usuario_id
-    )
-
+    resultados = listar_resultados_usuario(usuario_id)
 
     provas = []
 
-
     for resultado in resultados:
 
-        id_prova = int(
-            resultado["prova_id"]
-        )
+        id_prova = int(resultado["prova_id"])
 
-
-        catalogo = obter_catalogo_por_id(
-            id_prova
-        )
-
+        catalogo = obter_catalogo_por_id(id_prova)
 
         if catalogo is None:
             continue
-
 
         provas.append({
 
@@ -1340,11 +1105,7 @@ def estatisticas_areas():
             "erro": "Usuário não autenticado."
         }), 401
 
-
-    desempenho = obter_desempenho_por_area(
-        usuario_id
-    )
-
+    desempenho = obter_desempenho_por_area(usuario_id)
 
     return jsonify(desempenho)
 
@@ -1354,9 +1115,7 @@ def pagina_configuracoes():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    dados = carregar_configuracoes(
-        session["usuario_id"]
-    )
+    dados = carregar_configuracoes(session["usuario_id"])
 
     return render_template(
         "configuracoes/configuracoes.html",
@@ -1375,11 +1134,7 @@ def atualizar_conta_configuracoes():
     nome = request.form.get("nome")
     email = request.form.get("email")
 
-    resultado, mensagem = atualizar_conta(
-        session["usuario_id"],
-        nome,
-        email
-    )
+    resultado, mensagem = atualizar_conta(session["usuario_id"],nome,email)
 
     if resultado:
 
@@ -1397,9 +1152,7 @@ def atualizar_conta_configuracoes():
             "mensagem-erro"
         )
 
-    return redirect(
-        url_for("pagina_configuracoes")
-    )
+    return redirect(url_for("pagina_configuracoes"))
 
 @app.route(
     "/configuracoes/senha",
@@ -1408,31 +1161,15 @@ def atualizar_conta_configuracoes():
 def alterar_senha_configuracoes():
 
     if "usuario_id" not in session:
-        return redirect(
-            url_for("pagina_login")
-        )
+        return redirect(url_for("pagina_login"))
 
+    senha_atual = request.form.get("senha_atual")
 
-    senha_atual = request.form.get(
-        "senha_atual"
-    )
+    nova_senha = request.form.get("nova_senha")
 
-    nova_senha = request.form.get(
-        "nova_senha"
-    )
+    confirmar_senha = request.form.get("confirmar_senha")
 
-    confirmar_senha = request.form.get(
-        "confirmar_senha"
-    )
-
-
-    resultado, mensagem = alterar_senha(
-        session["usuario_id"],
-        senha_atual,
-        nova_senha,
-        confirmar_senha
-    )
-
+    resultado, mensagem = alterar_senha(session["usuario_id"],senha_atual,nova_senha,confirmar_senha)
 
     if resultado:
 
@@ -1449,9 +1186,7 @@ def alterar_senha_configuracoes():
         )
 
 
-    return redirect(
-        url_for("pagina_configuracoes")
-    )
+    return redirect(url_for("pagina_configuracoes"))
 
 @app.route(
     "/configuracoes/aparencia",
@@ -1465,17 +1200,9 @@ def atualizar_aparencia_configuracoes():
             url_for("pagina_login")
         )
 
+    tema = request.form.get("tema")
 
-    tema = request.form.get(
-        "tema"
-    )
-
-
-    resultado, mensagem = atualizar_tema(
-        session["usuario_id"],
-        tema
-    )
-
+    resultado, mensagem = atualizar_tema(session["usuario_id"],tema)
 
     if resultado:
 
@@ -1492,9 +1219,7 @@ def atualizar_aparencia_configuracoes():
         )
 
 
-    return redirect(
-        url_for("pagina_configuracoes")
-    )
+    return redirect(url_for("pagina_configuracoes"))
 
 @app.route(
     "/configuracoes/metas",
@@ -1503,33 +1228,20 @@ def atualizar_aparencia_configuracoes():
 def atualizar_metas_configuracoes_rota():
 
     if "usuario_id" not in session:
-        return redirect(
-            url_for("pagina_login")
-        )
+        return redirect(url_for("pagina_login"))
 
 
-    meta_estudo_horas = request.form.get(
-        "meta_estudo_horas"
-    )
+    meta_estudo_horas = request.form.get("meta_estudo_horas")
 
-    meta_estudo_minutos = request.form.get(
-        "meta_estudo_minutos"
-    )
+    meta_estudo_minutos = request.form.get("meta_estudo_minutos")
 
-    meta_questoes = request.form.get(
-        "meta_questoes"
-    )
-
+    meta_questoes = request.form.get("meta_questoes")
 
     try:
 
-        horas = int(
-            meta_estudo_horas or 0
-        )
+        horas = int(meta_estudo_horas or 0)
 
-        minutos = int(
-            meta_estudo_minutos or 0
-        )
+        minutos = int(meta_estudo_minutos or 0)
 
     except ValueError:
 
@@ -1538,9 +1250,7 @@ def atualizar_metas_configuracoes_rota():
             "mensagem-erro"
         )
 
-        return redirect(
-            url_for("pagina_configuracoes")
-        )
+        return redirect(url_for("pagina_configuracoes"))
 
 
     if minutos < 0 or minutos > 59:
@@ -1550,22 +1260,11 @@ def atualizar_metas_configuracoes_rota():
             "mensagem-erro"
         )
 
-        return redirect(
-            url_for("pagina_configuracoes")
-        )
+        return redirect(url_for("pagina_configuracoes"))
 
+    meta_estudo = (horas * 60) + minutos
 
-    meta_estudo = (
-        horas * 60
-    ) + minutos
-
-
-    resultado, mensagem = atualizar_metas_configuracoes(
-        session["usuario_id"],
-        meta_estudo,
-        meta_questoes
-    )
-
+    resultado, mensagem = atualizar_metas_configuracoes(session["usuario_id"],meta_estudo,meta_questoes)
 
     if resultado:
 
@@ -1582,9 +1281,7 @@ def atualizar_metas_configuracoes_rota():
         )
 
 
-    return redirect(
-        url_for("pagina_configuracoes")
-    )
+    return redirect(url_for("pagina_configuracoes"))
 
 @app.route(
     "/configuracoes/dados/exportar",
@@ -1594,15 +1291,9 @@ def exportar_dados():
 
     if "usuario_id" not in session:
 
-        return redirect(
-            url_for("pagina_login")
-        )
+        return redirect(url_for("pagina_login"))
 
-
-    dados = obter_dados_exportacao(
-        session["usuario_id"]
-    )
-
+    dados = obter_dados_exportacao(session["usuario_id"])
 
     arquivo = json.dumps(
         dados,
@@ -1628,15 +1319,9 @@ def limpar_historico_rota():
 
     if "usuario_id" not in session:
 
-        return redirect(
-            url_for("pagina_login")
-        )
+        return redirect(url_for("pagina_login"))
 
-
-    resultado, mensagem = limpar_historico(
-        session["usuario_id"]
-    )
-
+    resultado, mensagem = limpar_historico(session["usuario_id"])
 
     if resultado:
 
@@ -1653,9 +1338,7 @@ def limpar_historico_rota():
         )
 
 
-    return redirect(
-        url_for("pagina_configuracoes")
-    )
+    return redirect(url_for("pagina_configuracoes"))
 
 @app.route(
     "/configuracoes/excluir-conta",
@@ -1665,22 +1348,11 @@ def excluir_conta_configuracoes():
 
     if "usuario_id" not in session:
 
-        return redirect(
-            url_for("login")
-        )
+        return redirect(url_for("login"))
 
+    senha_atual = request.form.get("senha_atual","")
 
-    senha_atual = request.form.get(
-        "senha_atual",
-        ""
-    )
-
-
-    sucesso, mensagem = excluir_conta_controller(
-        session["usuario_id"],
-        senha_atual
-    )
-
+    sucesso, mensagem = excluir_conta_controller(session["usuario_id"],senha_atual)
 
     if not sucesso:
 
@@ -1689,13 +1361,9 @@ def excluir_conta_configuracoes():
             "erro"
         )
 
-        return redirect(
-            url_for("pagina_configuracoes")
-        )
-
+        return redirect(url_for("pagina_configuracoes"))
 
     session.clear()
-
 
     flash(
         "Sua conta foi excluída com sucesso.",
@@ -1703,19 +1371,12 @@ def excluir_conta_configuracoes():
     )
 
 
-    return redirect(
-        url_for("pagina_login")
-    )
+    return redirect(url_for("pagina_login"))
 
 @app.route("/questoes")
 def questoes_inicio():
 
-    return redirect(
-        url_for(
-            "questoes",
-            numero=1
-        )
-    )
+    return redirect(url_for("questoes",numero=1))
 
 @app.route("/questoes/<int:numero>")
 def questoes(numero):
@@ -1725,25 +1386,17 @@ def questoes(numero):
     if not usuario_id:
         return redirect(url_for("login"))
 
-    usuario = obter_usuario_por_id(
-        usuario_id
-    )
+    usuario = obter_usuario_por_id(usuario_id)
 
     estudo_ativo = obter_estudo_ativo_controller(usuario_id)
-
 
     # =====================================================
     # CARREGAR QUESTÕES
     # =====================================================
 
-    with open(
-        "dados/questoes/questoes.json",
-        "r",
-        encoding="utf-8"
-    ) as arquivo:
+    with open("dados/questoes/questoes.json","r",encoding="utf-8") as arquivo:
 
         questoes = json.load(arquivo)
-
 
     # =====================================================
     # ENCONTRAR QUESTÃO
@@ -1768,54 +1421,35 @@ def questoes(numero):
 
     if questao is None:
 
-        return redirect(
-            url_for(
-                "questoes",
-                numero=1
-            )
-        )
+        return redirect(url_for("questoes",numero=1))
 
 
     # =====================================================
     # NAVEGAÇÃO
     # =====================================================
 
-    tem_anterior = (
-        indice_questao > 0
-    )
+    tem_anterior = (indice_questao > 0)
 
-    tem_proxima = (
-        indice_questao < len(questoes) - 1
-    )
+    tem_proxima = (indice_questao < len(questoes) - 1)
 
     # =====================================================
     # VERIFICAR BLOQUEIO
     # =====================================================
 
-    ultima_resposta = obter_ultima_resposta_questao(
-        usuario_id,
-        numero
-    )
+    ultima_resposta = obter_ultima_resposta_questao(usuario_id,numero)
 
     questao_bloqueada = False
     proxima_tentativa = None
 
     if ultima_resposta:
 
-        proxima_tentativa = (
-            ultima_resposta["proxima_tentativa"]
-        )
+        proxima_tentativa = (ultima_resposta["proxima_tentativa"])
 
         if proxima_tentativa:
 
-            if isinstance(
-                    proxima_tentativa,
-                    str
-            ):
+            if isinstance(proxima_tentativa,str):
 
-                data_proxima = datetime.fromisoformat(
-                    proxima_tentativa
-                )
+                data_proxima = datetime.fromisoformat(proxima_tentativa)
 
             else:
 
@@ -1855,9 +1489,7 @@ def questoes(numero):
 )
 def responder_questao():
 
-    usuario_id = session.get(
-        "usuario_id"
-    )
+    usuario_id = session.get("usuario_id")
 
     if not usuario_id:
 
@@ -1875,13 +1507,9 @@ def responder_questao():
         }), 400
 
 
-    numero_questao = dados.get(
-        "questao_numero"
-    )
+    numero_questao = dados.get("questao_numero")
 
-    resposta = dados.get(
-        "resposta"
-    )
+    resposta = dados.get("resposta")
 
 
     if (
@@ -1898,16 +1526,9 @@ def responder_questao():
     # CARREGAR QUESTÕES
     # =====================================================
 
-    with open(
-        "dados/questoes/questoes.json",
-        "r",
-        encoding="utf-8"
-    ) as arquivo:
+    with open("dados/questoes/questoes.json","r",encoding="utf-8") as arquivo:
 
-        questoes = json.load(
-            arquivo
-        )
-
+        questoes = json.load(arquivo)
 
     questao = None
 
@@ -1941,10 +1562,7 @@ def responder_questao():
     # VERIFICAR RESPOSTA
     # =====================================================
 
-    correta = (
-        resposta == resposta_correta
-    )
-
+    correta = (resposta == resposta_correta)
 
     # =====================================================
     # CALCULAR PRÓXIMA TENTATIVA
@@ -1954,10 +1572,7 @@ def responder_questao():
 
     data_resposta = datetime.now()
 
-    proxima_tentativa = (
-        data_resposta
-        + timedelta(days=3)
-    )
+    proxima_tentativa = (data_resposta+ timedelta(days=3))
 
 
     # =====================================================
@@ -2044,13 +1659,7 @@ def pagina_cadastro():
 
             return redirect(url_for("pagina_cadastro"))
 
-
-        resultado, mensagem = realizar_cadastro(
-            nome,
-            email,
-            senha
-        )
-
+        resultado, mensagem = realizar_cadastro(nome,email,senha)
 
         if resultado:
 
@@ -2067,11 +1676,7 @@ def pagina_cadastro():
         )
 
 
-    return render_template(
-        "pagina_cadastro.html"
-    )
-
-
+    return render_template("pagina_cadastro.html")
 
 if __name__ == "__main__":
 

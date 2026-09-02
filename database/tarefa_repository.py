@@ -72,11 +72,7 @@ def atualizar_tarefa(id_tarefa, nova_tarefa, usuario_id):
 
     conexao.close()
 
-def atualizar_status(
-    id_tarefa,
-    concluida,
-    usuario_id
-):
+def atualizar_status(id_tarefa,concluida,usuario_id):
 
     conexao = conectar()
 
@@ -125,10 +121,7 @@ def atualizar_status(
 
     conexao.close()
 
-def obter_tarefas_por_data(
-    usuario_id,
-    data
-):
+def obter_tarefas_por_data(usuario_id,data):
 
     conexao = conectar()
 
@@ -165,6 +158,7 @@ def obter_tarefas_por_data(
 def remover_tarefa(id_tarefa, usuario_id):
 
     conexao = conectar()
+
     cursor = conexao.cursor()
 
     cursor.execute(

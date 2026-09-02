@@ -1,12 +1,9 @@
 from models.questao import Questao
 from models.prova import Prova
-
 import json
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 def listar_provas():
 

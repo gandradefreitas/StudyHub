@@ -1,5 +1,5 @@
-from database.conexao import conectar
-from services.provas_service import obter_prova
+from studyhub.database.conexao import conectar
+from studyhub.services.provas_service import obter_prova
 
 def salvar_resultado(resultado):
     conexao = conectar()
@@ -131,12 +131,7 @@ def obter_resultados_por_mes(usuario_id, ano, mes):
 
     return resultados
 
-def salvar_respostas_prova(
-    usuario_id,
-    prova_id,
-    questoes,
-    respostas
-):
+def salvar_respostas_prova(usuario_id,prova_id,questoes,respostas):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -247,59 +242,37 @@ def obter_resumo_usuario(usuario_id):
     # SOMAR ACERTOS E ERROS
     # =====================================================
 
-    acertos = (
-        resultado_provas["acertos_provas"]
-        +
-        resultado_estudos["acertos_estudos"]
-    )
+    acertos = (resultado_provas["acertos_provas"]+resultado_estudos["acertos_estudos"])
 
 
-    erros_provas = (
-        resultado_provas["erros_provas"]
-    )
+    erros_provas = (resultado_provas["erros_provas"])
 
 
-    questoes_estudos = (
-        resultado_estudos["questoes_estudos"]
-    )
+    questoes_estudos = (resultado_estudos["questoes_estudos"])
 
 
     # Nas questões de estudos:
     # cada resposta registrada é uma questão resolvida.
     # Portanto, as que não foram acertadas são erros.
 
-    erros_estudos = (
-        questoes_estudos
-        -
-        resultado_estudos["acertos_estudos"]
-    )
+    erros_estudos = (questoes_estudos - resultado_estudos["acertos_estudos"])
 
 
-    erros = (
-        erros_provas
-        +
-        erros_estudos
-    )
+    erros = (erros_provas + erros_estudos)
 
 
     # =====================================================
     # QUESTÕES REALMENTE RESOLVIDAS
     # =====================================================
 
-    questoes = (
-        acertos
-        +
-        erros
-    )
+    questoes = (acertos + erros)
 
 
     # =====================================================
     # QUESTÕES EM BRANCO
     # =====================================================
 
-    nao_respondidas = (
-        resultado_provas["nao_respondidas"]
-    )
+    nao_respondidas = (resultado_provas["nao_respondidas"])
 
 
     conexao.close()
@@ -404,14 +377,7 @@ def obter_desempenho_por_area(usuario_id):
 
         total = desempenho[area]["questoes"]
 
-        desempenho[area]["porcentagem"] = round(
-            (
-                desempenho[area]["acertos"]
-                / total
-            ) * 100,
-            1
-        )
-
+        desempenho[area]["porcentagem"] = round((desempenho[area]["acertos"]/ total) * 100,1)
 
     return desempenho
 
@@ -456,24 +422,13 @@ def obter_segundos_provas(usuario_id):
         if not tempo:
             continue
 
-        horas, minutos, segundos = map(
-            int,
-            tempo.split(":")
-        )
+        horas, minutos, segundos = map(int,tempo.split(":"))
 
-        total_segundos += (
-            horas * 3600
-            + minutos * 60
-            + segundos
-        )
+        total_segundos += (horas * 3600 + minutos * 60 + segundos)
 
     return total_segundos
 
-def obter_provas_por_periodo(
-    usuario_id,
-    data_inicio,
-    data_fim
-):
+def obter_provas_por_periodo(usuario_id,data_inicio,data_fim):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -503,10 +458,7 @@ def converter_tempo_para_segundos(tempo):
     if not tempo:
         return 0
 
-    horas, minutos, segundos = map(
-        int,
-        tempo.split(":")
-    )
+    horas, minutos, segundos = map(int,tempo.split(":"))
 
     return (
         horas * 3600

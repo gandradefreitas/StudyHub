@@ -1,4 +1,4 @@
-from database.conexao import conectar
+from studyhub.database.conexao import conectar
 from datetime import datetime
 
 def iniciar_estudo(usuario_id):

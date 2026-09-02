@@ -3,7 +3,6 @@ from studyhub.utils.formatacao import linha
 from studyhub.utils.pausas import pausas
 from studyhub.services.tarefas import obter_tarefas, adicionar_tarefa, editar_tarefa, concluir_tarefa, excluir_tarefa
 from rich import print
-
 from studyhub.utils.entrada import ler_inteiro
 
 def selecionar_tarefa(usuario_id):

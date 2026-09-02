@@ -1,12 +1,5 @@
-from studyhub.security.validacoes import (
-    validar_nome,
-    validar_email,
-    validar_senha
-)
-
+from studyhub.security.validacoes import (validar_nome,validar_email,validar_senha)
 from studyhub.services.usuarios import cadastrar_usuario
-
-
 
 def realizar_cadastro(nome, email, senha):
 
@@ -28,11 +21,7 @@ def realizar_cadastro(nome, email, senha):
         return False, mensagem
 
 
-    resultado = cadastrar_usuario(
-        nome,
-        email,
-        senha
-    )
+    resultado = cadastrar_usuario(nome,email,senha)
 
 
     if resultado:

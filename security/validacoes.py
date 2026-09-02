@@ -1,4 +1,3 @@
-
 CARACTERES_ESPECIAIS = "!@#$%&*()-_=+[]{};:,.<>?/\\|"
 
 def validar_nome(nome):

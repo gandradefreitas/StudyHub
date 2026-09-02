@@ -1,7 +1,6 @@
 from studyhub.database.usuario_repository import buscar_por_email
 from studyhub.security.hash import verificar_senha
 
-
 def autenticar(email, senha):
 
     usuario = buscar_por_email(email)

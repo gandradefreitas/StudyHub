@@ -1,7 +1,5 @@
 import sqlite3
-
 from studyhub.database.conexao import conectar
-
 
 def salvar_usuario(nome, email, senha):
     conexao = conectar()
@@ -93,12 +91,7 @@ def obter_configuracoes(usuario_id):
 
     return configuracoes
 
-def atualizar_configuracoes(
-    usuario_id,
-    tema,
-    meta_estudo,
-    meta_questoes
-):
+def atualizar_configuracoes(usuario_id,tema,meta_estudo,meta_questoes):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -172,11 +165,7 @@ def salvar_tema(usuario_id, tema):
     conexao.commit()
     conexao.close()
 
-def salvar_metas(
-    usuario_id,
-    meta_estudo,
-    meta_questoes
-):
+def salvar_metas(usuario_id,meta_estudo,meta_questoes):
 
     conexao = conectar()
     cursor = conexao.cursor()

@@ -1,10 +1,6 @@
 from studyhub.database.conexao import conectar
 
-
-def obter_anotacao_por_data(
-    usuario_id,
-    data
-):
+def obter_anotacao_por_data(usuario_id,data):
 
     conexao = conectar()
 
@@ -32,11 +28,7 @@ def obter_anotacao_por_data(
 
     return anotacao
 
-def salvar_anotacao(
-    usuario_id,
-    data,
-    texto
-):
+def salvar_anotacao(usuario_id,data,texto):
 
     conexao = conectar()
 

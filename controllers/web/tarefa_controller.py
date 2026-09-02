@@ -25,11 +25,7 @@ def concluir_tarefa_controller(usuario_id, id_tarefa):
 
     novo_status = 0 if tarefa["concluida"] == 1 else 1
 
-    atualizar_status(
-        id_tarefa,
-        novo_status,
-        usuario_id
-    )
+    atualizar_status(id_tarefa,novo_status,usuario_id)
 
     return True, "Status atualizado com sucesso."
 
@@ -41,19 +37,12 @@ def editar_tarefa_controller(usuario_id, id_tarefa, descricao):
 
         return False, "A descrição não pode ficar vazia."
 
-    atualizar_tarefa(
-        id_tarefa,
-        descricao,
-        usuario_id
-    )
+    atualizar_tarefa(id_tarefa,descricao,usuario_id)
 
     return True, "Tarefa atualizada com sucesso."
 
 def excluir_tarefa_controller(usuario_id, id_tarefa):
 
-    remover_tarefa(
-        id_tarefa,
-        usuario_id
-    )
+    remover_tarefa(id_tarefa,usuario_id)
 
     return True, "Tarefa excluída com sucesso."

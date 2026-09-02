@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-
 from models.questao import Questao
-
 
 @dataclass
 class Prova:
