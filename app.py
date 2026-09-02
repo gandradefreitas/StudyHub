@@ -87,7 +87,7 @@ def logout():
 
     flash(
         "Você saiu da sua conta.",
-        "mensagem-sucesso"
+        "mensagem-erro"
     )
 
     return redirect(url_for("pagina_login"))
@@ -112,11 +112,6 @@ def pagina_login():
 
             session["nome"] = usuario[1]
 
-            flash(
-                f"Bem-vindo, {usuario[1]}!",
-                "mensagem-sucesso"
-            )
-
             return redirect(
                 url_for("dashboard")
             )
@@ -127,10 +122,7 @@ def pagina_login():
         )
 
 
-    return render_template(
-        "pagina_login.html"
-    )
-
+    return render_template("pagina_login.html")
 
 @app.route("/tarefas")
 def pagina_tarefas():
