@@ -1,5 +1,8 @@
+from datetime import datetime, timezone, timedelta
+
 from studyhub.database.conexao import conectar
-from studyhub.services.provas_service import obter_prova
+from studyhub.services.provas_service import obter_prova, listar_provas
+
 
 def salvar_resultado(resultado):
     conexao = conectar()
@@ -39,6 +42,20 @@ def salvar_resultado(resultado):
 
     conexao.close()
 
+def formatar_data_realizacao(data):
+    data_utc = datetime.strptime(
+        data,
+        "%Y-%m-%d %H:%M:%S"
+    ).replace(tzinfo=timezone.utc)
+
+    horario_brasilia = data_utc.astimezone(
+        timezone(timedelta(hours=-3))
+    )
+
+    return horario_brasilia.strftime(
+        "%d/%m/%Y às %H:%M"
+    )
+
 def listar_resultados_usuario(usuario_id):
 
     conexao = conectar()
@@ -54,7 +71,7 @@ def listar_resultados_usuario(usuario_id):
             total,
             tempo_gasto,
             porcentagem,
-            data_realizacao AS data
+            data_realizacao
 
         FROM resultados_provas
 
@@ -68,7 +85,55 @@ def listar_resultados_usuario(usuario_id):
 
     conexao.close()
 
-    return resultados
+    provas = listar_provas()
+
+    historico = []
+
+    for resultado in resultados:
+
+        prova = next(
+            (
+                prova
+                for prova in provas
+                if prova["id"] == resultado["prova_id"]
+            ),
+            None
+        )
+
+        historico.append({
+
+              "data_realizacao":
+                  formatar_data_realizacao(
+                      resultado["data_realizacao"]
+                  ),
+
+              "prova":
+                  (
+                      f'{prova["nome"]} — {prova["dia"]}'
+                      if prova
+                      else "Prova não encontrada"
+                  ),
+
+              "acertos":
+                  resultado["acertos"],
+
+              "erros":
+                  resultado["erros"],
+
+              "nao_respondidas":
+                  resultado["nao_respondidas"],
+
+              "total":
+                  resultado["total"],
+
+              "tempo_gasto":
+                  resultado["tempo_gasto"],
+
+              "porcentagem":
+                  resultado["porcentagem"]
+        })
+
+    return historico
 
 def obter_resultados_por_data(usuario_id, data):
 
