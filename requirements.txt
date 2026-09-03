@@ -1,3 +1,4 @@
 bcrypt
 rich
 Flask
+gunicorn

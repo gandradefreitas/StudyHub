@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response
 import json
+import os
 from studyhub.controllers.web.configuracoes_controller import carregar_configuracoes, atualizar_conta, alterar_senha, \
     atualizar_metas_configuracoes
 from studyhub.database.conexao import conectar
@@ -35,7 +36,7 @@ from studyhub.controllers.web.configuracoes_controller import (atualizar_tema,ex
 
 app = Flask(__name__)
 
-app.secret_key = "studyhub-chave-desenvolvimento"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 @app.context_processor
 def contexto_usuario():
