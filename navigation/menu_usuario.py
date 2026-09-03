@@ -1,9 +1,9 @@
-from studyhub.controllers.tarefas_controller import gerenciar_tarefas
-from studyhub.interface.menus import segundo_menu
-from studyhub.utils.entrada import ler_inteiro
-from studyhub.utils.limpar_tela import limpar_tela
-from studyhub.utils.formatacao import linha
-from studyhub.utils.pausas import pausas
+from controllers.tarefas_controller import gerenciar_tarefas
+from interface.menus import segundo_menu
+from utils.entrada import ler_inteiro
+from utils.limpar_tela import limpar_tela
+from utils.formatacao import linha
+from utils.pausas import pausas
 from rich import print
 
 def menu_usuario(usuario):

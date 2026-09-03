@@ -1,4 +1,4 @@
-from studyhub.database.dados_repository import (obter_dados_exportacao,limpar_historico)
+from database.dados_repository import (obter_dados_exportacao,limpar_historico)
 
 def converter_para_json(dados):
 

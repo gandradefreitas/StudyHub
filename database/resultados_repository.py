@@ -1,7 +1,7 @@
 from datetime import datetime, timezone, timedelta
 
-from studyhub.database.conexao import conectar
-from studyhub.services.provas_service import obter_prova, listar_provas
+from database.conexao import conectar
+from services.provas_service import obter_prova, listar_provas
 
 
 def salvar_resultado(resultado):

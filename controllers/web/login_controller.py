@@ -1,5 +1,5 @@
-from studyhub.security.validacoes import (validar_email,validar_senha)
-from studyhub.services.autenticacao import autenticar
+from security.validacoes import (validar_email,validar_senha)
+from services.autenticacao import autenticar
 
 def realizar_login(email, senha):
 

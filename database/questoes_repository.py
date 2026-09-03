@@ -1,4 +1,4 @@
-from studyhub.database.conexao import conectar
+from database.conexao import conectar
 
 def registrar_resposta_questao(usuario_id,questao_numero,resposta,correta,data_resposta,proxima_tentativa):
 

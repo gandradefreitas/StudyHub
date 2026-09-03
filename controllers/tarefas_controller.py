@@ -1,9 +1,9 @@
-from studyhub.interface.menus import sub_menu
-from studyhub.utils.formatacao import linha
-from studyhub.utils.pausas import pausas
-from studyhub.services.tarefas import obter_tarefas, adicionar_tarefa, editar_tarefa, concluir_tarefa, excluir_tarefa
+from interface.menus import sub_menu
+from utils.formatacao import linha
+from utils.pausas import pausas
+from services.tarefas import obter_tarefas, adicionar_tarefa, editar_tarefa, concluir_tarefa, excluir_tarefa
 from rich import print
-from studyhub.utils.entrada import ler_inteiro
+from utils.entrada import ler_inteiro
 
 def selecionar_tarefa(usuario_id):
 

@@ -1,4 +1,4 @@
-from studyhub.database.tarefa_repository import (salvar_tarefa,listar_tarefas,atualizar_tarefa,atualizar_status,remover_tarefa,buscar_tarefa,)
+from database.tarefa_repository import (salvar_tarefa,listar_tarefas,atualizar_tarefa,atualizar_status,remover_tarefa,buscar_tarefa,)
 
 def editar_tarefa(id_tarefa, novo_nome, usuario_id):
     atualizar_tarefa(id_tarefa, novo_nome, usuario_id)

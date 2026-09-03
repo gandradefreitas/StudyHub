@@ -1,5 +1,5 @@
 import sqlite3
-from studyhub.database.conexao import conectar
+from database.conexao import conectar
 
 def obter_dados_exportacao(usuario_id):
 

@@ -1,4 +1,4 @@
-from studyhub.database.conexao import conectar
+from database.conexao import conectar
 
 def criar_tabelas():
     conexao = conectar()

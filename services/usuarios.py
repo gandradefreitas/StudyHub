@@ -1,5 +1,5 @@
-from studyhub.security.hash import gerar_hash
-from studyhub.database.usuario_repository import salvar_usuario
+from security.hash import gerar_hash
+from database.usuario_repository import salvar_usuario
 
 def cadastrar_usuario(nome, email, senha):
 

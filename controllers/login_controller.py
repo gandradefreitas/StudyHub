@@ -1,7 +1,7 @@
-from studyhub.security.validacoes import validar_email, validar_senha
-from studyhub.utils.formatacao import linha
-from studyhub.utils.pausas import pausas
-from studyhub.services.autenticacao import autenticar
+from security.validacoes import validar_email, validar_senha
+from utils.formatacao import linha
+from utils.pausas import pausas
+from services.autenticacao import autenticar
 from rich import print
 
 def realizar_login():

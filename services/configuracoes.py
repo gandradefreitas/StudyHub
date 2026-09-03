@@ -1,7 +1,7 @@
-from studyhub.database.usuario_repository import (obter_usuario_por_id,obter_configuracoes,atualizar_usuario,atualizar_senha,salvar_tema,salvar_metas,excluir_usuario)
-from studyhub.security.validacoes import (validar_nome,validar_email)
-from studyhub.security.hash import (gerar_hash,verificar_senha)
-from studyhub.security.validacoes import (validar_senha)
+from database.usuario_repository import (obter_usuario_por_id,obter_configuracoes,atualizar_usuario,atualizar_senha,salvar_tema,salvar_metas,excluir_usuario)
+from security.validacoes import (validar_nome,validar_email)
+from security.hash import (gerar_hash,verificar_senha)
+from security.validacoes import (validar_senha)
 
 TEMAS_PERMITIDOS = {
     "claro",

@@ -1,4 +1,4 @@
-from studyhub.database.conexao import conectar
+from database.conexao import conectar
 
 def adicionar_tarefa_controller(usuario_id, descricao):
 

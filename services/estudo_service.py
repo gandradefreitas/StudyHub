@@ -1,5 +1,5 @@
-from studyhub.database.resultados_repository import obter_segundos_provas
-from studyhub.database.estudos_repository import (obter_total_segundos, iniciar_estudo, obter_estudo_ativo, finalizar_estudo,
+from database.resultados_repository import obter_segundos_provas
+from database.estudos_repository import (obter_total_segundos, iniciar_estudo, obter_estudo_ativo, finalizar_estudo,
 possui_estudo_ativo)
 from datetime import datetime
 

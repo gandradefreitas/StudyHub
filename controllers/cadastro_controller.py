@@ -1,7 +1,7 @@
-from studyhub.security.validacoes import validar_nome, validar_email, validar_senha
-from studyhub.utils.formatacao import linha
-from studyhub.utils.pausas import pausas
-from studyhub.services.usuarios import cadastrar_usuario
+from security.validacoes import validar_nome, validar_email, validar_senha
+from utils.formatacao import linha
+from utils.pausas import pausas
+from services.usuarios import cadastrar_usuario
 from rich import print
 
 def realizar_cadastro():

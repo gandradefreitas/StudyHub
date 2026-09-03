@@ -1,39 +1,39 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response
 import json
 import os
-from studyhub.controllers.web.configuracoes_controller import carregar_configuracoes, atualizar_conta, alterar_senha, \
+from controllers.web.configuracoes_controller import carregar_configuracoes, atualizar_conta, alterar_senha, \
     atualizar_metas_configuracoes
-from studyhub.database.conexao import conectar
-from studyhub.controllers.estudo_controller import iniciar_estudo_controller, finalizar_estudo_controller, \
+from database.conexao import conectar
+from controllers.estudo_controller import iniciar_estudo_controller, finalizar_estudo_controller, \
     obter_estudo_ativo_controller
-from studyhub.controllers.web.tarefa_controller import  editar_tarefa_controller, excluir_tarefa_controller
-from studyhub.database.usuario_repository import obter_usuario_por_id
-from studyhub.database.tarefa_repository import listar_tarefas, buscar_tarefa
-from studyhub.controllers.web.tarefa_controller import adicionar_tarefa_controller, concluir_tarefa_controller
-from studyhub.services.dashboard_service import carregar_dashboard
-from studyhub.controllers.web.cadastro_controller import realizar_cadastro
-from studyhub.controllers.web.login_controller import realizar_login
-from studyhub.services.provas_service import obter_prova
-from studyhub.services.provas_service import listar_provas
-from studyhub.controllers.resultados_controller import obter_historico
-from studyhub.database.estudos_repository import obter_estudos_por_data, obter_total_segundos
-from studyhub.database.tarefa_repository import obter_tarefas_por_data
-from studyhub.database.resultados_repository import obter_resultados_por_data, converter_tempo_para_segundos, \
+from controllers.web.tarefa_controller import  editar_tarefa_controller, excluir_tarefa_controller
+from database.usuario_repository import obter_usuario_por_id
+from database.tarefa_repository import listar_tarefas, buscar_tarefa
+from controllers.web.tarefa_controller import adicionar_tarefa_controller, concluir_tarefa_controller
+from services.dashboard_service import carregar_dashboard
+from controllers.web.cadastro_controller import realizar_cadastro
+from controllers.web.login_controller import realizar_login
+from services.provas_service import obter_prova
+from services.provas_service import listar_provas
+from controllers.resultados_controller import obter_historico
+from database.estudos_repository import obter_estudos_por_data, obter_total_segundos
+from database.tarefa_repository import obter_tarefas_por_data
+from database.resultados_repository import obter_resultados_por_data, converter_tempo_para_segundos, \
     obter_provas_por_periodo, obter_segundos_provas
-from studyhub.services.provas_service import obter_catalogo_por_id
-from studyhub.database.anotacao_repository import (obter_anotacao_por_data,salvar_anotacao)
+from services.provas_service import obter_catalogo_por_id
+from database.anotacao_repository import (obter_anotacao_por_data,salvar_anotacao)
 from datetime import datetime, date, timedelta
-from studyhub.database.questoes_repository import (obter_ultima_resposta_questao)
-from studyhub.controllers.dados_controller import (obter_dados_exportacao,limpar_historico)
-from studyhub.database.estudos_repository import (obter_estudos_por_periodo)
-from studyhub.database.resultados_repository import (obter_resumo_usuario,listar_resultados_usuario)
-from studyhub.database.estudos_repository import obter_estudos_por_mes
-from studyhub.database.tarefa_repository import obter_tarefas_por_mes
-from studyhub.database.resultados_repository import obter_resultados_por_mes
-from studyhub.database.anotacao_repository import obter_anotacoes_por_mes
-from studyhub.database.resultados_repository import (salvar_resultado,salvar_respostas_prova,obter_desempenho_por_area)
-from studyhub.controllers.web.configuracoes_controller import (atualizar_tema,excluir_conta as excluir_conta_controller)
-from studyhub.database.criar_banco import criar_tabelas
+from database.questoes_repository import (obter_ultima_resposta_questao)
+from controllers.dados_controller import (obter_dados_exportacao,limpar_historico)
+from database.estudos_repository import (obter_estudos_por_periodo)
+from database.resultados_repository import (obter_resumo_usuario,listar_resultados_usuario)
+from database.estudos_repository import obter_estudos_por_mes
+from database.tarefa_repository import obter_tarefas_por_mes
+from database.resultados_repository import obter_resultados_por_mes
+from database.anotacao_repository import obter_anotacoes_por_mes
+from database.resultados_repository import (salvar_resultado,salvar_respostas_prova,obter_desempenho_por_area)
+from controllers.web.configuracoes_controller import (atualizar_tema,excluir_conta as excluir_conta_controller)
+from database.criar_banco import criar_tabelas
 
 app = Flask(__name__)
 

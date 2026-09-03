@@ -1,4 +1,4 @@
-from studyhub.services.estudo_service import iniciar_estudo_service, finalizar_estudo_service, obter_estudo_ativo_service, obter_horas_estudadas
+from services.estudo_service import iniciar_estudo_service, finalizar_estudo_service, obter_estudo_ativo_service, obter_horas_estudadas
 
 def obter_estudo_ativo_controller(usuario_id):
     return obter_estudo_ativo_service(usuario_id)

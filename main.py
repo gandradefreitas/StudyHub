@@ -1,6 +1,6 @@
-from studyhub.database.criar_banco import criar_tabelas
-from studyhub.navigation.menu_inicial import menu_inicial
-from studyhub.navigation.menu_usuario import menu_usuario
+from database.criar_banco import criar_tabelas
+from navigation.menu_inicial import menu_inicial
+from navigation.menu_usuario import menu_usuario
 
 def main():
     criar_tabelas()

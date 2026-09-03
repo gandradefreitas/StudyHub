@@ -1,10 +1,10 @@
 import sys
-from studyhub.controllers.login_controller import realizar_login
-from studyhub.controllers.cadastro_controller import realizar_cadastro
-from studyhub.utils.entrada import ler_inteiro
-from studyhub.interface.menus import primeiro_menu
-from studyhub.utils.limpar_tela import limpar_tela
-from studyhub.utils.formatacao import linha
+from controllers.login_controller import realizar_login
+from controllers.cadastro_controller import realizar_cadastro
+from utils.entrada import ler_inteiro
+from interface.menus import primeiro_menu
+from utils.limpar_tela import limpar_tela
+from utils.formatacao import linha
 from rich import print
 
 def menu_inicial():

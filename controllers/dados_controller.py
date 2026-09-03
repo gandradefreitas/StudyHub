@@ -1,4 +1,4 @@
-from studyhub.services.dados import (preparar_exportacao,limpar_historico_usuario)
+from services.dados import (preparar_exportacao,limpar_historico_usuario)
 
 def obter_dados_exportacao(usuario_id):
 

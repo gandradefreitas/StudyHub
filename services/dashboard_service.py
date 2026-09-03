@@ -1,10 +1,10 @@
-from studyhub.database.estudos_repository import obter_segundos_estudados_hoje, obter_questoes_respondidas_hoje, \
+from database.estudos_repository import obter_segundos_estudados_hoje, obter_questoes_respondidas_hoje, \
     obter_total_segundos, obter_segundos_provas_hoje
-from studyhub.database.resultados_repository import obter_resumo_usuario, obter_provas_realizadas, obter_segundos_provas
-from studyhub.database.usuario_repository import obter_usuario_por_id, obter_configuracoes
-from studyhub.services.estudo_service import obter_horas_estudadas, formatar_duracao
-from studyhub.services.provas_service import listar_provas
-from studyhub.database.tarefa_repository import (contar_tarefas_usuario,obter_proximas_tarefas)
+from database.resultados_repository import obter_resumo_usuario, obter_provas_realizadas, obter_segundos_provas
+from database.usuario_repository import obter_usuario_por_id, obter_configuracoes
+from services.estudo_service import obter_horas_estudadas, formatar_duracao
+from services.provas_service import listar_provas
+from database.tarefa_repository import (contar_tarefas_usuario,obter_proximas_tarefas)
 
 def obter_proxima_prova(usuario_id):
 

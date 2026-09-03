@@ -1,4 +1,4 @@
-from studyhub.services.configuracoes import (obter_dados_configuracoes,atualizar_dados_conta,alterar_senha_usuario,alterar_tema,atualizar_metas,excluir_conta_usuario)
+from services.configuracoes import (obter_dados_configuracoes,atualizar_dados_conta,alterar_senha_usuario,alterar_tema,atualizar_metas,excluir_conta_usuario)
 
 def carregar_configuracoes(usuario_id):
 

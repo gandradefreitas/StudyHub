@@ -1,8 +1,8 @@
-from studyhub.services.tarefa_service import adicionar_tarefa
-from studyhub.database.tarefa_repository import atualizar_status
-from studyhub.database.tarefa_repository import atualizar_tarefa
-from studyhub.database.tarefa_repository import remover_tarefa
-from studyhub.database.tarefa_repository import buscar_tarefa
+from services.tarefa_service import adicionar_tarefa
+from database.tarefa_repository import atualizar_status
+from database.tarefa_repository import atualizar_tarefa
+from database.tarefa_repository import remover_tarefa
+from database.tarefa_repository import buscar_tarefa
 
 def adicionar_tarefa_controller(usuario_id, descricao):
 
