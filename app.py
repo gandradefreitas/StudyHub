@@ -33,10 +33,16 @@ from studyhub.database.resultados_repository import obter_resultados_por_mes
 from studyhub.database.anotacao_repository import obter_anotacoes_por_mes
 from studyhub.database.resultados_repository import (salvar_resultado,salvar_respostas_prova,obter_desempenho_por_area)
 from studyhub.controllers.web.configuracoes_controller import (atualizar_tema,excluir_conta as excluir_conta_controller)
+from studyhub.database.criar_banco import criar_tabelas
 
 app = Flask(__name__)
 
 app.secret_key = os.environ.get("SECRET_KEY")
+
+if not app.secret_key:
+    raise RuntimeError("SECRET_KEY não configurada.")
+
+criar_tabelas()
 
 @app.context_processor
 def contexto_usuario():
