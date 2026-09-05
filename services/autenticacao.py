@@ -8,7 +8,7 @@ def autenticar(email, senha):
     if usuario is None:
         return None
 
-    senha_hash = usuario[3]
+    senha_hash = usuario["senha"]
 
     if verificar_senha(senha, senha_hash):
         return usuario

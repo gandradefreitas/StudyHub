@@ -4,43 +4,79 @@ from utils.pausas import pausas
 from services.autenticacao import autenticar
 from rich import print
 
+
 def realizar_login():
-        while True:
-            email = input('Informe o seu e-mail:  ').strip()
+
+    while True:
+
+        email = input(
+            "Informe o seu e-mail:  "
+        ).strip()
+
+        pausas()
+        linha()
+
+        valido, mensagem = validar_email(
+            email
+        )
+
+        if valido:
+            break
+
+        print(
+            f"[red]{mensagem}[/]"
+        )
+
+    while True:
+
+        senha = input(
+            "Informe a sua senha:  "
+        )
+
+        if not validar_senha(senha):
+
+            print(
+                "A senha não pode ficar vazia."
+            )
+
+            continue
+
+        usuario = autenticar(
+            email,
+            senha
+        )
+
+        if usuario:
+
+            linha()
+
+            print(
+                f"Bem-vindo "
+                f"[blue]{usuario['nome']}[/]!"
+            )
+
             pausas()
             linha()
 
-            valido, mensagem = validar_email(email)
+            return usuario
 
-            if valido:
-                break
+        else:
 
-            print(f"[red]{mensagem}[/]")
+            print(
+                "E-mail ou senha incorretos."
+            )
 
-        while True:
-            senha = input('Informe a sua senha:  ') # Desenvolver melhor após implementar criptografia e banco de dados
+        pausas()
+        linha()
 
-            if not validar_senha(senha):
-                print("A senha não pode ficar vazia.")
-                continue
+        valido, mensagem = validar_senha(
+            senha
+        )
 
-            usuario = autenticar(email, senha)
+        if valido:
+            break
 
-            if usuario:
-                linha()
-                print(f"Bem-vindo [blue]{usuario[1]}[/]!")
-                pausas()
-                linha()
-                return usuario
-            else:
-                print("E-mail ou senha incorretos.")
+        print(
+            f"[red]{mensagem}[/]"
+        )
 
-            pausas()
-            linha()
-
-            valido, mensagem = validar_senha(senha)
-
-            if valido:
-                break
-
-            print(f"[red]{mensagem}[/]")

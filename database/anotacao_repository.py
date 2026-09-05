@@ -1,6 +1,7 @@
 from database.conexao import conectar
 
-def obter_anotacao_por_data(usuario_id,data):
+
+def obter_anotacao_por_data(usuario_id, data):
 
     conexao = conectar()
 
@@ -13,8 +14,8 @@ def obter_anotacao_por_data(usuario_id,data):
             data,
             texto
         FROM anotacoes
-        WHERE usuario_id = ?
-        AND data = ?
+        WHERE usuario_id = %s
+        AND data = %s
         """,
         (
             usuario_id,
@@ -28,7 +29,8 @@ def obter_anotacao_por_data(usuario_id,data):
 
     return anotacao
 
-def salvar_anotacao(usuario_id,data,texto):
+
+def salvar_anotacao(usuario_id, data, texto):
 
     conexao = conectar()
 
@@ -41,10 +43,10 @@ def salvar_anotacao(usuario_id,data,texto):
             data,
             texto
         )
-        VALUES (?, ?, ?)
-        ON CONFLICT(usuario_id, data)
+        VALUES (%s, %s, %s)
+        ON CONFLICT (usuario_id, data)
         DO UPDATE SET
-            texto = excluded.texto
+            texto = EXCLUDED.texto
         """,
         (
             usuario_id,
@@ -57,25 +59,27 @@ def salvar_anotacao(usuario_id,data,texto):
 
     conexao.close()
 
+
 def obter_anotacoes_por_mes(usuario_id, ano, mes):
 
     conexao = conectar()
+
     cursor = conexao.cursor()
 
     cursor.execute("""
         SELECT
             data
         FROM anotacoes
-        WHERE usuario_id = ?
-        AND strftime('%Y', data) = ?
-        AND strftime('%m', data) = ?
+        WHERE usuario_id = %s
+        AND EXTRACT(YEAR FROM data::date) = %s
+        AND EXTRACT(MONTH FROM data::date) = %s
         AND texto != ''
         GROUP BY data
         ORDER BY data
     """, (
         usuario_id,
-        str(ano),
-        f"{mes:02d}"
+        ano,
+        mes
     ))
 
     anotacoes = cursor.fetchall()

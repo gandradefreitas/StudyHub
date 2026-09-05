@@ -1,37 +1,33 @@
 from database.conexao import conectar
 
+
 def criar_tabelas():
+
     conexao = conectar()
     cursor = conexao.cursor()
 
+    # =========================
+    # USUÁRIOS
+    # =========================
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             nome TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
-            senha TEXT NOT NULL
+            senha TEXT NOT NULL,
+            tema TEXT DEFAULT 'sistema'
         )
     """)
 
-    cursor.execute("""
-        PRAGMA table_info(usuarios)
-    """)
-
-    colunas_usuarios = [
-        coluna[1]
-        for coluna in cursor.fetchall()
-    ]
-
-    if "tema" not in colunas_usuarios:
-        cursor.execute("""
-            ALTER TABLE usuarios
-            ADD COLUMN tema TEXT DEFAULT 'sistema'
-        """)
+    # =========================
+    # CONFIGURAÇÕES DO USUÁRIO
+    # =========================
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS configuracoes_usuario(
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
             usuario_id INTEGER NOT NULL UNIQUE,
 
@@ -48,45 +44,39 @@ def criar_tabelas():
         )
     """)
 
+    # =========================
+    # TAREFAS
+    # =========================
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS tarefas(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             descricao TEXT NOT NULL,
             concluida INTEGER DEFAULT 0,
             usuario_id INTEGER NOT NULL,
             data_conclusao TEXT,
-            FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+            FOREIGN KEY(usuario_id)
+            REFERENCES usuarios(id)
         )
     """)
 
-    cursor.execute("""
-        PRAGMA table_info(tarefas)
-    """)
-
-    colunas_tarefas = [
-        coluna[1]
-        for coluna in cursor.fetchall()
-    ]
-
-    if "data_conclusao" not in colunas_tarefas:
-        cursor.execute("""
-            ALTER TABLE tarefas
-            ADD COLUMN data_conclusao TEXT
-        """)
+    # =========================
+    # ESTUDOS
+    # =========================
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS estudos(
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
             usuario_id INTEGER NOT NULL,
 
-            inicio DATETIME NOT NULL,
+            inicio TIMESTAMP NOT NULL,
 
-            fim DATETIME,
+            fim TIMESTAMP,
 
             duracao INTEGER DEFAULT 0,
-            
+
             ativa INTEGER DEFAULT 1,
 
             FOREIGN KEY(usuario_id)
@@ -95,10 +85,14 @@ def criar_tabelas():
         )
     """)
 
+    # =========================
+    # ANOTAÇÕES
+    # =========================
+
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS anotacoes(
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
             usuario_id INTEGER NOT NULL,
 
@@ -114,40 +108,47 @@ def criar_tabelas():
         )
     """)
 
+    # =========================
+    # RESULTADOS DAS PROVAS
+    # =========================
+
     cursor.execute("""
+        CREATE TABLE IF NOT EXISTS resultados_provas(
 
-    CREATE TABLE IF NOT EXISTS resultados_provas (
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-    
-        usuario_id INTEGER NOT NULL,
-    
-        prova_id INTEGER NOT NULL,
-    
-        acertos INTEGER NOT NULL,
-    
-        erros INTEGER NOT NULL,
-        
-        tempo_gasto TEXT,
-    
-        nao_respondidas INTEGER NOT NULL,
-    
-        total INTEGER NOT NULL,
-    
-        porcentagem REAL NOT NULL,
-    
-        data_realizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    
-        FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
-    
-    )
+            usuario_id INTEGER NOT NULL,
 
+            prova_id INTEGER NOT NULL,
+
+            acertos INTEGER NOT NULL,
+
+            erros INTEGER NOT NULL,
+
+            tempo_gasto TEXT,
+
+            nao_respondidas INTEGER NOT NULL,
+
+            total INTEGER NOT NULL,
+
+            porcentagem REAL NOT NULL,
+
+            data_realizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY(usuario_id)
+            REFERENCES usuarios(id)
+
+        )
     """)
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS respostas_provas (
+    # =========================
+    # RESPOSTAS DAS PROVAS
+    # =========================
 
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respostas_provas(
+
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
             usuario_id INTEGER NOT NULL,
 
@@ -159,7 +160,7 @@ def criar_tabelas():
 
             correta INTEGER NOT NULL,
 
-            data DATETIME DEFAULT CURRENT_TIMESTAMP,
+            data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
             FOREIGN KEY(usuario_id)
             REFERENCES usuarios(id)
@@ -167,63 +168,70 @@ def criar_tabelas():
         )
     """)
 
+    # =========================
+    # RESPOSTAS DAS QUESTÕES
+    # =========================
 
     cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respostas_questoes(
 
-    CREATE TABLE IF NOT EXISTS respostas_questoes (
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INTEGER NOT NULL,
 
-        usuario_id INTEGER NOT NULL,
+            questao_numero INTEGER NOT NULL,
 
-        questao_numero INTEGER NOT NULL,
+            resposta TEXT NOT NULL,
 
-        resposta TEXT NOT NULL,
+            correta INTEGER NOT NULL,
 
-        correta INTEGER NOT NULL,
+            data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-        data_resposta DATETIME DEFAULT CURRENT_TIMESTAMP,
+            proxima_tentativa TIMESTAMP,
 
-        proxima_tentativa DATETIME,
+            FOREIGN KEY(usuario_id)
+            REFERENCES usuarios(id)
+            ON DELETE CASCADE
 
-        FOREIGN KEY(usuario_id)
-        REFERENCES usuarios(id)
-        ON DELETE CASCADE
-
-    )
-
+        )
     """)
 
+    # =========================
+    # RESULTADOS DAS QUESTÕES
+    # =========================
+
     cursor.execute("""
+        CREATE TABLE IF NOT EXISTS resultados_questoes(
 
-    CREATE TABLE IF NOT EXISTS resultados_questoes (
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INTEGER NOT NULL,
 
-        usuario_id INTEGER NOT NULL,
+            questao_numero INTEGER NOT NULL,
 
-        questao_numero INTEGER NOT NULL,
+            resposta_usuario TEXT NOT NULL,
 
-        resposta_usuario TEXT NOT NULL,
+            resposta_correta TEXT NOT NULL,
 
-        resposta_correta TEXT NOT NULL,
+            correta INTEGER NOT NULL,
 
-        correta INTEGER NOT NULL,
+            data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-        data_resposta DATETIME DEFAULT CURRENT_TIMESTAMP,
+            proxima_tentativa TIMESTAMP NOT NULL,
 
-        proxima_tentativa DATETIME NOT NULL,
+            FOREIGN KEY(usuario_id)
+            REFERENCES usuarios(id)
+            ON DELETE CASCADE
 
-        FOREIGN KEY(usuario_id)
-        REFERENCES usuarios(id)
-        ON DELETE CASCADE
-
-    )
-
+        )
     """)
 
     conexao.commit()
+
+    cursor.close()
     conexao.close()
+
 
 if __name__ == "__main__":
     criar_tabelas()
+

@@ -1,49 +1,35 @@
 const botaoMenu = document.getElementById("btn-menu");
-
 const sidebar = document.getElementById("sidebar");
 
-botaoMenu.addEventListener("click", (evento) => {
+if (botaoMenu && sidebar) {
 
-    evento.stopPropagation();
-
-    sidebar.classList.toggle("ativo");
-
-});
-
-document.addEventListener("click", (evento) => {
-
-    if (!sidebar.contains(evento.target)) {
-
-        sidebar.classList.remove("ativo");
-
-    }
-
-});
-
-sidebar.addEventListener("click", (evento) => {
-
-    evento.stopPropagation();
-
-});
-
-const links = sidebar.querySelectorAll("a");
-
-links.forEach((link) => {
-
-    link.addEventListener("click", () => {
-
-        sidebar.classList.remove("ativo");
-
+    botaoMenu.addEventListener("click", (evento) => {
+        evento.stopPropagation();
+        sidebar.classList.toggle("ativo");
     });
 
-});
+    document.addEventListener("click", (evento) => {
+        if (!sidebar.contains(evento.target)) {
+            sidebar.classList.remove("ativo");
+        }
+    });
 
-document.addEventListener("keydown", (evento) => {
+    sidebar.addEventListener("click", (evento) => {
+        evento.stopPropagation();
+    });
 
-    if (evento.key === "Escape") {
+    const links = sidebar.querySelectorAll("a");
 
-        sidebar.classList.remove("ativo");
+    links.forEach((link) => {
+        link.addEventListener("click", () => {
+            sidebar.classList.remove("ativo");
+        });
+    });
 
-    }
+    document.addEventListener("keydown", (evento) => {
+        if (evento.key === "Escape") {
+            sidebar.classList.remove("ativo");
+        }
+    });
 
-});
+}

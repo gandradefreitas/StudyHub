@@ -1,16 +1,13 @@
-import sqlite3
-from pathlib import Path
+import os
+import psycopg
+from psycopg.rows import dict_row
 
-# Caminho para a pasta do projeto (studyhub)
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Caminho completo para o banco
-DB_PATH = BASE_DIR / "database" / "sistema.db"
 
 def conectar():
 
-    conexao = sqlite3.connect(DB_PATH)
-
-    conexao.row_factory = sqlite3.Row
+    conexao = psycopg.connect(
+        os.environ["DATABASE_URL"],
+        row_factory=dict_row
+    )
 
     return conexao

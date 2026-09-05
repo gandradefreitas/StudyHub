@@ -1,53 +1,47 @@
 from database.conexao import conectar
 
-def registrar_resposta_questao(usuario_id,questao_numero,resposta,correta,data_resposta,proxima_tentativa):
+
+def registrar_resposta_questao(
+    usuario_id,
+    questao_numero,
+    resposta,
+    correta,
+    data_resposta,
+    proxima_tentativa
+):
 
     conexao = conectar()
 
     cursor = conexao.cursor()
 
-
     cursor.execute("""
         INSERT INTO respostas_questoes (
-
             usuario_id,
-
             questao_numero,
-
             resposta,
-
             correta,
-
             data_resposta,
-
             proxima_tentativa
-
         )
-
-        VALUES (?, ?, ?, ?, ?, ?)
-
+        VALUES (%s, %s, %s, %s, %s, %s)
     """, (
-
         usuario_id,
-
         questao_numero,
-
         resposta,
-
         correta,
-
         data_resposta,
-
         proxima_tentativa
-
     ))
-
 
     conexao.commit()
 
     conexao.close()
 
-def obter_ultima_resposta_questao(usuario_id,questao_numero):
+
+def obter_ultima_resposta_questao(
+    usuario_id,
+    questao_numero
+):
 
     conexao = conectar()
 
@@ -59,16 +53,11 @@ def obter_ultima_resposta_questao(usuario_id,questao_numero):
             correta,
             data_resposta,
             proxima_tentativa
-
         FROM respostas_questoes
-
-        WHERE usuario_id = ?
-        AND questao_numero = ?
-
+        WHERE usuario_id = %s
+        AND questao_numero = %s
         ORDER BY data_resposta DESC
-
         LIMIT 1
-
     """, (
         usuario_id,
         questao_numero

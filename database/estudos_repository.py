@@ -1,6 +1,7 @@
 from database.conexao import conectar
 from datetime import datetime
 
+
 def iniciar_estudo(usuario_id):
 
     conexao = conectar()
@@ -8,14 +9,15 @@ def iniciar_estudo(usuario_id):
 
     cursor.execute("""
         INSERT INTO estudos(usuario_id, inicio)
-        VALUES(?, ?)
+        VALUES(%s, %s)
     """, (
         usuario_id,
-        datetime.now().isoformat()
+        datetime.now()
     ))
 
     conexao.commit()
     conexao.close()
+
 
 def finalizar_estudo(estudo_id, fim, duracao):
 
@@ -24,10 +26,11 @@ def finalizar_estudo(estudo_id, fim, duracao):
 
     cursor.execute("""
         UPDATE estudos
-        SET fim = ?, 
-            duracao = ?,
+        SET
+            fim = %s,
+            duracao = %s,
             ativa = 0
-        WHERE id = ?
+        WHERE id = %s
     """, (
         fim,
         duracao,
@@ -37,25 +40,24 @@ def finalizar_estudo(estudo_id, fim, duracao):
     conexao.commit()
     conexao.close()
 
+
 def obter_total_segundos(usuario_id):
 
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT SUM(duracao)
+        SELECT COALESCE(SUM(duracao), 0) AS total
         FROM estudos
-        WHERE usuario_id = ?
+        WHERE usuario_id = %s
     """, (usuario_id,))
 
     resultado = cursor.fetchone()
 
     conexao.close()
 
-    if resultado[0] is None:
-        return 0
+    return resultado["total"]
 
-    return resultado[0]
 
 def obter_estudos_por_data(usuario_id, data):
 
@@ -68,8 +70,8 @@ def obter_estudos_por_data(usuario_id, data):
             fim,
             duracao
         FROM estudos
-        WHERE usuario_id = ?
-        AND DATE(inicio) = ?
+        WHERE usuario_id = %s
+        AND inicio::date = %s
         ORDER BY inicio
     """, (
         usuario_id,
@@ -82,15 +84,18 @@ def obter_estudos_por_data(usuario_id, data):
 
     return estudos
 
+
 def obter_estudo_ativo(usuario_id):
 
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT id, inicio
+        SELECT
+            id,
+            inicio
         FROM estudos
-        WHERE usuario_id = ?
+        WHERE usuario_id = %s
         AND ativa = 1
     """, (usuario_id,))
 
@@ -100,6 +105,7 @@ def obter_estudo_ativo(usuario_id):
 
     return estudo
 
+
 def possui_estudo_ativo(usuario_id):
 
     conexao = conectar()
@@ -108,7 +114,7 @@ def possui_estudo_ativo(usuario_id):
     cursor.execute("""
         SELECT id
         FROM estudos
-        WHERE usuario_id = ?
+        WHERE usuario_id = %s
         AND ativa = 1
     """, (usuario_id,))
 
@@ -118,6 +124,7 @@ def possui_estudo_ativo(usuario_id):
 
     return resultado is not None
 
+
 def obter_estudos_por_mes(usuario_id, ano, mes):
 
     conexao = conectar()
@@ -125,18 +132,18 @@ def obter_estudos_por_mes(usuario_id, ano, mes):
 
     cursor.execute("""
         SELECT
-            DATE(inicio) AS data
+            inicio::date AS data
         FROM estudos
-        WHERE usuario_id = ?
-        AND strftime('%Y', inicio) = ?
-        AND strftime('%m', inicio) = ?
+        WHERE usuario_id = %s
+        AND EXTRACT(YEAR FROM inicio) = %s
+        AND EXTRACT(MONTH FROM inicio) = %s
         AND duracao > 0
-        GROUP BY DATE(inicio)
-        ORDER BY DATE(inicio)
+        GROUP BY inicio::date
+        ORDER BY inicio::date
     """, (
         usuario_id,
-        str(ano),
-        f"{mes:02d}"
+        ano,
+        mes
     ))
 
     estudos = cursor.fetchall()
@@ -145,6 +152,7 @@ def obter_estudos_por_mes(usuario_id, ano, mes):
 
     return estudos
 
+
 def obter_estudos_por_periodo(usuario_id, inicio, fim):
 
     conexao = conectar()
@@ -152,14 +160,14 @@ def obter_estudos_por_periodo(usuario_id, inicio, fim):
 
     cursor.execute("""
         SELECT
-            DATE(inicio) AS data,
+            inicio::date AS data,
             SUM(duracao) AS duracao
         FROM estudos
-        WHERE usuario_id = ?
-        AND DATE(inicio) BETWEEN ? AND ?
+        WHERE usuario_id = %s
+        AND inicio::date BETWEEN %s AND %s
         AND duracao > 0
-        GROUP BY DATE(inicio)
-        ORDER BY DATE(inicio)
+        GROUP BY inicio::date
+        ORDER BY inicio::date
     """, (
         usuario_id,
         inicio,
@@ -172,23 +180,25 @@ def obter_estudos_por_periodo(usuario_id, inicio, fim):
 
     return estudos
 
+
 def obter_segundos_estudados_hoje(usuario_id):
 
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT COALESCE(SUM(duracao), 0)
+        SELECT COALESCE(SUM(duracao), 0) AS segundos
         FROM estudos
-        WHERE usuario_id = ?
-        AND DATE(inicio) = DATE('now', 'localtime')
+        WHERE usuario_id = %s
+        AND inicio::date = CURRENT_DATE
     """, (usuario_id,))
 
-    segundos = cursor.fetchone()[0]
+    segundos = cursor.fetchone()["segundos"]
 
     conexao.close()
 
     return segundos
+
 
 def obter_questoes_hoje(usuario_id):
 
@@ -196,17 +206,18 @@ def obter_questoes_hoje(usuario_id):
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT COALESCE(SUM(total), 0)
+        SELECT COALESCE(SUM(total), 0) AS questoes
         FROM resultados_provas
-        WHERE usuario_id = ?
-        AND DATE(data) = DATE('now', 'localtime')
+        WHERE usuario_id = %s
+        AND data_realizacao::date = CURRENT_DATE
     """, (usuario_id,))
 
-    questoes = cursor.fetchone()[0]
+    questoes = cursor.fetchone()["questoes"]
 
     conexao.close()
 
     return questoes
+
 
 def obter_questoes_respondidas_hoje(usuario_id):
 
@@ -214,17 +225,18 @@ def obter_questoes_respondidas_hoje(usuario_id):
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS questoes
         FROM respostas_provas
-        WHERE usuario_id = ?
-        AND DATE(data) = DATE('now', 'localtime')
+        WHERE usuario_id = %s
+        AND data::date = CURRENT_DATE
     """, (usuario_id,))
 
-    questoes = cursor.fetchone()[0]
+    questoes = cursor.fetchone()["questoes"]
 
     conexao.close()
 
     return questoes
+
 
 def obter_segundos_provas_hoje(usuario_id):
 
@@ -234,8 +246,8 @@ def obter_segundos_provas_hoje(usuario_id):
     cursor.execute("""
         SELECT tempo_gasto
         FROM resultados_provas
-        WHERE usuario_id = ?
-        AND DATE(data_realizacao) = DATE('now', 'localtime')
+        WHERE usuario_id = %s
+        AND data_realizacao::date = CURRENT_DATE
     """, (usuario_id,))
 
     resultados = cursor.fetchall()

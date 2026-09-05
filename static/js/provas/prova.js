@@ -639,11 +639,24 @@ function converterTempoGasto(){
 
 function carregarQuestao() {
 
+    if (
+        questaoAtual < 0 ||
+        questaoAtual >= questoesProva.length
+    ) {
+        questaoAtual = 0;
+
+        localStorage.setItem(
+            `${CHAVE_PROVA}_questao`,
+            questaoAtual
+        );
+    }
+
     const questao =
-    questoesProva[questaoAtual];
+        questoesProva[questaoAtual];
 
     document.getElementById(
-    "contador-questao").textContent = questaoAtual + 1;
+        "contador-questao"
+    ).textContent = questaoAtual + 1;
 
 
     // Número da questão
