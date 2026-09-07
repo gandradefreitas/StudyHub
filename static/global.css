@@ -314,23 +314,12 @@ textarea:focus-visible {
 ======================================== */
 
 .oculto {
-
     opacity: 0;
-
-    transform: translateY(40px);
-
-    transition:
-        opacity .7s ease,
-        transform .7s ease;
-
+    transition: opacity .7s ease;
 }
 
 .visivel {
-
     opacity: 1;
-
-    transform: translateY(0);
-
 }
 
 /* =========================================================
