@@ -2,3 +2,4 @@ bcrypt
 rich
 Flask
 gunicorn
+psycopg[binary]
