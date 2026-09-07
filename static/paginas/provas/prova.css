@@ -6,16 +6,17 @@
 
 .pagina-prova {
 
-    --prova-radius: 14px;
-    --prova-radius-small: 10px;
+    --prova-radius:14px;
+
+    --prova-radius-small:10px;
+
     --prova-sombra:
-        0 4px 20px rgb(0 0 0 / 0.06);
+        0 4px 20px rgb(0 0 0 / .06);
 
     --prova-sombra-hover:
-        0 6px 22px rgb(0 0 0 / 0.10);
+        0 6px 22px rgb(0 0 0 / .10);
 
 }
-
 
 
 /* =========================================================
@@ -24,25 +25,27 @@
 
 .pagina-prova {
 
-    display: flex;
+    display:flex;
 
-    align-items: flex-start;
+    align-items:flex-start;
 
-    gap: 24px;
+    gap:24px;
 
-    width: 100%;
+    width:100%;
 
-    max-width: 1450px;
+    max-width:1450px;
 
-    min-height: 100vh;
+    min-width:0;
 
-    margin: 0 auto;
+    min-height:100vh;
+
+    margin:0 auto;
 
     padding:
         24px
         clamp(16px, 3vw, 32px);
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
 }
 
@@ -53,21 +56,22 @@
 
 .conteudo-prova {
 
-    flex: 1;
+    flex:1;
 
-    min-width: 0;
+    min-width:0;
 
-    padding: clamp(20px, 3vw, 32px);
+    padding:
+        clamp(20px, 3vw, 32px);
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-card);
+    background:var(--cor-card);
 
-    border: 1px solid var(--cor-borda);
+    border:1px solid var(--cor-borda);
 
-    border-radius: var(--prova-radius);
+    border-radius:var(--prova-radius);
 
-    box-shadow: var(--prova-sombra);
+    box-shadow:var(--prova-sombra);
 
 }
 
@@ -78,77 +82,87 @@
 
 .cabecalho-prova {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: space-between;
+    justify-content:space-between;
 
-    gap: 24px;
+    gap:24px;
 
-    margin-bottom: 28px;
+    min-width:0;
 
-    padding-bottom: 20px;
+    margin-bottom:28px;
 
-    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom:20px;
+
+    border-bottom:1px solid var(--cor-borda);
 
 }
 
 
 .cabecalho-prova h1 {
 
-    margin: 0 0 7px;
+    max-width:100%;
 
-    color: var(--cor-texto);
+    margin:0 0 7px;
 
-    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    color:var(--cor-texto);
 
-    font-weight: 700;
+    font-size:clamp(1.35rem, 3vw, 1.8rem);
 
-    line-height: 1.25;
+    font-weight:700;
+
+    line-height:1.25;
+
+    overflow-wrap:break-word;
 
 }
 
 
 .cabecalho-prova p {
 
-    margin: 0;
+    max-width:100%;
 
-    color: var(--cor-texto-secundario);
+    margin:0;
 
-    font-size: .9rem;
+    color:var(--cor-texto-secundario);
 
-    line-height: 1.5;
+    font-size:.9rem;
+
+    line-height:1.5;
 
 }
 
 
 .status-prova {
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    padding: 10px 14px;
+    padding:10px 14px;
 
-    background: var(--cor-fundo-secundario);
+    box-sizing:border-box;
 
-    border: 1px solid var(--cor-borda);
+    background:var(--cor-fundo-secundario);
 
-    border-radius: 10px;
+    border:1px solid var(--cor-borda);
 
-    color: var(--cor-texto-secundario);
+    border-radius:10px;
 
-    font-size: .85rem;
+    color:var(--cor-texto-secundario);
 
-    white-space: nowrap;
+    font-size:.85rem;
+
+    white-space:nowrap;
 
 }
 
 
 .status-prova strong {
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-weight: 700;
+    font-weight:700;
 
 }
 
@@ -159,36 +173,40 @@
 
 .questao {
 
-    margin-bottom: 28px;
+    min-width:0;
+
+    margin-bottom:28px;
 
 }
 
 
 .questao h2 {
 
-    display: inline-flex;
+    display:inline-flex;
 
-    align-items: center;
+    align-items:center;
 
-    min-height: 34px;
+    min-height:34px;
 
-    margin: 0 0 18px;
+    max-width:100%;
 
-    padding: 6px 11px;
+    margin:0 0 18px;
 
-    box-sizing: border-box;
+    padding:6px 11px;
 
-    background: var(--cor-fundo-secundario);
+    box-sizing:border-box;
 
-    border-radius: 8px;
+    background:var(--cor-fundo-secundario);
 
-    color: var(--cor-texto);
+    border-radius:8px;
 
-    font-size: .9rem;
+    color:var(--cor-texto);
 
-    font-weight: 700;
+    font-size:.9rem;
 
-    line-height: 1.2;
+    font-weight:700;
+
+    line-height:1.2;
 
 }
 
@@ -199,17 +217,19 @@
 
 .enunciado {
 
-    margin: 0;
+    max-width:100%;
 
-    color: var(--cor-texto);
+    margin:0;
 
-    font-size: 1rem;
+    color:var(--cor-texto);
 
-    line-height: 1.8;
+    font-size:1rem;
 
-    white-space: pre-wrap;
+    line-height:1.8;
 
-    overflow-wrap: anywhere;
+    white-space:pre-wrap;
+
+    overflow-wrap:anywhere;
 
 }
 
@@ -220,17 +240,19 @@
 
 .pergunta {
 
-    margin-top: 24px;
+    max-width:100%;
 
-    color: var(--cor-texto);
+    margin-top:24px;
 
-    font-size: 1rem;
+    color:var(--cor-texto);
 
-    font-weight: 500;
+    font-size:1rem;
 
-    line-height: 1.8;
+    font-weight:500;
 
-    overflow-wrap: anywhere;
+    line-height:1.8;
+
+    overflow-wrap:anywhere;
 
 }
 
@@ -241,49 +263,51 @@
 
 .container-imagem {
 
-    display: flex;
+    display:flex;
 
-    justify-content: center;
+    justify-content:center;
 
-    width: 100%;
+    width:100%;
 
-    margin: 24px 0;
+    min-width:0;
 
-    box-sizing: border-box;
+    margin:24px 0;
+
+    box-sizing:border-box;
 
 }
 
 
 .imagem-questao {
 
-    display: block;
+    display:block;
 
-    max-width: 100%;
+    max-width:100%;
 
-    height: auto;
+    height:auto;
 
-    margin: 0 auto;
+    margin:0 auto;
 
-    border-radius: 8px;
+    border-radius:8px;
 
 }
 
 
 .imagem-alternativa {
 
-    display: block;
+    display:block;
 
-    width: auto;
+    width:auto;
 
-    max-width: 100%;
+    max-width:100%;
 
-    max-height: 200px;
+    max-height:200px;
 
-    height: auto;
+    height:auto;
 
-    margin: 0 auto;
+    margin:0 auto;
 
-    border-radius: 6px;
+    border-radius:6px;
 
 }
 
@@ -294,42 +318,44 @@
 
 .alternativas {
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 12px;
+    gap:12px;
+
+    min-width:0;
 
 }
 
 
 .alternativa {
 
-    position: relative;
+    position:relative;
 
-    display: flex;
+    display:flex;
 
-    align-items: flex-start;
+    align-items:flex-start;
 
-    gap: 14px;
+    gap:14px;
 
-    width: 100%;
+    width:100%;
 
-    min-width: 0;
+    min-width:0;
 
-    padding: 15px 16px;
+    padding:15px 16px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-card);
+    background:var(--cor-card);
 
-    border: 1px solid var(--cor-borda);
+    border:1px solid var(--cor-borda);
 
-    border-radius: var(--prova-radius-small);
+    border-radius:var(--prova-radius-small);
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    cursor: pointer;
+    cursor:pointer;
 
     transition:
         border-color .2s ease,
@@ -346,13 +372,14 @@
 
 .alternativa:hover {
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border-color: var(--cor-primaria);
+    border-color:var(--cor-primaria);
 
-    box-shadow: 0 3px 12px rgb(0 0 0 / .06);
+    box-shadow:
+        0 3px 12px rgb(0 0 0 / .06);
 
-    transform: translateY(-1px);
+    transform:translateY(-1px);
 
 }
 
@@ -363,50 +390,50 @@
 
 .letra-alternativa {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    width: 34px;
+    width:34px;
 
-    height: 34px;
+    height:34px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border: 1px solid var(--cor-borda);
+    border:1px solid var(--cor-borda);
 
-    border-radius: 50%;
+    border-radius:50%;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-size: .85rem;
+    font-size:.85rem;
 
-    font-weight: 700;
+    font-weight:700;
 
-    line-height: 1;
+    line-height:1;
 
 }
 
 
 .conteudo-alternativa {
 
-    flex: 1;
+    flex:1;
 
-    min-width: 0;
+    min-width:0;
 
-    padding-top: 5px;
+    padding-top:5px;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    line-height: 1.65;
+    line-height:1.65;
 
-    overflow-wrap: anywhere;
+    overflow-wrap:anywhere;
 
 }
 
@@ -417,24 +444,26 @@
 
 .navegacao-prova {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    gap: 10px;
+    gap:10px;
 
-    margin-top: 32px;
+    min-width:0;
 
-    padding-top: 22px;
+    margin-top:32px;
 
-    border-top: 1px solid var(--cor-borda);
+    padding-top:22px;
+
+    border-top:1px solid var(--cor-borda);
 
 }
 
 
 .navegacao-prova .btn-revisao {
 
-    margin-right: auto;
+    margin-right:auto;
 
 }
 
@@ -446,27 +475,27 @@
 .navegacao-prova button,
 .btn-finalizar {
 
-    min-height: 44px;
+    min-height:44px;
 
-    padding: 10px 16px;
+    padding:10px 16px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border: 1px solid var(--cor-borda);
+    border:1px solid var(--cor-borda);
 
-    border-radius: 9px;
+    border-radius:9px;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font: inherit;
+    font:inherit;
 
-    font-size: .88rem;
+    font-size:.88rem;
 
-    font-weight: 600;
+    font-weight:600;
 
-    cursor: pointer;
+    cursor:pointer;
 
     transition:
         transform .2s ease,
@@ -479,7 +508,7 @@
 .navegacao-prova button:hover,
 .btn-finalizar:hover {
 
-    transform: translateY(-1px);
+    transform:translateY(-1px);
 
 }
 
@@ -487,7 +516,7 @@
 .navegacao-prova button:active,
 .btn-finalizar:active {
 
-    transform: translateY(0);
+    transform:translateY(0);
 
 }
 
@@ -498,53 +527,55 @@
 
 .painel-lateral {
 
-    flex: 0 0 300px;
+    flex:0 0 300px;
 
-    width: 300px;
+    width:300px;
 
-    max-height: calc(100vh - 48px);
+    min-width:0;
 
-    overflow-y: auto;
+    max-height:calc(100vh - 48px);
 
-    padding: 22px;
+    overflow-y:auto;
 
-    box-sizing: border-box;
+    padding:22px;
 
-    background: var(--cor-card);
+    box-sizing:border-box;
 
-    border: 1px solid var(--cor-borda);
+    background:var(--cor-card);
 
-    border-radius: var(--prova-radius);
+    border:1px solid var(--cor-borda);
 
-    box-shadow: var(--prova-sombra);
+    border-radius:var(--prova-radius);
 
-    scrollbar-width: thin;
+    box-shadow:var(--prova-sombra);
+
+    scrollbar-width:thin;
 
 }
 
 
 .painel-lateral h2 {
 
-    margin: 0;
+    margin:0;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-size: 1rem;
+    font-size:1rem;
 
-    font-weight: 700;
+    font-weight:700;
 
 }
 
 
 .painel-lateral h3 {
 
-    margin: 26px 0 12px;
+    margin:26px 0 12px;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-size: .9rem;
+    font-size:.9rem;
 
-    font-weight: 700;
+    font-weight:700;
 
 }
 
@@ -555,39 +586,49 @@
 
 .cronometro {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    min-height: 76px;
+    min-height:76px;
 
-    margin: 14px 0 22px;
+    margin:14px 0 22px;
 
-    padding: 12px;
+    padding:12px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border: 1px solid var(--cor-borda);
+    border:1px solid var(--cor-borda);
 
-    border-radius: 12px;
+    border-radius:12px;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace;
 
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size:clamp(1.5rem, 4vw, 2rem);
 
-    font-weight: 700;
+    font-weight:700;
 
-    letter-spacing: .04em;
+    letter-spacing:.04em;
 
-    line-height: 1;
+    line-height:1;
 
-    text-align: center;
+    text-align:center;
+
+    white-space:nowrap;
+
+    overflow:hidden;
 
 }
 
@@ -598,13 +639,16 @@
 
 .grade-questoes {
 
-    display: grid;
+    display:grid;
 
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
 
-    gap: 7px;
+    gap:7px;
 
-    margin: 0 0 22px;
+    min-width:0;
+
+    margin:0 0 22px;
 
 }
 
@@ -612,35 +656,37 @@
 .numero-questao,
 .grade-questoes button {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    width: 100%;
+    width:100%;
 
-    min-height: 42px;
+    min-width:0;
 
-    padding: 5px;
+    min-height:42px;
 
-    box-sizing: border-box;
+    padding:5px;
 
-    background: var(--cor-fundo-secundario);
+    box-sizing:border-box;
 
-    border: 1px solid var(--cor-borda);
+    background:var(--cor-fundo-secundario);
 
-    border-radius: 8px;
+    border:1px solid var(--cor-borda);
 
-    color: var(--cor-texto);
+    border-radius:8px;
 
-    cursor: pointer;
+    color:var(--cor-texto);
 
-    font: inherit;
+    cursor:pointer;
 
-    font-size: .82rem;
+    font:inherit;
 
-    font-weight: 600;
+    font-size:.82rem;
+
+    font-weight:600;
 
     transition:
         transform .2s ease,
@@ -653,9 +699,9 @@
 .numero-questao:hover,
 .grade-questoes button:hover {
 
-    transform: translateY(-1px);
+    transform:translateY(-1px);
 
-    filter: brightness(.97);
+    filter:brightness(.97);
 
 }
 
@@ -664,45 +710,35 @@
    ESTADOS DAS QUESTÕES
 ========================================================= */
 
-/* QUESTÃO RESPONDIDA */
-
 .numero-questao.questao-respondida {
 
-    background: var(--cor-sucesso);
+    background:var(--cor-sucesso);
 
-    border-color: var(--cor-sucesso);
+    border-color:var(--cor-sucesso);
 
-    color: var(--cor-texto-claro);
+    color:var(--cor-texto-claro);
 
 }
 
-
-/* QUESTÃO MARCADA PARA REVISÃO */
 
 .numero-questao.questao-revisao {
 
-    background: var(--cor-atencao);
+    background:var(--cor-atencao);
 
-    border-color: var(--cor-atencao);
+    border-color:var(--cor-atencao);
 
-    color: #111;
+    color:#111;
 
 }
 
 
-/* QUESTÃO ATUAL
-   Deve sempre ficar azul,
-   independentemente de estar respondida
-   ou marcada para revisão.
-*/
-
 .numero-questao.questao-atual {
 
-    background: var(--cor-primaria);
+    background:var(--cor-primaria);
 
-    border-color: var(--cor-primaria);
+    border-color:var(--cor-primaria);
 
-    color: var(--cor-texto-claro);
+    color:var(--cor-texto-claro);
 
     box-shadow:
         0 0 0 2px color-mix(
@@ -713,37 +749,39 @@
 
 }
 
+
 /* =========================================================
    BOTÃO FINALIZAR
 ========================================================= */
 
 .btn-finalizar {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    width: 100%;
+    width:100%;
 
-    min-height: 46px;
+    min-height:46px;
 
-    padding: 12px 16px;
+    padding:12px 16px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    border: none;
+    border:none;
 
-    border-radius: 9px;
+    border-radius:9px;
 
-    cursor: pointer;
+    cursor:pointer;
 
-    font: inherit;
+    font:inherit;
 
-    font-weight: 600;
+    font-weight:600;
 
 }
+
 
 /* =========================================================
    BOTÃO PRIMÁRIO
@@ -751,11 +789,11 @@
 
 .btn-primario {
 
-    background: var(--cor-primaria);
+    background:var(--cor-primaria);
 
-    border: 1px solid var(--cor-primaria);
+    border:1px solid var(--cor-primaria);
 
-    color: var(--cor-texto-claro);
+    color:var(--cor-texto-claro);
 
 }
 
@@ -766,21 +804,23 @@
 
 .selecao-lingua {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    width: 100%;
+    width:100%;
 
-    min-height: 100dvh;
+    min-height:100dvh;
 
-    padding: 24px;
+    min-width:0;
 
-    box-sizing: border-box;
+    padding:24px;
 
-    background: var(--cor-fundo);
+    box-sizing:border-box;
+
+    background:var(--cor-fundo);
 
 }
 
@@ -791,24 +831,27 @@
 
 .card-selecao-lingua {
 
-    width: 100%;
+    width:100%;
 
-    max-width: 520px;
+    max-width:520px;
 
-    padding: clamp(24px, 5vw, 40px);
+    min-width:0;
 
-    box-sizing: border-box;
+    padding:
+        clamp(24px, 5vw, 40px);
 
-    background: var(--cor-card);
+    box-sizing:border-box;
 
-    border: 1px solid var(--cor-borda);
+    background:var(--cor-card);
 
-    border-radius: 18px;
+    border:1px solid var(--cor-borda);
+
+    border-radius:18px;
 
     box-shadow:
         0 10px 40px rgb(0 0 0 / .08);
 
-    text-align: center;
+    text-align:center;
 
 }
 
@@ -819,62 +862,68 @@
 
 .cabecalho-selecao-lingua {
 
-    margin-bottom: 28px;
+    margin-bottom:28px;
 
 }
 
 
 .etapa-prova {
 
-    display: inline-flex;
+    display:inline-flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    margin-bottom: 14px;
+    margin-bottom:14px;
 
-    padding: 6px 11px;
+    padding:6px 11px;
 
-    background: var(--cor-primaria);
+    background:var(--cor-primaria);
 
-    border-radius: 999px;
+    border-radius:999px;
 
-    color: var(--cor-texto-claro);
+    color:var(--cor-texto-claro);
 
-    font-size: .72rem;
+    font-size:.72rem;
 
-    font-weight: 700;
+    font-weight:700;
 
-    letter-spacing: .03em;
+    letter-spacing:.03em;
 
 }
 
 
 .cabecalho-selecao-lingua h1 {
 
-    margin: 0 0 9px;
+    max-width:100%;
 
-    color: var(--cor-texto);
+    margin:0 0 9px;
 
-    font-size: clamp(1.4rem, 5vw, 1.75rem);
+    color:var(--cor-texto);
 
-    line-height: 1.25;
+    font-size:clamp(1.4rem, 5vw, 1.75rem);
+
+    line-height:1.25;
+
+    overflow-wrap:break-word;
 
 }
 
 
 .cabecalho-selecao-lingua p {
 
-    max-width: 400px;
+    width:100%;
 
-    margin: 0 auto;
+    max-width:400px;
 
-    color: var(--cor-texto-secundario);
+    margin:0 auto;
 
-    font-size: .9rem;
+    color:var(--cor-texto-secundario);
 
-    line-height: 1.65;
+    font-size:.9rem;
+
+    line-height:1.65;
 
 }
 
@@ -885,41 +934,45 @@
 
 .opcoes-lingua {
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 10px;
+    gap:10px;
 
-    margin-bottom: 24px;
+    min-width:0;
 
-    text-align: left;
+    margin-bottom:24px;
+
+    text-align:left;
 
 }
 
 
 .opcao-lingua {
 
-    position: relative;
+    position:relative;
 
-    display: block;
+    display:block;
 
-    cursor: pointer;
+    min-width:0;
+
+    cursor:pointer;
 
 }
 
 
 .opcao-lingua input {
 
-    position: absolute;
+    position:absolute;
 
-    width: 1px;
+    width:1px;
 
-    height: 1px;
+    height:1px;
 
-    opacity: 0;
+    opacity:0;
 
-    pointer-events: none;
+    pointer-events:none;
 
 }
 
@@ -930,23 +983,27 @@
 
 .conteudo-opcao-lingua {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    gap: 14px;
+    gap:14px;
 
-    min-height: 78px;
+    width:100%;
 
-    padding: 12px 14px;
+    min-width:0;
 
-    box-sizing: border-box;
+    min-height:78px;
 
-    background: var(--cor-card);
+    padding:12px 14px;
 
-    border: 1px solid var(--cor-borda);
+    box-sizing:border-box;
 
-    border-radius: 12px;
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
 
     transition:
         border-color .2s ease,
@@ -959,11 +1016,11 @@
 
 .opcao-lingua:hover .conteudo-opcao-lingua {
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border-color: var(--cor-primaria);
+    border-color:var(--cor-primaria);
 
-    transform: translateY(-1px);
+    transform:translateY(-1px);
 
 }
 
@@ -974,27 +1031,27 @@
 
 .icone-lingua {
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    justify-content: center;
+    justify-content:center;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    width: 44px;
+    width:44px;
 
-    height: 44px;
+    height:44px;
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border-radius: 10px;
+    border-radius:10px;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-size: .8rem;
+    font-size:.8rem;
 
-    font-weight: 800;
+    font-weight:800;
 
 }
 
@@ -1005,47 +1062,47 @@
 
 .texto-lingua {
 
-    display: flex;
+    display:flex;
 
-    flex: 1;
+    flex:1;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    min-width: 0;
+    min-width:0;
 
-    gap: 3px;
+    gap:3px;
 
 }
 
 
 .texto-lingua strong {
 
-    overflow: hidden;
+    overflow:hidden;
 
-    color: var(--cor-texto);
+    color:var(--cor-texto);
 
-    font-size: .95rem;
+    font-size:.95rem;
 
-    font-weight: 700;
+    font-weight:700;
 
-    text-overflow: ellipsis;
+    text-overflow:ellipsis;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
 }
 
 
 .texto-lingua small {
 
-    overflow: hidden;
+    overflow:hidden;
 
-    color: var(--cor-texto-secundario);
+    color:var(--cor-texto-secundario);
 
-    font-size: .78rem;
+    font-size:.78rem;
 
-    text-overflow: ellipsis;
+    text-overflow:ellipsis;
 
-    white-space: nowrap;
+    white-space:nowrap;
 
 }
 
@@ -1056,21 +1113,21 @@
 
 .indicador-lingua {
 
-    position: relative;
+    position:relative;
 
-    flex-shrink: 0;
+    flex-shrink:0;
 
-    width: 20px;
+    width:20px;
 
-    height: 20px;
+    height:20px;
 
-    box-sizing: border-box;
+    box-sizing:border-box;
 
-    background: var(--cor-card);
+    background:var(--cor-card);
 
-    border: 2px solid var(--cor-borda);
+    border:2px solid var(--cor-borda);
 
-    border-radius: 50%;
+    border-radius:50%;
 
     transition:
         border-color .2s ease,
@@ -1084,11 +1141,12 @@
    IDIOMA SELECIONADO
 ========================================================= */
 
-.opcao-lingua input:checked + .conteudo-opcao-lingua {
+.opcao-lingua input:checked
++ .conteudo-opcao-lingua {
 
-    background: var(--cor-fundo-secundario);
+    background:var(--cor-fundo-secundario);
 
-    border-color: var(--cor-primaria);
+    border-color:var(--cor-primaria);
 
     box-shadow:
         0 0 0 3px color-mix(
@@ -1100,12 +1158,13 @@
 }
 
 
-.opcao-lingua input:checked + .conteudo-opcao-lingua
+.opcao-lingua input:checked
++ .conteudo-opcao-lingua
 .indicador-lingua {
 
-    background: var(--cor-primaria);
+    background:var(--cor-primaria);
 
-    border-color: var(--cor-primaria);
+    border-color:var(--cor-primaria);
 
     box-shadow:
         inset 0 0 0 4px var(--cor-card);
@@ -1120,13 +1179,13 @@
 .opcao-lingua input:focus-visible
 + .conteudo-opcao-lingua {
 
-    outline: 3px solid color-mix(
+    outline:3px solid color-mix(
         in srgb,
         var(--cor-primaria) 25%,
         transparent
     );
 
-    outline-offset: 3px;
+    outline-offset:3px;
 
 }
 
@@ -1137,18 +1196,18 @@
 
 #confirmar-lingua {
 
-    width: 100%;
+    width:100%;
 
-    min-height: 46px;
+    min-height:46px;
 
 }
 
 
 #confirmar-lingua:disabled {
 
-    cursor: not-allowed;
+    cursor:not-allowed;
 
-    opacity: .5;
+    opacity:.5;
 
 }
 
@@ -1159,62 +1218,139 @@
 
 .prova-oculta {
 
-    display: none;
+    display:none;
 
 }
 
 
 /* =========================================================
-   TABLET
+   CELULARES MUITO PEQUENOS
 ========================================================= */
 
-@media (max-width: 1100px) {
+@media (max-width:380px) {
 
     .pagina-prova {
 
-        gap: 16px;
+        gap:10px;
 
-        padding:
-            20px;
+        padding:8px;
 
     }
 
+    .conteudo-prova,
     .painel-lateral {
 
-        flex-basis: 260px;
+        padding:13px;
 
-        width: 260px;
-
-    }
-
-}
-
-
-/* =========================================================
-   LAYOUT INTERMEDIÁRIO
-========================================================= */
-
-@media (max-width: 850px) {
-
-    .pagina-prova {
-
-        flex-direction: column;
-
-        align-items: stretch;
+        border-radius:11px;
 
     }
 
-    .conteudo-prova {
+    .cabecalho-prova h1 {
 
-        width: 100%;
+        font-size:1.25rem;
 
     }
 
-    .painel-lateral {
+    .cabecalho-prova p {
 
-        width: 100%;
+        font-size:.82rem;
 
-        max-height: none;
+    }
+
+    .questao h2 {
+
+        font-size:.82rem;
+
+    }
+
+    .enunciado,
+    .pergunta {
+
+        font-size:.88rem;
+
+        line-height:1.65;
+
+    }
+
+    .alternativa {
+
+        gap:9px;
+
+        padding:10px;
+
+    }
+
+    .letra-alternativa {
+
+        width:29px;
+
+        height:29px;
+
+        font-size:.75rem;
+
+    }
+
+    .conteudo-alternativa {
+
+        font-size:.85rem;
+
+    }
+
+    .grade-questoes {
+
+        gap:4px;
+
+    }
+
+    .numero-questao,
+    .grade-questoes button {
+
+        min-height:37px;
+
+        font-size:.72rem;
+
+    }
+
+    .conteudo-opcao-lingua {
+
+        gap:10px;
+
+        padding:9px;
+
+    }
+
+    .icone-lingua {
+
+        width:37px;
+
+        height:37px;
+
+    }
+
+    .texto-lingua strong {
+
+        font-size:.88rem;
+
+    }
+
+    .texto-lingua small {
+
+        font-size:.7rem;
+
+    }
+
+    .selecao-lingua {
+
+        padding:10px;
+
+    }
+
+    .card-selecao-lingua {
+
+        padding:20px 13px;
+
+        border-radius:13px;
 
     }
 
@@ -1225,203 +1361,177 @@
    CELULAR
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (min-width:481px) and (max-width:767px) {
 
     .pagina-prova {
 
-        gap: 12px;
+        gap:12px;
 
-        margin: 0;
-
-        padding: 12px;
+        padding:12px;
 
     }
-
 
     .conteudo-prova,
     .painel-lateral {
 
-        padding: 16px;
+        padding:16px;
 
-        border-radius: 11px;
+        border-radius:12px;
 
     }
-
 
     .cabecalho-prova {
 
-        align-items: flex-start;
+        align-items:flex-start;
 
-        flex-direction: column;
+        flex-direction:column;
 
-        gap: 12px;
+        gap:12px;
 
-        margin-bottom: 22px;
+        margin-bottom:22px;
 
-        padding-bottom: 16px;
+        padding-bottom:16px;
 
     }
-
 
     .status-prova {
 
-        width: 100%;
+        width:100%;
 
-        box-sizing: border-box;
-
-        text-align: center;
+        text-align:center;
 
     }
-
 
     .questao {
 
-        margin-bottom: 22px;
+        margin-bottom:22px;
 
     }
-
 
     .enunciado,
     .pergunta {
 
-        font-size: .92rem;
+        font-size:.92rem;
 
-        line-height: 1.7;
+        line-height:1.7;
 
     }
-
 
     .alternativas {
 
-        gap: 9px;
+        gap:9px;
 
     }
-
 
     .alternativa {
 
-        gap: 11px;
+        gap:11px;
 
-        padding: 12px;
+        padding:12px;
 
     }
-
 
     .letra-alternativa {
 
-        width: 31px;
+        width:31px;
 
-        height: 31px;
+        height:31px;
 
-        font-size: .8rem;
+        font-size:.8rem;
 
     }
-
 
     .conteudo-alternativa {
 
-        padding-top: 3px;
+        padding-top:3px;
 
-        font-size: .9rem;
+        font-size:.9rem;
 
-        line-height: 1.6;
+        line-height:1.6;
 
     }
-
 
     .imagem-alternativa {
 
-        max-height: 150px;
+        max-height:150px;
 
     }
-
 
     .navegacao-prova {
 
-        flex-wrap: wrap;
+        flex-wrap:wrap;
 
-        gap: 8px;
+        gap:8px;
 
-        margin-top: 24px;
+        margin-top:24px;
 
-        padding-top: 18px;
+        padding-top:18px;
 
     }
-
 
     .navegacao-prova .btn-revisao {
 
-        width: 100%;
+        width:100%;
 
-        margin-right: 0;
+        margin-right:0;
 
     }
-
 
     .navegacao-prova .btn-secundario,
     .navegacao-prova .btn-primario {
 
-        flex: 1;
+        flex:1;
 
     }
-
 
     .grade-questoes {
 
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-
-        gap: 5px;
+        gap:5px;
 
     }
-
 
     .numero-questao,
     .grade-questoes button {
 
-        min-height: 40px;
+        min-height:40px;
 
-        font-size: .78rem;
+        font-size:.78rem;
 
     }
-
 
     .selecao-lingua {
 
-        padding: 16px;
+        padding:16px;
 
     }
-
 
     .card-selecao-lingua {
 
-        padding: 24px 16px;
+        padding:24px 16px;
 
-        border-radius: 14px;
+        border-radius:14px;
 
     }
-
 
     .cabecalho-selecao-lingua {
 
-        margin-bottom: 22px;
+        margin-bottom:22px;
 
     }
-
 
     .conteudo-opcao-lingua {
 
-        min-height: 70px;
+        min-height:70px;
 
-        padding: 11px;
+        padding:11px;
 
     }
 
-
     .icone-lingua {
 
-        width: 40px;
+        width:40px;
 
-        height: 40px;
+        height:40px;
 
     }
 
@@ -1429,78 +1539,34 @@
 
 
 /* =========================================================
-   CELULARES MUITO PEQUENOS
+   TABLET
 ========================================================= */
 
-@media (max-width: 380px) {
+@media (min-width:768px) and (max-width:999px) {
 
     .pagina-prova {
 
-        padding: 8px;
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:16px;
+
+        padding:20px;
 
     }
 
+    .conteudo-prova {
 
-    .conteudo-prova,
+        width:100%;
+
+    }
+
     .painel-lateral {
 
-        padding: 13px;
+        width:100%;
 
-    }
-
-
-    .cabecalho-prova h1 {
-
-        font-size: 1.25rem;
-
-    }
-
-
-    .grade-questoes {
-
-        gap: 4px;
-
-    }
-
-
-    .numero-questao,
-    .grade-questoes button {
-
-        min-height: 37px;
-
-        font-size: .72rem;
-
-    }
-
-
-    .conteudo-opcao-lingua {
-
-        gap: 10px;
-
-        padding: 9px;
-
-    }
-
-
-    .icone-lingua {
-
-        width: 37px;
-
-        height: 37px;
-
-    }
-
-
-    .texto-lingua strong {
-
-        font-size: .88rem;
-
-    }
-
-
-    .texto-lingua small {
-
-        font-size: .7rem;
+        max-height:none;
 
     }
 
@@ -1508,10 +1574,77 @@
 
 
 /* =========================================================
-   DISPOSITIVOS SEM HOVER
+   TABLET GRANDE / NOTEBOOK
 ========================================================= */
 
-@media (hover: none) {
+@media (min-width:1000px) and (max-width:1199px) {
+
+    .pagina-prova {
+
+        gap:16px;
+
+        padding:20px;
+
+    }
+
+    .painel-lateral {
+
+        flex-basis:260px;
+
+        width:260px;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1200px) {
+
+    .pagina-prova {
+
+        gap:24px;
+
+        padding:
+            24px
+            clamp(24px, 3vw, 32px);
+
+    }
+
+    .painel-lateral {
+
+        flex-basis:300px;
+
+        width:300px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .pagina-prova {
+
+        gap:28px;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE / DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
 
     .alternativa:hover,
     .opcao-lingua:hover .conteudo-opcao-lingua,
@@ -1520,7 +1653,7 @@
     .btn-finalizar:hover,
     .navegacao-prova button:hover {
 
-        transform: none;
+        transform:none;
 
     }
 
@@ -1531,7 +1664,7 @@
    REDUÇÃO DE MOVIMENTO
 ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
 
     .alternativa,
     .numero-questao,
@@ -1541,9 +1674,8 @@
     .btn-finalizar,
     .navegacao-prova button {
 
-        transition: none;
+        transition:none;
 
     }
 
 }
-

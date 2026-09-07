@@ -28,6 +28,8 @@
 
     max-width:650px;
 
+    min-width:0;
+
     margin:0 auto;
 
     box-sizing:border-box;
@@ -70,6 +72,8 @@
 
     align-items:center;
 
+    min-width:0;
+
 }
 
 .estudos-legenda {
@@ -90,6 +94,8 @@
 
 .estudos-cabecalho h1 {
 
+    max-width:100%;
+
     margin:0 0 1.25rem;
 
     color:var(--cor-primaria);
@@ -98,9 +104,13 @@
 
     line-height:1.2;
 
+    overflow-wrap:break-word;
+
 }
 
 .estudos-cabecalho p {
+
+    width:100%;
 
     max-width:500px;
 
@@ -123,6 +133,8 @@
 
     width:100%;
 
+    min-width:0;
+
     margin:
         clamp(1.5rem, 6vw, 2rem) 0;
 
@@ -140,6 +152,8 @@
         clamp(1px, .5vw, 2px);
 
     white-space:nowrap;
+
+    overflow:hidden;
 
 }
 
@@ -181,6 +195,8 @@
 
 .estudos-sem-sessao p {
 
+    max-width:100%;
+
     margin:0;
 
 }
@@ -200,11 +216,15 @@
 
     width:100%;
 
+    min-width:0;
+
 }
 
 .estudos-acoes form {
 
     width:100%;
+
+    min-width:0;
 
     margin:0;
 
@@ -294,7 +314,7 @@
 
 
 /* =========================================================
-   CELULARES PEQUENOS
+   CELULARES MUITO PEQUENOS
 ========================================================= */
 
 @media (max-width:380px) {
@@ -347,6 +367,35 @@
 
 
 /* =========================================================
+   CELULAR
+========================================================= */
+
+@media (min-width:481px) {
+
+    .estudos {
+
+        padding:
+            clamp(1.25rem, 4vw, 2rem);
+
+    }
+
+    .estudos-card {
+
+        padding:
+            clamp(1.5rem, 5vw, 2.5rem);
+
+    }
+
+    .estudos-cronometro {
+
+        font-size:clamp(3rem, 10vw, 4rem);
+
+    }
+
+}
+
+
+/* =========================================================
    TABLET
 ========================================================= */
 
@@ -364,14 +413,20 @@
 
     }
 
+    .estudos-cronometro {
+
+        font-size:4.5rem;
+
+    }
+
 }
 
 
 /* =========================================================
-   DESKTOP
+   TABLET GRANDE / NOTEBOOK
 ========================================================= */
 
-@media (min-width:1024px) {
+@media (min-width:1000px) {
 
     .estudos {
 
@@ -379,9 +434,30 @@
 
     }
 
+    .estudos-card {
+
+        max-width:650px;
+
+    }
+
     .estudos-cronometro {
 
         font-size:5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1200px) {
+
+    .estudos {
+
+        padding:2.5rem;
 
     }
 
@@ -404,7 +480,7 @@
 
 
 /* =========================================================
-   DISPOSITIVOS SEM HOVER
+   ACESSIBILIDADE / DISPOSITIVOS SEM HOVER
 ========================================================= */
 
 @media (hover:none) {
@@ -412,6 +488,8 @@
     .estudos-card:hover {
 
         transform:none;
+
+        box-shadow:var(--sombra);
 
     }
 

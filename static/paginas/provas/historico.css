@@ -10,6 +10,8 @@
 
     max-width:1400px;
 
+    min-width:0;
+
     margin:0 auto;
 
     padding:
@@ -34,6 +36,10 @@
 
     gap:1.5rem;
 
+    width:100%;
+
+    min-width:0;
+
     margin-bottom:2rem;
 
     padding:
@@ -57,6 +63,8 @@
 
     margin:0 0 .4rem;
 
+    color:var(--cor-primaria);
+
     font-size:.72rem;
 
     font-weight:700;
@@ -65,11 +73,11 @@
 
     text-transform:uppercase;
 
-    color:var(--cor-primaria);
-
 }
 
 .cabecalho-historico h1 {
+
+    max-width:100%;
 
     margin:0;
 
@@ -81,9 +89,13 @@
 
     line-height:1.2;
 
+    overflow-wrap:break-word;
+
 }
 
 .cabecalho-historico p {
+
+    width:100%;
 
     max-width:650px;
 
@@ -145,7 +157,8 @@
 
     transform:translateY(-1px);
 
-    box-shadow:0 4px 10px rgb(0 0 0 / .08);
+    box-shadow:
+        0 4px 10px rgb(0 0 0 / .08);
 
 }
 
@@ -157,6 +170,8 @@
 .historico-card {
 
     width:100%;
+
+    min-width:0;
 
     box-sizing:border-box;
 
@@ -180,6 +195,8 @@
 .tabela-wrapper {
 
     width:100%;
+
+    min-width:0;
 
     overflow-x:auto;
 
@@ -223,17 +240,17 @@
 
     text-align:left;
 
+    color:var(--cor-texto-secundario);
+
     font-size:.72rem;
 
     font-weight:700;
 
-    text-transform:uppercase;
-
     letter-spacing:.04em;
 
-    white-space:nowrap;
+    text-transform:uppercase;
 
-    color:var(--cor-texto-secundario);
+    white-space:nowrap;
 
 }
 
@@ -387,6 +404,10 @@
 
     justify-content:center;
 
+    width:100%;
+
+    min-width:0;
+
     padding:
         clamp(2.5rem, 8vw, 3.75rem)
         1.5rem;
@@ -413,6 +434,8 @@
 
     justify-content:center;
 
+    flex-shrink:0;
+
     width:56px;
 
     height:56px;
@@ -431,6 +454,8 @@
 
 .historico-vazio h2 {
 
+    max-width:100%;
+
     margin:0 0 .5rem;
 
     color:var(--cor-texto);
@@ -439,9 +464,13 @@
 
     line-height:1.3;
 
+    overflow-wrap:break-word;
+
 }
 
 .historico-vazio p {
+
+    width:100%;
 
     max-width:420px;
 
@@ -452,99 +481,6 @@
     font-size:.85rem;
 
     line-height:1.6;
-
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width:900px) {
-
-    .cabecalho-historico {
-
-        gap:1rem;
-
-    }
-
-}
-
-
-/* =========================================================
-   CELULAR
-========================================================= */
-
-@media (max-width:700px) {
-
-    .container {
-
-        padding:.75rem;
-
-    }
-
-    .cabecalho-historico {
-
-        flex-direction:column;
-
-        align-items:stretch;
-
-        gap:1.25rem;
-
-        margin-bottom:1.25rem;
-
-        padding:1.25rem;
-
-        border-radius:14px;
-
-    }
-
-    .cabecalho-historico h1 {
-
-        font-size:1.45rem;
-
-    }
-
-    .cabecalho-historico p {
-
-        font-size:.85rem;
-
-    }
-
-    .botao-voltar,
-    .botao-iniciar {
-
-        width:100%;
-
-    }
-
-    .historico-card {
-
-        border-radius:12px;
-
-    }
-
-    .historico-card th {
-
-        padding:.75rem .85rem;
-
-        font-size:.68rem;
-
-    }
-
-    .historico-card td {
-
-        padding:.8rem .85rem;
-
-        font-size:.82rem;
-
-    }
-
-    .historico-vazio {
-
-        border-radius:12px;
-
-    }
 
 }
 
@@ -563,7 +499,17 @@
 
     .cabecalho-historico {
 
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:1rem;
+
+        margin-bottom:1rem;
+
         padding:1rem;
+
+        border-radius:12px;
 
     }
 
@@ -573,9 +519,44 @@
 
     }
 
+    .cabecalho-historico p {
+
+        font-size:.82rem;
+
+    }
+
+    .botao-voltar,
+    .botao-iniciar {
+
+        width:100%;
+
+    }
+
+    .historico-card {
+
+        border-radius:12px;
+
+    }
+
     .historico-card table {
 
         min-width:650px;
+
+    }
+
+    .historico-card th {
+
+        padding:.7rem .75rem;
+
+        font-size:.65rem;
+
+    }
+
+    .historico-card td {
+
+        padding:.75rem;
+
+        font-size:.8rem;
 
     }
 
@@ -583,13 +564,109 @@
 
         padding:2.5rem 1rem;
 
+        border-radius:12px;
+
     }
 
 }
 
 
 /* =========================================================
-   DISPOSITIVOS SEM HOVER
+   CELULAR
+========================================================= */
+
+@media (min-width:481px) {
+
+    .container {
+
+        padding:
+            clamp(1.25rem, 4vw, 2rem);
+
+    }
+
+    .cabecalho-historico {
+
+        gap:1.25rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .container {
+
+        padding:2rem;
+
+    }
+
+    .cabecalho-historico {
+
+        gap:1.5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET GRANDE / NOTEBOOK
+========================================================= */
+
+@media (min-width:1000px) {
+
+    .container {
+
+        padding:2.5rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1200px) {
+
+    .container {
+
+        padding:2.5rem;
+
+    }
+
+    .cabecalho-historico {
+
+        padding:2rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .container {
+
+        padding:3rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE / DISPOSITIVOS SEM HOVER
 ========================================================= */
 
 @media (hover:none) {
@@ -600,6 +677,12 @@
         transform:none;
 
         box-shadow:none;
+
+    }
+
+    .historico-card tbody tr:hover {
+
+        background-color:transparent;
 
     }
 

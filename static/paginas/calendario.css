@@ -4,66 +4,72 @@
 
 .cabecalho-calendario {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:space-between;
+    align-items: center;
+    justify-content: space-between;
 
-    gap:1.5rem;
+    gap: 1.5rem;
 
-    margin-bottom:1.875rem;
+    margin-bottom: 1.875rem;
+
+    min-width: 0;
 
 }
 
 
 .cabecalho-calendario-info {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:.375rem;
+    gap: .375rem;
 
-    min-width:0;
+    min-width: 0;
 
 }
 
 
 .subtitulo-calendario {
 
-    font-size:.75rem;
+    font-size: .75rem;
 
-    font-weight:700;
+    font-weight: 700;
 
-    letter-spacing:.08em;
+    letter-spacing: .08em;
 
-    text-transform:uppercase;
+    text-transform: uppercase;
 
-    color:var(--cor-primaria);
+    color: var(--cor-primaria);
 
 }
 
 
 .cabecalho-calendario h1 {
 
-    margin:0;
+    margin: 0;
 
-    font-size:1.8rem;
+    font-size: 1.8rem;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
+
+    overflow-wrap: break-word;
 
 }
 
 
 .cabecalho-calendario p {
 
-    margin:0;
+    margin: 0;
 
-    font-size:.9rem;
+    font-size: .9rem;
 
-    line-height:1.5;
+    line-height: 1.5;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
+
+    overflow-wrap: anywhere;
 
 }
 
@@ -74,11 +80,13 @@
 
 .conteudo-calendario {
 
-    display:grid;
+    display: grid;
 
-    grid-template-columns:minmax(0,1fr);
+    grid-template-columns: minmax(0, 1fr);
 
-    gap:1.5rem;
+    gap: 1.5rem;
+
+    min-width: 0;
 
 }
 
@@ -89,21 +97,23 @@
 
 .calendario-container {
 
-    width:100%;
+    width: 100%;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    padding:1.5rem;
+    padding: 1.5rem;
 
-    background:var(--cor-card);
+    min-width: 0;
 
-    border:1px solid var(--cor-borda);
+    background: var(--cor-card);
 
-    border-radius:var(--raio);
+    border: 1px solid var(--cor-borda);
 
-    box-shadow:var(--sombra);
+    border-radius: var(--raio);
 
-    overflow:hidden;
+    box-shadow: var(--sombra);
+
+    overflow: hidden;
 
 }
 
@@ -114,25 +124,29 @@
 
 .cabecalho-calendario-mes {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:space-between;
+    align-items: center;
+    justify-content: space-between;
 
-    gap:1rem;
+    gap: 1rem;
 
-    margin-bottom:1.5rem;
+    margin-bottom: 1.5rem;
+
+    min-width: 0;
 
 }
 
 
 .cabecalho-calendario-mes h2 {
 
-    margin:0;
+    margin: 0;
 
-    font-size:1.25rem;
+    font-size: 1.25rem;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
+
+    overflow-wrap: break-word;
 
 }
 
@@ -143,27 +157,27 @@
 
 .botao-navegacao-calendario {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    width:38px;
-    height:38px;
+    width: 38px;
+    height: 38px;
 
-    padding:0;
+    padding: 0;
 
-    border:1px solid transparent;
+    border: 1px solid transparent;
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    background:transparent;
+    background: transparent;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
-    cursor:pointer;
+    cursor: pointer;
 
     transition:
         background-color .2s ease,
@@ -175,20 +189,20 @@
 
 .botao-navegacao-calendario:hover {
 
-    background:var(--cor-fundo-secundario);
+    background: var(--cor-fundo-secundario);
 
-    border-color:var(--cor-borda);
+    border-color: var(--cor-borda);
 
-    color:var(--cor-primaria);
+    color: var(--cor-primaria);
 
 }
 
 
 .botao-navegacao-calendario:focus-visible {
 
-    outline:none;
+    outline: none;
 
-    border-color:var(--cor-primaria);
+    border-color: var(--cor-primaria);
 
     box-shadow:
         0 0 0 3px
@@ -207,27 +221,29 @@
 
 .calendario-dias-semana {
 
-    display:grid;
+    display: grid;
 
     grid-template-columns:
-        repeat(7,minmax(0,1fr));
+        repeat(7, minmax(0, 1fr));
 
-    margin-bottom:.5rem;
+    margin-bottom: .5rem;
+
+    min-width: 0;
 
 }
 
 
 .calendario-dias-semana span {
 
-    padding:.5rem 0;
+    padding: .5rem 0;
 
-    text-align:center;
+    text-align: center;
 
-    font-size:.8rem;
+    font-size: .8rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
 }
 
@@ -238,12 +254,14 @@
 
 .calendario-dias {
 
-    display:grid;
+    display: grid;
 
     grid-template-columns:
-        repeat(7,minmax(0,1fr));
+        repeat(7, minmax(0, 1fr));
 
-    gap:.375rem;
+    gap: .375rem;
+
+    min-width: 0;
 
 }
 
@@ -254,38 +272,37 @@
 
 .dia {
 
-    position:relative;
+    position: relative;
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    gap:.2rem;
+    gap: .2rem;
 
-    min-width:0;
+    min-width: 0;
+    min-height: 52px;
 
-    min-height:52px;
+    padding: .25rem;
 
-    padding:.25rem;
+    box-sizing: border-box;
 
-    box-sizing:border-box;
+    border: 1px solid transparent;
 
-    border:1px solid transparent;
+    border-radius: 8px;
 
-    border-radius:8px;
+    background: transparent;
 
-    background:transparent;
+    color: var(--cor-texto);
 
-    color:var(--cor-texto);
+    font-family: inherit;
 
-    font-family:inherit;
+    font-size: .95rem;
 
-    font-size:.95rem;
-
-    cursor:pointer;
+    cursor: pointer;
 
     transition:
         background-color .2s ease,
@@ -297,36 +314,36 @@
 
 .dia:hover {
 
-    background:var(--cor-fundo-secundario);
+    background: var(--cor-fundo-secundario);
 
 }
 
 
 .dia-hoje {
 
-    background:var(--cor-primaria);
+    background: var(--cor-primaria);
 
-    color:var(--cor-texto-claro);
+    color: var(--cor-texto-claro);
 
-    font-weight:700;
+    font-weight: 700;
 
 }
 
 
 .dia-hoje:hover {
 
-    background:var(--cor-primaria);
+    background: var(--cor-primaria);
 
 }
 
 
 .dia-outro-mes {
 
-    cursor:default;
+    cursor: default;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
-    opacity:.5;
+    opacity: .5;
 
 }
 
@@ -337,16 +354,16 @@
 
 .dia-selecionado {
 
-    outline:2px solid var(--cor-primaria);
+    outline: 2px solid var(--cor-primaria);
 
-    outline-offset:-2px;
+    outline-offset: -2px;
 
 }
 
 
 .dia-hoje.dia-selecionado {
 
-    outline:2px solid var(--cor-texto-claro);
+    outline: 2px solid var(--cor-texto-claro);
 
 }
 
@@ -357,7 +374,7 @@
 
 .numero-dia {
 
-    line-height:1;
+    line-height: 1;
 
 }
 
@@ -368,56 +385,56 @@
 
 .indicadores-dia {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    gap:3px;
+    gap: 3px;
 
-    min-height:5px;
+    min-height: 5px;
 
 }
 
 
 .indicador {
 
-    display:block;
+    display: block;
 
-    width:5px;
-    height:5px;
+    width: 5px;
+    height: 5px;
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    border-radius:50%;
+    border-radius: 50%;
 
 }
 
 
 .indicador-estudo {
 
-    background:#4f8cff;
+    background: #4f8cff;
 
 }
 
 
 .indicador-tarefa {
 
-    background:#8b5cf6;
+    background: #8b5cf6;
 
 }
 
 
 .indicador-prova {
 
-    background:#22c55e;
+    background: #22c55e;
 
 }
 
 
 .indicador-anotacao {
 
-    background:#f59e0b;
+    background: #f59e0b;
 
 }
 
@@ -428,70 +445,74 @@
 
 .detalhes-dia {
 
-    min-height:200px;
+    min-height: 200px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    padding:1.5rem;
+    padding: 1.5rem;
 
-    background:var(--cor-card);
+    min-width: 0;
 
-    border:1px solid var(--cor-borda);
+    background: var(--cor-card);
 
-    border-radius:var(--raio);
+    border: 1px solid var(--cor-borda);
 
-    box-shadow:var(--sombra);
+    border-radius: var(--raio);
+
+    box-shadow: var(--sombra);
 
 }
 
 
 .detalhes-dia-vazio {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    height:100%;
+    height: 100%;
 
-    min-height:180px;
+    min-height: 180px;
 
-    text-align:center;
+    text-align: center;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
 }
 
 
 .detalhes-dia-vazio i {
 
-    margin-bottom:.75rem;
+    margin-bottom: .75rem;
 
-    font-size:2rem;
+    font-size: 2rem;
 
 }
 
 
 .detalhes-dia-vazio h2 {
 
-    margin:0 0 .5rem;
+    margin: 0 0 .5rem;
 
-    font-size:1.1rem;
+    font-size: 1.1rem;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
 }
 
 
 .detalhes-dia-vazio p {
 
-    max-width:300px;
+    max-width: 300px;
 
-    margin:0;
+    margin: 0;
 
-    line-height:1.5;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
 
 }
 
@@ -500,13 +521,22 @@
    CONTEÚDO DOS DETALHES
 ========================================================= */
 
+.detalhes-dia-conteudo {
+
+    min-width: 0;
+
+}
+
+
 .detalhes-dia-conteudo h2 {
 
-    margin:.375rem 0 1.5rem;
+    margin: .375rem 0 1.5rem;
 
-    font-size:1.4rem;
+    font-size: 1.4rem;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
+
+    overflow-wrap: break-word;
 
 }
 
@@ -517,107 +547,111 @@
 
 .resumo-dia {
 
-    margin-bottom:1.25rem;
+    margin-bottom: 1.25rem;
 
-    padding:.875rem 1rem;
+    padding: .875rem 1rem;
 
-    background:var(--cor-fundo);
+    background: var(--cor-fundo);
 
-    border:1px solid var(--cor-borda);
+    border: 1px solid var(--cor-borda);
 
-    border-radius:12px;
+    border-radius: 12px;
+
+    min-width: 0;
 
 }
 
 
 .resumo-dia-titulo {
 
-    display:block;
+    display: block;
 
-    margin-bottom:.625rem;
+    margin-bottom: .625rem;
 
-    font-size:.85rem;
+    font-size: .85rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
 }
 
 
 .resumo-lista {
 
-    display:flex;
+    display: flex;
 
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 
-    gap:.5rem;
+    gap: .5rem;
+
+    min-width: 0;
 
 }
 
 
 .resumo-item {
 
-    display:inline-flex;
+    display: inline-flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.375rem;
+    gap: .375rem;
 
-    padding:.375rem .625rem;
+    padding: .375rem .625rem;
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    font-size:.82rem;
+    font-size: .82rem;
 
-    font-weight:500;
+    font-weight: 500;
 
 }
 
 
 .resumo-prova {
 
-    background:rgba(34,197,94,.12);
+    background: rgba(34, 197, 94, .12);
 
-    color:#16a34a;
+    color: #16a34a;
 
 }
 
 
 .resumo-tarefa {
 
-    background:rgba(59,130,246,.12);
+    background: rgba(59, 130, 246, .12);
 
-    color:#2563eb;
+    color: #2563eb;
 
 }
 
 
 .resumo-estudo {
 
-    background:rgba(139,92,246,.12);
+    background: rgba(139, 92, 246, .12);
 
-    color:#7c3aed;
+    color: #7c3aed;
 
 }
 
 
 .resumo-anotacao {
 
-    background:rgba(245,158,11,.12);
+    background: rgba(245, 158, 11, .12);
 
-    color:#d97706;
+    color: #d97706;
 
 }
 
 
 .resumo-vazio {
 
-    margin:0;
+    margin: 0;
 
-    font-size:.85rem;
+    font-size: .85rem;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
 }
 
@@ -628,102 +662,114 @@
 
 .atividades-dia {
 
-    padding-top:1.25rem;
+    padding-top: 1.25rem;
 
-    border-top:1px solid var(--cor-borda);
+    border-top: 1px solid var(--cor-borda);
+
+    min-width: 0;
 
 }
 
 
 .atividade-secao {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:.625rem;
+    gap: .625rem;
 
-    margin-bottom:1.25rem;
+    margin-bottom: 1.25rem;
+
+    min-width: 0;
 
 }
 
 
 .titulo-atividade {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.5rem;
+    gap: .5rem;
 
-    margin-bottom:.25rem;
+    margin-bottom: .25rem;
 
-    font-size:.85rem;
+    font-size: .85rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
 }
 
 
 .titulo-atividade i {
 
-    font-size:1rem;
+    flex-shrink: 0;
 
-    color:var(--cor-primaria);
+    font-size: 1rem;
+
+    color: var(--cor-primaria);
 
 }
 
 
 .lista-atividade {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:.625rem;
+    gap: .625rem;
+
+    min-width: 0;
 
 }
 
 
 .item-atividade {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.625rem;
+    gap: .625rem;
 
-    padding:.625rem .75rem;
+    padding: .625rem .75rem;
 
-    background:var(--cor-fundo-secundario);
+    min-width: 0;
 
-    border-radius:8px;
+    background: var(--cor-fundo-secundario);
 
-    font-size:.9rem;
+    border-radius: 8px;
+
+    font-size: .9rem;
 
 }
 
 
 .item-atividade span {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.5rem;
+    gap: .5rem;
 
-    min-width:0;
+    min-width: 0;
+
+    overflow-wrap: anywhere;
 
 }
 
 
 .item-atividade i {
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    font-size:1rem;
+    font-size: 1rem;
 
 }
 
@@ -734,72 +780,76 @@
 
 .prova-calendario {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
-    justify-content:space-between;
+    align-items: center;
+    justify-content: space-between;
 
-    gap:1rem;
+    gap: 1rem;
 
-    padding:.75rem;
+    padding: .75rem;
 
-    background:var(--cor-fundo-secundario);
+    min-width: 0;
 
-    border-radius:8px;
+    background: var(--cor-fundo-secundario);
+
+    border-radius: 8px;
 
 }
 
 
 .prova-calendario-info {
 
-    display:flex;
+    display: flex;
 
-    flex-direction:column;
+    flex-direction: column;
 
-    gap:.1875rem;
+    gap: .1875rem;
 
-    min-width:0;
+    min-width: 0;
 
 }
 
 
 .prova-calendario-info strong {
 
-    overflow:hidden;
+    overflow: hidden;
 
-    font-size:.9rem;
+    font-size: .9rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 
-    white-space:nowrap;
+    white-space: nowrap;
 
 }
 
 
 .prova-calendario-info span {
 
-    font-size:.8rem;
+    font-size: .8rem;
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
+
+    overflow-wrap: anywhere;
 
 }
 
 
 .prova-calendario-porcentagem {
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    font-size:.9rem;
+    font-size: .9rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
-    white-space:nowrap;
+    white-space: nowrap;
 
 }
 
@@ -810,31 +860,31 @@
 
 .campo-anotacao {
 
-    width:100%;
+    width: 100%;
 
-    min-height:130px;
+    min-height: 130px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    padding:.875rem 1rem;
+    padding: .875rem 1rem;
 
-    border:1px solid var(--cor-borda);
+    border: 1px solid var(--cor-borda);
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    background:var(--cor-fundo);
+    background: var(--cor-fundo);
 
-    color:var(--cor-texto);
+    color: var(--cor-texto);
 
-    font-family:inherit;
+    font-family: inherit;
 
-    font-size:.9rem;
+    font-size: .9rem;
 
-    line-height:1.5;
+    line-height: 1.5;
 
-    resize:vertical;
+    resize: vertical;
 
-    outline:none;
+    outline: none;
 
     transition:
         border-color .2s ease,
@@ -846,14 +896,14 @@
 
 .campo-anotacao::placeholder {
 
-    color:var(--cor-texto-secundario);
+    color: var(--cor-texto-secundario);
 
 }
 
 
 .campo-anotacao:focus {
 
-    border-color:var(--cor-primaria);
+    border-color: var(--cor-primaria);
 
     box-shadow:
         0 0 0 3px
@@ -872,32 +922,32 @@
 
 .botao-salvar-anotacao {
 
-    align-self:flex-start;
+    align-self: flex-start;
 
-    display:inline-flex;
+    display: inline-flex;
 
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    gap:.5rem;
+    gap: .5rem;
 
-    padding:.5625rem .9375rem;
+    padding: .5625rem .9375rem;
 
-    border:1px solid var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    background:var(--cor-primaria);
+    background: var(--cor-primaria);
 
-    color:var(--cor-texto-claro);
+    color: var(--cor-texto-claro);
 
-    font-family:inherit;
+    font-family: inherit;
 
-    font-size:.85rem;
+    font-size: .85rem;
 
-    font-weight:600;
+    font-weight: 600;
 
-    cursor:pointer;
+    cursor: pointer;
 
     transition:
         transform .15s ease,
@@ -909,7 +959,7 @@
 
 .botao-salvar-anotacao:hover {
 
-    opacity:.9;
+    opacity: .9;
 
     box-shadow:
         0 4px 12px
@@ -924,14 +974,14 @@
 
 .botao-salvar-anotacao:active {
 
-    transform:translateY(1px);
+    transform: translateY(1px);
 
 }
 
 
 .botao-salvar-anotacao i {
 
-    font-size:.95rem;
+    font-size: .95rem;
 
 }
 
@@ -942,22 +992,22 @@
 
 .mensagem-anotacao {
 
-    display:none;
+    display: none;
 
-    align-items:center;
+    align-items: center;
 
-    gap:.5rem;
+    gap: .5rem;
 
-    padding:.5625rem .75rem;
+    padding: .5625rem .75rem;
 
-    border:1px solid
+    border: 1px solid
         color-mix(
             in srgb,
             var(--cor-sucesso) 30%,
             var(--cor-borda)
         );
 
-    border-radius:8px;
+    border-radius: 8px;
 
     background:
         color-mix(
@@ -966,291 +1016,105 @@
             var(--cor-card)
         );
 
-    color:var(--cor-sucesso);
+    color: var(--cor-sucesso);
 
-    font-size:.85rem;
+    font-size: .85rem;
 
-    font-weight:500;
+    font-weight: 500;
 
 }
 
 
 .mensagem-anotacao-visivel {
 
-    display:flex;
+    display: flex;
 
 }
 
 
 .mensagem-anotacao::before {
 
-    content:"✓";
+    content: "✓";
 
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    width:18px;
-    height:18px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    background:#22c55e;
-
-    color:white;
-
-    font-size:.7rem;
-
-    font-weight:700;
-
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (min-width:768px) {
-
-    .cabecalho-calendario h1 {
-
-        font-size:2rem;
-
-    }
-
-
-    .conteudo-calendario {
-
-        grid-template-columns:
-            minmax(0,1.5fr)
-            minmax(280px,1fr);
-
-    }
-
-
-    .detalhes-dia {
-
-        min-height:100%;
-
-    }
-
-}
-
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width:1100px) {
-
-    .conteudo-calendario {
-
-        grid-template-columns:
-            minmax(0,1.7fr)
-            minmax(320px,1fr);
-
-        gap:1.5rem;
-
-    }
-
-
-    .calendario-container,
-    .detalhes-dia {
-
-        padding:1.75rem;
-
-    }
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width:767px) {
-
-    .cabecalho-calendario {
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:.75rem;
-
-        margin-bottom:1.25rem;
-
-    }
-
-
-    .cabecalho-calendario h1 {
-
-        font-size:1.5rem;
-
-    }
-
-
-    .cabecalho-calendario p {
-
-        font-size:.85rem;
-
-    }
-
-
-    .calendario-container {
-
-        padding:1rem;
-
-        border-radius:12px;
-
-    }
-
-
-    .cabecalho-calendario-mes {
-
-        margin-bottom:1rem;
-
-    }
-
-
-    .cabecalho-calendario-mes h2 {
-
-        font-size:1.1rem;
-
-    }
-
-
-    .botao-navegacao-calendario {
-
-        width:36px;
-        height:36px;
-
-    }
-
-
-    .calendario-dias-semana span {
-
-        font-size:.7rem;
-
-    }
-
-
-    .calendario-dias {
-
-        gap:.2rem;
-
-    }
-
-
-    .dia {
-
-        min-height:44px;
-
-        border-radius:7px;
-
-        font-size:.82rem;
-
-    }
-
-
-    .indicador {
-
-        width:4px;
-        height:4px;
-
-    }
-
-
-    .detalhes-dia {
-
-        padding:1rem;
-
-        border-radius:12px;
-
-    }
-
-
-    .detalhes-dia-conteudo h2 {
-
-        font-size:1.2rem;
-
-        margin-bottom:1.25rem;
-
-    }
-
-
-    .resumo-lista {
-
-        gap:.4rem;
-
-    }
-
-
-    .resumo-item {
-
-        font-size:.75rem;
-
-        padding:.35rem .5rem;
-
-    }
-
-
-    .prova-calendario {
-
-        align-items:flex-start;
-
-    }
-
-
-    .prova-calendario-porcentagem {
-
-        font-size:.8rem;
-
-    }
-
-
-    .campo-anotacao {
-
-        min-height:120px;
-
-    }
-
-
-    .botao-salvar-anotacao {
-
-        width:100%;
-
-    }
-
-}
-
-.calendario-detalhes-vazio {
     display: flex;
-    flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
-    text-align: center;
-    height: 100%;
-    padding: 40px 20px;
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    color: white;
+
+    font-size: .7rem;
+
+    font-weight: 700;
+
 }
+
+
+/* =========================================================
+   DETALHES VAZIOS
+========================================================= */
+
+.calendario-detalhes-vazio {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    min-width: 0;
+
+}
+
 
 .calendario-detalhes-vazio i {
-    font-size: 64px;
+
     margin-bottom: 20px;
+
+    font-size: 64px;
+
 }
+
 
 .calendario-detalhes-vazio h2 {
+
     margin: 0 0 10px;
+
+    overflow-wrap: break-word;
+
 }
 
+
 .calendario-detalhes-vazio p {
-    margin: 0;
+
     max-width: 400px;
+
+    margin: 0;
+
+    overflow-wrap: anywhere;
+
 }
+
+
+/* =========================================================
+   HEADER DASHBOARD
+========================================================= */
 
 .header-dashboard {
 
@@ -1263,69 +1127,437 @@
 
     margin-bottom: 2rem;
 
+    min-width: 0;
+
 }
+
+
 /* =========================================================
    CELULARES MUITO PEQUENOS
 ========================================================= */
 
-@media (max-width:380px) {
+@media (max-width: 380px) {
+
+    .cabecalho-calendario {
+
+        gap: .6rem;
+
+        margin-bottom: 1rem;
+
+    }
+
+
+    .cabecalho-calendario h1 {
+
+        font-size: 1.35rem;
+
+    }
+
+
+    .cabecalho-calendario p {
+
+        font-size: .8rem;
+
+    }
+
 
     .calendario-container {
 
-        padding:.75rem;
+        padding: .75rem;
+
+        border-radius: 10px;
+
+    }
+
+
+    .cabecalho-calendario-mes {
+
+        gap: .5rem;
+
+        margin-bottom: .8rem;
 
     }
 
 
     .cabecalho-calendario-mes h2 {
 
-        font-size:1rem;
+        font-size: 1rem;
 
     }
 
 
     .botao-navegacao-calendario {
 
-        width:34px;
-        height:34px;
+        width: 34px;
+        height: 34px;
 
     }
 
 
     .calendario-dias {
 
-        gap:.15rem;
-
-    }
-
-
-    .dia {
-
-        min-height:40px;
-
-        font-size:.75rem;
+        gap: .15rem;
 
     }
 
 
     .calendario-dias-semana span {
 
-        font-size:.65rem;
+        padding: .35rem 0;
+
+        font-size: .65rem;
+
+    }
+
+
+    .dia {
+
+        min-height: 40px;
+
+        border-radius: 6px;
+
+        font-size: .75rem;
 
     }
 
 
     .indicadores-dia {
 
-        gap:2px;
+        gap: 2px;
 
     }
 
 
     .indicador {
 
-        width:3px;
-        height:3px;
+        width: 3px;
+        height: 3px;
+
+    }
+
+
+    .detalhes-dia {
+
+        padding: .8rem;
+
+        border-radius: 10px;
+
+    }
+
+
+    .detalhes-dia-conteudo h2 {
+
+        font-size: 1.1rem;
+
+    }
+
+
+    .resumo-dia {
+
+        padding: .75rem;
+
+    }
+
+
+    .resumo-lista {
+
+        gap: .3rem;
+
+    }
+
+
+    .resumo-item {
+
+        padding: .3rem .45rem;
+
+        font-size: .72rem;
+
+    }
+
+
+    .item-atividade {
+
+        padding: .55rem .6rem;
+
+        font-size: .82rem;
+
+    }
+
+
+    .prova-calendario {
+
+        gap: .5rem;
+
+        padding: .6rem;
+
+    }
+
+
+    .prova-calendario-info strong {
+
+        font-size: .82rem;
+
+    }
+
+
+    .prova-calendario-porcentagem {
+
+        font-size: .75rem;
+
+    }
+
+
+    .campo-anotacao {
+
+        min-height: 110px;
+
+        padding: .75rem;
+
+    }
+
+
+    .botao-salvar-anotacao {
+
+        width: 100%;
+
+    }
+
+
+    .calendario-detalhes-vazio {
+
+        padding: 30px 15px;
+
+    }
+
+
+    .calendario-detalhes-vazio i {
+
+        font-size: 48px;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (min-width: 481px) {
+
+    .cabecalho-calendario {
+
+        margin-bottom: 1.5rem;
+
+    }
+
+
+    .cabecalho-calendario h1 {
+
+        font-size: 1.6rem;
+
+    }
+
+
+    .calendario-container {
+
+        padding: 1.25rem;
+
+    }
+
+
+    .dia {
+
+        min-height: 46px;
+
+    }
+
+
+    .detalhes-dia {
+
+        padding: 1.25rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width: 768px) {
+
+    .cabecalho-calendario h1 {
+
+        font-size: 2rem;
+
+    }
+
+
+    .conteudo-calendario {
+
+        grid-template-columns:
+            minmax(0, 1.5fr)
+            minmax(280px, 1fr);
+
+    }
+
+
+    .detalhes-dia {
+
+        min-height: 100%;
+
+    }
+
+
+    .botao-salvar-anotacao {
+
+        width: auto;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET GRANDE / NOTEBOOK
+========================================================= */
+
+@media (min-width: 1000px) {
+
+    .conteudo-calendario {
+
+        grid-template-columns:
+            minmax(0, 1.6fr)
+            minmax(300px, 1fr);
+
+        gap: 1.5rem;
+
+    }
+
+
+    .calendario-container,
+    .detalhes-dia {
+
+        padding: 1.6rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 1200px) {
+
+    .conteudo-calendario {
+
+        grid-template-columns:
+            minmax(0, 1.7fr)
+            minmax(320px, 1fr);
+
+        gap: 1.5rem;
+
+    }
+
+
+    .calendario-container,
+    .detalhes-dia {
+
+        padding: 1.75rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width: 1400px) {
+
+    .conteudo-calendario {
+
+        gap: 1.75rem;
+
+    }
+
+
+    .calendario-container,
+    .detalhes-dia {
+
+        padding: 2rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE / DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover: none) {
+
+    .botao-navegacao-calendario:hover {
+
+        background: transparent;
+
+        border-color: transparent;
+
+        color: var(--cor-texto);
+
+    }
+
+
+    .dia:hover {
+
+        background: transparent;
+
+    }
+
+
+    .dia-hoje:hover {
+
+        background: var(--cor-primaria);
+
+    }
+
+
+    .botao-salvar-anotacao:hover {
+
+        opacity: 1;
+
+        box-shadow: none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .botao-navegacao-calendario,
+    .dia,
+    .campo-anotacao,
+    .botao-salvar-anotacao {
+
+        transition: none;
+
+    }
+
+
+    .botao-salvar-anotacao:active {
+
+        transform: none;
 
     }
 

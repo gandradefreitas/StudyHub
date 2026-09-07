@@ -253,13 +253,6 @@ def nova_tarefa():
             descricao
         )
 
-        flash(
-            mensagem,
-            "mensagem-sucesso"
-            if resultado
-            else "mensagem-erro"
-        )
-
         if resultado:
 
             return redirect(
