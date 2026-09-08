@@ -71,9 +71,9 @@ def criar_tabelas():
 
             usuario_id INTEGER NOT NULL,
 
-            inicio TIMESTAMP NOT NULL,
+            inicio TIMESTAMP WITH TIME ZONE NOT NULL,
 
-            fim TIMESTAMP,
+            fim TIMESTAMP WITH TIME ZONE,
 
             duracao INTEGER DEFAULT 0,
 
