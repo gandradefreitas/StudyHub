@@ -31,7 +31,7 @@
 
             {% if estudo_ativo %}
 
-                <div id="cronometro-estudos" class="estudos-cronometro" data-inicio="{{ estudo_ativo['inicio'] }}">
+                <div id="cronometro-estudos" class="estudos-cronometro" data-inicio="{{ estudo_ativo['inicio'].timestamp() * 1000 }}">
                     00:00:00
                 </div>
 
