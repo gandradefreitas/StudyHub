@@ -205,6 +205,18 @@ def obter_questoes_hoje(usuario_id):
     conexao = conectar()
     cursor = conexao.cursor()
 
+    # Questões respondidas na área de Estudos
+    cursor.execute("""
+        SELECT COUNT(*) AS questoes
+        FROM respostas_questoes
+        WHERE usuario_id = %s
+        AND data_resposta::date = CURRENT_DATE
+    """, (usuario_id,))
+
+    questoes_estudos = cursor.fetchone()["questoes"]
+
+
+    # Questões realizadas em Provas
     cursor.execute("""
         SELECT COALESCE(SUM(total), 0) AS questoes
         FROM resultados_provas
@@ -212,12 +224,16 @@ def obter_questoes_hoje(usuario_id):
         AND data_realizacao::date = CURRENT_DATE
     """, (usuario_id,))
 
-    questoes = cursor.fetchone()["questoes"]
+    questoes_provas = cursor.fetchone()["questoes"]
+
 
     conexao.close()
 
-    return questoes
 
+    return (
+        questoes_estudos
+        + questoes_provas
+    )
 
 def obter_questoes_respondidas_hoje(usuario_id):
 
