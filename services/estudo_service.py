@@ -8,7 +8,7 @@ from database.estudos_repository import (
     possui_estudo_ativo
 )
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 def iniciar_estudo_service(usuario_id):
@@ -71,7 +71,7 @@ def finalizar_estudo_service(usuario_id):
             inicio
         )
 
-    fim = datetime.now(timezone.utc)
+    fim = datetime.now()
 
     duracao = int(
         (fim - inicio).total_seconds()

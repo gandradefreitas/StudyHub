@@ -8,13 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const inicio = Number(cronometro.dataset.inicio);
+    const valorInicio = cronometro.dataset.inicio;
+
+    if (!valorInicio) {
+        cronometro.textContent = "00:00:00";
+        return;
+    }
+
+    const inicio = Date.parse(
+        valorInicio.replace(" ", "T") + "Z"
+    );
 
     if (!Number.isFinite(inicio)) {
 
         console.error(
-            "Timestamp de início inválido:",
-            cronometro.dataset.inicio
+            "Data de início inválida:",
+            valorInicio
         );
 
         return;
@@ -22,26 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function atualizarCronometro() {
 
-        const agora = Date.now();
-
-        const diferenca = Math.floor(
-            (agora - inicio) / 1000
-        );
-
-        const segundosTotais = Math.max(
+        const diferenca = Math.max(
             0,
-            diferenca
+            Math.floor(
+                (Date.now() - inicio) / 1000
+            )
         );
 
         const horas = Math.floor(
-            segundosTotais / 3600
+            diferenca / 3600
         );
 
         const minutos = Math.floor(
-            (segundosTotais % 3600) / 60
+            (diferenca % 3600) / 60
         );
 
-        const segundos = segundosTotais % 60;
+        const segundos = diferenca % 60;
 
         cronometro.textContent =
             String(horas).padStart(2, "0")

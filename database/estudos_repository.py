@@ -1,5 +1,5 @@
 from database.conexao import conectar
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 def iniciar_estudo(usuario_id):
@@ -12,7 +12,7 @@ def iniciar_estudo(usuario_id):
         VALUES(%s, %s)
     """, (
         usuario_id,
-        datetime.now(timezone.utc)
+        datetime.now()
     ))
 
     conexao.commit()
