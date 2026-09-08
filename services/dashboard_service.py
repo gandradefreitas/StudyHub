@@ -1,8 +1,7 @@
 from database.estudos_repository import (
     obter_segundos_estudados_hoje,
-    obter_questoes_respondidas_hoje,
     obter_total_segundos,
-    obter_segundos_provas_hoje
+    obter_segundos_provas_hoje, obter_questoes_hoje
 )
 
 from database.resultados_repository import (
@@ -83,7 +82,7 @@ def carregar_dashboard(usuario_id):
     )
 
     questoes_hoje = (
-        obter_questoes_respondidas_hoje(usuario_id)
+        obter_questoes_hoje(usuario_id)
     )
 
     configuracoes = obter_configuracoes(usuario_id)
