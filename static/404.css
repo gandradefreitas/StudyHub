@@ -1,0 +1,131 @@
+/* ========================================
+   PÁGINA 404
+======================================== */
+
+.pagina-404 {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 2rem 0;
+
+}
+
+
+/* ========================================
+   CONTAINER DO ERRO
+======================================== */
+
+.erro-404 {
+
+    width: min(100%, 600px);
+
+    padding: 3rem 1.5rem;
+
+    text-align: center;
+
+}
+
+
+/* ========================================
+   NÚMERO 404
+======================================== */
+
+.erro-404-numero {
+
+    margin-bottom: 1rem;
+
+    color: var(--cor-primaria);
+
+    font-size: clamp(6rem, 25vw, 10rem);
+
+    font-weight: 800;
+
+    line-height: .9;
+
+    letter-spacing: -0.05em;
+
+}
+
+
+/* ========================================
+   TÍTULO
+======================================== */
+
+.erro-404 h1 {
+
+    margin-bottom: 1rem;
+
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+
+}
+
+
+/* ========================================
+   DESCRIÇÃO
+======================================== */
+
+.erro-404 p {
+
+    max-width: 450px;
+
+    margin: 0 auto 2rem;
+
+    font-size: 1rem;
+
+}
+
+
+/* ========================================
+   BOTÃO
+======================================== */
+
+.erro-404-botao {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: .5rem;
+
+    padding: .8rem 1.2rem;
+
+    border: 1px solid var(--cor-primaria);
+
+    border-radius: var(--raio-pequeno);
+
+    background: var(--cor-primaria);
+
+    color: var(--cor-texto-claro);
+
+    font-weight: 600;
+
+    transition:
+        background-color var(--transicao),
+        border-color var(--transicao),
+        transform var(--transicao);
+
+}
+
+
+.erro-404-botao:hover {
+
+    background: var(--cor-secundaria);
+
+    border-color: var(--cor-secundaria);
+
+    transform: translateY(-2px);
+
+}
+
+
+.erro-404-botao:active {
+
+    transform: translateY(0);
+
+}

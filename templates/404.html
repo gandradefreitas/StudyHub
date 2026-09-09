@@ -1,24 +1,49 @@
-{% extends "base.html" %}
+{% extends "base_publico.html" %}
 
-{% block title %}Página não encontrada - StudyHub{% endblock %}
 
-{% block content %}
+{% block css %}
 
-<main class="pagina-erro">
+<link rel="stylesheet" href="{{ url_for('static', filename='404.css') }}">
 
-    <div class="erro-container">
+{% endblock %}
 
-        <div class="erro-numero">404</div>
 
-        <h1>Página não encontrada</h1>
+{% block titulo %}
 
-        <p>
-            Parece que essa página se perdeu no meio dos estudos.
-        </p>
+Página não encontrada - StudyHub
 
-        <a href="{{ url_for('dashboard') }}" class="botao-voltar">
-            Voltar para o dashboard
-        </a>
+{% endblock %}
+
+
+{% block conteudo %}
+
+<main class="pagina-404">
+
+    <div class="container">
+
+        <section class="erro-404" aria-labelledby="titulo-404">
+
+            <div class="erro-404-numero" aria-hidden="true">
+                404
+            </div>
+
+            <h1 id="titulo-404">
+                Página não encontrada
+            </h1>
+
+            <p>
+                Parece que essa página se perdeu no meio dos estudos.
+            </p>
+
+            <a
+                href="{{ url_for('pagina_inicial') }}"
+                class="erro-404-botao"
+            >
+                <i class="bi bi-house"></i>
+                Voltar para o início
+            </a>
+
+        </section>
 
     </div>
 
