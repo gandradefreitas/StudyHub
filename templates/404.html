@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Página não encontrada - StudyHub{% endblock %}
+
+{% block content %}
+
+<main class="pagina-erro">
+
+    <div class="erro-container">
+
+        <div class="erro-numero">404</div>
+
+        <h1>Página não encontrada</h1>
+
+        <p>
+            Parece que essa página se perdeu no meio dos estudos.
+        </p>
+
+        <a href="{{ url_for('dashboard') }}" class="botao-voltar">
+            Voltar para o dashboard
+        </a>
+
+    </div>
+
+</main>
+
+{% endblock %}

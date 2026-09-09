@@ -1993,6 +1993,10 @@ def responder_questao():
     })
 
 
+@app.errorhandler(404)
+def pagina_nao_encontrada(e):
+    return render_template("404.html"), 404
+
 # ==========================
 # CADASTRO
 # ==========================
