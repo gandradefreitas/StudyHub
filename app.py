@@ -80,8 +80,7 @@ from services.provas_service import (
     obter_catalogo_por_id
 )
 
-from datetime import datetime, date, timedelta
-
+from datetime import datetime, date, timedelta, timezone
 
 app = Flask(__name__)
 
@@ -90,6 +89,9 @@ app.secret_key = os.environ.get("SECRET_KEY")
 if not app.secret_key:
     raise RuntimeError("SECRET_KEY não configurada.")
 
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = True
 
 criar_tabelas()
 
@@ -531,13 +533,31 @@ def visualizar_prova(id_prova):
             url_for("pagina_login")
         )
 
+
     prova = obter_prova(id_prova)
+
+
+    if prova is None:
+        return redirect(
+            url_for("pagina_provas")
+        )
+
+
+    # Registra o início da prova no servidor
+    session["prova_inicio"] = {
+        "prova_id": prova.id,
+        "inicio": datetime.now(
+            timezone.utc
+        ).isoformat()
+    }
+
 
     return render_template(
         "provas/prova.html",
         prova=prova,
         questao_atual=prova.questoes[0]
     )
+
 
 
 @app.route(
@@ -548,6 +568,16 @@ def resultado_prova():
 
     if request.method == "POST":
 
+        # Usuário precisa estar autenticado
+        usuario_id = session.get("usuario_id")
+
+        if not usuario_id:
+
+            return jsonify({
+                "erro": "Usuário não autenticado."
+            }), 401
+
+
         dados = request.get_json()
 
         if not dados:
@@ -556,83 +586,291 @@ def resultado_prova():
                 "erro": "Nenhum dado foi recebido."
             }), 400
 
+
+        # ------------------------------------------------
+        # VALIDAÇÃO DOS DADOS RECEBIDOS
+        # ------------------------------------------------
+
+        prova_id = dados.get("prova_id")
+        respostas = dados.get("respostas")
+
+
+        if prova_id is None:
+
+            return jsonify({
+                "erro": "Prova não informada."
+            }), 400
+
+
+        if not isinstance(respostas, dict):
+
+            return jsonify({
+                "erro": "Formato de respostas inválido."
+            }), 400
+
+
+        try:
+
+            prova_id = int(prova_id)
+
+        except (TypeError, ValueError):
+
+            return jsonify({
+                "erro": "Prova inválida."
+            }), 400
+
+
+        # ------------------------------------------------
+        # CARREGA A PROVA OFICIAL
+        # ------------------------------------------------
+
+        prova = obter_prova(prova_id)
+
+
+        if prova is None:
+
+            return jsonify({
+                "erro": "Prova não encontrada."
+            }), 404
+
+
+        # ------------------------------------------------
+        # CALCULA O RESULTADO NO SERVIDOR
+        # ------------------------------------------------
+
+        acertos = 0
+        erros = 0
+        nao_respondidas = 0
+
+
+        for questao in prova.questoes:
+
+            resposta_usuario = respostas.get(
+                str(questao.numero)
+            )
+
+
+            # Questão não respondida
+            if resposta_usuario is None:
+
+                nao_respondidas += 1
+
+                continue
+
+
+            # Validação da alternativa
+            try:
+
+                resposta_usuario = int(
+                    resposta_usuario
+                )
+
+            except (TypeError, ValueError):
+
+                erros += 1
+
+                continue
+
+
+            # Resposta correta
+            if resposta_usuario == questao.resposta:
+
+                acertos += 1
+
+            else:
+
+                erros += 1
+
+
+        total = len(prova.questoes)
+
+
+        # ------------------------------------------------
+        # PORCENTAGEM CALCULADA NO SERVIDOR
+        # ------------------------------------------------
+
         porcentagem = round(
-            (
-                dados["acertos"]
-                / dados["total"]
-            ) * 100,
+            (acertos / total) * 100,
             2
+        ) if total > 0 else 0
+
+
+        # ------------------------------------------------
+        # CALCULA O TEMPO NO SERVIDOR
+        # ------------------------------------------------
+
+        prova_inicio = session.get(
+            "prova_inicio"
         )
+
+
+        if (
+            not prova_inicio
+            or prova_inicio.get("prova_id") != prova_id
+        ):
+
+            return jsonify({
+                "erro": "Início da prova não encontrado."
+            }), 400
+
+
+        try:
+
+            inicio = datetime.fromisoformat(
+                prova_inicio["inicio"]
+            )
+
+        except (
+            TypeError,
+            ValueError
+        ):
+
+            session.pop(
+                "prova_inicio",
+                None
+            )
+
+            return jsonify({
+                "erro": "Horário de início da prova inválido."
+            }), 400
+
+
+        fim = datetime.now(
+            timezone.utc
+        )
+
+
+        duracao = fim - inicio
+
+
+        segundos = max(
+            0,
+            int(duracao.total_seconds())
+        )
+
+
+        horas = segundos // 3600
+
+        minutos = (
+            segundos % 3600
+        ) // 60
+
+        segundos_restantes = (
+            segundos % 60
+        )
+
+
+        tempo_gasto = (
+            f"{horas:02d}:"
+            f"{minutos:02d}:"
+            f"{segundos_restantes:02d}"
+        )
+
+
+
+        # ------------------------------------------------
+        # SALVA O RESULTADO
+        # ------------------------------------------------
 
         resultado = {
 
             "usuario_id":
-                session["usuario_id"],
+                usuario_id,
 
             "prova_id":
-                dados["prova_id"],
+                prova_id,
 
             "acertos":
-                dados["acertos"],
+                acertos,
 
             "erros":
-                dados["erros"],
+                erros,
 
             "nao_respondidas":
-                dados["naoRespondidas"],
+                nao_respondidas,
 
             "total":
-                dados["total"],
+                total,
 
             "tempo_gasto":
-                dados["tempoGasto"],
+                tempo_gasto,
 
             "porcentagem":
                 porcentagem
         }
 
+
         salvar_resultado(
             resultado
         )
 
+
+        # ------------------------------------------------
+        # SALVA AS RESPOSTAS
+        # ------------------------------------------------
+
         salvar_respostas_prova(
 
-            usuario_id=session["usuario_id"],
+            usuario_id=usuario_id,
 
-            prova_id=dados["prova_id"],
+            prova_id=prova_id,
 
-            questoes=dados["questoes"],
+            questoes=prova.questoes,
 
-            respostas=dados["respostas"]
+            respostas=respostas
+
         )
+
+        session.pop(
+            "prova_inicio",
+            None
+        )
+
+
+        # ------------------------------------------------
+        # RESULTADO DA SESSÃO
+        # ------------------------------------------------
 
         session["resultado_prova"] = {
 
             "prova_id":
-                dados["prova_id"],
+                prova_id,
 
             "acertos":
-                dados["acertos"],
+                acertos,
 
             "erros":
-                dados["erros"],
+                erros,
 
             "nao_respondidas":
-                dados["naoRespondidas"],
+                nao_respondidas,
 
             "total":
-                dados["total"],
+                total,
 
             "porcentagem":
                 porcentagem,
 
             "tempo_gasto":
-                dados["tempoGasto"]
+                tempo_gasto
         }
+
 
         return jsonify({
             "status": "ok"
         })
+
+
+    # ----------------------------------------------------
+    # PÁGINA DE RESULTADO
+    # ----------------------------------------------------
+
+    if "usuario_id" not in session:
+
+        return redirect(
+            url_for("pagina_login")
+        )
+
 
     resultado = session.get(
         "resultado_prova",
@@ -642,11 +880,12 @@ def resultado_prova():
             "erros": 0,
             "questoes_erradas": [],
             "nao_respondidas": 0,
-            "total": 90,
+            "total": 0,
             "porcentagem": 0,
-            "tempo_gasto": "0min"
+            "tempo_gasto": "00:00:00"
         }
     )
+
 
     return render_template(
         "provas/resultado.html",
@@ -688,10 +927,14 @@ def historico_provas():
 @app.route("/calendario")
 def pagina_calendario():
 
+    if "usuario_id" not in session:
+        return redirect(
+            url_for("pagina_login")
+        )
+
     return render_template(
         "/calendario.html"
     )
-
 
 @app.route("/calendario/estudos")
 def calendario_estudos():

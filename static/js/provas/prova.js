@@ -296,20 +296,19 @@ function obterEstatisticas(){
     let questoesErradas = [];
 
 
-    questoesProva.forEach((questao, indice)=>{
+    questoesProva.forEach((questao)=>{
 
 
-        if(respostas[indice] !== undefined){
+        if(respostas[questao.numero] !== undefined){
 
             respondidas++;
 
 
-            if(respostas[indice] === questao.resposta){
+            if(respostas[questao.numero] === questao.resposta){
 
                 acertos++;
 
             } else {
-
 
                 questoesErradas.push({
 
@@ -319,19 +318,19 @@ function obterEstatisticas(){
 
                     alternativas: questao.alternativas,
 
-                    respostaUsuario: respostas[indice],
+                    respostaUsuario:
+                        respostas[questao.numero],
 
-                    respostaCorreta: questao.resposta,
+                    respostaCorreta:
+                        questao.resposta,
 
                     comentario: questao.comentario
 
                 });
 
-
             }
 
         }
-
 
     });
 
@@ -342,15 +341,20 @@ function obterEstatisticas(){
 
         erros: respondidas - acertos,
 
-        naoRespondidas: questoesProva.length - respondidas,
+        naoRespondidas:
+            questoesProva.length - respondidas,
 
-        total: questoesProva.length,
+        total:
+            questoesProva.length,
 
-        questoesErradas: questoesErradas
+        questoesErradas:
+            questoesErradas
 
     };
 
 }
+
+
 function converterTempo(tempo){
 
     const partes = tempo.split(":");
@@ -435,40 +439,16 @@ function iniciarCronometro() {
         );
 }
 
+
 function finalizarProva() {
-
-    const resultado =
-        obterEstatisticas();
-
 
     const dadosResultado = {
 
         prova_id:
             prova.id,
 
-        questoes:
-            questoesProva,
-
-        acertos:
-            resultado.acertos,
-
-        erros:
-            resultado.erros,
-
-        questoesErradas:
-            resultado.questoesErradas,
-
-        naoRespondidas:
-            resultado.naoRespondidas,
-
         respostas:
-            respostas,
-
-        tempoGasto:
-            converterTempoGasto(),
-
-        total:
-            resultado.total
+            respostas
 
     };
 
@@ -594,6 +574,8 @@ function finalizarProva() {
     });
 
 }
+
+
 function atualizarCronometro(){
 
     const horas =
@@ -722,7 +704,7 @@ function carregarQuestao() {
                         name="questao"
                         value="${indice}"
                         ${
-                            respostas[questaoAtual] == indice
+                            respostas[questao.numero] == indice
                                 ? "checked"
                                 : ""
                         }
@@ -758,7 +740,7 @@ function carregarQuestao() {
             "change",
             () => {
 
-                respostas[questaoAtual] =
+                respostas[questao.numero] =
                     Number(radio.value);
 
 
@@ -888,6 +870,7 @@ function atualizarQuestaoAtual(){
     }
 
 }
+
 function atualizarQuestoesRespondidas(){
 
     const botoes =
@@ -899,14 +882,24 @@ function atualizarQuestoesRespondidas(){
         const numero =
             Number(botao.dataset.questao);
 
+        const questao =
+            questoesProva[numero - 1];
 
-        if(respostas[numero - 1] !== undefined){
 
-            botao.classList.add("questao-respondida");
+        if (
+            questao &&
+            respostas[questao.numero] !== undefined
+        ){
+
+            botao.classList.add(
+                "questao-respondida"
+            );
 
         } else {
 
-            botao.classList.remove("questao-respondida");
+            botao.classList.remove(
+                "questao-respondida"
+            );
 
         }
 
@@ -969,8 +962,12 @@ function atualizarEstadoQuestoes() {
 
         // Questão respondida
 
+        const questao =
+            questoesProva[numero - 1];
+
         if (
-            respostas[numero - 1] !== undefined
+            questao &&
+            respostas[questao.numero] !== undefined
         ) {
 
             botao.classList.add(

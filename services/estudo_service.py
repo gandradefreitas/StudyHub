@@ -80,7 +80,8 @@ def finalizar_estudo_service(usuario_id):
     finalizar_estudo(
         estudo_id,
         fim,
-        duracao
+        duracao,
+        usuario_id
     )
 
     return True, "Sessão de estudo finalizada."

@@ -218,20 +218,25 @@ def salvar_respostas_prova(
     questoes,
     respostas
 ):
-
     conexao = conectar()
     cursor = conexao.cursor()
 
-    for indice, questao in enumerate(questoes):
+    for questao in questoes:
 
-        if str(indice) not in respostas:
+        chave_questao = str(
+            questao.numero
+        )
+
+        if chave_questao not in respostas:
             continue
 
-        resposta_usuario = respostas[str(indice)]
+        resposta_usuario = respostas[
+            chave_questao
+        ]
 
         correta = (
             1
-            if resposta_usuario == questao["resposta"]
+            if resposta_usuario == questao.resposta
             else 0
         )
 
@@ -248,13 +253,12 @@ def salvar_respostas_prova(
         """, (
             usuario_id,
             prova_id,
-            questao["numero"],
+            questao.numero,
             resposta_usuario,
             correta
         ))
 
     conexao.commit()
-
     conexao.close()
 
 

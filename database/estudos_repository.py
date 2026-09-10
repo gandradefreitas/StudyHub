@@ -19,7 +19,7 @@ def iniciar_estudo(usuario_id):
     conexao.close()
 
 
-def finalizar_estudo(estudo_id, fim, duracao):
+def finalizar_estudo(estudo_id, fim, duracao, usuario_id):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -31,15 +31,16 @@ def finalizar_estudo(estudo_id, fim, duracao):
             duracao = %s,
             ativa = 0
         WHERE id = %s
+        AND usuario_id = %s
     """, (
         fim,
         duracao,
-        estudo_id
+        estudo_id,
+        usuario_id
     ))
 
     conexao.commit()
     conexao.close()
-
 
 def obter_total_segundos(usuario_id):
 
