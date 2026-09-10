@@ -3,3 +3,4 @@ rich
 Flask
 gunicorn
 psycopg[binary]
+Flask-WTF
