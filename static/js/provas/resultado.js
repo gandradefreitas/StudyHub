@@ -1,4 +1,3 @@
-
 const grafico =
     document.getElementById("grafico");
 

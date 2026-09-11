@@ -1,3 +1,8 @@
+const csrfToken =
+    document.querySelector(
+        'meta[name="csrf-token"]'
+    ).getAttribute("content");
+
 const CHAVE_PROVA = `prova_${prova.id}`;
 
 let questaoAtual = Number(
@@ -479,7 +484,10 @@ function finalizarProva() {
             headers: {
 
                 "Content-Type":
-                    "application/json"
+                    "application/json",
+
+                "X-CSRFToken":
+                    csrfToken
 
             },
 

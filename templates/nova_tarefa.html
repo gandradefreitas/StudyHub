@@ -16,6 +16,12 @@ Nova tarefa | StudyHub
 
     <form method="POST">
 
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
         <label for="descricao">Descrição</label>
 
         <input type="text" id="descricao" name="descricao" placeholder="Ex.: Resolver lista de Matemática" required>

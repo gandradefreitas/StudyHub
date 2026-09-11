@@ -196,6 +196,12 @@
 
                         <form method="POST" action="{{ url_for('atualizar_aparencia_configuracoes') }}">
 
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="{{ csrf_token() }}"
+                            >
+
                             <div class="opcoes-tema-configuracoes">
 
                                 <label class="opcao-tema-configuracoes">
@@ -296,6 +302,12 @@
                 </div>
 
                 <form action="{{ url_for('atualizar_metas_configuracoes_rota') }}" method="POST" class="conteudo-secao-configuracoes">
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
 
                     <div class="grid-metas-configuracoes">
 
@@ -461,6 +473,12 @@
 
                     <form method="POST" action="{{ url_for('limpar_historico_rota') }}">
 
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
                         <div class="acoes-modal-configuracoes">
 
                             <button type="button" id="botao-cancelar-historico" class="botao-configuracao-secundario">
@@ -557,6 +575,12 @@
                     </p>
 
                     <form method="POST" action="{{ url_for('excluir_conta_configuracoes') }}">
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
 
                         <label for="senha-exclusao">
 

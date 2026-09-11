@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response
 import json
 import os
+from flask_wtf.csrf import CSRFProtect
 
 from controllers.web.configuracoes_controller import (
     carregar_configuracoes,
@@ -92,6 +93,8 @@ if not app.secret_key:
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
+
+csrf = CSRFProtect(app)
 
 criar_tabelas()
 

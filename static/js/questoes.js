@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const csrfToken =
+        document.querySelector(
+            'meta[name="csrf-token"]'
+        ).getAttribute("content");
+
 
     /* =====================================================
        ELEMENTOS
@@ -110,9 +115,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch(
                     "/estudos/iniciar-ajax",
                     {
-                        method: "POST"
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": csrfToken
+                        }
                     }
                 )
+
                 .then(
                     resposta => {
 
@@ -185,9 +194,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch(
                     "/estudos/finalizar-ajax",
                     {
-                        method: "POST"
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": csrfToken
+                        }
                     }
                 )
+
                 .then(
                     resposta => {
 
@@ -386,7 +399,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken
                     },
 
                     body: JSON.stringify({

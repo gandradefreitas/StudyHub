@@ -1,3 +1,8 @@
+const csrfToken =
+    document.querySelector(
+        'meta[name="csrf-token"]'
+    ).getAttribute("content");
+
 /* =========================================================
    ELEMENTOS DO CALENDÁRIO
 ========================================================= */
@@ -1173,7 +1178,10 @@ async function salvarAnotacao() {
                     headers: {
 
                         "Content-Type":
-                            "application/json"
+                            "application/json",
+
+                        "X-CSRFToken":
+                            csrfToken
 
                     },
 

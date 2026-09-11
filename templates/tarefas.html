@@ -89,6 +89,12 @@
 
                             <form method="POST" action="{{ url_for('concluir_tarefa', id_tarefa=tarefa['id']) }}">
 
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                >
+
                                 <button type="submit" class="tarefa-acao tarefa-acao-concluir">
 
                                     {% if tarefa["concluida"] == 0 %}
@@ -111,6 +117,12 @@
 
 
                             <form method="POST" action="{{ url_for('excluir_tarefa', id_tarefa=tarefa['id']) }}">
+
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                >
 
                                 <button type="submit" class="tarefa-acao tarefa-acao-excluir"
                                     onclick="return confirm('Deseja realmente excluir esta tarefa?')"

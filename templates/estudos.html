@@ -39,6 +39,12 @@
 
                     <form action="{{ url_for('finalizar_estudo') }}" method="POST">
 
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
                         <button type="submit" class="estudos-botao estudos-botao-finalizar">
                             Finalizar estudo
                         </button>
@@ -60,6 +66,12 @@
                 <div class="estudos-acoes">
 
                     <form action="{{ url_for('iniciar_estudo') }}" method="POST">
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
 
                         <button type="submit" class="estudos-botao estudos-botao-iniciar">
                             Iniciar estudo

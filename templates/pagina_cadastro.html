@@ -52,6 +52,12 @@ Cadastro | StudyHub
 
         <form action="{{ url_for('pagina_cadastro') }}" method="POST">
 
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
             <div class="campo">
 
                 <label for="nome">Nome completo</label>
