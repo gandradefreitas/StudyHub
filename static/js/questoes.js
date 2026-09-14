@@ -101,11 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                console.log(
-                    "CLIQUE NO BOTÃO INICIAR"
-                );
-
-
                 botaoIniciarEstudo.disabled = true;
 
                 botaoIniciarEstudo.textContent =
@@ -156,10 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
                 .catch(
                     erro => {
-
-                        console.error(
-                            erro
-                        );
 
                         botaoIniciarEstudo.disabled = false;
 
@@ -235,10 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
                 .catch(
                     erro => {
-
-                        console.error(
-                            erro
-                        );
 
                         botaoFinalizarEstudo.disabled = false;
 
@@ -433,12 +420,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(
                 dados => {
 
-                    console.log(
-                        "Resposta recebida do servidor:",
-                        dados
-                    );
-
-
                     /* =============================================
                        VERIFICAR SUCESSO
                     ============================================= */
@@ -474,55 +455,90 @@ document.addEventListener("DOMContentLoaded", () => {
                         resultado.className =
                             "questoes-resultado questoes-resultado-correto";
 
+
                         resultado.innerHTML = `
                     
-                            <p class="questoes-resultado-titulo">
-                                ✓ Resposta correta!
-                            </p>
+                            <p class="questoes-resultado-titulo"></p>
                     
                             <p class="questoes-resultado-texto">
                     
                                 Você selecionou a alternativa
-                                <strong>${dados.resposta_usuario}</strong>.
+                                <strong class="resposta-usuario"></strong>.
                     
                             </p>
                     
-                            <p class="questoes-resultado-comentario">
-                    
-                                ${card.dataset.comentario || "Não há comentário disponível."}
-                    
-                            </p>
+                            <p class="questoes-resultado-comentario"></p>
                     
                         `;
+
+
+                        resultado.querySelector(
+                            ".questoes-resultado-titulo"
+                        ).textContent =
+                            "✓ Resposta correta!";
+
+
+                        resultado.querySelector(
+                            ".resposta-usuario"
+                        ).textContent =
+                            dados.resposta_usuario;
+
+
+                        resultado.querySelector(
+                            ".questoes-resultado-comentario"
+                        ).textContent =
+                            card.dataset.comentario ||
+                            "Não há comentário disponível.";
+
 
                     } else {
 
                         resultado.className =
                             "questoes-resultado questoes-resultado-incorreto";
 
+
                         resultado.innerHTML = `
                     
-                            <p class="questoes-resultado-titulo">
-                                ✕ Resposta incorreta.
-                            </p>
+                            <p class="questoes-resultado-titulo"></p>
                     
                             <p class="questoes-resultado-texto">
                     
                                 Você marcou a alternativa
-                                <strong>${dados.resposta_usuario}</strong>.
+                                <strong class="resposta-usuario"></strong>.
                     
                                 A resposta correta é
-                                <strong>${dados.resposta_correta}</strong>.
+                                <strong class="resposta-correta"></strong>.
                     
                             </p>
                     
-                            <p class="questoes-resultado-comentario">
-                    
-                                ${card.dataset.comentario || "Não há comentário disponível."}
-                    
-                            </p>
+                            <p class="questoes-resultado-comentario"></p>
                     
                         `;
+
+
+                        resultado.querySelector(
+                            ".questoes-resultado-titulo"
+                        ).textContent =
+                            "✕ Resposta incorreta.";
+
+
+                        resultado.querySelector(
+                            ".resposta-usuario"
+                        ).textContent =
+                            dados.resposta_usuario;
+
+
+                        resultado.querySelector(
+                            ".resposta-correta"
+                        ).textContent =
+                            dados.resposta_correta;
+
+
+                        resultado.querySelector(
+                            ".questoes-resultado-comentario"
+                        ).textContent =
+                            card.dataset.comentario ||
+                            "Não há comentário disponível.";
 
                     }
 
@@ -564,12 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
             )
             .catch(
                 erro => {
-
-                    console.error(
-                        "Erro:",
-                        erro
-                    );
-
 
                     /* =============================================
                        RESTAURAR BOTÃO EM CASO DE ERRO

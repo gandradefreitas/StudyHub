@@ -73,9 +73,13 @@ def atualizar_tarefa(id_tarefa, nova_tarefa, usuario_id):
         )
     )
 
+    alterada = cursor.rowcount > 0
+
     conexao.commit()
 
     conexao.close()
+
+    return alterada
 
 
 def atualizar_status(id_tarefa, concluida, usuario_id):
@@ -170,9 +174,13 @@ def remover_tarefa(id_tarefa, usuario_id):
         (id_tarefa, usuario_id)
     )
 
+    removida = cursor.rowcount > 0
+
     conexao.commit()
 
     conexao.close()
+
+    return removida
 
 
 def buscar_tarefa(id_tarefa, usuario_id):

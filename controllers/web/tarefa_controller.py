@@ -10,11 +10,19 @@ from database.tarefa_repository import (
 
 def adicionar_tarefa_controller(usuario_id, descricao):
 
+    if not isinstance(descricao, str):
+
+        return False, "A descrição da tarefa é inválida."
+
     descricao = descricao.strip()
 
     if not descricao:
 
         return False, "A descrição da tarefa é obrigatória."
+
+    if len(descricao) > 500:
+
+        return False, "A descrição da tarefa é muito longa."
 
     adicionar_tarefa(
         usuario_id,
@@ -56,17 +64,28 @@ def editar_tarefa_controller(
     descricao
 ):
 
+    if not isinstance(descricao, str):
+
+        return False, "A descrição da tarefa é inválida."
+
     descricao = descricao.strip()
 
     if not descricao:
 
         return False, "A descrição não pode ficar vazia."
 
-    atualizar_tarefa(
+    if len(descricao) > 500:
+
+        return False, "A descrição da tarefa é muito longa."
+
+    alterada = atualizar_tarefa(
         id_tarefa,
         descricao,
         usuario_id
     )
+
+    if not alterada:
+        return False, "Tarefa não encontrada."
 
     return True, "Tarefa atualizada com sucesso."
 
@@ -75,10 +94,12 @@ def excluir_tarefa_controller(
     usuario_id,
     id_tarefa
 ):
-
-    remover_tarefa(
+    removida = remover_tarefa(
         id_tarefa,
         usuario_id
     )
+
+    if not removida:
+        return False, "Tarefa não encontrada."
 
     return True, "Tarefa excluída com sucesso."

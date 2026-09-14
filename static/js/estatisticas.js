@@ -840,17 +840,31 @@ function renderizarDesempenhoAreas(dados) {
                 "item-desempenho-area";
 
 
+            const porcentagem =
+                Number(
+                    dadosArea.porcentagem
+                );
+
+
+            const acertos =
+                Number(
+                    dadosArea.acertos
+                );
+
+
+            const questoes =
+                Number(
+                    dadosArea.questoes
+                );
+
+
             elemento.innerHTML = `
 
                 <div class="cabecalho-area">
 
-                    <span class="nome-area">
-                        ${area}
-                    </span>
+                    <span class="nome-area"></span>
 
-                    <strong>
-                        ${dadosArea.porcentagem}%
-                    </strong>
+                    <strong class="porcentagem-area"></strong>
 
                 </div>
 
@@ -859,22 +873,54 @@ function renderizarDesempenhoAreas(dados) {
 
                     <div
                         class="progresso-desempenho"
-                        style="width: ${dadosArea.porcentagem}%"
                     ></div>
 
                 </div>
 
 
-                <span class="detalhes-area">
-
-                    ${dadosArea.acertos}
-                    acertos de
-                    ${dadosArea.questoes}
-                    questões
-
-                </span>
+                <span class="detalhes-area"></span>
 
             `;
+
+
+            const nomeArea =
+                elemento.querySelector(
+                    ".nome-area"
+                );
+
+
+            const porcentagemElemento =
+                elemento.querySelector(
+                    ".porcentagem-area"
+                );
+
+
+            const progresso =
+                elemento.querySelector(
+                    ".progresso-desempenho"
+                );
+
+
+            const detalhes =
+                elemento.querySelector(
+                    ".detalhes-area"
+                );
+
+
+            nomeArea.textContent =
+                area;
+
+
+            porcentagemElemento.textContent =
+                `${porcentagem}%`;
+
+
+            progresso.style.width =
+                `${porcentagem}%`;
+
+
+            detalhes.textContent =
+                `${acertos} acertos de ${questoes} questões`;
 
 
             container.appendChild(
@@ -946,6 +992,18 @@ function renderizarProvas(provas) {
                 );
 
 
+            const acertos =
+                Number(
+                    prova.acertos
+                );
+
+
+            const total =
+                Number(
+                    prova.total
+                );
+
+
             const classeResultado =
                 porcentagem >= 70
                     ? "resultado-bom"
@@ -958,21 +1016,9 @@ function renderizarProvas(provas) {
 
                 <div class="prova-estatistica-info">
 
-                    <strong>
+                    <strong class="nome-prova"></strong>
 
-                        ${prova.nome}
-                        — ${prova.dia}
-
-                    </strong>
-
-
-                    <span>
-
-                        ${formatarDataProva(
-                            prova.data
-                        )}
-
-                    </span>
+                    <span class="data-prova"></span>
 
                 </div>
 
@@ -984,25 +1030,57 @@ function renderizarProvas(provas) {
                     "
                 >
 
-                    <strong>
+                    <strong class="porcentagem-prova"></strong>
 
-                        ${porcentagem.toLocaleString(
-                            "pt-BR"
-                        )}%
-
-                    </strong>
-
-
-                    <span>
-
-                        ${prova.acertos}/${prova.total}
-                        acertos
-
-                    </span>
+                    <span class="resultado-prova"></span>
 
                 </div>
 
             `;
+
+
+            const nomeProva =
+                elemento.querySelector(
+                    ".nome-prova"
+                );
+
+
+            const dataProva =
+                elemento.querySelector(
+                    ".data-prova"
+                );
+
+
+            const porcentagemElemento =
+                elemento.querySelector(
+                    ".porcentagem-prova"
+                );
+
+
+            const resultadoProva =
+                elemento.querySelector(
+                    ".resultado-prova"
+                );
+
+
+            nomeProva.textContent =
+                `${prova.nome} — ${prova.dia}`;
+
+
+            dataProva.textContent =
+                formatarDataProva(
+                    prova.data
+                );
+
+
+            porcentagemElemento.textContent =
+                `${porcentagem.toLocaleString(
+                    "pt-BR"
+                )}%`;
+
+
+            resultadoProva.textContent =
+                `${acertos}/${total} acertos`;
 
 
             container.appendChild(
@@ -1077,6 +1155,18 @@ function renderizarAnalise(dados) {
         ];
 
 
+    const porcentagemMelhor =
+        Number(
+            melhor[1].porcentagem
+        );
+
+
+    const porcentagemPior =
+        Number(
+            pior[1].porcentagem
+        );
+
+
     container.innerHTML = `
 
         <div class="card-analise">
@@ -1095,15 +1185,7 @@ function renderizarAnalise(dados) {
                 </h3>
 
 
-                <p>
-
-                    ${melhor[0]}
-                    apresenta seu melhor
-                    aproveitamento, com
-                    ${melhor[1].porcentagem}%
-                    de acertos.
-
-                </p>
+                <p class="texto-melhor-area"></p>
 
             </div>
 
@@ -1126,15 +1208,7 @@ function renderizarAnalise(dados) {
                 </h3>
 
 
-                <p>
-
-                    ${pior[0]}
-                    apresenta seu menor
-                    aproveitamento, com
-                    ${pior[1].porcentagem}%
-                    de acertos.
-
-                </p>
+                <p class="texto-pior-area"></p>
 
             </div>
 
@@ -1142,4 +1216,29 @@ function renderizarAnalise(dados) {
 
     `;
 
+
+    const textoMelhor =
+        container.querySelector(
+            ".texto-melhor-area"
+        );
+
+
+    const textoPior =
+        container.querySelector(
+            ".texto-pior-area"
+        );
+
+
+    textoMelhor.textContent =
+        `${melhor[0]} apresenta seu melhor ` +
+        `aproveitamento, com ` +
+        `${porcentagemMelhor}% de acertos.`;
+
+
+    textoPior.textContent =
+        `${pior[0]} apresenta seu menor ` +
+        `aproveitamento, com ` +
+        `${porcentagemPior}% de acertos.`;
+
 }
+

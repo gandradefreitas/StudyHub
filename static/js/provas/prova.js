@@ -672,63 +672,94 @@ function carregarQuestao() {
     questao.alternativas.forEach(
         (alternativa, indice) => {
 
-            let conteudoAlternativa;
+            const label =
+                document.createElement("label");
+
+            label.className =
+                "alternativa";
 
 
-            // Verifica se a alternativa é uma imagem
+            const input =
+                document.createElement("input");
+
+            input.type =
+                "radio";
+
+            input.name =
+                "questao";
+
+            input.value =
+                indice;
+
+
+            if (
+                respostas[questao.numero] == indice
+            ) {
+
+                input.checked =
+                    true;
+
+            }
+
+
+            const letra =
+                document.createElement("span");
+
+            letra.className =
+                "letra-alternativa";
+
+            letra.textContent =
+                `${"ABCDE"[indice]})`;
+
+
+            const conteudo =
+                document.createElement("span");
+
+            conteudo.className =
+                "conteudo-alternativa";
+
 
             if (ehImagem(alternativa)) {
 
                 const caminhoImagem =
-                    limparCaminhoImagem(alternativa);
+                    limparCaminhoImagem(
+                        alternativa
+                    );
 
 
-                conteudoAlternativa = `
+                const imagem =
+                    document.createElement("img");
 
-                    <img
-                        class="imagem-alternativa"
-                        src="${STATIC_URL}${caminhoImagem}"
-                        alt="Alternativa ${"ABCDE"[indice]}"
-                    >
+                imagem.className =
+                    "imagem-alternativa";
 
-                `;
+                imagem.src =
+                    STATIC_URL +
+                    caminhoImagem;
+
+                imagem.alt =
+                    `Alternativa ${"ABCDE"[indice]}`;
+
+
+                conteudo.appendChild(
+                    imagem
+                );
 
             } else {
 
-                // Alternativa normal de texto
-
-                conteudoAlternativa =
+                conteudo.textContent =
                     alternativa;
 
             }
 
 
-            areaAlternativas.innerHTML += `
+            label.appendChild(input);
+            label.appendChild(letra);
+            label.appendChild(conteudo);
 
-                <label class="alternativa">
-
-                    <input
-                        type="radio"
-                        name="questao"
-                        value="${indice}"
-                        ${
-                            respostas[questao.numero] == indice
-                                ? "checked"
-                                : ""
-                        }
-                    >
-
-                    <span class="letra-alternativa">
-                        ${"ABCDE"[indice]})
-                    </span>
-
-                    <span class="conteudo-alternativa">
-                        ${conteudoAlternativa}
-                    </span>
-
-                </label>
-
-            `;
+            areaAlternativas.appendChild(
+                label
+            );
 
         }
     );

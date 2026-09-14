@@ -33,9 +33,11 @@ def criar_tabelas():
 
             tema TEXT DEFAULT 'sistema',
 
-            meta_estudo INTEGER DEFAULT 60,
+            meta_estudo INTEGER DEFAULT 60
+                CHECK (meta_estudo >= 1),
 
-            meta_questoes INTEGER DEFAULT 20,
+            meta_questoes INTEGER DEFAULT 20
+                CHECK (meta_questoes >= 1),
 
             FOREIGN KEY(usuario_id)
             REFERENCES usuarios(id)
@@ -222,6 +224,26 @@ def criar_tabelas():
             FOREIGN KEY(usuario_id)
             REFERENCES usuarios(id)
             ON DELETE CASCADE
+
+        )
+    """)
+
+    # =========================
+    # TENTATIVAS DE LOGIN
+    # =========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tentativas_login(
+
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+            chave TEXT NOT NULL UNIQUE,
+
+            tentativas INTEGER NOT NULL DEFAULT 0,
+
+            primeira_tentativa TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            bloqueado_ate TIMESTAMPTZ
 
         )
     """)

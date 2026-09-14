@@ -47,7 +47,7 @@ def obter_usuario_por_id(usuario_id):
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT *
+        SELECT id, nome, email, tema
         FROM usuarios
         WHERE id = %s
     """, (usuario_id,))
@@ -58,6 +58,25 @@ def obter_usuario_por_id(usuario_id):
 
     return usuario
 
+def obter_senha_usuario(usuario_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT senha
+        FROM usuarios
+        WHERE id = %s
+    """, (usuario_id,))
+
+    usuario = cursor.fetchone()
+
+    conexao.close()
+
+    if usuario is None:
+        return None
+
+    return usuario["senha"]
 
 def obter_configuracoes(usuario_id):
 
@@ -204,6 +223,18 @@ def excluir_usuario(usuario_id):
     cursor = conexao.cursor()
 
     try:
+
+        # Respostas das questões
+        cursor.execute("""
+            DELETE FROM respostas_questoes
+            WHERE usuario_id = %s
+        """, (usuario_id,))
+
+        # Resultados das questões
+        cursor.execute("""
+            DELETE FROM resultados_questoes
+            WHERE usuario_id = %s
+        """, (usuario_id,))
 
         # Respostas das provas
         cursor.execute("""

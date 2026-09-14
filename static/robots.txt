@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /tarefas
+Disallow: /estudos
+Disallow: /provas
+Disallow: /calendario
+Disallow: /estatisticas
+Disallow: /configuracoes
+Disallow: /questoes
+
+Sitemap: https://SEU-DOMINIO.com/sitemap.xml

@@ -73,10 +73,11 @@
 
 
 /* ========================================
-   LINKS
+   LINKS E BOTÃO DE LOGOUT
 ======================================== */
 
-.sidebar a {
+.sidebar a,
+.sidebar form button {
     display: flex;
 
     align-items: center;
@@ -90,11 +91,31 @@
     transition: var(--transicao);
 }
 
-
 /* ========================================
-   HOVER DOS LINKS
+   HOVER DOS LINKS E BOTÃO DE LOGOUT
 ======================================== */
 
-.sidebar a:hover {
+.sidebar a:hover,
+.sidebar form button:hover {
     background: rgb(255 255 255 / .15);
+}
+
+.sidebar form {
+    margin: 0;
+}
+
+.sidebar form button {
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--cor-texto-claro);
+
+    font: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
 }

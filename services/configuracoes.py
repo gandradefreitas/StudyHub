@@ -1,4 +1,5 @@
-from database.usuario_repository import (obter_usuario_por_id,obter_configuracoes,atualizar_usuario,atualizar_senha,salvar_tema,salvar_metas,excluir_usuario)
+from database.usuario_repository import (obter_usuario_por_id, obter_configuracoes, atualizar_usuario, atualizar_senha,
+                                         salvar_tema, salvar_metas, excluir_usuario, obter_senha_usuario)
 from security.validacoes import (validar_nome,validar_email)
 from security.hash import (gerar_hash,verificar_senha)
 from security.validacoes import (validar_senha)
@@ -111,14 +112,15 @@ def atualizar_metas(usuario_id,meta_estudo,meta_questoes):
 
 def excluir_conta_usuario(usuario_id,senha_atual):
 
-    usuario = obter_usuario_por_id(usuario_id)
+    senha_hash = obter_senha_usuario(usuario_id)
 
-    if not usuario:
-
+    if senha_hash is None:
         return False, "Usuário não encontrado."
 
-
-    senha_correta = verificar_senha(senha_atual,usuario["senha"])
+    senha_correta = verificar_senha(
+        senha_atual,
+        senha_hash
+    )
 
     if not senha_correta:
 

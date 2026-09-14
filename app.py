@@ -1,7 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response, \
+    send_from_directory
 import json
 import os
 from flask_wtf.csrf import CSRFProtect
+
+from security.limite_login import (
+    verificar_bloqueio,
+    registrar_tentativa_falha,
+    limpar_tentativas
+)
 
 from controllers.web.configuracoes_controller import (
     carregar_configuracoes,
@@ -113,6 +120,13 @@ def contexto_usuario():
         "usuario": usuario
     }
 
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(
+        app.static_folder,
+        "robots.txt",
+        mimetype="text/plain"
+    )
 
 # ==========================
 # PÁGINA INICIAL
@@ -155,7 +169,7 @@ def dashboard():
 # LOGOUT
 # ==========================
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
 
     session.clear()
@@ -169,7 +183,6 @@ def logout():
         url_for("pagina_login")
     )
 
-
 # ==========================
 # LOGIN
 # ==========================
@@ -182,12 +195,30 @@ def pagina_login():
         email = request.form.get("email")
         senha = request.form.get("senha")
 
+        ip = request.remote_addr or "desconhecido"
+
+        chave = f"{email.lower().strip()}|{ip}"
+
+        if verificar_bloqueio(chave):
+
+            flash(
+                "Muitas tentativas de login. "
+                "Tente novamente mais tarde.",
+                "mensagem-erro"
+            )
+
+            return render_template(
+                "pagina_login.html"
+            )
+
         usuario, mensagem = realizar_login(
             email,
             senha
         )
 
         if usuario:
+
+            limpar_tentativas(chave)
 
             session["usuario_id"] = usuario["id"]
 
@@ -197,6 +228,8 @@ def pagina_login():
                 url_for("dashboard")
             )
 
+        registrar_tentativa_falha(chave)
+
         flash(
             mensagem,
             "mensagem-erro"
@@ -205,7 +238,6 @@ def pagina_login():
     return render_template(
         "pagina_login.html"
     )
-
 
 # ==========================
 # TAREFAS
@@ -354,7 +386,7 @@ def editar_tarefa(id_tarefa):
 
 @app.route(
     "/tarefas/<int:id_tarefa>/excluir",
-    methods=["GET", "POST"]
+    methods=["POST"]
 )
 def excluir_tarefa(id_tarefa):
 
@@ -962,6 +994,18 @@ def calendario_estudos():
             "erro": "Data não informada."
         }), 400
 
+    if not isinstance(data, str):
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+    try:
+        date.fromisoformat(data)
+    except ValueError:
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
     estudos = obter_estudos_por_data(
         usuario_id,
         data
@@ -1003,6 +1047,18 @@ def calendario_tarefas():
             "erro": "Data não informada."
         }), 400
 
+    if not isinstance(data, str):
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+    try:
+        date.fromisoformat(data)
+    except ValueError:
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
     tarefas = obter_tarefas_por_data(
         usuario_id,
         data
@@ -1042,6 +1098,18 @@ def calendario_provas():
 
         return jsonify({
             "erro": "Data não informada."
+        }), 400
+
+    if not isinstance(data, str):
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+    try:
+        date.fromisoformat(data)
+    except ValueError:
+        return jsonify({
+            "erro": "Data inválida."
         }), 400
 
     resultados = obter_resultados_por_data(
@@ -1123,6 +1191,18 @@ def calendario_anotacao():
             "erro": "Data não informada."
         }), 400
 
+    if not isinstance(data, str):
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+    try:
+        date.fromisoformat(data)
+    except ValueError:
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
     anotacao = obter_anotacao_por_data(
         usuario_id,
         data
@@ -1168,6 +1248,11 @@ def salvar_calendario_anotacao():
 
     dados = request.get_json()
 
+    if not isinstance(dados, dict):
+        return jsonify({
+            "erro": "Dados inválidos."
+        }), 400
+
     data = dados.get(
         "data"
     )
@@ -1175,7 +1260,14 @@ def salvar_calendario_anotacao():
     texto = dados.get(
         "texto",
         ""
-    ).strip()
+    )
+
+    if not isinstance(texto, str):
+        return jsonify({
+            "erro": "Texto da anotação inválido."
+        }), 400
+
+    texto = texto.strip()
 
     if not data:
 
@@ -1183,10 +1275,32 @@ def salvar_calendario_anotacao():
             "erro": "Data não informada."
         }), 400
 
+    if not isinstance(data, str):
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+    try:
+
+        date.fromisoformat(data)
+
+    except ValueError:
+
+        return jsonify({
+            "erro": "Data inválida."
+        }), 400
+
+
+
     if not texto:
 
         return jsonify({
             "erro": "A anotação não pode estar vazia."
+        }), 400
+
+    if len(texto) > 5000:
+        return jsonify({
+            "erro": "A anotação é muito longa."
         }), 400
 
     salvar_anotacao(
@@ -1225,10 +1339,19 @@ def indicadores_calendario():
         type=int
     )
 
-    if not mes or not ano:
-
+    if mes is None or ano is None:
         return jsonify({
             "erro": "Mês e ano são obrigatórios."
+        }), 400
+
+    if mes < 1 or mes > 12:
+        return jsonify({
+            "erro": "Mês inválido."
+        }), 400
+
+    if ano < 2000 or ano > 2100:
+        return jsonify({
+            "erro": "Ano inválido."
         }), 400
 
     indicadores = {}
@@ -1838,6 +1961,16 @@ def atualizar_metas_configuracoes_rota():
             url_for("pagina_configuracoes")
         )
 
+    if horas < 0:
+        flash(
+            "As horas não podem ser negativas.",
+            "mensagem-erro"
+        )
+
+        return redirect(
+            url_for("pagina_configuracoes")
+        )
+
     if minutos < 0 or minutos > 59:
 
         flash(
@@ -2154,18 +2287,36 @@ def responder_questao():
     )
 
     if (
-        numero_questao is None
-        or resposta is None
+            numero_questao is None
+            or resposta is None
     ):
-
         return jsonify({
             "erro": "Questão ou resposta não informada."
         }), 400
 
+    try:
+        numero_questao = int(numero_questao)
+    except (TypeError, ValueError):
+        return jsonify({
+            "erro": "Questão inválida."
+        }), 400
+
+    if not isinstance(resposta, str):
+        return jsonify({
+            "erro": "Resposta inválida."
+        }), 400
+
+    resposta = resposta.strip().upper()
+
+    if resposta not in {"A", "B", "C", "D", "E"}:
+        return jsonify({
+            "erro": "Resposta inválida."
+        }), 400
+
     with open(
-        "dados/questoes/questoes.json",
-        "r",
-        encoding="utf-8"
+            "dados/questoes/questoes.json",
+            "r",
+            encoding="utf-8"
     ) as arquivo:
 
         questoes = json.load(
@@ -2176,16 +2327,12 @@ def responder_questao():
 
     for item in questoes:
 
-        if item["numero"] == int(
-            numero_questao
-        ):
-
+        if item["numero"] == numero_questao:
             questao = item
 
             break
 
     if questao is None:
-
         return jsonify({
             "erro": "Questão não encontrada."
         }), 404
@@ -2195,7 +2342,7 @@ def responder_questao():
     )
 
     correta = (
-        resposta == resposta_correta
+            resposta == resposta_correta
     )
 
     data_resposta = datetime.now()
@@ -2312,5 +2459,5 @@ def pagina_cadastro():
 if __name__ == "__main__":
 
     app.run(
-        debug=True
+        debug=False
     )

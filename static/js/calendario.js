@@ -191,17 +191,20 @@ function renderizarAtividades() {
 
         dadosDia.tarefas.forEach((tarefa) => {
 
+            /*
+                A descrição da tarefa é fornecida pelo usuário.
+                Ela não é inserida diretamente no HTML.
+
+                O marcador abaixo será substituído
+                posteriormente por um elemento criado
+                com textContent.
+            */
+
             html += `
 
                 <div class="item-atividade">
 
-                    <span>
-
-                        <i class="bi bi-check-circle-fill"></i>
-
-                        ${tarefa.descricao}
-
-                    </span>
+                    <span class="descricao-tarefa"></span>
 
                 </div>
 
@@ -255,17 +258,15 @@ function renderizarAtividades() {
 
                     <div class="prova-calendario-info">
 
-                        <strong>
-
-                            ${prova.nome}
-                            — ${prova.dia}
-
-                        </strong>
-
+                        <strong class="nome-prova"></strong>
 
                         <span>
 
-                            ${prova.acertos}/${prova.total}
+                            ${Number(
+                                prova.acertos
+                            )}/${Number(
+                                prova.total
+                            )}
                             acertos
 
                         </span>
@@ -321,7 +322,7 @@ function renderizarAtividades() {
             <textarea
                 class="campo-anotacao"
                 placeholder="Escreva algo sobre seu dia..."
-            >${dadosDia.anotacao || ""}</textarea>
+            ></textarea>
 
 
             <button
@@ -348,6 +349,114 @@ function renderizarAtividades() {
 
 
     atividades.innerHTML = html;
+
+
+    /* =====================================================
+       INSERIR DADOS DE USUÁRIO COM SEGURANÇA
+    ===================================================== */
+
+    /*
+        TAREFAS
+    */
+
+    const descricoesTarefas =
+        atividades.querySelectorAll(
+            ".descricao-tarefa"
+        );
+
+
+    dadosDia.tarefas.forEach(
+        (tarefa, indice) => {
+
+            const elemento =
+                descricoesTarefas[indice];
+
+
+            if (!elemento) {
+
+                return;
+
+            }
+
+
+            elemento.innerHTML = "";
+
+            const icone =
+                document.createElement("i");
+
+
+            icone.classList.add(
+                "bi",
+                "bi-check-circle-fill"
+            );
+
+
+            elemento.appendChild(
+                icone
+            );
+
+
+            const descricao =
+                document.createTextNode(
+                    ` ${tarefa.descricao}`
+                );
+
+
+            elemento.appendChild(
+                descricao
+            );
+
+        }
+    );
+
+
+    /*
+        PROVAS
+    */
+
+    const nomesProvas =
+        atividades.querySelectorAll(
+            ".nome-prova"
+        );
+
+
+    dadosDia.provas.forEach(
+        (prova, indice) => {
+
+            const elemento =
+                nomesProvas[indice];
+
+
+            if (!elemento) {
+
+                return;
+
+            }
+
+
+            elemento.textContent =
+                `${prova.nome} — ${prova.dia}`;
+
+        }
+    );
+
+
+    /*
+        ANOTAÇÃO
+    */
+
+    const campoAnotacao =
+        atividades.querySelector(
+            ".campo-anotacao"
+        );
+
+
+    if (campoAnotacao) {
+
+        campoAnotacao.value =
+            dadosDia.anotacao || "";
+
+    }
 
 
     /*
