@@ -128,6 +128,28 @@ def robots_txt():
         mimetype="text/plain"
     )
 
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    paginas = [
+        url_for("pagina_inicial", _external=True),
+        url_for("pagina_login", _external=True),
+        url_for("pagina_cadastro", _external=True)
+    ]
+
+    urls = "\n".join(
+        f"    <url>\n"
+        f"        <loc>{url}</loc>\n"
+        f"    </url>"
+        for url in paginas
+    )
+
+    sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{urls}
+</urlset>
+"""
+
+    return sitemap, 200, {"Content-Type": "application/xml"}
 # ==========================
 # PÁGINA INICIAL
 # ==========================
