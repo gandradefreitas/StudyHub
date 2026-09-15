@@ -13,6 +13,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block descricao %}StudyHub: plataforma para organizar seus estudos, tarefas e acompanhar seu desempenho.{% endblock %}">
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_titulo %}StudyHub - Organize seus estudos{% endblock %}">
+    <meta property="og:description" content="{% block og_descricao %}Organize seus estudos, resolva questões e acompanhe seu desempenho com o StudyHub.{% endblock %}">
+    <meta property="og:image" content="{{ url_for('static', filename='imagens/studyhub-og-image.png', _external=True) }}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="StudyHub">
+    <meta property="og:locale" content="pt_BR">
     <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
