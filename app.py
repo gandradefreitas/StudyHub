@@ -76,7 +76,8 @@ from database.anotacao_repository import (
 
 from database.questoes_repository import (
     obter_ultima_resposta_questao,
-    registrar_resposta_questao
+    registrar_resposta_questao,
+    obter_ordem_questoes
 )
 
 from database.criar_banco import criar_tabelas
@@ -2136,10 +2137,33 @@ def excluir_conta_configuracoes():
 @app.route("/questoes")
 def questoes_inicio():
 
+    usuario_id = session.get(
+        "usuario_id"
+    )
+
+    if not usuario_id:
+
+        return redirect(
+            url_for("pagina_login")
+        )
+
+    ordem_questoes = obter_ordem_questoes(
+        usuario_id
+    )
+
+    if not ordem_questoes:
+
+        return redirect(
+            url_for(
+                "questoes",
+                numero=1
+            )
+        )
+
     return redirect(
         url_for(
             "questoes",
-            numero=1
+            numero=ordem_questoes[0]
         )
     )
 
@@ -2164,6 +2188,31 @@ def questoes(numero):
         usuario_id
     )
 
+    # =====================================================
+    # OBTER ORDEM DAS QUESTÕES
+    # =====================================================
+
+    ordem_questoes = obter_ordem_questoes(
+        usuario_id
+    )
+
+    # =====================================================
+    # VERIFICAR SE A QUESTÃO EXISTE NA ORDEM
+    # =====================================================
+
+    if numero not in ordem_questoes:
+
+        return redirect(
+            url_for(
+                "questoes",
+                numero=ordem_questoes[0]
+            )
+        )
+
+    # =====================================================
+    # CARREGAR QUESTÕES
+    # =====================================================
+
     with open(
         "dados/questoes/questoes.json",
         "r",
@@ -2175,16 +2224,12 @@ def questoes(numero):
         )
 
     questao = None
-    indice_questao = None
 
-    for indice, item in enumerate(
-        questoes
-    ):
+    for item in questoes:
 
         if item["numero"] == numero:
 
             questao = item
-            indice_questao = indice
 
             break
 
@@ -2193,18 +2238,61 @@ def questoes(numero):
         return redirect(
             url_for(
                 "questoes",
-                numero=1
+                numero=ordem_questoes[0]
             )
         )
 
-    tem_anterior = (
-        indice_questao > 0
+    # =====================================================
+    # LOCALIZAR QUESTÃO NA NOVA ORDEM
+    # =====================================================
+
+    indice_ordem = ordem_questoes.index(
+        numero
     )
 
-    tem_proxima = (
-        indice_questao
-        < len(questoes) - 1
-    )
+    # =====================================================
+    # QUESTÃO ANTERIOR
+    # =====================================================
+
+    if indice_ordem > 0:
+
+        numero_anterior = (
+            ordem_questoes[
+                indice_ordem - 1
+            ]
+        )
+
+        tem_anterior = True
+
+    else:
+
+        numero_anterior = None
+
+        tem_anterior = False
+
+    # =====================================================
+    # PRÓXIMA QUESTÃO
+    # =====================================================
+
+    if indice_ordem < len(ordem_questoes) - 1:
+
+        numero_proxima = (
+            ordem_questoes[
+                indice_ordem + 1
+            ]
+        )
+
+        tem_proxima = True
+
+    else:
+
+        numero_proxima = None
+
+        tem_proxima = False
+
+    # =====================================================
+    # ÚLTIMA RESPOSTA
+    # =====================================================
 
     ultima_resposta = obter_ultima_resposta_questao(
         usuario_id,
@@ -2255,6 +2343,10 @@ def questoes(numero):
 
                 questao_bloqueada = True
 
+    # =====================================================
+    # RENDERIZAR
+    # =====================================================
+
     return render_template(
         "questoes.html",
 
@@ -2265,6 +2357,10 @@ def questoes(numero):
         tem_anterior=tem_anterior,
 
         tem_proxima=tem_proxima,
+
+        numero_anterior=numero_anterior,
+
+        numero_proxima=numero_proxima,
 
         questao_bloqueada=questao_bloqueada,
 

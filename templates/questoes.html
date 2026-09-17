@@ -64,6 +64,7 @@
 
                     </div>
 
+                    {#
                     <div class="questoes-estudo">
 
                         {% if estudo_ativo %}
@@ -89,6 +90,7 @@
                         {% endif %}
 
                     </div>
+                    #}
 
                 </div>
 
@@ -159,7 +161,7 @@
 
                     {% if tem_anterior %}
 
-                        <a href="{{ url_for('questoes', numero=questao.numero - 1) }}" class="questoes-botao questoes-botao-anterior">
+                        <a href="{{ url_for('questoes', numero=numero_anterior) }}" class="questoes-botao questoes-botao-anterior">
                             Anterior
                         </a>
 
@@ -179,7 +181,7 @@
 
                     {% if tem_proxima %}
 
-                        <a href="{{ url_for('questoes', numero=questao.numero + 1) }}" class="questoes-botao questoes-botao-proxima">
+                        <a href="{{ url_for('questoes', numero=numero_proxima) }}" class="questoes-botao questoes-botao-proxima">
                             Próxima
                         </a>
 
