@@ -83,7 +83,7 @@ def validar_email(email):
 
     for caractere in usuario:
         if not (caractere.isalnum() or caractere in caracteres_permitidos):
-            return False, "O nome de usuário possui caracteres inválidos."
+            return False, "O e-mail do usuário possui caracteres inválidos."
 
     for caractere in dominio:
         if not (caractere.isalnum() or caractere in ".-"):

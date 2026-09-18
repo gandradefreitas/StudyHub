@@ -6,22 +6,31 @@ def salvar_usuario(nome, email, senha):
     conexao = conectar()
     cursor = conexao.cursor()
 
-    cursor.execute("""
-        INSERT INTO usuarios(nome, email, senha)
-        VALUES (%s, %s, %s)
-        RETURNING id
-    """, (nome, email, senha))
+    try:
 
-    usuario_id = cursor.fetchone()["id"]
+        cursor.execute("""
+            INSERT INTO usuarios(nome, email, senha)
+            VALUES (%s, %s, %s)
+            RETURNING id
+        """, (nome, email, senha))
 
-    cursor.execute("""
-        INSERT INTO configuracoes_usuario(usuario_id)
-        VALUES (%s)
-    """, (usuario_id,))
+        usuario_id = cursor.fetchone()["id"]
 
-    conexao.commit()
-    conexao.close()
+        cursor.execute("""
+            INSERT INTO configuracoes_usuario(usuario_id)
+            VALUES (%s)
+        """, (usuario_id,))
 
+        conexao.commit()
+
+    except Exception:
+
+        conexao.rollback()
+        raise
+
+    finally:
+
+        conexao.close()
 
 def buscar_por_email(email):
 

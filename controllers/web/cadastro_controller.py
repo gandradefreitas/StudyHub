@@ -21,12 +21,7 @@ def realizar_cadastro(nome, email, senha):
         return False, mensagem
 
 
-    resultado = cadastrar_usuario(nome,email,senha)
+    resultado, mensagem = cadastrar_usuario(nome,email,senha)
 
 
-    if resultado:
-
-        return True, "Usuário cadastrado com sucesso."
-
-
-    return False, "Erro ao cadastrar usuário."
+    return resultado, mensagem
