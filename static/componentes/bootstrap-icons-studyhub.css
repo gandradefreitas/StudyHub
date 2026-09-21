@@ -3,6 +3,7 @@
     src: url("../fontes/bootstrap-icons-studyhub.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 .bi {
