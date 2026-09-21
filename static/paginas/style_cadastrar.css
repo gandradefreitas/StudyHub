@@ -301,6 +301,47 @@ button:hover {
     text-decoration: underline;
 }
 
+.cadastro-google {
+    margin-top: 16px;
+}
+
+.cadastro-google .botao-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pequeno);
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color .3s ease,
+        border-color .3s ease,
+        color .3s ease,
+        box-shadow .3s ease;
+}
+
+.cadastro-google .botao-google:hover {
+    background: var(--cor-fundo-secundario);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+    box-shadow: var(--sombra);
+}
+
+.cadastro-google .bi {
+    font-size: 1.2rem;
+}
+
+.cadastro-google .bi-google {
+    color: var(--cor-texto);
+}
+
 /* ===========================
    TABLETS
 =========================== */

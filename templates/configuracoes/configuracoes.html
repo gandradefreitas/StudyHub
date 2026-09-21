@@ -116,6 +116,8 @@
 
                     <div class="divisor-configuracoes"></div>
 
+                    {% if possui_senha %}
+
                     <form method="POST" action="{{ url_for('alterar_senha_configuracoes') }}">
 
                         <div class="informacao-acao-configuracao">
@@ -126,12 +128,17 @@
 
                         </div>
 
-
                         <div class="campo-configuracao">
 
                             <label for="senha-atual">Senha atual</label>
 
-                            <input type="password" id="senha-atual" name="senha_atual" required>
+                            <input
+                                type="password"
+                                id="senha-atual"
+                                name="senha_atual"
+                                required
+                                autocomplete="current-password"
+                            >
 
                         </div>
 
@@ -139,7 +146,13 @@
 
                             <label for="nova-senha">Nova senha</label>
 
-                            <input type="password" id="nova-senha" name="nova_senha" required>
+                            <input
+                                type="password"
+                                id="nova-senha"
+                                name="nova_senha"
+                                required
+                                autocomplete="new-password"
+                            >
 
                         </div>
 
@@ -147,13 +160,22 @@
 
                             <label for="confirmar-senha">Confirmar nova senha</label>
 
-                            <input type="password" id="confirmar-senha" name="confirmar_senha" required>
+                            <input
+                                type="password"
+                                id="confirmar-senha"
+                                name="confirmar_senha"
+                                required
+                                autocomplete="new-password"
+                            >
 
                         </div>
 
                         <div class="acao-configuracao">
 
-                            <button type="submit" class="botao-configuracao-secundario">
+                            <button
+                                type="submit"
+                                class="botao-configuracao-secundario"
+                            >
 
                                 <i class="bi bi-key"></i>
 
@@ -164,6 +186,74 @@
                         </div>
 
                     </form>
+
+                    {% else %}
+
+                    <form method="POST" action="{{ url_for('definir_senha_configuracoes') }}">
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+                        <div class="informacao-acao-configuracao">
+
+                            <h3>Definir senha</h3>
+
+                            <p>
+                                Defina uma senha do StudyHub para também poder
+                                acessar sua conta usando e-mail e senha.
+                            </p>
+
+                        </div>
+
+                        <div class="campo-configuracao">
+
+                            <label for="nova-senha">Nova senha</label>
+
+                            <input
+                                type="password"
+                                id="nova-senha"
+                                name="nova_senha"
+                                required
+                                autocomplete="new-password"
+                            >
+
+                        </div>
+
+                        <div class="campo-configuracao">
+
+                            <label for="confirmar-senha">Confirmar nova senha</label>
+
+                            <input
+                                type="password"
+                                id="confirmar-senha"
+                                name="confirmar_senha"
+                                required
+                                autocomplete="new-password"
+                            >
+
+                        </div>
+
+                        <div class="acao-configuracao">
+
+                            <button
+                                type="submit"
+                                class="botao-configuracao-secundario"
+                            >
+
+                                <i class="bi bi-key"></i>
+
+                                Definir senha
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    {% endif %}
 
                 </div>
 

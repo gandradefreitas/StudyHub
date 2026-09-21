@@ -4,3 +4,5 @@ Flask
 gunicorn
 psycopg[binary]
 Flask-WTF
+Authlib
+requests

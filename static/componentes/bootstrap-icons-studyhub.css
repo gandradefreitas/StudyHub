@@ -45,3 +45,4 @@
 .bi-linkedin::before { content: "\f472"; }
 .bi-youtube::before { content: "\f62b"; }
 .bi-house::before { content: "\f425"; }
+.bi-google::before {content: "\f3f0";}

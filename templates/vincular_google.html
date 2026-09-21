@@ -1,0 +1,83 @@
+{% extends "base_publico.html" %}
+
+{% block titulo %}
+Vincular conta Google - StudyHub
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-6 col-lg-5">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h1 class="h4 text-center mb-3">
+                        Vincular conta Google
+                    </h1>
+
+                    <p class="text-center mb-4">
+                        Já existe uma conta StudyHub com este
+                        e-mail. Digite sua senha para
+                        vinculá-la à sua conta Google.
+                    </p>
+
+                    {% include "componentes/flash_messages.html" %}
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('vincular_google_conta') }}"
+                    >
+
+                        <div class="mb-3">
+
+                            <label
+                                for="senha"
+                                class="form-label"
+                            >
+                                Senha da conta StudyHub
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="senha"
+                                name="senha"
+                                required
+                                autocomplete="current-password"
+                            >
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Confirmar e vincular Google
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-3">
+
+                        <a href="{{ url_for('pagina_login') }}">
+                            Voltar para o login
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

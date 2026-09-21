@@ -15,8 +15,9 @@ def criar_tabelas():
             id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
             nome TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
-            senha TEXT NOT NULL,
-            tema TEXT DEFAULT 'sistema'
+            senha TEXT,
+            tema TEXT DEFAULT 'sistema',
+            google_id TEXT UNIQUE
         )
     """)
 

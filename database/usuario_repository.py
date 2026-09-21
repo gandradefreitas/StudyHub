@@ -51,12 +51,11 @@ def buscar_por_email(email):
 
 
 def obter_usuario_por_id(usuario_id):
-
     conexao = conectar()
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT id, nome, email, tema
+        SELECT id, nome, email, senha, tema, google_id
         FROM usuarios
         WHERE id = %s
     """, (usuario_id,))
@@ -300,3 +299,102 @@ def excluir_usuario(usuario_id):
     finally:
 
         conexao.close()
+
+def salvar_usuario_google(nome, email, google_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            INSERT INTO usuarios(nome, email, senha, google_id)
+            VALUES (%s, %s, %s, %s)
+            RETURNING id
+        """, (
+            nome,
+            email,
+            None,
+            google_id
+        ))
+
+        usuario_id = cursor.fetchone()["id"]
+
+        cursor.execute("""
+            INSERT INTO configuracoes_usuario(usuario_id)
+            VALUES (%s)
+        """, (usuario_id,))
+
+        conexao.commit()
+
+        return usuario_id
+
+    except Exception:
+
+        conexao.rollback()
+        raise
+
+    finally:
+
+        conexao.close()
+
+def buscar_por_google_id(google_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM usuarios
+        WHERE google_id = %s
+    """, (google_id,))
+
+    usuario = cursor.fetchone()
+
+    conexao.close()
+
+    return usuario
+
+def vincular_google(usuario_id, google_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            UPDATE usuarios
+            SET google_id = %s
+            WHERE id = %s
+        """, (google_id, usuario_id))
+
+        conexao.commit()
+
+    except Exception:
+
+        conexao.rollback()
+        raise
+
+    finally:
+
+        conexao.close()
+
+def usuario_possui_senha(usuario_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT senha IS NOT NULL AS possui_senha
+        FROM usuarios
+        WHERE id = %s
+    """, (usuario_id,))
+
+    resultado = cursor.fetchone()
+
+    conexao.close()
+
+    if resultado is None:
+        return False
+
+    return resultado["possui_senha"]

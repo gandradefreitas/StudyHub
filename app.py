@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import json
 import os
 from flask_wtf.csrf import CSRFProtect
-
+from authlib.integrations.flask_client import OAuth
 from security.limite_login import (
     verificar_bloqueio,
     registrar_tentativa_falha,
@@ -40,7 +40,13 @@ from controllers.dados_controller import (
     limpar_historico
 )
 
-from database.usuario_repository import obter_usuario_por_id
+from database.usuario_repository import (
+    obter_usuario_por_id,
+    buscar_por_email,
+    buscar_por_google_id,
+    salvar_usuario_google,
+    vincular_google
+)
 from database.tarefa_repository import (
     listar_tarefas,
     buscar_tarefa,
@@ -81,7 +87,8 @@ from database.questoes_repository import (
 )
 
 from database.criar_banco import criar_tabelas
-
+from services.autenticacao import autenticar
+from services.configuracoes import definir_senha_usuario
 from services.dashboard_service import carregar_dashboard
 from services.provas_service import (
     obter_prova,
@@ -97,6 +104,18 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 if not app.secret_key:
     raise RuntimeError("SECRET_KEY não configurada.")
+
+oauth = OAuth(app)
+
+google = oauth.register(
+    name="google",
+    client_id=os.environ.get("GOOGLE_CLIENT_ID"),
+    client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    client_kwargs={
+        "scope": "openid email profile"
+    }
+)
 
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
@@ -209,6 +228,127 @@ def logout():
 # ==========================
 # LOGIN
 # ==========================
+
+@app.route("/login/google")
+def login_google():
+    redirect_uri = url_for("google_callback", _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route("/login/google/callback")
+def google_callback():
+
+    token = google.authorize_access_token()
+
+    userinfo = token.get("userinfo")
+
+    if not userinfo:
+        return "Não foi possível obter os dados da conta Google.", 400
+
+    google_id = userinfo.get("sub")
+    email = userinfo.get("email")
+    nome = userinfo.get("name")
+    email_verificado = userinfo.get("email_verified")
+
+    if not google_id or not email:
+        return "O Google não forneceu os dados necessários.", 400
+
+    if not email_verificado:
+        return "O e-mail da conta Google não foi verificado.", 400
+
+    # 1. Procurar uma conta já vinculada ao Google
+    usuario = buscar_por_google_id(google_id)
+
+    if usuario:
+
+        session["usuario_id"] = usuario["id"]
+        session["nome"] = usuario["nome"]
+
+        return redirect(
+            url_for("dashboard")
+        )
+
+    # 2. Procurar uma conta existente pelo e-mail
+    usuario = buscar_por_email(email)
+
+    if usuario:
+        session["google_vinculo_email"] = email
+        session["google_vinculo_id"] = google_id
+
+        return redirect(
+            url_for("vincular_google_conta")
+        )
+
+    # 3. Criar uma nova conta Google
+    usuario_id = salvar_usuario_google(
+        nome,
+        email,
+        google_id
+    )
+
+    session["usuario_id"] = usuario_id
+    session["nome"] = nome
+
+    return redirect(
+        url_for("dashboard")
+    )
+
+@app.route("/login/google/vincular", methods=["GET", "POST"])
+def vincular_google_conta():
+
+    if request.method == "POST":
+
+        email = session.get("google_vinculo_email")
+        google_id = session.get("google_vinculo_id")
+
+        if not email or not google_id:
+
+            return redirect(
+                url_for("pagina_login")
+            )
+
+        senha = request.form.get("senha")
+
+        usuario = autenticar(
+            email,
+            senha
+        )
+
+        if not usuario:
+
+            flash(
+                "Senha incorreta.",
+                "mensagem-erro"
+            )
+
+            return render_template(
+                "vincular_google.html"
+            )
+
+        vincular_google(
+            usuario["id"],
+            google_id
+        )
+
+        session.pop(
+            "google_vinculo_email",
+            None
+        )
+
+        session.pop(
+            "google_vinculo_id",
+            None
+        )
+
+        session["usuario_id"] = usuario["id"]
+        session["nome"] = usuario["nome"]
+
+        return redirect(
+            url_for("dashboard")
+        )
+
+    return render_template(
+        "vincular_google.html"
+    )
 
 @app.route("/login", methods=["GET", "POST"])
 def pagina_login():
@@ -1906,6 +2046,40 @@ def alterar_senha_configuracoes():
         url_for("pagina_configuracoes")
     )
 
+@app.route(
+    "/configuracoes/definir-senha",
+    methods=["POST"]
+)
+def definir_senha_configuracoes():
+
+    if "usuario_id" not in session:
+        return redirect(
+            url_for("pagina_login")
+        )
+
+    nova_senha = request.form.get("nova_senha")
+    confirmar_senha = request.form.get("confirmar_senha")
+
+    sucesso, mensagem = definir_senha_usuario(
+        session["usuario_id"],
+        nova_senha,
+        confirmar_senha
+    )
+
+    if sucesso:
+        flash(
+            mensagem,
+            "mensagem-sucesso"
+        )
+    else:
+        flash(
+            mensagem,
+            "mensagem-erro"
+        )
+
+    return redirect(
+        url_for("pagina_configuracoes")
+    )
 
 @app.route(
     "/configuracoes/aparencia",
