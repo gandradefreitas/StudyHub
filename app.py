@@ -778,6 +778,15 @@ def resultado_prova():
 
         dados = request.get_json()
 
+        total = dados.get("total")
+
+        try:
+            total = int(total)
+        except (TypeError, ValueError):
+            return jsonify({
+                "erro": "Total de questões inválido."
+            }), 400
+
         if not dados:
 
             return jsonify({
@@ -824,6 +833,11 @@ def resultado_prova():
 
         prova = obter_prova(prova_id)
 
+        for questao in prova.questoes[:5]:
+            print(questao)
+
+        print("================================")
+
 
         if prova is None:
 
@@ -831,46 +845,144 @@ def resultado_prova():
                 "erro": "Prova não encontrada."
             }), 404
 
+        # ------------------------------------------------
+        # IDENTIFICA AS QUESTÕES REALMENTE REALIZADAS
+        # ------------------------------------------------
+
+        questoes_recebidas = dados.get("questoes")
+
+        if not isinstance(questoes_recebidas, list):
+            return jsonify({
+                "erro": "Questões da prova não foram informadas."
+            }), 400
+
+        # Obtém somente os números das questões
+        # que realmente foram apresentadas ao usuário.
+
+        numeros_questoes = set()
+
+        for questao in questoes_recebidas:
+
+            try:
+
+                numero = int(
+                    questao.get("numero")
+                )
+
+                numeros_questoes.add(numero)
+
+            except (
+                    TypeError,
+                    ValueError,
+                    AttributeError
+            ):
+
+                continue
+
+        # Filtra as questões oficiais da prova.
+        #
+        # A resposta correta continua vindo de
+        # prova.questoes, portanto não confiamos
+        # no gabarito enviado pelo navegador.
+
+        questoes_realizadas = [
+
+            questao
+
+            for questao in prova.questoes
+
+            if questao.numero in numeros_questoes
+
+        ]
 
         # ------------------------------------------------
-        # CALCULA O RESULTADO NO SERVIDOR
+        # IDENTIFICA AS QUESTÕES REALMENTE REALIZADAS
+        # ------------------------------------------------
+
+        questoes_recebidas = dados.get("questoes")
+
+        if not isinstance(questoes_recebidas, list):
+            return jsonify({
+                "erro": "Questões da prova não foram informadas."
+            }), 400
+
+        # Guarda os números das questões que
+        # realmente foram apresentadas ao usuário.
+
+        numeros_questoes = set()
+
+        for questao in questoes_recebidas:
+
+            try:
+
+                numero = int(
+                    questao.get("numero")
+                )
+
+                numeros_questoes.add(numero)
+
+            except (
+                    TypeError,
+                    ValueError,
+                    AttributeError
+            ):
+
+                continue
+
+        # ------------------------------------------------
+        # FILTRA AS QUESTÕES OFICIAIS
+        # ------------------------------------------------
+
+        questoes_realizadas = [
+
+            questao
+
+            for questao in prova.questoes
+
+            if questao.numero in numeros_questoes
+
+        ]
+
+        # ------------------------------------------------
+        # CALCULA O RESULTADO
         # ------------------------------------------------
 
         acertos = 0
         erros = 0
         nao_respondidas = 0
 
-
-        for questao in prova.questoes:
+        for questao in questoes_realizadas:
 
             resposta_usuario = respostas.get(
                 str(questao.numero)
             )
 
-
             # Questão não respondida
-            if resposta_usuario is None:
 
+            if resposta_usuario is None:
                 nao_respondidas += 1
 
                 continue
 
-
             # Validação da alternativa
+
             try:
 
                 resposta_usuario = int(
                     resposta_usuario
                 )
 
-            except (TypeError, ValueError):
+            except (
+                    TypeError,
+                    ValueError
+            ):
 
                 erros += 1
 
                 continue
 
-
             # Resposta correta
+
             if resposta_usuario == questao.resposta:
 
                 acertos += 1
@@ -879,8 +991,9 @@ def resultado_prova():
 
                 erros += 1
 
+        # Total de questões REALIZADAS
 
-        total = len(prova.questoes)
+        total = int(dados["total"])
 
 
         # ------------------------------------------------
@@ -1013,7 +1126,7 @@ def resultado_prova():
 
             prova_id=prova_id,
 
-            questoes=prova.questoes,
+            questoes=questoes_realizadas,
 
             respostas=respostas
 
@@ -2747,6 +2860,9 @@ def pagina_cadastro():
         "pagina_cadastro.html"
     )
 
+@app.route("/health")
+def health():
+    return "OK", 200
 
 if __name__ == "__main__":
 

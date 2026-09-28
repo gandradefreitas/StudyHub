@@ -447,13 +447,38 @@ function iniciarCronometro() {
 
 function finalizarProva() {
 
+    const estatisticas =
+        obterEstatisticas();
+
+
     const dadosResultado = {
 
         prova_id:
             prova.id,
 
+        acertos:
+            estatisticas.acertos,
+
+        erros:
+            estatisticas.erros,
+
+        naoRespondidas:
+            estatisticas.naoRespondidas,
+
+        total:
+            estatisticas.total,
+
+        questoesErradas:
+            estatisticas.questoesErradas,
+
         respostas:
-            respostas
+            respostas,
+
+        questoes:
+            questoesProva,
+
+        tempoGasto:
+            converterTempoGasto()
 
     };
 
@@ -470,9 +495,6 @@ function finalizarProva() {
         dadosResultado
     );
 
-    console.log(
-        "================================"
-    );
 
 
     fetch(
@@ -582,7 +604,6 @@ function finalizarProva() {
     });
 
 }
-
 
 function atualizarCronometro(){
 
