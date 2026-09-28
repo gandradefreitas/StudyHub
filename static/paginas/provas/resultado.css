@@ -1008,3 +1008,44 @@
     }
 
 }
+
+/* =========================================================
+   RESULTADO — LAYOUT MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .resultado-prova .cards-estatisticas {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+    }
+
+
+    .resultado-prova .card-estatistica {
+
+        padding: 14px 18px;
+
+        min-height: auto;
+
+    }
+
+
+    .resultado-prova .card-estatistica span {
+
+        margin-bottom: 5px;
+
+        font-size: .9rem;
+
+    }
+
+
+    .resultado-prova .card-estatistica strong {
+
+        font-size: 1.7rem;
+
+    }
+
+}
