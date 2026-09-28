@@ -14,7 +14,7 @@ Nova tarefa | StudyHub
 
     <p>Adicione uma nova tarefa para acompanhar seus estudos.</p>
 
-    <form method="POST">
+    <form method="POST" id="form-nova-tarefa">
 
         <input
             type="hidden"
@@ -26,10 +26,23 @@ Nova tarefa | StudyHub
 
         <input type="text" id="descricao" name="descricao" placeholder="Ex.: Resolver lista de Matemática" required>
 
-        <button type="submit">Salvar tarefa</button>
+        <button type="submit" id="botao-salvar">Salvar tarefa</button>
 
     </form>
 
 </section>
+
+<script>
+    document.getElementById("form-nova-tarefa").addEventListener("submit", function () {
+        const botao = document.getElementById("botao-salvar");
+
+        if (botao.disabled) {
+            return;
+        }
+
+        botao.disabled = true;
+        botao.textContent = "Salvando...";
+    });
+</script>
 
 {% endblock %}
