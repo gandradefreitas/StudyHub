@@ -126,6 +126,12 @@
 
                     <form method="POST" action="{{ url_for('alterar_senha_configuracoes') }}">
 
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
                         <div class="informacao-acao-configuracao">
 
                             <h3>Alterar senha</h3>
