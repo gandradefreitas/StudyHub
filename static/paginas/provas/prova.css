@@ -1679,3 +1679,270 @@
     }
 
 }
+
+/* =========================================================
+   PROVA — LAYOUT MOBILE
+========================================================= */
+
+@media (max-width:767px) {
+
+    .pagina-prova {
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:12px;
+
+        width:100%;
+
+        padding:10px;
+
+    }
+
+
+    /* =====================================================
+       CONTEÚDO DA QUESTÃO
+    ===================================================== */
+
+    .conteudo-prova {
+
+        order:1;
+
+        width:100%;
+
+        padding:16px;
+
+        box-sizing:border-box;
+
+        border-radius:12px;
+
+    }
+
+
+    /* =====================================================
+       PAINEL LATERAL
+    ===================================================== */
+
+    .painel-lateral {
+
+        order:2;
+
+        width:100%;
+
+        flex:none;
+
+        max-height:none;
+
+        padding:14px;
+
+        box-sizing:border-box;
+
+        border-radius:12px;
+
+    }
+
+
+    /* =====================================================
+       CRONÔMETRO
+    ===================================================== */
+
+    .cronometro {
+
+        min-height:58px;
+
+        margin:10px 0 14px;
+
+        padding:8px;
+
+        font-size:1.35rem;
+
+    }
+
+
+    /* =====================================================
+       GRADE DE QUESTÕES
+    ===================================================== */
+
+    .painel-lateral h3 {
+
+        margin:16px 0 8px;
+
+    }
+
+
+    .grade-questoes {
+
+        grid-template-columns:
+            repeat(10, minmax(0, 1fr));
+
+        gap:4px;
+
+        margin-bottom:14px;
+
+    }
+
+
+    .numero-questao,
+    .grade-questoes button {
+
+        min-height:32px;
+
+        padding:3px;
+
+        border-radius:6px;
+
+        font-size:.68rem;
+
+    }
+
+
+    /* =====================================================
+       BOTÃO FINALIZAR
+    ===================================================== */
+
+    .btn-finalizar {
+
+        min-height:42px;
+
+        padding:9px 12px;
+
+    }
+
+
+    /* =====================================================
+       CABEÇALHO
+    ===================================================== */
+
+    .cabecalho-prova {
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        gap:10px;
+
+        margin-bottom:20px;
+
+        padding-bottom:14px;
+
+    }
+
+
+    .status-prova {
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+
+    /* =====================================================
+       QUESTÃO
+    ===================================================== */
+
+    .questao {
+
+        margin-bottom:20px;
+
+    }
+
+
+    .questao h2 {
+
+        margin-bottom:14px;
+
+        font-size:.85rem;
+
+    }
+
+
+    .enunciado,
+    .pergunta {
+
+        font-size:.92rem;
+
+        line-height:1.7;
+
+    }
+
+
+    /* =====================================================
+       ALTERNATIVAS
+    ===================================================== */
+
+    .alternativas {
+
+        gap:8px;
+
+    }
+
+
+    .alternativa {
+
+        gap:10px;
+
+        padding:11px;
+
+    }
+
+
+    .letra-alternativa {
+
+        width:30px;
+
+        height:30px;
+
+        font-size:.75rem;
+
+    }
+
+
+    .conteudo-alternativa {
+
+        padding-top:3px;
+
+        font-size:.88rem;
+
+        line-height:1.6;
+
+    }
+
+
+    /* =====================================================
+       NAVEGAÇÃO
+    ===================================================== */
+
+    .navegacao-prova {
+
+        flex-wrap:wrap;
+
+        gap:8px;
+
+        margin-top:22px;
+
+        padding-top:16px;
+
+    }
+
+
+    .navegacao-prova .btn-revisao {
+
+        width:100%;
+
+        margin-right:0;
+
+    }
+
+
+    .navegacao-prova .btn-secundario,
+    .navegacao-prova .btn-primario {
+
+        flex:1;
+
+    }
+
+}
