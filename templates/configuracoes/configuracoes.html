@@ -84,6 +84,12 @@
 
                     <form method="POST" action="{{ url_for('atualizar_conta_configuracoes') }}">
 
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
                         <div class="campo-configuracao">
 
                             <label for="nome">Nome</label>
