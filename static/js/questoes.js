@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
             'meta[name="csrf-token"]'
         ).getAttribute("content");
 
+    const botaoFinalizarRevisao = document.getElementById(
+    "botao-finalizar-revisao"
+    );
+
 
     /* =====================================================
        ELEMENTOS
@@ -369,6 +373,10 @@ document.addEventListener("DOMContentLoaded", () => {
             ============================================= */
 
             botaoResponder.disabled = true;
+
+            if (botaoFinalizarRevisao) {
+                botaoFinalizarRevisao.hidden = false;
+            }
 
 
             botaoResponder.textContent =

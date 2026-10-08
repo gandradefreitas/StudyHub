@@ -83,7 +83,9 @@ from database.anotacao_repository import (
 from database.questoes_repository import (
     obter_ultima_resposta_questao,
     registrar_resposta_questao,
-    obter_ordem_questoes
+    obter_ordem_questoes, calcular_intervalo_revisao, obter_numero_tentativa, obter_questoes_para_revisao,
+    obter_questoes_filtradas, obter_areas_questoes, obter_dificuldades_questoes, obter_competencias_questoes,
+    obter_habilidades_questoes, obter_linguas_questoes
 )
 
 from database.criar_banco import criar_tabelas
@@ -2475,6 +2477,38 @@ def questoes(numero):
         usuario_id
     )
 
+    modo_revisao = request.args.get(
+        "revisao"
+    ) == "1"
+
+    area = request.args.get("area")
+
+    dificuldade = request.args.get("dificuldade")
+
+    competencia = request.args.get("competencia")
+
+    habilidade = request.args.get("habilidade")
+
+    lingua = request.args.get("lingua")
+
+    questoes = obter_questoes_filtradas(
+        area=area,
+        dificuldade=dificuldade,
+        competencia=competencia,
+        habilidade=habilidade,
+        lingua=lingua
+    )
+
+    areas_questoes = obter_areas_questoes()
+
+    dificuldades_questoes = obter_dificuldades_questoes()
+
+    competencias_questoes = obter_competencias_questoes()
+
+    habilidades_questoes = obter_habilidades_questoes()
+
+    linguas_questoes = obter_linguas_questoes()
+
     # =====================================================
     # OBTER ORDEM DAS QUESTÕES
     # =====================================================
@@ -2483,16 +2517,64 @@ def questoes(numero):
         usuario_id
     )
 
+    if modo_revisao:
+
+        questoes_revisao = obter_questoes_para_revisao(
+            usuario_id
+        )
+
+        if area or dificuldade or competencia or habilidade or lingua:
+            questoes_filtradas = obter_questoes_filtradas(
+                area=area,
+                dificuldade=dificuldade,
+                competencia=competencia,
+                habilidade=habilidade,
+                lingua=lingua
+            )
+
+            numeros_filtrados = {
+                questao["numero"]
+                for questao in questoes_filtradas
+            }
+
+            questoes_revisao = [
+                resposta
+                for resposta in questoes_revisao
+                if resposta["questao_numero"] in numeros_filtrados
+            ]
+
+        ordem_questoes = [
+            resposta["questao_numero"]
+            for resposta in questoes_revisao
+        ]
+    elif area or dificuldade or competencia or habilidade or lingua:
+
+        numeros_filtrados = {
+            questao["numero"]
+            for questao in questoes
+        }
+
+        ordem_questoes = [
+            numero
+            for numero in ordem_questoes
+            if numero in numeros_filtrados
+        ]
+
     # =====================================================
     # VERIFICAR SE A QUESTÃO EXISTE NA ORDEM
     # =====================================================
 
     if numero not in ordem_questoes:
-
         return redirect(
             url_for(
                 "questoes",
-                numero=ordem_questoes[0]
+                numero=ordem_questoes[0],
+                area=area if not modo_revisao else None,
+                dificuldade=dificuldade if not modo_revisao else None,
+                competencia=competencia if not modo_revisao else None,
+                habilidade=habilidade if not modo_revisao else None,
+                lingua=lingua if not modo_revisao else None,
+                revisao=1 if modo_revisao else None
             )
         )
 
@@ -2500,15 +2582,7 @@ def questoes(numero):
     # CARREGAR QUESTÕES
     # =====================================================
 
-    with open(
-        "dados/questoes/questoes.json",
-        "r",
-        encoding="utf-8"
-    ) as arquivo:
 
-        questoes = json.load(
-            arquivo
-        )
 
     questao = None
 
@@ -2521,11 +2595,16 @@ def questoes(numero):
             break
 
     if questao is None:
-
         return redirect(
             url_for(
                 "questoes",
-                numero=ordem_questoes[0]
+                numero=ordem_questoes[0],
+                area=area if not modo_revisao else None,
+                dificuldade=dificuldade if not modo_revisao else None,
+                competencia=competencia if not modo_revisao else None,
+                habilidade=habilidade if not modo_revisao else None,
+                lingua=lingua if not modo_revisao else None,
+                revisao=1 if modo_revisao else None
             )
         )
 
@@ -2536,6 +2615,13 @@ def questoes(numero):
     indice_ordem = ordem_questoes.index(
         numero
     )
+
+    posicao_revisao = None
+    total_revisao = None
+
+    if modo_revisao:
+        posicao_revisao = indice_ordem + 1
+        total_revisao = len(ordem_questoes)
 
     # =====================================================
     # QUESTÃO ANTERIOR
@@ -2576,6 +2662,11 @@ def questoes(numero):
         numero_proxima = None
 
         tem_proxima = False
+
+    ultima_questao_revisao = (
+            modo_revisao
+            and not tem_proxima
+    )
 
     # =====================================================
     # ÚLTIMA RESPOSTA
@@ -2655,7 +2746,35 @@ def questoes(numero):
 
         proxima_tentativa=proxima_tentativa,
 
-        estudo_ativo=estudo_ativo
+        estudo_ativo=estudo_ativo,
+
+        modo_revisao=modo_revisao,
+
+        ultima_questao_revisao=ultima_questao_revisao,
+
+        posicao_revisao=posicao_revisao,
+
+        total_revisao=total_revisao,
+
+        areas_questoes=areas_questoes,
+
+        dificuldades_questoes=dificuldades_questoes,
+
+        area=area,
+
+        dificuldade=dificuldade,
+
+        competencias_questoes=competencias_questoes,
+
+        competencia=competencia,
+
+        habilidades_questoes=habilidades_questoes,
+
+        habilidade=habilidade,
+
+        linguas_questoes=linguas_questoes,
+
+        lingua=lingua
     )
 
 
@@ -2692,36 +2811,60 @@ def responder_questao():
     )
 
     if (
-            numero_questao is None
-            or resposta is None
+        numero_questao is None
+        or resposta is None
     ):
+
         return jsonify({
             "erro": "Questão ou resposta não informada."
         }), 400
 
     try:
-        numero_questao = int(numero_questao)
-    except (TypeError, ValueError):
+
+        numero_questao = int(
+            numero_questao
+        )
+
+    except (
+        TypeError,
+        ValueError
+    ):
+
         return jsonify({
             "erro": "Questão inválida."
         }), 400
 
-    if not isinstance(resposta, str):
+    if not isinstance(
+        resposta,
+        str
+    ):
+
         return jsonify({
             "erro": "Resposta inválida."
         }), 400
 
     resposta = resposta.strip().upper()
 
-    if resposta not in {"A", "B", "C", "D", "E"}:
+    if resposta not in {
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+    }:
+
         return jsonify({
             "erro": "Resposta inválida."
         }), 400
 
+    # =====================================================
+    # CARREGAR QUESTÕES
+    # =====================================================
+
     with open(
-            "dados/questoes/questoes.json",
-            "r",
-            encoding="utf-8"
+        "dados/questoes/questoes.json",
+        "r",
+        encoding="utf-8"
     ) as arquivo:
 
         questoes = json.load(
@@ -2733,46 +2876,157 @@ def responder_questao():
     for item in questoes:
 
         if item["numero"] == numero_questao:
+
             questao = item
 
             break
 
     if questao is None:
+
         return jsonify({
             "erro": "Questão não encontrada."
         }), 404
+
+    # =====================================================
+    # VERIFICAR ÚLTIMA RESPOSTA
+    # =====================================================
+
+    ultima_resposta = (
+        obter_ultima_resposta_questao(
+            usuario_id,
+            numero_questao
+        )
+    )
+
+    # =====================================================
+    # IMPEDIR RESPOSTA DURANTE O BLOQUEIO
+    # =====================================================
+
+    if ultima_resposta:
+
+        proxima_tentativa_atual = (
+            ultima_resposta[
+                "proxima_tentativa"
+            ]
+        )
+
+        if proxima_tentativa_atual:
+
+            if isinstance(
+                proxima_tentativa_atual,
+                str
+            ):
+
+                data_proxima = (
+                    datetime.fromisoformat(
+                        proxima_tentativa_atual
+                    )
+                )
+
+            else:
+
+                data_proxima = (
+                    proxima_tentativa_atual
+                )
+
+            if data_proxima.tzinfo is not None:
+
+                agora = datetime.now(
+                    data_proxima.tzinfo
+                )
+
+            else:
+
+                agora = datetime.now()
+
+            if agora < data_proxima:
+
+                return jsonify({
+
+                    "erro":
+                        "Esta questão ainda está bloqueada.",
+
+                    "proxima_tentativa":
+                        data_proxima.isoformat()
+
+                }), 409
+
+    # =====================================================
+    # VERIFICAR RESPOSTA
+    # =====================================================
 
     resposta_correta = (
         questao["resposta"]
     )
 
     correta = (
-            resposta == resposta_correta
+        resposta == resposta_correta
     )
+
+    # =====================================================
+    # DATA DA RESPOSTA
+    # =====================================================
 
     data_resposta = datetime.now()
 
+    # =====================================================
+    # TENTATIVA
+    # =====================================================
+
+    tentativa = obter_numero_tentativa(
+        usuario_id,
+        numero_questao
+    )
+
+    # =====================================================
+    # INTERVALO DE REVISÃO
+    # =====================================================
+
+    intervalo_revisao = (
+        calcular_intervalo_revisao(
+            correta,
+            ultima_resposta
+        )
+    )
+
+    # =====================================================
+    # PRÓXIMA TENTATIVA
+    # =====================================================
+
     proxima_tentativa = (
         data_resposta
-        + timedelta(days=3)
+        + timedelta(
+            days=intervalo_revisao
+        )
     )
+
+    # =====================================================
+    # REGISTRAR RESPOSTA
+    # =====================================================
 
     registrar_resposta_questao(
 
         usuario_id=usuario_id,
 
-        questao_numero=int(
-            numero_questao
-        ),
+        questao_numero=numero_questao,
 
         resposta=resposta,
 
         correta=1 if correta else 0,
 
+        tentativa=tentativa,
+
+        intervalo_revisao=intervalo_revisao,
+
         data_resposta=data_resposta,
 
         proxima_tentativa=proxima_tentativa
+
     )
+
+    # =====================================================
+    # RESPOSTA
+    # =====================================================
 
     return jsonify({
 
@@ -2786,10 +3040,75 @@ def responder_questao():
         "resposta_correta":
             resposta_correta,
 
+        "tentativa":
+            tentativa,
+
+        "intervalo_revisao":
+            intervalo_revisao,
+
         "proxima_tentativa":
             proxima_tentativa.isoformat()
+
     })
 
+@app.route("/questoes/revisar")
+def revisar_questoes():
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return redirect(
+            url_for("pagina_login")
+        )
+
+    usuario = obter_usuario_por_id(
+        usuario_id
+    )
+
+    area = request.args.get("area")
+
+    dificuldade = request.args.get("dificuldade")
+
+    competencia = request.args.get("competencia")
+
+    habilidade = request.args.get("habilidade")
+
+    lingua = request.args.get("lingua")
+
+    questoes_revisao = obter_questoes_para_revisao(
+        usuario_id
+    )
+
+    if area or dificuldade or competencia or habilidade or lingua:
+        questoes_filtradas = obter_questoes_filtradas(
+            area=area,
+            dificuldade=dificuldade,
+            competencia=competencia,
+            habilidade=habilidade,
+            lingua=lingua
+        )
+
+        numeros_filtrados = {
+            questao["numero"]
+            for questao in questoes_filtradas
+        }
+
+        questoes_revisao = [
+            resposta
+            for resposta in questoes_revisao
+            if resposta["questao_numero"] in numeros_filtrados
+        ]
+
+    return render_template(
+        "revisar_questoes.html",
+        usuario=usuario,
+        questoes_revisao=questoes_revisao,
+        area=area,
+        dificuldade=dificuldade,
+        competencia=competencia,
+        habilidade=habilidade,
+        lingua=lingua
+    )
 
 @app.errorhandler(404)
 def pagina_nao_encontrada(e):

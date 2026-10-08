@@ -870,6 +870,241 @@
 
 }
 
+/* =========================================================
+   FILTROS
+========================================================= */
+
+.questoes-filtros {
+
+    width:100%;
+
+    margin-top:2rem;
+
+    padding:1rem;
+
+    box-sizing:border-box;
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+}
+
+
+.questoes-filtros form {
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:.75rem;
+
+    width:100%;
+
+    min-width:0;
+
+}
+
+
+.questoes-filtros-grupo {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.4rem;
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+
+.questoes-filtros label {
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+
+.questoes-filtros select {
+
+    width:100%;
+
+    min-height:44px;
+
+    padding:.65rem .8rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-texto);
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-family:inherit;
+
+    font-size:.9rem;
+
+    cursor:pointer;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.questoes-filtros select:focus {
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:
+        0 0 0 2px
+        color-mix(
+            in srgb,
+            var(--cor-primaria) 15%,
+            transparent
+        );
+
+}
+
+
+.questoes-filtros button {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:44px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-card);
+
+    background:var(--cor-primaria);
+
+    border:1px solid var(--cor-primaria);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    white-space:nowrap;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+
+}
+
+
+.questoes-filtros button:hover {
+
+    transform:translateY(-1px);
+
+    box-shadow:var(--sombra);
+
+}
+
+
+@media (hover:none) {
+
+    .questoes-filtros button:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+    }
+
+}
+
+/* =========================================================
+   BOTÃO - REVISAR QUESTÕES
+========================================================= */
+
+.botao-revisar {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:44px;
+
+    padding:.65rem 1rem;
+
+    box-sizing:border-box;
+
+    margin-top: 10px;
+
+    color:var(--cor-texto);
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+
+}
+
+
+.botao-revisar:hover {
+
+    transform:translateY(-1px);
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:var(--sombra);
+
+}
+
 
 /* =========================================================
    CELULARES MUITO PEQUENOS
@@ -880,6 +1115,28 @@
     .questoes {
 
         padding:.75rem;
+
+    }
+
+    .questoes-filtros {
+
+        padding:.85rem;
+
+    }
+
+
+    .questoes-filtros form {
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+    .questoes-filtros button {
+
+        width:100%;
 
     }
 
@@ -980,6 +1237,12 @@
     .questoes-bloqueio {
 
         padding:.875rem 1rem;
+
+    }
+
+    .botao-revisar {
+
+        width:100%;
 
     }
 
@@ -1168,6 +1431,14 @@
 
     }
 
+    .botao-revisar:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+    }
+
 
     .questoes-botao:hover {
 
@@ -1223,5 +1494,287 @@
     width:100%;
 
     margin-bottom:2rem;
+
+}
+
+/* =========================================================
+   PÁGINA - REVISAR QUESTÕES
+========================================================= */
+
+.questoes-card .questoes-alternativas {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.75rem;
+
+    width:100%;
+
+    min-width:0;
+
+    margin-top:2rem;
+
+}
+
+
+.questoes-card .questoes-alternativa {
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:.85rem;
+
+    width:100%;
+
+    min-width:0;
+
+    min-height:60px;
+
+    padding:1rem;
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+    text-align:left;
+
+    cursor:default;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+
+}
+
+
+.questoes-card .questoes-alternativa:hover {
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:var(--sombra);
+
+    transform:translateY(-1px);
+
+}
+
+
+.questoes-card .questoes-letra {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    width:34px;
+
+    height:34px;
+
+    margin-top:-.15rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-texto-secundario);
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:50%;
+
+    font-size:.8rem;
+
+    font-weight:700;
+
+}
+
+
+.questoes-card .questoes-texto {
+
+    flex:1;
+
+    min-width:0;
+
+    color:var(--cor-texto);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.questoes-card .questoes-texto strong {
+
+    color:var(--cor-texto);
+
+}
+
+
+.questoes-card .questoes-texto small {
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.78rem;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO DA REVISÃO
+========================================================= */
+
+.questoes-card .questoes-navegacao {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:1rem;
+
+    width:100%;
+
+    min-width:0;
+
+    margin-top:2rem;
+
+    padding-top:1.5rem;
+
+    border-top:1px solid var(--cor-borda);
+
+}
+
+
+.questoes-card .questoes-botao-proxima {
+
+    color:#000;
+
+    background:var(--cor-primaria);
+
+    border:1px solid var(--cor-primaria);
+
+}
+
+
+.questoes-card .questoes-botao-proxima:hover {
+
+    transform:translateY(-1px);
+
+    box-shadow:var(--sombra);
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width:380px) {
+
+    .questoes-card .questoes-alternativa {
+
+        gap:.7rem;
+
+        padding:.85rem;
+
+    }
+
+
+    .questoes-card .questoes-letra {
+
+        width:30px;
+
+        height:30px;
+
+        font-size:.75rem;
+
+    }
+
+
+    .questoes-card .questoes-texto {
+
+        font-size:.85rem;
+
+    }
+
+
+    .questoes-card .questoes-texto small {
+
+        font-size:.72rem;
+
+    }
+
+
+    .questoes-card .questoes-navegacao {
+
+        width:100%;
+
+    }
+
+
+    .questoes-card .questoes-botao {
+
+        width:100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .questoes-card .questoes-alternativa:hover {
+
+        border-color:var(--cor-borda);
+
+        box-shadow:none;
+
+        transform:none;
+
+    }
+
+
+    .questoes-card .questoes-botao-proxima:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .questoes-card .questoes-alternativa,
+    .questoes-card .questoes-botao {
+
+        transition:none;
+
+    }
 
 }

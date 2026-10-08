@@ -1,0 +1,837 @@
+@charset "UTF-8";
+
+/* =========================================================
+   PÁGINA - REVISAR QUESTÕES
+========================================================= */
+
+.questoes {
+
+    width:100%;
+
+    min-height:100vh;
+
+    box-sizing:border-box;
+
+    padding:clamp(1rem, 3vw, 2rem);
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   CARD DE REVISÃO
+========================================================= */
+
+.questoes-card {
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:0 auto;
+
+    box-sizing:border-box;
+
+    padding:clamp(1.25rem, 5vw, 3rem);
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:var(--raio);
+
+    box-shadow:var(--sombra);
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
+.questoes-cabecalho {
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+    min-width:0;
+
+}
+
+
+.questoes-legenda {
+
+    margin-bottom:.35rem;
+
+    color:var(--cor-primaria);
+
+    font-size:.72rem;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+}
+
+
+.questoes-cabecalho h1 {
+
+    margin:0 0 1.25rem;
+
+    color:var(--cor-primaria);
+
+    font-size:clamp(1.5rem, 5vw, 2rem);
+
+    line-height:1.2;
+
+    overflow-wrap:break-word;
+
+}
+
+
+.questoes-cabecalho p {
+
+    max-width:500px;
+
+    margin:0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    overflow-wrap:break-word;
+
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
+
+.questoes-conteudo {
+
+    width:100%;
+
+    margin-top:clamp(2rem, 6vw, 3rem);
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   CLASSIFICAÇÃO
+========================================================= */
+
+.questoes-classificacao {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:.5rem;
+
+    width:100%;
+
+    min-width:0;
+
+}
+
+
+.questoes-tag {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    min-height:30px;
+
+    padding:.35rem .7rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-texto-secundario);
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+
+/* =========================================================
+   TEXTO DA REVISÃO
+========================================================= */
+
+.questoes-enunciado {
+
+    margin-top:1.75rem;
+
+    min-width:0;
+
+}
+
+
+.questoes-enunciado p {
+
+    margin:0;
+
+    color:var(--cor-texto);
+
+    font-size:1rem;
+
+    line-height:1.7;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.questoes-enunciado p + p {
+
+    margin-top:.75rem;
+
+}
+
+
+/* =========================================================
+   LISTA DE QUESTÕES
+========================================================= */
+
+.questoes-alternativas {
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.75rem;
+
+    width:100%;
+
+    min-width:0;
+
+    margin-top:2rem;
+
+}
+
+
+/* =========================================================
+   ITEM DA QUESTÃO
+========================================================= */
+
+.questoes-alternativa {
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:.85rem;
+
+    width:100%;
+
+    min-width:0;
+
+    min-height:60px;
+
+    padding:1rem;
+
+    box-sizing:border-box;
+
+    background:var(--cor-card);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+    text-align:left;
+
+    transition:
+        border-color .2s ease,
+        background-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+
+}
+
+
+/* =========================================================
+   NÚMERO DA QUESTÃO
+========================================================= */
+
+.questoes-letra {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+    width:34px;
+
+    height:34px;
+
+    margin-top:-.15rem;
+
+    box-sizing:border-box;
+
+    color:var(--cor-texto-secundario);
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:50%;
+
+    font-size:.8rem;
+
+    font-weight:700;
+
+}
+
+
+/* =========================================================
+   TEXTO DA QUESTÃO
+========================================================= */
+
+.questoes-texto {
+
+    flex:1;
+
+    min-width:0;
+
+    color:var(--cor-texto);
+
+    font-size:.9rem;
+
+    line-height:1.5;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+.questoes-texto strong {
+
+    color:var(--cor-texto);
+
+    font-weight:700;
+
+}
+
+
+.questoes-texto small {
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.78rem;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================================
+   HOVER DOS ITENS
+========================================================= */
+
+.questoes-alternativa:hover {
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:var(--sombra);
+
+    transform:translateY(-1px);
+
+}
+
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
+.questoes-navegacao {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:1rem;
+
+    min-width:0;
+
+    margin-top:2rem;
+
+    padding-top:1.5rem;
+
+    border-top:1px solid var(--cor-borda);
+
+}
+
+
+/* =========================================================
+   BOTÃO
+========================================================= */
+
+.questoes-botao {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:46px;
+
+    padding:.8rem 1.25rem;
+
+    box-sizing:border-box;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-family:inherit;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    line-height:1.2;
+
+    text-decoration:none;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+
+}
+
+
+.questoes-botao-proxima {
+
+    color:#000;
+
+    background:var(--cor-primaria);
+
+    border:1px solid var(--cor-primaria);
+
+}
+
+
+.questoes-botao-proxima:hover {
+
+    transform:translateY(-1px);
+
+    box-shadow:var(--sombra);
+
+    filter:brightness(1.05);
+
+}
+
+
+/* =========================================================
+   ESTADO SEM QUESTÕES
+========================================================= */
+
+.questoes-conteudo
+.questoes-enunciado:has(p:first-child) {
+
+    min-width:0;
+
+}
+
+
+/* =========================================================
+   CABEÇALHO DO DASHBOARD
+========================================================= */
+
+.header-dashboard {
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    width:100%;
+
+    margin-bottom:2rem;
+
+}
+
+
+/* =========================================================
+   CELULARES MUITO PEQUENOS
+========================================================= */
+
+@media (max-width:380px) {
+
+    .questoes {
+
+        padding:.75rem;
+
+    }
+
+
+    .questoes-card {
+
+        padding:1.25rem 1rem;
+
+        border-radius:12px;
+
+    }
+
+
+    .questoes-cabecalho h1 {
+
+        font-size:1.4rem;
+
+    }
+
+
+    .questoes-cabecalho p {
+
+        font-size:.85rem;
+
+    }
+
+
+    .questoes-alternativa {
+
+        gap:.7rem;
+
+        padding:.85rem;
+
+    }
+
+
+    .questoes-letra {
+
+        width:30px;
+
+        height:30px;
+
+        font-size:.75rem;
+
+    }
+
+
+    .questoes-texto {
+
+        font-size:.85rem;
+
+    }
+
+
+    .questoes-texto small {
+
+        font-size:.72rem;
+
+    }
+
+
+    .questoes-navegacao {
+
+        width:100%;
+
+    }
+
+
+    .questoes-botao {
+
+        width:100%;
+
+        min-height:46px;
+
+        padding:.8rem;
+
+        font-size:.85rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (min-width:481px) {
+
+    .questoes-card {
+
+        padding:2rem;
+
+    }
+
+
+    .questoes-alternativa {
+
+        padding:1rem;
+
+    }
+
+
+    .questoes-texto {
+
+        font-size:.95rem;
+
+    }
+
+
+    .questoes-enunciado p {
+
+        font-size:1rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (min-width:768px) {
+
+    .questoes {
+
+        padding:2rem;
+
+    }
+
+
+    .questoes-card {
+
+        padding:2.5rem;
+
+    }
+
+
+    .questoes-enunciado p {
+
+        font-size:1.05rem;
+
+    }
+
+
+    .questoes-alternativa {
+
+        min-height:62px;
+
+    }
+
+
+    .questoes-texto {
+
+        font-size:.95rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET GRANDE / NOTEBOOK
+========================================================= */
+
+@media (min-width:1000px) {
+
+    .questoes {
+
+        padding:2.5rem;
+
+    }
+
+
+    .questoes-card {
+
+        padding:3rem;
+
+    }
+
+
+    .questoes-cabecalho h1 {
+
+        font-size:2rem;
+
+    }
+
+
+    .questoes-enunciado p {
+
+        font-size:1.05rem;
+
+    }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width:1200px) {
+
+    .questoes {
+
+        padding:2.75rem;
+
+    }
+
+
+    .questoes-card {
+
+        max-width:920px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TELAS GRANDES
+========================================================= */
+
+@media (min-width:1400px) {
+
+    .questoes {
+
+        padding:3rem;
+
+    }
+
+
+    .questoes-card {
+
+        max-width:950px;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPOSITIVOS SEM HOVER
+========================================================= */
+
+@media (hover:none) {
+
+    .questoes-alternativa:hover {
+
+        border-color:var(--cor-borda);
+
+        box-shadow:none;
+
+        transform:none;
+
+    }
+
+
+    .questoes-botao-proxima:hover {
+
+        transform:none;
+
+        box-shadow:none;
+
+        filter:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    .questoes-alternativa,
+    .questoes-botao {
+
+        transition:none;
+
+    }
+
+}
+
+/* =========================================================
+   MENSAGEM - SEM QUESTÕES PARA REVISAR
+========================================================= */
+
+.questoes-sem-revisao {
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    margin-top:2rem;
+
+    padding:1.5rem;
+
+    background:var(--cor-fundo);
+
+    border:1px solid var(--cor-borda);
+
+    border-radius:12px;
+
+    text-align:center;
+
+}
+
+
+.questoes-sem-revisao .questoes-enunciado {
+
+    margin-top:0;
+
+}
+
+
+.questoes-sem-revisao .questoes-enunciado p {
+
+    margin:0;
+
+    color:var(--cor-texto-secundario);
+
+    font-size:.9rem;
+
+    line-height:1.6;
+
+}
+
+
+.questoes-sem-revisao .questoes-enunciado p:first-child {
+
+    margin-bottom:.75rem;
+
+    color:var(--cor-texto);
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}

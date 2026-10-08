@@ -37,14 +37,236 @@
 
             <div class="questoes-cabecalho">
 
-                <span class="questoes-legenda">QUESTÕES</span>
+                {% if modo_revisao %}
 
-                <h1>Pratique seus conhecimentos</h1>
+                    <span class="questoes-legenda">
+                        REVISÃO
+                    </span>
 
-                <p>Resolva questões e acompanhe seu desempenho.</p>
+                    <h1>
+                        Revisão de questões
+                    </h1>
+
+                    <p>
+                        Questão {{ posicao_revisao }} de {{ total_revisao }}
+                    </p>
+
+                {% else %}
+
+                    <span class="questoes-legenda">
+                        QUESTÕES
+                    </span>
+
+                    <h1>
+                        Pratique seus conhecimentos
+                    </h1>
+
+                    <p>
+                        Resolva questões e acompanhe seu desempenho.
+                    </p>
+
+                {% endif %}
 
             </div>
 
+            <div class="questoes-filtros">
+
+                <form method="GET">
+
+                    <div class="questoes-filtros-grupo">
+
+                        <label for="filtro-area">
+                            Área
+                        </label>
+
+                        <select
+                            id="filtro-area"
+                            name="area"
+                        >
+
+                            <option value="">
+                                Todas as áreas
+                            </option>
+
+                            {% for area_opcao in areas_questoes %}
+
+                                <option
+                                    value="{{ area_opcao }}"
+                                    {% if area == area_opcao %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ area_opcao }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="questoes-filtros-grupo">
+
+                        <label for="filtro-dificuldade">
+                            Dificuldade
+                        </label>
+
+                        <select
+                            id="filtro-dificuldade"
+                            name="dificuldade"
+                        >
+
+                            <option value="">
+                                Todas
+                            </option>
+
+                            {% for dificuldade_opcao in dificuldades_questoes %}
+
+                                <option
+                                    value="{{ dificuldade_opcao }}"
+                                    {% if dificuldade == dificuldade_opcao %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ dificuldade_opcao }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="questoes-filtros-grupo">
+
+                        <label for="filtro-competencia">
+                            Competência
+                        </label>
+
+                        <select
+                            id="filtro-competencia"
+                            name="competencia"
+                        >
+
+                            <option value="">
+                                Todas
+                            </option>
+
+                            {% for competencia_opcao in competencias_questoes %}
+
+                                <option
+                                    value="{{ competencia_opcao }}"
+                                    {% if competencia == competencia_opcao %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ competencia_opcao }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="questoes-filtros-grupo">
+
+                        <label for="filtro-habilidade">
+                            Habilidade
+                        </label>
+
+                        <select
+                            id="filtro-habilidade"
+                            name="habilidade"
+                        >
+
+                            <option value="">
+                                Todas
+                            </option>
+
+                            {% for habilidade_opcao in habilidades_questoes %}
+
+                                <option
+                                    value="{{ habilidade_opcao }}"
+                                    {% if habilidade == habilidade_opcao %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ habilidade_opcao }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="questoes-filtros-grupo">
+
+                        <label for="filtro-lingua">
+                            Língua
+                        </label>
+
+                        <select
+                            id="filtro-lingua"
+                            name="lingua"
+                        >
+
+                            <option value="">
+                                Todas
+                            </option>
+
+                            {% for lingua_opcao in linguas_questoes %}
+
+                                <option
+                                    value="{{ lingua_opcao }}"
+                                    {% if lingua == lingua_opcao %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ lingua_opcao|capitalize }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    {% if modo_revisao %}
+
+                        <input
+                            type="hidden"
+                            name="revisao"
+                            value="1"
+                        >
+
+                    {% endif %}
+
+
+                    <button type="submit">
+                        Aplicar filtros
+                    </button>
+
+                </form>
+
+                <a
+                    href="{{ url_for(
+                        'revisar_questoes',
+                        area=area,
+                        dificuldade=dificuldade,
+                        competencia=competencia,
+                        habilidade=habilidade,
+                        lingua=lingua
+                    ) }}"
+                    class="botao-revisar"
+                >
+                    📚 Revisar questões
+                </a>
+
+            </div>
 
             <!-- =====================================================
                  QUESTÃO
@@ -161,28 +383,75 @@
 
                     {% if tem_anterior %}
 
-                        <a href="{{ url_for('questoes', numero=numero_anterior) }}" class="questoes-botao questoes-botao-anterior">
+                        <a
+                            href="{{ url_for(
+                                'questoes',
+                                numero=numero_anterior,
+                                revisao=1 if modo_revisao else None,
+                                area=area,
+                                dificuldade=dificuldade,
+                                competencia=competencia,
+                                habilidade=habilidade,
+                                lingua=lingua
+                            ) }}"
+                            class="questoes-botao questoes-botao-anterior"
+                        >
                             Anterior
                         </a>
 
                     {% endif %}
 
-                    <button type="button" class="questoes-botao questoes-botao-responder" id="botao-responder"
+
+                    <button
+                        type="button"
+                        class="questoes-botao questoes-botao-responder"
+                        id="botao-responder"
+
                         {% if questao_bloqueada %}
                             disabled
                         {% endif %}
                     >
+
                         {% if questao_bloqueada %}
+
                             Questão bloqueada
+
                         {% else %}
+
                             Responder
+
                         {% endif %}
+
                     </button>
+
 
                     {% if tem_proxima %}
 
-                        <a href="{{ url_for('questoes', numero=numero_proxima) }}" class="questoes-botao questoes-botao-proxima">
+                        <a
+                            href="{{ url_for(
+                                'questoes',
+                                numero=numero_proxima,
+                                revisao=1 if modo_revisao else None,
+                                area=area,
+                                dificuldade=dificuldade,
+                                competencia=competencia,
+                                habilidade=habilidade,
+                                lingua=lingua
+                            ) }}"
+                            class="questoes-botao questoes-botao-proxima"
+                        >
                             Próxima
+                        </a>
+
+                    {% elif ultima_questao_revisao %}
+
+                        <a
+                            href="{{ url_for('questoes_inicio') }}"
+                            id="botao-finalizar-revisao"
+                            class="questoes-botao questoes-botao-proxima"
+                            hidden
+                        >
+                            Finalizar revisão
                         </a>
 
                     {% endif %}

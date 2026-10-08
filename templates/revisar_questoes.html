@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXV3F6JX2D"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-SXV3F6JX2D');
+    </script>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/revisar_questoes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas/questoes.css') }}">
+
+
+    <title>Revisar questões</title>
+
+</head>
+
+<body
+    class="sidebar-toggle"
+    data-tema="{{ usuario['tema'] }}"
+>
+
+    {% include "componentes/sidebar.html" %}
+
+    <main class="questoes">
+
+        {% include "componentes/header_dashboard.html" %}
+
+
+        <section class="questoes-card">
+
+            <div class="questoes-cabecalho">
+
+                <span class="questoes-legenda">
+                    REVISÃO
+                </span>
+
+                <h1>
+                    Revisar questões
+                </h1>
+
+                {% if questoes_revisao %}
+
+                    <p>
+                        Você possui questões disponíveis para revisar.
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        No momento, não há questões disponíveis para revisão.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if questoes_revisao %}
+
+                <div class="questoes-conteudo">
+
+                    <div class="questoes-classificacao">
+
+                        <span class="questoes-tag">
+                            {{ questoes_revisao|length }}
+                            {% if questoes_revisao|length == 1 %}
+                                questão disponível
+                            {% else %}
+                                questões disponíveis
+                            {% endif %}
+                        </span>
+
+                    </div>
+
+
+                    <div class="questoes-enunciado">
+
+                        <p>
+                            Algumas questões já estão prontas para uma
+                            nova tentativa. Aproveite este momento para
+                            reforçar o conteúdo estudado.
+                        </p>
+
+                    </div>
+
+
+                    <div class="questoes-alternativas">
+
+                        {% for questao in questoes_revisao %}
+
+                            <div class="questoes-alternativa">
+
+                                <span class="questoes-letra">
+                                    {{ loop.index }}
+                                </span>
+
+                                <span class="questoes-texto">
+
+                                    <strong>
+                                        Questão {{ questao.questao_numero }}
+                                    </strong>
+
+                                    <br>
+
+                                    <small>
+                                        Tentativa {{ questao.tentativa }}
+                                        ·
+                                        Intervalo anterior:
+                                        {{ questao.intervalo_revisao }}
+                                        dias
+                                    </small>
+
+                                </span>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="questoes-navegacao">
+
+                        <a
+                            href="{{ url_for(
+                                'questoes',
+                                numero=questoes_revisao[0]['questao_numero'],
+                                revisao=1,
+                                area=area,
+                                dificuldade=dificuldade,
+                                competencia=competencia,
+                                habilidade=habilidade,
+                                lingua=lingua
+                            ) }}"
+                            class="questoes-botao questoes-botao-proxima"
+                        >
+                            Começar revisão
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <div class="questoes-conteudo">
+
+                    <div class="questoes-sem-revisao">
+
+                        <div class="questoes-enunciado">
+
+                            <p>
+                                🎉 Todas as suas questões estão em dia.
+                            </p>
+
+                            <p>
+                                Continue praticando e novas revisões
+                                aparecerão aqui quando estiverem disponíveis.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="questoes-navegacao">
+
+                        <a
+                            href="{{ url_for('questoes_inicio') }}"
+                            class="questoes-botao questoes-botao-proxima"
+                        >
+                            Voltar para questões
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <script
+        src="{{ url_for('static', filename='js/dashboard.js') }}"
+    ></script>
+
+</body>
+
+</html>
+

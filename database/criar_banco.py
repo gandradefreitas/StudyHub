@@ -188,6 +188,10 @@ def criar_tabelas():
 
             correta INTEGER NOT NULL,
 
+            tentativa INTEGER NOT NULL DEFAULT 1,
+
+            intervalo_revisao INTEGER NOT NULL DEFAULT 3,
+
             data_resposta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
             proxima_tentativa TIMESTAMP,
