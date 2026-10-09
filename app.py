@@ -85,7 +85,7 @@ from database.questoes_repository import (
     registrar_resposta_questao,
     obter_ordem_questoes, calcular_intervalo_revisao, obter_numero_tentativa, obter_questoes_para_revisao,
     obter_questoes_filtradas, obter_areas_questoes, obter_dificuldades_questoes, obter_competencias_questoes,
-    obter_habilidades_questoes, obter_linguas_questoes
+    obter_habilidades_questoes, obter_linguas_questoes, obter_desempenho_questoes_por_area, obter_desempenho_questoes
 )
 
 from database.criar_banco import criar_tabelas
@@ -777,22 +777,11 @@ def resultado_prova():
                 "erro": "Usuário não autenticado."
             }), 401
 
-
         dados = request.get_json()
 
-        total = dados.get("total")
-
-        try:
-            total = int(total)
-        except (TypeError, ValueError):
+        if not isinstance(dados, dict):
             return jsonify({
-                "erro": "Total de questões inválido."
-            }), 400
-
-        if not dados:
-
-            return jsonify({
-                "erro": "Nenhum dado foi recebido."
+                "erro": "Nenhum dado válido foi recebido."
             }), 400
 
 
@@ -835,115 +824,65 @@ def resultado_prova():
 
         prova = obter_prova(prova_id)
 
-        for questao in prova.questoes[:5]:
-            print(questao)
-
-        print("================================")
-
-
         if prova is None:
-
             return jsonify({
                 "erro": "Prova não encontrada."
             }), 404
 
         # ------------------------------------------------
-        # IDENTIFICA AS QUESTÕES REALMENTE REALIZADAS
+        # IDENTIFICA E VALIDA AS QUESTÕES REALIZADAS
         # ------------------------------------------------
 
         questoes_recebidas = dados.get("questoes")
 
-        if not isinstance(questoes_recebidas, list):
+        if not isinstance(questoes_recebidas, list) or not questoes_recebidas:
             return jsonify({
                 "erro": "Questões da prova não foram informadas."
             }), 400
-
-        # Obtém somente os números das questões
-        # que realmente foram apresentadas ao usuário.
 
         numeros_questoes = set()
 
         for questao in questoes_recebidas:
 
+            if not isinstance(questao, dict):
+                return jsonify({
+                    "erro": "Formato de questão inválido."
+                }), 400
+
             try:
+                numero = int(questao["numero"])
 
-                numero = int(
-                    questao.get("numero")
-                )
+            except (KeyError, TypeError, ValueError):
+                return jsonify({
+                    "erro": "Número de questão inválido."
+                }), 400
 
-                numeros_questoes.add(numero)
+            numeros_questoes.add(numero)
 
-            except (
-                    TypeError,
-                    ValueError,
-                    AttributeError
-            ):
+        # ------------------------------------------------
+        # FILTRA AS QUESTÕES OFICIAIS DA PROVA
+        # ------------------------------------------------
 
-                continue
+        # Identifica o idioma escolhido para a prova.
+        lingua_escolhida = dados.get("lingua")
 
-        # Filtra as questões oficiais da prova.
-        #
-        # A resposta correta continua vindo de
-        # prova.questoes, portanto não confiamos
-        # no gabarito enviado pelo navegador.
-
+        # Filtra as questões oficiais pelo número e, quando aplicável,
+        # pelo idioma escolhido.
         questoes_realizadas = [
-
             questao
-
             for questao in prova.questoes
-
             if questao.numero in numeros_questoes
-
+               and (
+                       not questao.lingua
+                       or questao.lingua == lingua_escolhida
+               )
         ]
 
-        # ------------------------------------------------
-        # IDENTIFICA AS QUESTÕES REALMENTE REALIZADAS
-        # ------------------------------------------------
-
-        questoes_recebidas = dados.get("questoes")
-
-        if not isinstance(questoes_recebidas, list):
+        if len(questoes_realizadas) != len(numeros_questoes):
             return jsonify({
-                "erro": "Questões da prova não foram informadas."
+                "erro": "A lista de questões não corresponde à prova oficial."
             }), 400
 
-        # Guarda os números das questões que
-        # realmente foram apresentadas ao usuário.
-
-        numeros_questoes = set()
-
-        for questao in questoes_recebidas:
-
-            try:
-
-                numero = int(
-                    questao.get("numero")
-                )
-
-                numeros_questoes.add(numero)
-
-            except (
-                    TypeError,
-                    ValueError,
-                    AttributeError
-            ):
-
-                continue
-
-        # ------------------------------------------------
-        # FILTRA AS QUESTÕES OFICIAIS
-        # ------------------------------------------------
-
-        questoes_realizadas = [
-
-            questao
-
-            for questao in prova.questoes
-
-            if questao.numero in numeros_questoes
-
-        ]
 
         # ------------------------------------------------
         # CALCULA O RESULTADO
@@ -993,9 +932,11 @@ def resultado_prova():
 
                 erros += 1
 
-        # Total de questões REALIZADAS
+        # Total de questões efetivamente realizadas.
+        # O cálculo é feito no servidor, sem confiar
+        # no total enviado pelo navegador.
 
-        total = int(dados["total"])
+        total = len(questoes_realizadas)
 
 
         # ------------------------------------------------
@@ -2047,6 +1988,60 @@ def estatisticas_areas():
     )
 
     return jsonify(desempenho)
+
+
+@app.route("/estatisticas/questoes-areas")
+def estatisticas_questoes_areas():
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+
+        return jsonify({
+            "erro": "Usuário não autenticado."
+        }), 401
+
+    desempenho = obter_desempenho_questoes_por_area(
+        usuario_id
+    )
+
+    return jsonify(desempenho)
+
+
+@app.route("/estatisticas/questoes-detalhadas")
+def estatisticas_questoes_detalhadas():
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+
+        return jsonify({
+            "erro": "Usuário não autenticado."
+        }), 401
+
+    criterio = request.args.get("criterio", "dificuldade")
+
+    criterios_permitidos = {
+        "dificuldade",
+        "competencia",
+        "habilidade",
+        "lingua"
+    }
+
+    if criterio not in criterios_permitidos:
+
+        return jsonify({
+            "erro": "Critério de análise inválido."
+        }), 400
+
+    desempenho = obter_desempenho_questoes(
+        usuario_id,
+        criterio
+    )
+
+    return jsonify(desempenho)
+
+
 
 
 # ==========================

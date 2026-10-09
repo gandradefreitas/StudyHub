@@ -15,6 +15,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carregarDesempenhoAreas();
 
+    carregarDesempenhoQuestoesAreas();
+
+    carregarAnaliseDetalhadaQuestoes();
+
+
+    const seletorAnalise = document.getElementById(
+        "criterio-analise-questoes"
+    );
+
+    if (seletorAnalise) {
+
+        seletorAnalise.addEventListener(
+            "change",
+            carregarAnaliseDetalhadaQuestoes
+        );
+
+    }
+
 
     const botaoAnterior =
         document.querySelector(
@@ -104,6 +122,178 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// =============================================
+// ANÁLISE DETALHADA DAS QUESTÕES
+// =============================================
+
+async function carregarAnaliseDetalhadaQuestoes() {
+
+    const seletor = document.getElementById(
+        "criterio-analise-questoes"
+    );
+
+    const container = document.getElementById(
+        "estatisticas-analise-detalhada"
+    );
+
+    if (!seletor || !container) {
+        return;
+    }
+
+    const criterio = seletor.value;
+
+    container.innerHTML = `
+        <p class="estado-vazio">
+            Carregando análise...
+        </p>
+    `;
+
+    try {
+
+        const resposta = await fetch(
+            `/estatisticas/questoes-detalhadas?criterio=${encodeURIComponent(criterio)}`
+        );
+
+        if (!resposta.ok) {
+            throw new Error(
+                "Não foi possível carregar a análise detalhada."
+            );
+        }
+
+        const dados = await resposta.json();
+
+        renderizarAnaliseDetalhadaQuestoes(dados);
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar análise detalhada:",
+            erro
+        );
+
+        container.innerHTML = `
+            <p class="estado-vazio">
+                Não foi possível carregar esta análise.
+                Tente novamente mais tarde.
+            </p>
+        `;
+    }
+}
+
+
+// =============================================
+// RENDERIZAR CARTÕES DA ANÁLISE
+// =============================================
+
+function renderizarAnaliseDetalhadaQuestoes(dados) {
+
+    const container = document.getElementById(
+        "estatisticas-analise-detalhada"
+    );
+
+    if (!container) {
+        return;
+    }
+
+    container.replaceChildren();
+
+    const categorias = Object.entries(dados);
+
+    if (categorias.length === 0) {
+
+        const mensagem = document.createElement("p");
+
+        mensagem.className = "estado-vazio";
+
+        mensagem.textContent =
+            "Ainda não existem respostas registradas para esta análise.";
+
+        container.appendChild(mensagem);
+
+        return;
+    }
+
+    // Ordenar do maior para o menor aproveitamento.
+    categorias.sort(
+        (a, b) => b[1].porcentagem - a[1].porcentagem
+    );
+
+    categorias.forEach(([categoria, dadosCategoria]) => {
+
+        const cartao = document.createElement("article");
+
+        cartao.className = "cartao-analise-detalhada";
+
+        const titulo = document.createElement("h3");
+
+        titulo.textContent = categoria;
+
+        const total = document.createElement("p");
+
+        total.className = "resumo-analise-detalhada";
+
+        total.textContent =
+            `${dadosCategoria.questoes} respostas registradas`;
+
+        const resultados = document.createElement("div");
+
+        resultados.className = "resultados-analise-detalhada";
+
+        const acertos = document.createElement("span");
+
+        acertos.textContent =
+            `${dadosCategoria.acertos} acertos`;
+
+        const erros = document.createElement("span");
+
+        erros.textContent =
+            `${dadosCategoria.erros} erros`;
+
+        resultados.append(acertos, erros);
+
+        const porcentagem = document.createElement("p");
+
+        porcentagem.className =
+            "porcentagem-analise-detalhada";
+
+        porcentagem.textContent =
+            `${Number(dadosCategoria.porcentagem).toLocaleString(
+                "pt-BR",
+                {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
+                }
+            )}% de acerto`;
+
+        const barra = document.createElement("div");
+
+        barra.className = "barra-analise-detalhada";
+
+        const progresso = document.createElement("div");
+
+        progresso.className = "progresso-analise-detalhada";
+
+        const percentual = Math.min(
+            100,
+            Math.max(0, Number(dadosCategoria.porcentagem) || 0)
+        );
+
+        progresso.style.width = `${percentual}%`;
+
+        barra.appendChild(progresso);
+
+        cartao.append(
+            titulo,
+            total,
+            resultados,
+            porcentagem,
+            barra
+        );
+
+        container.appendChild(cartao);
+    });
+}
+
 
 /* =========================================================
    CARREGAMENTO DOS DADOS
@@ -178,6 +368,133 @@ async function carregarResumo() {
     }
 
 }
+
+
+async function carregarDesempenhoQuestoesAreas() {
+
+    const container = document.getElementById(
+        "estatisticas-desempenho-questoes-areas"
+    );
+
+    if (!container) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            "/estatisticas/questoes-areas"
+        );
+
+        if (!resposta.ok) {
+            throw new Error(
+                "Não foi possível carregar o desempenho."
+            );
+        }
+
+        const dados = await resposta.json();
+
+        renderizarDesempenhoQuestoesAreas(dados);
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar desempenho das questões:",
+            erro
+        );
+
+        container.innerHTML = `
+            <p class="estado-vazio">
+                Não foi possível carregar o desempenho das questões.
+                Tente novamente mais tarde.
+            </p>
+        `;
+    }
+}
+
+
+function renderizarDesempenhoQuestoesAreas(dados) {
+
+    const container = document.getElementById(
+        "estatisticas-desempenho-questoes-areas"
+    );
+
+    if (!container) {
+        return;
+    }
+
+    container.replaceChildren();
+
+    const areas = Object.entries(dados);
+
+    if (areas.length === 0) {
+
+        const mensagem = document.createElement("p");
+
+        mensagem.className = "estado-vazio";
+
+        mensagem.textContent =
+            "Você ainda não respondeu a questões de estudo.";
+
+        container.appendChild(mensagem);
+
+        return;
+    }
+
+    areas.sort((a, b) =>
+        b[1].porcentagem - a[1].porcentagem
+    );
+
+    areas.forEach(([area, dadosArea]) => {
+
+        const cartao = document.createElement("article");
+
+        cartao.className = "cartao-desempenho-questoes";
+
+        const titulo = document.createElement("h3");
+
+        titulo.textContent = area;
+
+        const resumo = document.createElement("p");
+
+        resumo.className = "resumo-desempenho-questoes";
+
+        resumo.textContent =
+            `${dadosArea.questoes} respostas · ` +
+            `${dadosArea.acertos} acertos · ` +
+            `${dadosArea.erros} erros`;
+
+        const porcentagem = document.createElement("p");
+
+        porcentagem.className = "porcentagem-desempenho-questoes";
+
+        porcentagem.textContent =
+            `${dadosArea.porcentagem.toFixed(1)}% de acerto`;
+
+        const barra = document.createElement("div");
+
+        barra.className = "barra-desempenho-questoes";
+
+        const progresso = document.createElement("div");
+
+        progresso.className = "progresso-desempenho-questoes";
+
+        progresso.style.width =
+            `${Math.min(100, Math.max(0, dadosArea.porcentagem))}%`;
+
+        barra.appendChild(progresso);
+
+        cartao.append(
+            titulo,
+            resumo,
+            porcentagem,
+            barra
+        );
+
+        container.appendChild(cartao);
+    });
+}
+
 
 
 async function carregarEvolucao() {
@@ -933,162 +1250,191 @@ function renderizarDesempenhoAreas(dados) {
 }
 
 
+
 /* =========================================================
    PROVAS
 ========================================================= */
 
 function renderizarProvas(provas) {
 
-    const container =
-        document.querySelector(
-            "#estatisticas-historico-provas"
-        );
-
+    const container = document.querySelector(
+        "#estatisticas-historico-provas"
+    );
 
     if (!container) {
         return;
     }
 
+    container.replaceChildren();
 
-    container.innerHTML = "";
+    if (!provas || provas.length === 0) {
 
+        const mensagem = document.createElement("div");
 
-    if (provas.length === 0) {
+        mensagem.className = "historico-vazio";
 
-        container.innerHTML = `
-
-            <div class="historico-vazio">
-
-                <i class="bi bi-clipboard"></i>
-
-                <p>
-                    Nenhuma prova realizada ainda.
-                </p>
-
-            </div>
-
+        mensagem.innerHTML = `
+            <i class="bi bi-clipboard"></i>
+            <p>Nenhuma prova realizada ainda.</p>
         `;
+
+        container.appendChild(mensagem);
 
         return;
     }
 
+    const limiteVisivel = 3;
 
-    provas.forEach(
-        prova => {
+    const provasOcultas = provas.length > limiteVisivel;
 
-            const elemento =
-                document.createElement(
-                    "div"
-                );
+    // Contêiner exclusivo dos cartões.
+    const lista = document.createElement("div");
 
+    lista.className = "lista-provas-estatisticas";
 
-            elemento.className =
-                "prova-estatistica";
+    // Criar os cartões de todas as provas.
+    provas.forEach((prova, indice) => {
 
+        const elemento = document.createElement("div");
 
-            const porcentagem =
-                Number(
-                    prova.porcentagem
-                );
+        elemento.className = "prova-estatistica";
 
+        const porcentagem = Number(prova.porcentagem) || 0;
+        const acertos = Number(prova.acertos) || 0;
+        const total = Number(prova.total) || 0;
 
-            const acertos =
-                Number(
-                    prova.acertos
-                );
-
-
-            const total =
-                Number(
-                    prova.total
-                );
+        const classeResultado =
+            porcentagem >= 70
+                ? "resultado-bom"
+                : porcentagem >= 50
+                    ? "resultado-medio"
+                    : "resultado-baixo";
 
 
-            const classeResultado =
-                porcentagem >= 70
-                    ? "resultado-bom"
-                    : porcentagem >= 50
-                        ? "resultado-medio"
-                        : "resultado-baixo";
-
-
-            elemento.innerHTML = `
-
-                <div class="prova-estatistica-info">
-
-                    <strong class="nome-prova"></strong>
-
-                    <span class="data-prova"></span>
-
-                </div>
-
-
-                <div
-                    class="
-                        prova-estatistica-resultado
-                        ${classeResultado}
-                    "
-                >
-
-                    <strong class="porcentagem-prova"></strong>
-
-                    <span class="resultado-prova"></span>
-
-                </div>
-
-            `;
-
-
-            const nomeProva =
-                elemento.querySelector(
-                    ".nome-prova"
-                );
-
-
-            const dataProva =
-                elemento.querySelector(
-                    ".data-prova"
-                );
-
-
-            const porcentagemElemento =
-                elemento.querySelector(
-                    ".porcentagem-prova"
-                );
-
-
-            const resultadoProva =
-                elemento.querySelector(
-                    ".resultado-prova"
-                );
-
-
-            nomeProva.textContent =
-                `${prova.nome} — ${prova.dia}`;
-
-
-            dataProva.textContent =
-                formatarDataProva(
-                    prova.data
-                );
-
-
-            porcentagemElemento.textContent =
-                `${porcentagem.toLocaleString(
-                    "pt-BR"
-                )}%`;
-
-
-            resultadoProva.textContent =
-                `${acertos}/${total} acertos`;
-
-
-            container.appendChild(
-                elemento
-            );
-
+        // Ocultar inicialmente as provas a partir da quarta.
+        if (indice >= limiteVisivel) {
+            elemento.classList.add("prova-estatistica-oculta");
+            elemento.hidden = true;
         }
+
+
+
+        const informacoes = document.createElement("div");
+
+        informacoes.className = "prova-estatistica-info";
+
+        const nome = document.createElement("strong");
+
+        nome.className = "nome-prova";
+
+        nome.textContent = `${prova.nome} — ${prova.dia}`;
+
+        const data = document.createElement("span");
+
+        data.className = "data-prova";
+
+        data.textContent = prova.data || "";
+
+        informacoes.append(nome, data);
+
+        const resultado = document.createElement("div");
+
+        resultado.className =
+            `prova-estatistica-resultado ${classeResultado}`;
+
+        const percentual = document.createElement("strong");
+
+        percentual.className = "porcentagem-prova";
+
+        percentual.textContent =
+            `${porcentagem.toLocaleString("pt-BR")}%`;
+
+        const resumo = document.createElement("span");
+
+        resumo.className = "resultado-prova";
+
+        resumo.textContent = `${acertos}/${total} acertos`;
+
+        resultado.append(percentual, resumo);
+
+        elemento.append(informacoes, resultado);
+
+        lista.appendChild(elemento);
+
+    });
+
+    container.appendChild(lista);
+
+    // Não criar botão quando todas as provas já estão visíveis.
+    if (!provasOcultas) {
+        return;
+    }
+
+    // Botão para expandir ou recolher o histórico.
+    const botao = document.createElement("button");
+
+    botao.type = "button";
+
+    botao.className = "botao-historico-provas";
+
+    botao.setAttribute("aria-expanded", "false");
+
+    botao.setAttribute(
+        "aria-label",
+        "Mostrar provas anteriores"
     );
+
+    const icone = document.createElement("i");
+
+    icone.className = "bi bi-three-dots";
+
+    icone.setAttribute("aria-hidden", "true");
+
+    const texto = document.createElement("span");
+
+    texto.textContent = "Mostrar provas anteriores";
+
+    botao.append(icone, texto);
+
+    botao.addEventListener("click", () => {
+
+        const expandido =
+            botao.getAttribute("aria-expanded") === "true";
+
+        const novoEstado = !expandido;
+
+        // Mostrar ou ocultar as provas a partir da quarta.
+        lista.querySelectorAll(
+            ".prova-estatistica-oculta"
+        ).forEach(prova => {
+
+            prova.hidden = !novoEstado;
+
+        });
+
+        botao.setAttribute(
+            "aria-expanded",
+            String(novoEstado)
+        );
+
+        botao.setAttribute(
+            "aria-label",
+            novoEstado
+                ? "Ocultar provas anteriores"
+                : "Mostrar provas anteriores"
+        );
+
+        icone.className = novoEstado
+            ? "bi bi-chevron-up"
+            : "bi bi-three-dots";
+
+        texto.textContent = novoEstado
+            ? "Ocultar provas anteriores"
+            : "Mostrar provas anteriores";
+
+    });
+
+    container.appendChild(botao);
 
 }
 

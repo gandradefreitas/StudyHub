@@ -454,3 +454,230 @@ def obter_linguas_questoes():
     })
 
     return linguas
+
+
+def obter_desempenho_questoes_por_area(usuario_id):
+
+    # =============================================
+    # CARREGAR QUESTÕES DO CATÁLOGO
+    # =============================================
+
+    with open(
+        "dados/questoes/questoes.json",
+        "r",
+        encoding="utf-8"
+    ) as arquivo:
+
+        questoes = json.load(arquivo)
+
+    # Criar um índice para localizar questões pelo número.
+    questoes_por_numero = {
+        questao["numero"]: questao
+        for questao in questoes
+    }
+
+    # =============================================
+    # BUSCAR HISTÓRICO DE RESPOSTAS DO USUÁRIO
+    # =============================================
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            SELECT
+                questao_numero,
+                correta
+            FROM respostas_questoes
+            WHERE usuario_id = %s
+            ORDER BY data_resposta
+        """, (usuario_id,))
+
+        respostas = cursor.fetchall()
+
+    finally:
+
+        cursor.close()
+        conexao.close()
+
+    # =============================================
+    # AGRUPAR RESULTADOS POR ÁREA
+    # =============================================
+
+    desempenho = {}
+
+    for resposta in respostas:
+
+        numero = resposta["questao_numero"]
+
+        questao = questoes_por_numero.get(numero)
+
+        # Ignorar questões que não existem mais no catálogo.
+        if questao is None:
+            continue
+
+        area = questao.get("area")
+
+        # Ignorar questões sem área definida.
+        if not area:
+            continue
+
+        if area not in desempenho:
+
+            desempenho[area] = {
+                "questoes": 0,
+                "acertos": 0,
+                "erros": 0,
+                "porcentagem": 0
+            }
+
+        desempenho[area]["questoes"] += 1
+
+        if resposta["correta"]:
+
+            desempenho[area]["acertos"] += 1
+
+        else:
+
+            desempenho[area]["erros"] += 1
+
+    # =============================================
+    # CALCULAR APROVEITAMENTO
+    # =============================================
+
+    for area, dados in desempenho.items():
+
+        total = dados["questoes"]
+
+        dados["porcentagem"] = round(
+            dados["acertos"] / total * 100,
+            1
+        )
+
+    return desempenho
+
+
+def obter_desempenho_questoes(usuario_id, criterio="area"):
+
+    criterios_permitidos = {
+        "area",
+        "dificuldade",
+        "competencia",
+        "habilidade",
+        "lingua"
+    }
+
+    if criterio not in criterios_permitidos:
+        raise ValueError("Critério de desempenho inválido.")
+
+    # =============================================
+    # CARREGAR QUESTÕES DO CATÁLOGO
+    # =============================================
+
+    with open(
+        "dados/questoes/questoes.json",
+        "r",
+        encoding="utf-8"
+    ) as arquivo:
+
+        questoes = json.load(arquivo)
+
+    questoes_por_numero = {
+        questao["numero"]: questao
+        for questao in questoes
+    }
+
+    # =============================================
+    # BUSCAR HISTÓRICO DE RESPOSTAS
+    # =============================================
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            SELECT
+                questao_numero,
+                correta
+            FROM respostas_questoes
+            WHERE usuario_id = %s
+            ORDER BY data_resposta
+        """, (usuario_id,))
+
+        respostas = cursor.fetchall()
+
+    finally:
+
+        cursor.close()
+        conexao.close()
+
+    # =============================================
+    # AGRUPAR RESPOSTAS PELO CRITÉRIO ESCOLHIDO
+    # =============================================
+
+    desempenho = {}
+
+    for resposta in respostas:
+
+        numero = resposta["questao_numero"]
+
+        questao = questoes_por_numero.get(numero)
+
+        if questao is None:
+            continue
+
+        valor = questao.get(criterio)
+
+        # Questões sem o critério não entram na análise.
+        if valor is None or valor == "":
+            continue
+
+        # Padronizar o idioma para facilitar a exibição.
+        if criterio == "lingua":
+
+            idiomas = {
+                "ingles": "Inglês",
+                "espanhol": "Espanhol"
+            }
+
+            valor = idiomas.get(
+                str(valor).lower(),
+                str(valor).capitalize()
+            )
+
+        if valor not in desempenho:
+
+            desempenho[valor] = {
+                "questoes": 0,
+                "acertos": 0,
+                "erros": 0,
+                "porcentagem": 0
+            }
+
+        desempenho[valor]["questoes"] += 1
+
+        if resposta["correta"]:
+
+            desempenho[valor]["acertos"] += 1
+
+        else:
+
+            desempenho[valor]["erros"] += 1
+
+    # =============================================
+    # CALCULAR PERCENTUAIS
+    # =============================================
+
+    for dados in desempenho.values():
+
+        total = dados["questoes"]
+
+        dados["porcentagem"] = round(
+            dados["acertos"] / total * 100,
+            1
+        )
+
+    return desempenho
+

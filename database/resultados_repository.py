@@ -1,4 +1,5 @@
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 
 from database.conexao import conectar
 from services.provas_service import obter_prova, listar_provas
@@ -43,28 +44,32 @@ def salvar_resultado(resultado):
 
 def formatar_data_realizacao(data):
 
+    fuso_fortaleza = ZoneInfo("America/Fortaleza")
+
     if isinstance(data, datetime):
 
-        data_utc = data
-
-        if data_utc.tzinfo is None:
-            data_utc = data_utc.replace(tzinfo=timezone.utc)
+        data_local = data
 
     else:
 
-        data_utc = datetime.strptime(
-            data,
-            "%Y-%m-%d %H:%M:%S"
-        ).replace(tzinfo=timezone.utc)
+        data_local = datetime.fromisoformat(data)
 
-    horario_brasilia = data_utc.astimezone(
-        timezone(timedelta(hours=-3))
-    )
+    # Interpreta datas sem fuso como horário de Fortaleza.
+    if data_local.tzinfo is None:
 
-    return horario_brasilia.strftime(
+        data_local = data_local.replace(
+            tzinfo=fuso_fortaleza
+        )
+
+    else:
+
+        data_local = data_local.astimezone(
+            fuso_fortaleza
+        )
+
+    return data_local.strftime(
         "%d/%m/%Y às %H:%M"
     )
-
 
 
 def listar_resultados_usuario(usuario_id):

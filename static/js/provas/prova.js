@@ -30,18 +30,15 @@ let questoesProva = [];
 
 function atualizarQuestoesProva() {
 
-    questoesProva =
-        questoes.filter(questao => {
+    questoesProva = questoes.filter(questao => {
 
-            // Questões normais
-            if (!questao.lingua) {
-                return true;
-            }
+        if (!questao.lingua) {
+            return true;
+        }
 
-            // Questões de língua estrangeira
-            return questao.lingua === linguaEscolhida;
+        return questao.lingua === linguaEscolhida;
 
-        });
+    });
 
 }
 
@@ -456,6 +453,8 @@ function finalizarProva() {
         prova_id:
             prova.id,
 
+        lingua: linguaEscolhida,
+
         acertos:
             estatisticas.acertos,
 
@@ -483,19 +482,6 @@ function finalizarProva() {
     };
 
 
-    console.log(
-        "================================"
-    );
-
-    console.log(
-        "ENVIANDO RESULTADO PARA O FLASK"
-    );
-
-    console.log(
-        dadosResultado
-    );
-
-
 
     fetch(
         "/provas/resultado",
@@ -521,34 +507,25 @@ function finalizarProva() {
         }
     )
 
-    .then(response => {
+    .then(async response => {
 
-        console.log(
-            "Status da resposta:",
-            response.status
-        );
 
+        const dados = await response.json();
 
         if (!response.ok) {
 
             throw new Error(
+                dados.erro ||
                 `Servidor respondeu com ${response.status}`
             );
 
         }
 
-
-        return response.json();
+        return dados;
 
     })
 
     .then(dados => {
-
-        console.log(
-            "Resposta recebida do Flask:",
-            dados
-        );
-
 
         if (
             dados.status !== "ok"

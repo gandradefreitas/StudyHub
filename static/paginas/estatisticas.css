@@ -1393,3 +1393,320 @@
     margin-bottom:2rem;
 
 }
+
+.secao-estatisticas {
+
+    margin-top:2rem;
+}
+
+.desempenho-questoes-areas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cartao-desempenho-questoes {
+    padding: 20px;
+    border-radius: 12px;
+    background: var(--cor-fundo-secundario);
+    border: 1px solid var(--cor-borda);
+    min-width: 0;
+}
+
+.cartao-desempenho-questoes h3 {
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+}
+
+.resumo-desempenho-questoes {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--cor-texto-secundario);
+}
+
+.porcentagem-desempenho-questoes {
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.barra-desempenho-questoes {
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--cor-borda);
+}
+
+.progresso-desempenho-questoes {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--cor-primaria);
+    transition: width 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    .desempenho-questoes-areas {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   ANÁLISE DETALHADA DAS QUESTÕES
+========================================================= */
+
+.controles-analise-questoes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0 24px;
+}
+
+.controles-analise-questoes label {
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.controles-analise-questoes select {
+    min-width: 190px;
+    padding: 11px 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto);
+    font: inherit;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.controles-analise-questoes select:hover {
+    border-color: var(--cor-primaria);
+}
+
+.controles-analise-questoes select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--cor-primaria) 15%, transparent);
+}
+
+/* Grade de cartões */
+
+.estatisticas-analise-detalhada {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* Cartão individual */
+
+.cartao-analise-detalhada {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    background: var(--cor-fundo-secundario);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.cartao-analise-detalhada:hover {
+    transform: translateY(-2px);
+    border-color: var(--cor-primaria);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.06);
+}
+
+.cartao-analise-detalhada h3 {
+    margin: 0 0 8px;
+    color: var(--cor-texto);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.resumo-analise-detalhada {
+    margin: 0 0 16px;
+    color: var(--cor-texto-secundario);
+    font-size: 0.88rem;
+}
+
+/* Quantidade de acertos e erros */
+
+.resultados-analise-detalhada {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.resultados-analise-detalhada span {
+    padding: 7px 11px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Percentual */
+
+.porcentagem-analise-detalhada {
+    margin: 0 0 10px;
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* Barra de progresso */
+
+.barra-analise-detalhada {
+    width: 100%;
+    height: 9px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--cor-borda);
+}
+
+.progresso-analise-detalhada {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--cor-primaria);
+    transition: width 0.4s ease;
+}
+
+/* Estado vazio ou carregamento */
+
+.estatisticas-analise-detalhada > .estado-vazio {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 28px 20px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto-secundario);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+    .estatisticas-analise-detalhada {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .cartao-analise-detalhada {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .controles-analise-questoes {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .controles-analise-questoes select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .cartao-analise-detalhada h3 {
+        font-size: 1.05rem;
+    }
+
+    .resultados-analise-detalhada {
+        gap: 8px;
+    }
+}
+
+
+/* =========================================================
+   EXPANSÃO DO HISTÓRICO DE PROVAS
+========================================================= */
+
+.lista-provas-estatisticas {
+    display: flex;
+    flex-direction: column;
+    gap: .625rem;
+    min-width: 0;
+}
+
+/* Provas adicionais começam ocultas. */
+.prova-estatistica-oculta {
+    display: flex;
+}
+
+.prova-estatistica-oculta[hidden] {
+    display: none;
+}
+
+/* Botão para expandir ou recolher. */
+.botao-historico-provas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+
+    width: 100%;
+    min-height: 44px;
+    margin-top: .5rem;
+    padding: .625rem 1rem;
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto-secundario);
+
+    font: inherit;
+    font-size: .85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+.botao-historico-provas i {
+    font-size: 1.25rem;
+}
+
+.botao-historico-provas:hover {
+    background: var(--cor-card);
+    border-color: var(--cor-primaria);
+    color: var(--cor-primaria);
+}
+
+.botao-historico-provas:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 3px;
+}
+
+@media (hover: none) {
+    .botao-historico-provas:hover {
+        background: var(--cor-fundo-secundario);
+        border-color: var(--cor-borda);
+        color: var(--cor-texto-secundario);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .botao-historico-provas {
+        transition: none;
+    }
+}
+
+
+
