@@ -216,6 +216,25 @@ function limparCaminhoImagem(valor) {
 
 }
 
+function obterUrlImagem(caminhoImagem) {
+
+
+if (!caminhoImagem) {
+    return "";
+}
+
+const caminho = limparCaminhoImagem(caminhoImagem);
+
+if (/^https?:\/\//i.test(caminho)) {
+    return caminho;
+}
+
+return `${STATIC_URL}${caminho}`;
+
+
+}
+
+
 
 function carregarConteudoQuestao(questao) {
 
@@ -259,7 +278,7 @@ function carregarConteudoQuestao(questao) {
             "imagem-questao";
 
         imagem.src =
-            STATIC_URL + questao.imagem;
+            obterUrlImagem(questao.imagem);
 
         imagem.alt =
             `Imagem da questão ${questao.numero}`;
@@ -732,8 +751,7 @@ function carregarQuestao() {
                     "imagem-alternativa";
 
                 imagem.src =
-                    STATIC_URL +
-                    caminhoImagem;
+                    obterUrlImagem(caminhoImagem);
 
                 imagem.alt =
                     `Alternativa ${"ABCDE"[indice]}`;
