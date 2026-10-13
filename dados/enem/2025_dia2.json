@@ -241,7 +241,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "A quantidade de CO2 na atmosfera da Terra aumentou em\n50%, e a temperatura está agora cerca de 1,2 °C mais quente\nem comparação ao século XIX. O ritmo de aumento da temperatura\nprecisa diminuir se quisermos evitar as piores consequências das\nmudanças climáticas. Cientistas afirmam que o aquecimento global\nprecisa ser mantido em 1,5 °C até o ano 2100. No entanto, a menos\nque outras ações sejam tomadas, o planeta ainda pode aquecer\nmais de 2 °C até o final deste século. Na prática, os países precisam\nenfrentar as mudanças climáticas com ações mitigadoras, que\nreduzam tanto as emissões quanto os níveis de CO2 na atmosfera.\nUm guia rápido para entender as mudanças climáticas.\nDisponível em: www.bbc.com. Acesso em: 6 dez. 2021 (adaptado).\n\nQual ação mitigadora auxilia na remoção desse gás presente na\natmosfera, reduzindo seus níveis?",
+        "enunciado": "A quantidade de CO₂ na atmosfera da Terra aumentou em\n50%, e a temperatura está agora cerca de 1,2 °C mais quente\nem comparação ao século XIX. O ritmo de aumento da temperatura\nprecisa diminuir se quisermos evitar as piores consequências das\nmudanças climáticas. Cientistas afirmam que o aquecimento global\nprecisa ser mantido em 1,5 °C até o ano 2100. No entanto, a menos\nque outras ações sejam tomadas, o planeta ainda pode aquecer\nmais de 2 °C até o final deste século. Na prática, os países precisam\nenfrentar as mudanças climáticas com ações mitigadoras, que\nreduzam tanto as emissões quanto os níveis de CO₂ na atmosfera.\nUm guia rápido para entender as mudanças climáticas.\nDisponível em: www.bbc.com. Acesso em: 6 dez. 2021 (adaptado).\n\nQual ação mitigadora auxilia na remoção desse gás presente na\natmosfera, reduzindo seus níveis?",
         "imagem": null,
         "alternativas": [
             " Plantar mais árvores.",
@@ -277,12 +277,12 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "No início do século XX, as fórmulas das substâncias eram representadas de modo diferente do atual. A figura apresenta uma\nfotografia bem antiga (1909) que registra uma aula de química ministrada em um colégio em Santos (SP). Um olhar mais atento\npermite identificar como os compostos químicos eram representadosO nitrogênio era chamado de azoto e representado pelo símbolo Az. Vê-se na lousa a equação representativa da adição do\noxigênio atômico (O) ao monóxido de nitrogênio (AzO) com a formação de dióxido de nitrogênio (AzO2\n). Analogamente, o nitrato\nde sódio era representado por NaAzO3\n.\n\nEm 1909, as representações das substâncias ácido nítrico e cloreto de cálcio, tendo por base essas informações e seguindo a\nmesma lógica, seriam, respectivamente:",
+        "enunciado": "No início do século XX, as fórmulas das substâncias eram representadas de modo diferente do atual. A figura apresenta uma\nfotografia bem antiga (1909) que registra uma aula de química ministrada em um colégio em Santos (SP). Um olhar mais atento\npermite identificar como os compostos químicos eram representadosO nitrogênio era chamado de azoto e representado pelo símbolo Az. Vê-se na lousa a equação representativa da adição do\noxigênio atômico (O) ao monóxido de nitrogênio (AzO) com a formação de dióxido de nitrogênio (AzO²\n). Analogamente, o nitrato\nde sódio era representado por NaAzO³.\n\nEm 1909, as representações das substâncias ácido nítrico e cloreto de cálcio, tendo por base essas informações e seguindo a\nmesma lógica, seriam, respectivamente:",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806180/Captura_de_tela_2026-08-07_142413.png",
         "alternativas": [
             "HAzO³ e CaCl²",
             "HAz³O e Ca²Cl",
-            "H³AzO4 e CaCl",
+            "H³AzO⁴ e CaCl",
             "HAz³O e KCl²",
             "HAzO² e KCl"
         ],
@@ -403,7 +403,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "A Figura 1apresenta o esquema de um tubo de imagem em que\num filamento, na posição A, libera elétrons por efeito termiônico.\nEsses elétrons formam um feixe estreito, que é acelerado por\ncampos elétricos em direção à parte interna da tela. Nesse\ncaminho, o feixe de elétrons passa por outro campo elétrico, na\nregião B, atingindo, em seguida, a parte interna da tela do tubo,\na qual é recoberta por um material que emite luz ao receber o\nimpacto dos elétrons.\n\nNessa situação, qual ponto da tela será atingido pelo feixe de\nelétrons?",
+        "enunciado": "A Figura 1 apresenta o esquema de um tubo de imagem em que\num filamento, na posição A, libera elétrons por efeito termiônico.\nEsses elétrons formam um feixe estreito, que é acelerado por\ncampos elétricos em direção à parte interna da tela. Nesse\ncaminho, o feixe de elétrons passa por outro campo elétrico, na\nregião B, atingindo, em seguida, a parte interna da tela do tubo,\na qual é recoberta por um material que emite luz ao receber o\nimpacto dos elétrons.\n\nNessa situação, qual ponto da tela será atingido pelo feixe de\nelétrons?",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806202/Captura_de_tela_2026-08-07_144941.png",
         "alternativas": [
             "1",
@@ -442,11 +442,11 @@
         "enunciado": "Em uma aula prática de química orgânica, um professor\nidentificou os frascos de várias substâncias apenas por suas\nfórmulas moleculares. Em seguida, apresentou a representação\ntridimensional da molécula do borneol, um álcool secundário,\nconforme a figura. Ele explicou que, quando oxidado, o borneol\ndá origem à cânfora, uma cetona usada desde a Antiguidade\ncomo incenso e no preparo de medicamentos. Finalmente, o\nprofessor solicitou que os alunos identificassem o frasco contendo\na substância cânfora.\n\nO frasco contendo cânfora apresenta a fórmula molecular:",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806205/Captura_de_tela_2026-08-07_145405.png",
         "alternativas": [
-            "C9H16O",
-            "C9H17O",
-            "C10H16O",
-            "C10H16O2",
-            "C10H18O2"
+            "C₉H₁₆O",
+            "C₉H₁₇O",
+            "C₁₀H₁₆O",
+            "C₁₀H₁₆O₂",
+            "C₁₀H₁₈O₂"
         ],
         "resposta": 2,
         "comentario": ""
@@ -475,14 +475,14 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "ara a produção de titânio metálico ou dióxido de titânio\npuros, é necessário fazer a cloração do minério que contém\ndióxido de titânio, com o objetivo de separar esse óxido de\noutras substâncias presentes no minério. A principal reação\nquímica de cloração é representada por:\nTiO2 (s) + 2 Cl2 (g) TiCl4 (g) + O2 (g) ΔH = +175 kJ/mol\nDepois da cloração, o tetracloreto de titânio é condensado\ne convertido, novamente, a dióxido de titânio.\n\nApós o sistema atingir o equilíbrio químico, como a formação\ndo TiCl4 pode ser favorecida?",
+        "enunciado": "ara a produção de titânio metálico ou dióxido de titânio\npuros, é necessário fazer a cloração do minério que contém\ndióxido de titânio, com o objetivo de separar esse óxido de\noutras substâncias presentes no minério. A principal reação\nquímica de cloração é representada por:\nTiO₂ (s) + 2 Cl₂ (g) TiCl₄ (g) + O₂ (g) ΔH = +175 kJ/mol\nDepois da cloração, o tetracloreto de titânio é condensado\ne convertido, novamente, a dióxido de titânio.\n\nApós o sistema atingir o equilíbrio químico, como a formação\ndo TiCl₄ pode ser favorecida?",
         "imagem": null,
         "alternativas": [
             "Aumentando a pressão total do sistema.",
             "Diminuindo a temperatura do sistema.",
-            "Aumentando a pressão parcial de O2.",
-            "Aumentando a pressão parcial de Cl2.",
-            "Variando a quantidade de TiO2."
+            "Aumentando a pressão parcial de O₂.",
+            "Aumentando a pressão parcial de Cl₂.",
+            "Variando a quantidade de TiO₂."
         ],
         "resposta": 3,
         "comentario": ""
@@ -493,7 +493,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "A laje de um depósito de bebidas tem 50 m2 de área útil de\narmazenamento e foi projetada para suportar pressões de até\n104 Pa. O gerente do estabelecimento pretende armazenar um\nproduto cuja densidade é 1 250 kg/m³. Considere a aceleração\nda gravidade igual a 10 m/s².\n\nA altura máxima, em metro, de empilhamento do produto que\nessa laje é capaz de suportar é",
+        "enunciado": "A laje de um depósito de bebidas tem 50 m² de área útil de\narmazenamento e foi projetada para suportar pressões de até\n10⁴ Pa. O gerente do estabelecimento pretende armazenar um\nproduto cuja densidade é 1 250 kg/m³. Considere a aceleração\nda gravidade igual a 10 m/s².\n\nA altura máxima, em metro, de empilhamento do produto que\nessa laje é capaz de suportar é",
         "imagem": null,
         "alternativas": [
             "0,16 m.",
@@ -583,7 +583,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "Plantas e algas realizam fotossíntese oxigênica para\nsíntese de matéria orgânica e, para isso, utilizam trifosfato de\nadenosina (ATP) e nicotinamida adenina dinucleotídeo fosfato\nreduzido (NADPH). Já algumas bactérias fotossintetizantes\nnão apresentam cloroplasto e clorofila, mas um pigmento\ndenominado bacterioclorofila. Esses procariotos realizam a\nfotossíntese anoxigênica, um processo de síntese de matéria\norgânica utilizando o gás carbônico (CO2) e o gás sulfídrico (H2S).\n\nNa fotossíntese oxigênica, qual composto desempenha função\nanáloga à do H2S?",
+        "enunciado": "Plantas e algas realizam fotossíntese oxigênica para\nsíntese de matéria orgânica e, para isso, utilizam trifosfato de\nadenosina (ATP) e nicotinamida adenina dinucleotídeo fosfato\nreduzido (NADPH). Já algumas bactérias fotossintetizantes\nnão apresentam cloroplasto e clorofila, mas um pigmento\ndenominado bacterioclorofila. Esses procariotos realizam a\nfotossíntese anoxigênica, um processo de síntese de matéria\norgânica utilizando o gás carbônico (CO₂) e o gás sulfídrico (H₂S).\n\nNa fotossíntese oxigênica, qual composto desempenha função\nanáloga à do H₂S?",
         "imagem": null,
         "alternativas": [
             "ATP.",
@@ -619,7 +619,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "Apaixonada por culinária e química, uma chefe de cozinha\ncalculou que, para promover o crescimento adequado da\nmassa durante o cozimento de um bolo a 180 °C (453 K) e\n1,00 atm, ela precisaria utilizar uma quantidade de fermento\nquímico suficiente para produzir um volume de gás igual a\n4,00 L. Com esse objetivo, ela escolheu utilizar o bicarbonato de\namônio, um composto que, sob aquecimento, degrada-se em\ntrês gases distintos, que são os responsáveis pelo crescimento\nda massa. A decomposição do bicarbonato de amônio ocorre\nconforme a equação química apresentada e, nas condições do\ncozimento, seu rendimento é de 80%.\nNH4HCO3 (s) → NH3 (g) + CO2 (g) + H2O (g)\nConsidere que a mistura dos gases se comporta como gás\nideal nas condições de cozimento utilizadas pela chefe.\nDados: Massa molar do NH4HCO3 = 79 g ⋅ mol−1 e R = 0,082 atm ⋅ L ⋅ mol−1 ⋅ K-1.\n\nA massa, em grama, de bicarbonato de amônio que ela deve\nutilizar é mais próxima de",
+        "enunciado": "Apaixonada por culinária e química, uma chefe de cozinha\ncalculou que, para promover o crescimento adequado da\nmassa durante o cozimento de um bolo a 180 °C (453 K) e\n1,00 atm, ela precisaria utilizar uma quantidade de fermento\nquímico suficiente para produzir um volume de gás igual a\n4,00 L. Com esse objetivo, ela escolheu utilizar o bicarbonato de\namônio, um composto que, sob aquecimento, degrada-se em\ntrês gases distintos, que são os responsáveis pelo crescimento\nda massa. A decomposição do bicarbonato de amônio ocorre\nconforme a equação química apresentada e, nas condições do\ncozimento, seu rendimento é de 80%.\nNH₄HCO₃ (s) → NH₃ (g) + CO₂ (g) + H₂O (g)\nConsidere que a mistura dos gases se comporta como gás\nideal nas condições de cozimento utilizadas pela chefe.\nDados: Massa molar do NH4HCO3 = 79 g ⋅ mol⁻¹ e R = 0,082 atm ⋅ L ⋅ mol⁻¹ ⋅ K⁻¹.\n\nA massa, em grama, de bicarbonato de amônio que ela deve\nutilizar é mais próxima de",
         "imagem": null,
         "alternativas": [
             "2,3 g.",
@@ -727,7 +727,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "O Brasil é o maior produtor mundial de nióbio (massa\nmolar = 93 g mol−1\n), metal utilizado na fabricação de\nvários tipos de aço: automotivos, estruturais e inoxidáveis.\nO processo utilizado na produção do nióbio é a redução\naluminotérmica de Nb2O5 com excesso de 10% de Al (massa\nmolar = 27 g mol−1\n), em relação à quantidade estequiométrica\nda reação, representada pela equação química:\n3 Nb2O5 (s) + 10 Al (s) → 6 Nb (s) + 5 Al2O3 (s)\nUma engenheira metalúrgica estimou a massa de alumínio\nnecessária para produzir 9,3 kg de nióbio, nas condições descritas,\npara a produção de um lote de peças de aço encomendado por\numa indústria, considerando um rendimento de 100%.\nDisponível em: www.cbmm.com.br. Acesso em: 17 out. 2015 (adaptado).\n\nA massa de alumínio, em quilograma, estimada pela engenheira\né mais próxima de",
+        "enunciado": "O Brasil é o maior produtor mundial de nióbio (massa molar = 93 g mol⁻¹), metal utilizado na fabricação de\nvários tipos de aço: automotivos, estruturais e inoxidáveis.\nO processo utilizado na produção do nióbio é a redução\naluminotérmica de Nb₂O₅ com excesso de 10% de Al (massa molar = 27 g mol⁻¹), em relação à quantidade estequiométrica\nda reação, representada pela equação química:\n3 Nb₂O₅ (s) + 10 Al (s) → 6 Nb (s) + 5 Al₂O₃ (s)\nUma engenheira metalúrgica estimou a massa de alumínio\nnecessária para produzir 9,3 kg de nióbio, nas condições descritas,\npara a produção de um lote de peças de aço encomendado por\numa indústria, considerando um rendimento de 100%.\nDisponível em: www.cbmm.com.br. Acesso em: 17 out. 2015 (adaptado).\n\nA massa de alumínio, em quilograma, estimada pela engenheira\né mais próxima de",
         "imagem": null,
         "alternativas": [
             "2,7 kg.",
@@ -745,7 +745,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": " nível sonoro, em decibel (dB), é calculado pela expressão:\nn\nI\nI \u001F \u001E\n\u001D\n\u001C \u001B\n\u001A\n10 10 \u0019\n0\n log\nUma conversa normal entre duas pessoas gera sons de\nníveis sonoros entre 50 e 60 dB, enquanto pessoas gritando\npodem gerar sons de níveis superiores a 100 dB. Supondo que,\nno centro de um estádio de futebol, foram realizadas medidas\npara avaliar o ruído médio de uma pessoa gritando a palavra\n“gol” em diferentes posições das arquibancadas. O valor médio\nobtido, considerando um grande número de medidas, foi de\n100 dB. Com esse dado, estimou-se o ruído sonoro produzido por\n10 000 pessoas, distribuídas aleatoriamente nas arquibancadas,\nenquanto gritavam, simultaneamente, a palavra “gol”.\n\nO valor médio estimado para o ruído produzido por essas\npessoas, na posição central desse estádio hipotético, foi de",
+        "enunciado": " nível sonoro, em decibel (dB), é calculado pela expressão: \nn = 10 log₁₀(I / I₀)\nUma conversa normal entre duas pessoas gera sons de\nníveis sonoros entre 50 e 60 dB, enquanto pessoas gritando\npodem gerar sons de níveis superiores a 100 dB. Supondo que,\nno centro de um estádio de futebol, foram realizadas medidas\npara avaliar o ruído médio de uma pessoa gritando a palavra\n“gol” em diferentes posições das arquibancadas. O valor médio\nobtido, considerando um grande número de medidas, foi de\n100 dB. Com esse dado, estimou-se o ruído sonoro produzido por\n10 000 pessoas, distribuídas aleatoriamente nas arquibancadas,\nenquanto gritavam, simultaneamente, a palavra “gol”.\n\nO valor médio estimado para o ruído produzido por essas\npessoas, na posição central desse estádio hipotético, foi de",
         "imagem": null,
         "alternativas": [
             "60 dB.",
@@ -763,7 +763,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "O despejo acidental de óleo nos oceanos tem ocasionado\nincontáveis prejuízos à vida marinha e à economia de regiões\ncosteiras. Métodos tradicionais de tratamento do despejo geram\nresíduos de difícil descarte e nem sempre são eficazes. Por isso,\npesquisadores desenvolveram um filtro capaz de separar óleo\ne água. O dispositivo é montado sobre uma malha de aço com\numa sequência de camadas. A primeira camada é formada\npor um polímero de carga positiva, a segunda é composta por\nnanopartículas de sílica (SiO2), a terceira é formada pelo mesmo\npolímero e a última é um surfactante, conforme apresentado\nna figura.\n\nNa utilização desse dispositivo, a retenção do óleo ocorre",
+        "enunciado": "O despejo acidental de óleo nos oceanos tem ocasionado\nincontáveis prejuízos à vida marinha e à economia de regiões\ncosteiras. Métodos tradicionais de tratamento do despejo geram\nresíduos de difícil descarte e nem sempre são eficazes. Por isso,\npesquisadores desenvolveram um filtro capaz de separar óleo\ne água. O dispositivo é montado sobre uma malha de aço com\numa sequência de camadas. A primeira camada é formada\npor um polímero de carga positiva, a segunda é composta por\nnanopartículas de sílica (SiO₂), a terceira é formada pelo mesmo\npolímero e a última é um surfactante, conforme apresentado\nna figura.\n\nNa utilização desse dispositivo, a retenção do óleo ocorre",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806237/Captura_de_tela_2026-08-10_093349.png",
         "alternativas": [
             "no surfactante.",
@@ -817,7 +817,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "Uma pessoa pretende instalar um kit de gás natural veicular (GNV) em seu carro. Na loja que escolheu para realizar a compra\ne instalação desse kit, havia cinco modelos de cilindro para armazenamento do gás, cujas capacidades, em metro cúbico, eram,\nrespectivamente: 10, 14, 17, 21 e 25. O preço do cilindro é proporcional à sua capacidade. Esse carro rodará 30 km diariamente,\n7 dias por semana, e o consumo do GNV é de 1 m3 a cada 13 km rodados. A pessoa escolherá o modelo de cilindro de menor\npreço e que garanta apenas um abastecimento semanal.\n\nNessas condições, qual será a capacidade, em metro cúbico, do cilindro escolhido por essa pessoa?",
+        "enunciado": "Uma pessoa pretende instalar um kit de gás natural veicular (GNV) em seu carro. Na loja que escolheu para realizar a compra\ne instalação desse kit, havia cinco modelos de cilindro para armazenamento do gás, cujas capacidades, em metro cúbico, eram,\nrespectivamente: 10, 14, 17, 21 e 25. O preço do cilindro é proporcional à sua capacidade. Esse carro rodará 30 km diariamente,\n7 dias por semana, e o consumo do GNV é de 1 m³ a cada 13 km rodados. A pessoa escolherá o modelo de cilindro de menor\npreço e que garanta apenas um abastecimento semanal.\n\nNessas condições, qual será a capacidade, em metro cúbico, do cilindro escolhido por essa pessoa?",
         "imagem": null,
         "alternativas": [
             "10",
@@ -1231,7 +1231,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "O dono de uma sorveteria armazena sorvete em potes de\n20 000 cm3\n. Ele serve o sorvete em taças, em porções de 250 mL.\n\nA quantidade de taças que ele consegue servir a partir de um\npote cheio de sorvete é",
+        "enunciado": "O dono de uma sorveteria armazena sorvete em potes de\n20 000 cm³\n. Ele serve o sorvete em taças, em porções de 250 mL.\n\nA quantidade de taças que ele consegue servir a partir de um\npote cheio de sorvete é",
         "imagem": null,
         "alternativas": [
             "5.",
@@ -1250,11 +1250,11 @@
         "competencia": "C2",
         "dificuldade": "Média",
         "enunciado": "Um recipiente tem um formato que faz com que, ao ser\nenchido de água com uma vazão constante, a distância D da\nlâmina de água ao tampo da mesa, em centímetro, aumente\nem relação ao tempo T, em minuto, de acordo com uma função\ndo tipo\nD = k + tg[p(T + m)],\nsendo os parâmetros k, p e m números reais, para T variando\nentre 0 e 4 minutos, conforme ilustrado na figura, na qual estão\napresentadas assíntotas verticais da função tangente utilizada\nna definição de D.\n\nA expressão algébrica que representa a relação entre D e T é",
-        "imagem": null,
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791894667/Captura_de_tela_2026-10-13_092922.png",
         "alternativas": [
-            "D = 2,5 + tg[30(t - 5-2\u0010 / 2)]",
+            "D = 2,5 + tg[30(t - 5-2Π / 2)]",
             "D = 4 + tg[30(t + 5/2)]",
-            "D = 4 + tg[2,5(t + 5+2\u0010 / 2)]",
+            "D = 4 + tg[2,5(t + 5+2Π / 2)]",
             "D = 30 + tg[1/2(t - 5)]",
             "D = 30 + tg[1/2(t - 5/2)]"
         ],
@@ -1465,14 +1465,14 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "Um empresário utiliza máquinas cuja pressão interna P,\nem atmosfera, depende do tempo contínuo de utilização t, em\nhora, e de um parâmetro positivo K, que define o modelo da\nmáquina, segundo a expressão:\nP = 4 ⋅ log[−K ⋅ (t + 1) ⋅ (t − 19)]\nO fabricante dessas máquinas recomenda ao usuário\nque a pressão interna desse tipo de máquina não ultrapasse\n10 atmosferas durante seu funcionamento.\nO empresário pretende comprar novas máquinas desse\ntipo que deverão funcionar, diariamente, por um período\ncontínuo de 10 horas. Para isso, precisa definir o modelo de\nmáquina a ser adquirida escolhendo o maior valor possível\ndo parâmetro K, atendendo à recomendação do fabricante.\n\nO maior valor a ser escolhido para K é",
+        "enunciado": "Um empresário utiliza máquinas cuja pressão interna P,\nem atmosfera, depende do tempo contínuo de utilização t, em\nhora, e de um parâmetro positivo K, que define o modelo da\nmáquina, segundo a expressão:\nP = 4 * log[−K * (t + 1)*(t − 19)]\nO fabricante dessas máquinas recomenda ao usuário\nque a pressão interna desse tipo de máquina não ultrapasse\n10 atmosferas durante seu funcionamento.\nO empresário pretende comprar novas máquinas desse\ntipo que deverão funcionar, diariamente, por um período\ncontínuo de 10 horas. Para isso, precisa definir o modelo de\nmáquina a ser adquirida escolhendo o maior valor possível\ndo parâmetro K, atendendo à recomendação do fabricante.\n\nO maior valor a ser escolhido para K é",
         "imagem": null,
         "alternativas": [
-            "10^0,5",
-            "10^8",
-            "10^2,5 / 84",
-            "10^2,5 / 99",
-            "25 x 10^-2"
+            "10⁰·⁵",
+            "10⁸",
+            "10²·⁵ / 84",
+            "10²·⁵ / 99",
+            "25 x 10⁻²"
         ],
         "resposta": 0,
         "comentario": ""
@@ -1483,13 +1483,13 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "Em uma cidade, será construído um túnel que atravessa uma\nmontanha para facilitar o trânsito de automóveis e bicicletas.\nDois projetos foram elaborados e os esquemas com as vistas\nfrontais desses projetos são apresentados na figura.O Projeto 1 conta com dois túneis, um exclusivo para\nbicicletas e o outro, para automóveis. O Projeto 2 conta com\num único túnel, com espaços reservados para o trânsito exclusivo\nde bicicletas e automóveis. Nos dois projetos, os túneis têm o\nformato de semicilindro reto de mesma extensão, com vias de\nida e volta para os dois tipos de veículos, separados por muretas.\nO projeto a ser aprovado será aquele que apresentar a\nmenor área da seção transversal, pois implicará menor volume\nde material retirado da montanha.\nConsidere 3 como aproximação para p e desconsidere as\nespessuras das muretas.\n\nO projeto a ser aprovado é",
+        "enunciado": "Em uma cidade, será construído um túnel que atravessa uma\nmontanha para facilitar o trânsito de automóveis e bicicletas.\nDois projetos foram elaborados e os esquemas com as vistas\nfrontais desses projetos são apresentados na figura.O Projeto 1 conta com dois túneis, um exclusivo para\nbicicletas e o outro, para automóveis. O Projeto 2 conta com\num único túnel, com espaços reservados para o trânsito exclusivo\nde bicicletas e automóveis. Nos dois projetos, os túneis têm o\nformato de semicilindro reto de mesma extensão, com vias de\nida e volta para os dois tipos de veículos, separados por muretas.\nO projeto a ser aprovado será aquele que apresentar a\nmenor área da seção transversal, pois implicará menor volume\nde material retirado da montanha.\nConsidere 3 como aproximação para Π e desconsidere as\nespessuras das muretas.\n\nO projeto a ser aprovado é",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806174/Captura_de_tela_2026-08-11_091328.png",
         "alternativas": [
-            "o 1, pois apresenta área de seção transversal medindo\n67,5 m2\n.",
-            "o 2, pois apresenta área de seção transversal medindo\n121,5 m2\n.",
-            "o 1, pois apresenta área de seção transversal medindo 135 m2\n.",
-            "o 2, pois apresenta área de seção transversal medindo 243 m2\n.",
+            "o 1, pois apresenta área de seção transversal medindo\n67,5 m²\n.",
+            "o 2, pois apresenta área de seção transversal medindo\n121,5 m²\n.",
+            "o 1, pois apresenta área de seção transversal medindo 135 m²\n.",
+            "o 2, pois apresenta área de seção transversal medindo 243 m²\n.",
             "qualquer um dos dois, pois apresentam áreas de suas seções\ntransversais com medidas iguais."
         ],
         "resposta": 0,
@@ -1537,7 +1537,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "A final de um campeonato de futebol foi disputada em 2tempos\nregulamentares, de 45 minutos cada, sem acréscimos, com uma\nprorrogação de 30minutos, também sem acréscimos. Um jogador\nentrou no início do segundo tempo, com um equipamento para\nmedir a distância percorrida durante sua participação no jogo.\nAo final do segundo tempo regulamentar, esse jogador havia\npercorrido 4,5km. Ele manteve na prorrogação a mesma velocidade\nmédia que havia mantido no segundo tempo regulamentar.\n\nA distância percorrida por esse jogador durante sua participação\nna partida, em quilômetro, foi",
+        "enunciado": "A final de um campeonato de futebol foi disputada em 2 tempos\nregulamentares, de 45 minutos cada, sem acréscimos, com uma\nprorrogação de 30 minutos, também sem acréscimos. Um jogador\nentrou no início do segundo tempo, com um equipamento para\nmedir a distância percorrida durante sua participação no jogo.\nAo final do segundo tempo regulamentar, esse jogador havia\npercorrido 4,5km. Ele manteve na prorrogação a mesma velocidade\nmédia que havia mantido no segundo tempo regulamentar.\n\nA distância percorrida por esse jogador durante sua participação\nna partida, em quilômetro, foi",
         "imagem": null,
         "alternativas": [
             "4,5.",
@@ -1555,7 +1555,7 @@
         "habilidade": "H5",
         "competencia": "C2",
         "dificuldade": "Média",
-        "enunciado": "A figura ilustra o projeto visual para confecção de uma\nmedalha comemorativa, com a forma de um cilindro circular\nreto, de diâmetro 6 cm e espessura 3 mm.A figura ABCD tem a forma de um quadrado e é a base de\num prisma que atravessa toda a medalha. A região da medalha\nexterna a esse prisma será cunhada em ouro. Pretende-se\ncunhar 100 dessas medalhas.\nConsidere 3,1 como valor aproximado para p.\n\nQual é o volume de ouro, em centímetro cúbico, necessário\npara a confecção dessas medalhas?",
+        "enunciado": "A figura ilustra o projeto visual para confecção de uma\nmedalha comemorativa, com a forma de um cilindro circular\nreto, de diâmetro 6 cm e espessura 3 mm.A figura ABCD tem a forma de um quadrado e é a base de\num prisma que atravessa toda a medalha. A região da medalha\nexterna a esse prisma será cunhada em ouro. Pretende-se\ncunhar 100 dessas medalhas.\nConsidere 3,1 como valor aproximado para Π.\n\nQual é o volume de ouro, em centímetro cúbico, necessário\npara a confecção dessas medalhas?",
         "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1791806301/Captura_de_tela_2026-08-11_091809.png",
         "alternativas": [
             "288",

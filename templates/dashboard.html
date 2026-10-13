@@ -501,7 +501,6 @@ Dashboard | StudyHub
 {% block scripts %}
 
 <script>
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const canvas = document.getElementById("graficoProgresso");
@@ -516,19 +515,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            const resposta = await fetch("{{ url_for('estatisticas_evolucao') }}?dias=7");
+            const resposta = await fetch(
+                "{{ url_for('estatisticas_evolucao') }}?dias=7"
+            );
 
             if (!resposta.ok) {
-
                 throw new Error("Erro ao carregar evolução.");
-
             }
 
             const dados = await resposta.json();
 
-
             criarGrafico(dados);
-
 
         } catch (erro) {
 
@@ -542,6 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const labels = dados.map(item => formatarData(item.data));
 
+        // Converte segundos para minutos.
         const valores = dados.map(item => item.duracao / 60);
 
         new Chart(canvas, {
@@ -552,28 +550,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 labels: labels,
 
-                datasets: [
+                datasets: [{
 
-                    {
+                    label: "Tempo de estudo",
 
-                        label: "Horas estudadas",
+                    data: valores,
 
-                        data: valores,
+                    backgroundColor: "#315EFB",
 
-                        backgroundColor: "#1F45ED",
+                    hoverBackgroundColor: "#5685FF",
 
-                        hoverBackgroundColor: "#1E96FC",
+                    borderRadius: 8,
 
-                        borderRadius: 7,
+                    borderSkipped: false,
 
-                        borderSkipped: false
+                    maxBarThickness: 22,
 
-                    }
+                    categoryPercentage: 0.72,
 
-                ]
+                    barPercentage: 0.8
+
+                }]
 
             },
-
 
             options: {
 
@@ -581,26 +580,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 maintainAspectRatio: false,
 
+                interaction: {
+                    intersect: false,
+                    mode: "index"
+                },
+
+                animation: {
+                    duration: 700,
+                    easing: "easeOutQuart"
+                },
+
+                layout: {
+                    padding: {
+                        top: 10,
+                        right: 8,
+                        bottom: 0,
+                        left: 0
+                    }
+                },
 
                 plugins: {
 
                     legend: {
-
                         display: false
-
                     },
-
 
                     tooltip: {
 
+                        enabled: true,
+
+                        backgroundColor: "#111827",
+
+                        titleColor: "#FFFFFF",
+
+                        bodyColor: "#D1D5DB",
+
+                        borderColor: "rgba(148, 163, 184, 0.2)",
+
+                        borderWidth: 1,
+
+                        cornerRadius: 10,
+
+                        padding: 12,
+
+                        displayColors: false,
+
+                        titleFont: {
+                            size: 13,
+                            weight: "600"
+                        },
+
+                        bodyFont: {
+                            size: 12
+                        },
+
                         callbacks: {
+
+                            title: function(context) {
+
+                                return `Dia ${context[0].label}`;
+
+                            },
 
                             label: function(context) {
 
                                 const segundos =
                                     dados[context.dataIndex].duracao;
 
-                                return formatarDuracao(segundos);
+                                return `Tempo estudado: ${formatarDuracao(segundos)}`;
 
                             }
 
@@ -610,40 +657,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 },
 
-
                 scales: {
 
                     x: {
 
-                        grid: {
-
+                        border: {
                             display: false
+                        },
+
+                        grid: {
+                            display: false,
+                            drawTicks: false
+                        },
+
+                        ticks: {
+
+                            color: "#8B95A7",
+
+                            font: {
+                                size: 11,
+                                weight: "500"
+                            },
+
+                            padding: 10,
+
+                            maxRotation: 0,
+
+                            minRotation: 0
 
                         }
 
                     },
 
-
                     y: {
 
                         beginAtZero: true,
 
-                        ticks: {
-
-                            stepSize: 15,
-
-                            callback: function(valor) {
-
-                                return valor + " min";
-
-                            }
-
+                        border: {
+                            display: false,
+                            dash: [4, 4]
                         },
 
                         grid: {
 
-                            color:
-                                "rgba(0, 0, 0, 0.06)"
+                            color: "rgba(148, 163, 184, 0.08)",
+
+                            drawTicks: false,
+
+                            lineWidth: 1
+
+                        },
+
+                        ticks: {
+
+                            color: "#7F8A9D",
+
+                            padding: 10,
+
+                            font: {
+                                size: 11
+                            },
+
+                            callback: function(valor) {
+
+                                return valor === 0
+                                    ? "0"
+                                    : `${valor} min`;
+
+                            }
 
                         }
 
@@ -657,46 +738,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function formatarData(data) {
 
+        // Exibe somente o dia do mês.
         const partes = data.split("-");
 
-        const dia = partes[2];
-
-        const mes = partes[1];
-
-
-        const meses = [
-
-            "Jan",
-            "Fev",
-            "Mar",
-            "Abr",
-            "Mai",
-            "Jun",
-            "Jul",
-            "Ago",
-            "Set",
-            "Out",
-            "Nov",
-            "Dez"
-
-        ];
-
-
-        return `${dia} ${meses[Number(mes) - 1]}`;
+        return partes[2];
 
     }
-
 
     function formatarDuracao(segundos) {
 
         const horas = Math.floor(segundos / 3600);
 
-
         const minutos = Math.floor((segundos % 3600) / 60);
-
 
         if (horas > 0) {
 
@@ -704,13 +759,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        if (minutos > 0) {
 
-        return `${minutos}min`;
+            return `${minutos} min`;
+
+        }
+
+        return `${segundos} s`;
 
     }
 
 });
-
 </script>
 
 {% endblock %}
