@@ -1,9 +1,33 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response, \
     send_from_directory
+
+import io
+
 import json
+
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import (
+    getSampleStyleSheet,
+    ParagraphStyle
+)
+from reportlab.lib.units import cm
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Spacer,
+    Table,
+    TableStyle,
+    KeepTogether
+)
+
 import os
+
 from flask_wtf.csrf import CSRFProtect
+
 from authlib.integrations.flask_client import OAuth
+
 from security.limite_login import (
     verificar_bloqueio,
     registrar_tentativa_falha,
@@ -2339,6 +2363,957 @@ def exportar_dados():
         headers={
             "Content-Disposition":
                 "attachment; filename=studyhub_dados.json"
+        }
+    )
+
+@app.route(
+    "/configuracoes/dados/exportar/pdf",
+    methods=["GET"]
+)
+def exportar_dados_pdf():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    dados = obter_dados_exportacao(
+        session["usuario_id"]
+    )
+
+    if not isinstance(dados, dict):
+        return "Não foi possível gerar o relatório.", 500
+
+    memoria = io.BytesIO()
+
+    documento = SimpleDocTemplate(
+        memoria,
+        pagesize=A4,
+        rightMargin=1.7 * cm,
+        leftMargin=1.7 * cm,
+        topMargin=1.7 * cm,
+        bottomMargin=2 * cm,
+        title="Relatório de dados - StudyHub",
+        author="StudyHub"
+    )
+
+    estilos = getSampleStyleSheet()
+
+    estilos.add(
+        ParagraphStyle(
+            name="TituloStudyHub",
+            parent=estilos["Title"],
+            fontName="Helvetica-Bold",
+            fontSize=24,
+            leading=29,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#2563EB"),
+            spaceAfter=5
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="SubtituloStudyHub",
+            parent=estilos["Normal"],
+            fontSize=10,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#64748B"),
+            spaceAfter=18
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="SecaoStudyHub",
+            parent=estilos["Heading2"],
+            fontName="Helvetica-Bold",
+            fontSize=13,
+            leading=17,
+            textColor=colors.HexColor("#1E293B"),
+            spaceBefore=13,
+            spaceAfter=8,
+            keepWithNext=True
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="TextoStudyHub",
+            parent=estilos["BodyText"],
+            fontName="Helvetica",
+            fontSize=8.5,
+            leading=12,
+            textColor=colors.HexColor("#334155"),
+            wordWrap="LTR"
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="TextoPequenoStudyHub",
+            parent=estilos["BodyText"],
+            fontName="Helvetica",
+            fontSize=7.5,
+            leading=10,
+            textColor=colors.HexColor("#334155"),
+            wordWrap="LTR"
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="CabecalhoTabelaStudyHub",
+            parent=estilos["TextoPequenoStudyHub"],
+            fontName="Helvetica-Bold",
+            textColor=colors.white
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="IndicadorValorStudyHub",
+            parent=estilos["Heading2"],
+            fontName="Helvetica-Bold",
+            fontSize=19,
+            leading=23,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#2563EB"),
+            spaceAfter=4
+        )
+    )
+
+    estilos.add(
+        ParagraphStyle(
+            name="IndicadorRotuloStudyHub",
+            parent=estilos["Normal"],
+            fontSize=8,
+            leading=11,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#64748B")
+        )
+    )
+
+    elementos = []
+
+    # --------------------------------------------------
+    # FUNÇÕES AUXILIARES
+    # --------------------------------------------------
+
+    def formatar_texto(valor):
+
+        if valor is None or valor == "":
+            return "—"
+
+        if isinstance(valor, bool):
+            return "Sim" if valor else "Não"
+
+        if isinstance(valor, datetime):
+            return valor.strftime("%d/%m/%Y %H:%M")
+
+        if hasattr(valor, "strftime"):
+            return valor.strftime("%d/%m/%Y")
+
+        texto = str(valor)
+
+        # Evita que caracteres especiais sejam interpretados
+        # como tags HTML pelo ReportLab.
+        from xml.sax.saxutils import escape
+
+        return escape(texto)
+
+    def formatar_data(valor, incluir_hora=False):
+
+        if valor is None:
+            return "—"
+
+        if isinstance(valor, datetime):
+            formato = (
+                "%d/%m/%Y %H:%M"
+                if incluir_hora
+                else "%d/%m/%Y"
+            )
+
+            return valor.strftime(formato)
+
+        if hasattr(valor, "strftime"):
+            return valor.strftime("%d/%m/%Y")
+
+        texto = str(valor)
+
+        try:
+            data = datetime.fromisoformat(texto)
+
+            formato = (
+                "%d/%m/%Y %H:%M"
+                if incluir_hora
+                else "%d/%m/%Y"
+            )
+
+            return data.strftime(formato)
+
+        except (ValueError, TypeError):
+            return texto
+
+    def formatar_duracao(valor):
+
+        if valor is None:
+            return "—"
+
+        if isinstance(valor, str):
+
+            partes = valor.split(":")
+
+            try:
+                if len(partes) == 3:
+                    horas, minutos, segundos = map(int, partes)
+
+                    total_segundos = (
+                        horas * 3600
+                        + minutos * 60
+                        + segundos
+                    )
+
+                elif len(partes) == 2:
+                    minutos, segundos = map(int, partes)
+
+                    total_segundos = (
+                        minutos * 60
+                        + segundos
+                    )
+
+                else:
+                    total_segundos = int(valor)
+
+            except ValueError:
+                return valor
+
+        else:
+            try:
+                total_segundos = int(valor)
+            except (ValueError, TypeError):
+                return str(valor)
+
+        horas, resto = divmod(total_segundos, 3600)
+        minutos, segundos = divmod(resto, 60)
+
+        partes_formatadas = []
+
+        if horas:
+            partes_formatadas.append(f"{horas}h")
+
+        if minutos:
+            partes_formatadas.append(f"{minutos}min")
+
+        if segundos and not horas:
+            partes_formatadas.append(f"{segundos}s")
+
+        return " ".join(partes_formatadas) or "0min"
+
+    def adicionar_secao(titulo):
+
+        elementos.append(
+            Paragraph(
+                titulo,
+                estilos["SecaoStudyHub"]
+            )
+        )
+
+    def adicionar_tabela(cabecalho, linhas, larguras):
+
+        if not linhas:
+            return
+
+        dados_tabela = [
+            [
+                Paragraph(
+                    formatar_texto(coluna),
+                    estilos["CabecalhoTabelaStudyHub"]
+                )
+                for coluna in cabecalho
+            ]
+        ]
+
+        for linha in linhas:
+
+            dados_tabela.append([
+                Paragraph(
+                    formatar_texto(valor),
+                    estilos["TextoPequenoStudyHub"]
+                )
+                for valor in linha
+            ])
+
+        tabela = Table(
+            dados_tabela,
+            colWidths=larguras,
+            repeatRows=1,
+            hAlign="LEFT"
+        )
+
+        tabela.setStyle(
+            TableStyle([
+                (
+                    "BACKGROUND",
+                    (0, 0),
+                    (-1, 0),
+                    colors.HexColor("#1E40AF")
+                ),
+                (
+                    "TEXTCOLOR",
+                    (0, 0),
+                    (-1, 0),
+                    colors.white
+                ),
+                (
+                    "FONTNAME",
+                    (0, 0),
+                    (-1, 0),
+                    "Helvetica-Bold"
+                ),
+                (
+                    "VALIGN",
+                    (0, 0),
+                    (-1, -1),
+                    "TOP"
+                ),
+                (
+                    "GRID",
+                    (0, 0),
+                    (-1, -1),
+                    0.35,
+                    colors.HexColor("#E2E8F0")
+                ),
+                (
+                    "ROWBACKGROUNDS",
+                    (0, 1),
+                    (-1, -1),
+                    [
+                        colors.white,
+                        colors.HexColor("#F8FAFC")
+                    ]
+                ),
+                (
+                    "LEFTPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    6
+                ),
+                (
+                    "RIGHTPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    6
+                ),
+                (
+                    "TOPPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    6
+                ),
+                (
+                    "BOTTOMPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    6
+                )
+            ])
+        )
+
+        elementos.append(tabela)
+        elementos.append(Spacer(1, 0.25 * cm))
+
+    def adicionar_indicadores(indicadores):
+
+        celulas = []
+
+        for valor, rotulo in indicadores:
+            valor_formatado = Paragraph(
+                formatar_texto(valor),
+                estilos["IndicadorValorStudyHub"]
+            )
+
+            rotulo_formatado = Paragraph(
+                formatar_texto(rotulo),
+                estilos["IndicadorRotuloStudyHub"]
+            )
+
+            celulas.append([
+                valor_formatado,
+                rotulo_formatado
+            ])
+
+        if not celulas:
+            return
+
+        largura_disponivel = A4[0] - 3.4 * cm
+        largura_celula = largura_disponivel / len(celulas)
+
+        tabela = Table(
+            [celulas],
+            colWidths=[largura_celula] * len(celulas),
+            hAlign="LEFT"
+        )
+
+        tabela.setStyle(
+            TableStyle([
+                (
+                    "BACKGROUND",
+                    (0, 0),
+                    (-1, -1),
+                    colors.HexColor("#F1F5F9")
+                ),
+                (
+                    "BOX",
+                    (0, 0),
+                    (-1, -1),
+                    0.5,
+                    colors.HexColor("#E2E8F0")
+                ),
+                (
+                    "INNERGRID",
+                    (0, 0),
+                    (-1, -1),
+                    0.5,
+                    colors.HexColor("#E2E8F0")
+                ),
+                (
+                    "VALIGN",
+                    (0, 0),
+                    (-1, -1),
+                    "MIDDLE"
+                ),
+                (
+                    "LEFTPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    5
+                ),
+                (
+                    "RIGHTPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    5
+                ),
+                (
+                    "TOPPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    10
+                ),
+                (
+                    "BOTTOMPADDING",
+                    (0, 0),
+                    (-1, -1),
+                    10
+                )
+            ])
+        )
+
+        elementos.append(tabela)
+        elementos.append(Spacer(1, 0.35 * cm))
+
+    # --------------------------------------------------
+    # DADOS DO USUÁRIO
+    # --------------------------------------------------
+
+    usuario = dados.get("usuario")
+    configuracoes = dados.get("configuracoes")
+
+    if usuario:
+        nome = usuario["nome"]
+        email = usuario["email"]
+    else:
+        nome = "Usuário"
+        email = None
+
+    if configuracoes:
+        tema = configuracoes["tema"]
+        meta_estudo = configuracoes["meta_estudo"]
+        meta_questoes = configuracoes["meta_questoes"]
+    else:
+        tema = "sistema"
+        meta_estudo = 60
+        meta_questoes = 20
+
+    estudos = dados.get("estudos") or []
+    tarefas = dados.get("tarefas") or []
+    anotacoes = dados.get("anotacoes") or []
+    resultados_provas = dados.get("resultados_provas") or []
+
+    # --------------------------------------------------
+    # CABEÇALHO
+    # --------------------------------------------------
+
+    elementos.append(
+        Paragraph(
+            "StudyHub",
+            estilos["TituloStudyHub"]
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            "Relatório de desempenho acadêmico",
+            estilos["SubtituloStudyHub"]
+        )
+    )
+
+    elementos.append(
+        Paragraph(
+            f"Exportado em {datetime.now().strftime('%d/%m/%Y às %H:%M')}",
+            estilos["TextoStudyHub"]
+        )
+    )
+
+    elementos.append(Spacer(1, 0.3 * cm))
+
+    adicionar_secao("Identificação")
+
+    adicionar_tabela(
+        ["Informação", "Valor"],
+        [
+            ["Nome", nome],
+            ["E-mail", email],
+            [
+                "Meta diária de estudo",
+                f"{meta_estudo} minutos"
+            ],
+            [
+                "Meta diária de questões",
+                f"{meta_questoes} questões"
+            ]
+        ],
+        [5 * cm, 10 * cm]
+    )
+
+    # --------------------------------------------------
+    # RESUMO DO DESEMPENHO
+    # --------------------------------------------------
+
+    adicionar_secao("Resumo do desempenho")
+
+    usuario_id = session["usuario_id"]
+
+    resumo = obter_resumo_usuario(usuario_id)
+
+    segundos_estudo = obter_total_segundos(usuario_id)
+    segundos_provas = obter_segundos_provas(usuario_id)
+
+    tempo_total = segundos_estudo + segundos_provas
+
+    total_questoes = (
+            resumo["acertos"]
+            + resumo["erros"]
+    )
+
+    total_provas = resumo["provas"]
+
+    if total_questoes > 0:
+        taxa_acerto = (
+                              resumo["acertos"] / total_questoes
+                      ) * 100
+    else:
+        taxa_acerto = 0
+
+    adicionar_indicadores([
+        (
+            total_questoes,
+            "Questões resolvidas"
+        ),
+        (
+            total_provas,
+            "Provas realizadas"
+        ),
+        (
+            f"{taxa_acerto:.1f}%".replace(".", ","),
+            "Taxa de acerto"
+        ),
+        (
+            formatar_duracao(tempo_total),
+            "Tempo total"
+        )
+    ])
+
+    # --------------------------------------------------
+    # DESEMPENHO EM QUESTÕES
+    # --------------------------------------------------
+
+    adicionar_secao("Desempenho em questões")
+
+    acertos = resumo["acertos"]
+    erros = resumo["erros"]
+    questoes_respondidas = acertos + erros
+
+    if questoes_respondidas > 0:
+        aproveitamento = (
+                                 acertos / questoes_respondidas
+                         ) * 100
+    else:
+        aproveitamento = 0
+
+    adicionar_indicadores([
+        (
+            questoes_respondidas,
+            "Questões resolvidas"
+        ),
+        (
+            acertos,
+            "Acertos"
+        ),
+        (
+            erros,
+            "Erros"
+        ),
+        (
+            f"{aproveitamento:.1f}%".replace(".", ","),
+            "Aproveitamento"
+        )
+    ])
+
+    # --------------------------------------------------
+    # DESEMPENHO POR ÁREA — PROVAS
+    # --------------------------------------------------
+
+    adicionar_secao("Desempenho por área")
+
+    desempenho_areas = obter_desempenho_por_area(usuario_id)
+
+    if desempenho_areas:
+
+        linhas = []
+
+        for area, resultado in sorted(
+                desempenho_areas.items(),
+                key=lambda item: item[1]["porcentagem"],
+                reverse=True
+        ):
+            linhas.append([
+                area,
+                resultado["questoes"],
+                resultado["acertos"],
+                resultado["erros"],
+                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
+            ])
+
+        adicionar_tabela(
+            [
+                "Área do conhecimento",
+                "Questões",
+                "Acertos",
+                "Erros",
+                "Aproveitamento"
+            ],
+            linhas,
+            [
+                5.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                3.0 * cm
+            ]
+        )
+
+    else:
+
+        elementos.append(
+            Paragraph(
+                "Ainda não há respostas de provas suficientes "
+                "para apresentar o desempenho por área.",
+                estilos["TextoStudyHub"]
+            )
+        )
+
+        elementos.append(Spacer(1, 0.25 * cm))
+
+    # --------------------------------------------------
+    # DESEMPENHO NAS QUESTÕES PRATICADAS
+    # --------------------------------------------------
+
+    adicionar_secao("Desempenho nas questões")
+
+    desempenho_questoes = obter_desempenho_questoes_por_area(
+        usuario_id
+    )
+
+    if desempenho_questoes:
+
+        linhas = []
+
+        for area, resultado in sorted(
+                desempenho_questoes.items(),
+                key=lambda item: item[1]["porcentagem"],
+                reverse=True
+        ):
+            linhas.append([
+                area,
+                resultado["questoes"],
+                resultado["acertos"],
+                resultado["erros"],
+                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
+            ])
+
+        adicionar_tabela(
+            [
+                "Área do conhecimento",
+                "Questões",
+                "Acertos",
+                "Erros",
+                "Aproveitamento"
+            ],
+            linhas,
+            [
+                5.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                3.0 * cm
+            ]
+        )
+
+    else:
+
+        elementos.append(
+            Paragraph(
+                "Ainda não há questões praticadas suficientes "
+                "para apresentar esta análise.",
+                estilos["TextoStudyHub"]
+            )
+        )
+
+        elementos.append(Spacer(1, 0.25 * cm))
+
+    # --------------------------------------------------
+    # ANÁLISE DETALHADA DAS QUESTÕES
+    # --------------------------------------------------
+
+    adicionar_secao("Análise detalhada das questões")
+
+    criterios = [
+        ("dificuldade", "Desempenho por dificuldade"),
+        ("competencia", "Desempenho por competência"),
+        ("habilidade", "Desempenho por habilidade"),
+        ("lingua", "Desempenho por idioma")
+    ]
+
+    for criterio, titulo in criterios:
+
+        desempenho = obter_desempenho_questoes(
+            usuario_id,
+            criterio
+        )
+
+        if not desempenho:
+            continue
+
+        adicionar_secao(titulo)
+
+        linhas = []
+
+        for categoria, resultado in sorted(
+                desempenho.items(),
+                key=lambda item: item[1]["porcentagem"],
+                reverse=True
+        ):
+            linhas.append([
+                categoria,
+                resultado["questoes"],
+                resultado["acertos"],
+                resultado["erros"],
+                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
+            ])
+
+        adicionar_tabela(
+            [
+                "Categoria",
+                "Questões",
+                "Acertos",
+                "Erros",
+                "Aproveitamento"
+            ],
+            linhas,
+            [
+                5.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                2.0 * cm,
+                3.0 * cm
+            ]
+        )
+
+    # --------------------------------------------------
+    # ANÁLISE DO DESEMPENHO
+    # --------------------------------------------------
+
+    adicionar_secao("Análise do desempenho")
+
+    if desempenho_areas:
+
+        areas_ordenadas = sorted(
+            desempenho_areas.items(),
+            key=lambda item: item[1]["porcentagem"],
+            reverse=True
+        )
+
+        melhor_area, melhor_resultado = areas_ordenadas[0]
+        pior_area, pior_resultado = areas_ordenadas[-1]
+
+        adicionar_tabela(
+            ["Indicador", "Resultado"],
+            [
+                [
+                    "Maior aproveitamento em provas",
+                    (
+                        f'{melhor_area} — '
+                        f'{melhor_resultado["porcentagem"]:.1f}%'
+                    ).replace(".", ",")
+                ],
+                [
+                    "Menor aproveitamento em provas",
+                    (
+                        f'{pior_area} — '
+                        f'{pior_resultado["porcentagem"]:.1f}%'
+                    ).replace(".", ",")
+                ]
+            ],
+            [
+                7.5 * cm,
+                7.5 * cm
+            ]
+        )
+
+    else:
+
+        elementos.append(
+            Paragraph(
+                "Ainda não existem dados suficientes para "
+                "identificar os pontos fortes e os pontos "
+                "que precisam de atenção nas provas.",
+                estilos["TextoStudyHub"]
+            )
+        )
+
+        elementos.append(Spacer(1, 0.25 * cm))
+
+    # --------------------------------------------------
+    # RESULTADOS DAS PROVAS
+    # --------------------------------------------------
+
+    if resultados_provas:
+
+        adicionar_secao("Resultados das provas")
+
+        linhas = []
+
+        nomes_provas = {
+            1: "ENEM 2025 — Dia 1",
+            2: "ENEM 2025 — Dia 2"
+        }
+
+        for resultado in resultados_provas:
+            prova_id = resultado["prova_id"]
+            acertos = resultado["acertos"]
+            erros = resultado["erros"]
+            nao_respondidas = resultado["nao_respondidas"]
+            total = resultado["total"]
+            tempo_gasto = resultado["tempo_gasto"]
+            porcentagem = resultado["porcentagem"]
+            data_realizacao = resultado["data_realizacao"]
+
+            nome_prova = nomes_provas.get(
+                prova_id,
+                f"Prova {prova_id}"
+            )
+
+            linhas.append([
+                nome_prova,
+                f"{acertos}/{total}",
+                erros,
+                nao_respondidas,
+                f"{float(porcentagem):.2f}%".replace(".", ","),
+                formatar_duracao(tempo_gasto),
+                formatar_data(
+                    data_realizacao,
+                    incluir_hora=True
+                )
+            ])
+
+        adicionar_tabela(
+            [
+                "Prova",
+                "Acertos",
+                "Erros",
+                "Em branco",
+                "Aproveitamento",
+                "Duração",
+                "Realização"
+            ],
+            linhas,
+            [
+                3.0 * cm,
+                1.5 * cm,
+                1.2 * cm,
+                1.5 * cm,
+                2.0 * cm,
+                1.5 * cm,
+                3.3 * cm
+            ]
+        )
+
+    # --------------------------------------------------
+    # RODAPÉ
+    # --------------------------------------------------
+
+    def adicionar_rodape(canvas, doc):
+
+        canvas.saveState()
+
+        largura, altura = A4
+
+        canvas.setStrokeColor(
+            colors.HexColor("#CBD5E1")
+        )
+
+        canvas.line(
+            1.7 * cm,
+            1.5 * cm,
+            largura - 1.7 * cm,
+            1.5 * cm
+        )
+
+        canvas.setFont("Helvetica", 8)
+
+        canvas.setFillColor(
+            colors.HexColor("#64748B")
+        )
+
+        canvas.drawString(
+            1.7 * cm,
+            1 * cm,
+            "StudyHub | Relatório pessoal"
+        )
+
+        canvas.drawRightString(
+            largura - 1.7 * cm,
+            1 * cm,
+            f"Página {doc.page}"
+        )
+
+        canvas.restoreState()
+
+    documento.build(
+        elementos,
+        onFirstPage=adicionar_rodape,
+        onLaterPages=adicionar_rodape
+    )
+
+    memoria.seek(0)
+
+    return Response(
+        memoria.getvalue(),
+        mimetype="application/pdf",
+        headers={
+            "Content-Disposition":
+                'attachment; filename="studyhub_relatorio.pdf"',
+            "Cache-Control": "no-store"
         }
     )
 

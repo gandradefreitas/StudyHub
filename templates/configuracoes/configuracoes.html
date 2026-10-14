@@ -515,21 +515,52 @@
 
                             <h3>Exportar dados</h3>
 
-                            <p>Baixe uma cópia dos seus dados armazenados no StudyHub.</p>
+                            <p>
+                                Baixe uma cópia dos seus dados armazenados
+                                no StudyHub.
+                            </p>
 
                         </div>
 
-                        <form action="{{ url_for('exportar_dados') }}" method="GET">
+                        <div class="botoes-exportacao">
 
-                            <button type="submit" class="botao-configuracao-secundario">
+                            <form
+                                action="{{ url_for('exportar_dados') }}"
+                                method="GET"
+                            >
 
-                                <i class="bi bi-download"></i>
+                                <button
+                                    type="submit"
+                                    class="botao-configuracao-secundario"
+                                >
 
-                                Exportar dados
+                                    <i class="bi bi-filetype-json"></i>
 
-                            </button>
+                                    Backup JSON
 
-                        </form>
+                                </button>
+
+                            </form>
+
+                            <form
+                                action="{{ url_for('exportar_dados_pdf') }}"
+                                method="GET"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="botao-configuracao-secundario"
+                                >
+
+                                    <i class="bi bi-file-earmark-pdf"></i>
+
+                                    Relatório PDF
+
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 

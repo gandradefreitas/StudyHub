@@ -6,3 +6,4 @@ psycopg[binary]
 Flask-WTF
 Authlib
 requests
+reportlab>=4.0
