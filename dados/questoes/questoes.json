@@ -16,7 +16,7 @@
             "The negative effects on concentration and relationships."
         ],
         "resposta": "E",
-        "comentario": ""
+        "comentario": "O texto destaca que, embora a tecnologia traga facilidades, o uso excessivo pode afetar negativamente a concentração e as relações humanas. A alternativa E sintetiza corretamente essa preocupação. As demais alternativas trazem informações incorretas ou não mencionadas no texto."
     },
     {
         "numero": 2,
@@ -35,7 +35,7 @@
             "R$ 140,00."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "Para calcular o valor com desconto, aplicamos 20% sobre o preço original de R$ 150,00. O valor do desconto é 150 X 0,20 = 30. Subtraindo esse valor do preço inicial, temos 150 - 30 = 120. Portanto, o preço da mochila após o desconto é R$ 120,00 (alternativa C)."
     },
     {
         "numero": 3,
@@ -54,7 +54,7 @@
             "aumentar el consumo de recursos naturales."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O texto em espanhol explica que as pessoas estão preferindo reparar, reutilizar ou trocar objetos, o que ajuda a reduzir a quantidade de resíduos (desperdício) e economizar dinheiro. Isso corresponde diretamente à alternativa B, que aponta a redução de gastos e da produção de resíduos."
     },
     {
         "numero": 4,
@@ -73,7 +73,7 @@
             "explicar as causas do crescimento das cidades."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A descrição do ambiente urbano nas primeiras horas da manhã (\"ruas quase vazias\", \"som distante... misturava-se ao canto dos pássaros\") é utilizada para contextualizar o espaço físico e evocar uma atmosfera de calma e tranquilidade, o que valida a alternativa C."
     },
     {
         "numero": 5,
@@ -92,7 +92,7 @@
             "a mistura passou a possuir apenas substâncias sólidas."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A efervescência (formação de bolhas) resultante da mistura entre o bicarbonato de sódio e o vinagre evidencia a liberação de gás carbônico, o que caracteriza uma transformação química (ocorrência de uma reação entre os reagentes). Portanto, a alternativa correta é a C."
     },
     {
         "numero": 6,
@@ -111,7 +111,7 @@
             "2 000 m."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "A distância percorrida em um movimento uniforme é calculada pela fórmula d = v * t. A velocidade é v = 10m/s e o tempo t = 2 minutos. Convertendo o tempo para segundos, temos 2 * 60 = 120 segundos. Logo, d = 10 * 120 = 1200 metros (alternativa D)."
     },
     {
         "numero": 7,
@@ -130,7 +130,7 @@
             "R$ 45,00."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "O custo total é composto pela taxa fixa de R$ 15,00 somada ao valor por quilômetro rodado (8km * R$3,00 = R$24,00$). Somando ambos, temos R$15,00 + R$24,00 = R$39,00, o que corresponde à alternativa D."
     },
     {
         "numero": 8,
@@ -149,7 +149,7 @@
             "a diminuição da produção industrial devido à utilização de novas tecnologias."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A introdução das fábricas e das máquinas durante a Revolução Industrial provocou um intenso êxodo rural e a concentração de pessoas nas cidades, dando origem ao proletariado (trabalhadores assalariados). Assim, a alternativa correta é a C."
     },
     {
         "numero": 9,
@@ -168,7 +168,7 @@
             "impedir que diferentes grupos mantenham suas próprias tradições."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O reconhecimento da diversidade cultural sob a ótica sociológica nos permite compreender que os padrões de comportamento, crenças e valores variam de acordo com a construção histórica e social de cada povo, superando visões etnocêntricas. Resposta correta: C."
     },
     {
         "numero": 10,
@@ -187,7 +187,7 @@
             "sublimação do recipiente."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O desaparecimento gradual da água líquida exposta ao sol, sem que haja intervenção direta, caracteriza o processo de passagem do estado líquido para o gasoso de forma lenta, conhecido como evaporação (alternativa C)."
     },
     {
         "numero": 11,
@@ -206,7 +206,7 @@
             "criticar pessoas que utilizam computadores."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O texto orienta o leitor a verificar fontes, comparar informações e observar datas para lidar com os conteúdos da internet de forma crítica e responsável. Isso evidencia que a finalidade principal é apresentar cuidados para avaliar essas informações (alternativa B)."
     },
     {
         "numero": 12,
@@ -225,7 +225,7 @@
             "50%."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O total de bolas na caixa é 5 + 3 + 2 = 10. Como há 3 bolas azuis, a probabilidade é calculada pela razão entre o número de casos favoráveis e o total de casos: 3/10 = 0,3, o que equivale a 30% (alternativa C)."
     },
     {
         "numero": 13,
@@ -244,7 +244,7 @@
             "o fim imediato dos privilégios das elites agrárias."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A Independência do Brasil de 1822 operou uma ruptura de cúpula com Portugal, preservando a monarquia e mantendo intactas as bases socioeconômicas coloniais, destacadamente a escravidão e o latifúndio (concentração de terras), confirmando a alternativa C."
     },
     {
         "numero": 14,
@@ -263,7 +263,7 @@
             "are exclusively used for educational activities."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "O texto em inglês explica que as bibliotecas públicas estão integrando novos serviços (computadores, internet, atividades e eventos comunitários) para continuar relevantes na era digital. Isso demonstra que elas expandiram seus serviços para atender a novas necessidades, correspondendo à alternativa D."
     },
     {
         "numero": 15,
@@ -282,7 +282,7 @@
             "20 m/s²."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A aceleração média é calculada pela variação da velocidade dividida pelo intervalo de tempo: a = Δv/Δt. Com Δv = 20m/s e Δt = 10 segundos, temos a = 20/10 = 2m/s² (alternativa C)."
     },
     {
         "numero": 16,
@@ -301,7 +301,7 @@
             "Porque quería desayunar en una cafetería."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O texto em espanhol relata de forma direta que \"María salió temprano de casa porque tenía una entrevista de trabajo\", o que torna a alternativa B a resposta correta e evidente."
     },
     {
         "numero": 17,
@@ -320,7 +320,7 @@
             "alienação."
         ],
         "resposta": "A",
-        "comentario": ""
+        "comentario": "O conceito sociológico cunhado por Émile Durkheim para designar as maneiras de agir, pensar e sentir exteriores ao indivíduo e dotadas de poder coercitivo é o fato social (alternativa A)."
     },
     {
         "numero": 18,
@@ -339,7 +339,7 @@
             "96 m."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O perímetro (quantidade de cerca necessária para contornar o terreno retangular) é dado pela soma de todos os lados: 12 + 12 + 8 + 8 = 40 metros (ou 2 * (12 + 8) = 40), o que valida a alternativa C."
     },
     {
         "numero": 19,
@@ -358,7 +358,7 @@
             "Lei da Reflexão."
         ],
         "resposta": "A",
-        "comentario": ""
+        "comentario": "A constância da quantidade de matéria em sistemas fechados durante reações químicas fundamenta a Lei da Conservação das Massas (ou Lei de Lavoisier), apontada na alternativa A."
     },
     {
         "numero": 20,
@@ -377,7 +377,7 @@
             "personificação."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A frase utiliza a expressão \"tão lento que parecia que os carros haviam esquecido como andar\" para construir um exagero expressivo com fins dramáticos ou humorísticos, caracterizando a figura de linguagem denominada hipérbole (alternativa B)."
     },
     {
         "numero": 21,
@@ -396,7 +396,7 @@
             "os imperadores romanos."
         ],
         "resposta": "A",
-        "comentario": ""
+        "comentario": "A burguesia, inserida no contexto do Terceiro Estado, foi a principal força motriz e ideológica da Revolução Francesa, liderando o questionamento das estruturas absolutistas e propondo os princípios liberais burgueses (alternativa A)."
     },
     {
         "numero": 22,
@@ -415,7 +415,7 @@
             "21."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "Para encontrar o valor de f(7) na função f(x) = 2x + 5, basta substituir x por 7: f(7) = 2(7) + 5 = 14 + 5 = 19, o que corresponde à alternativa D."
     },
     {
         "numero": 23,
@@ -434,7 +434,7 @@
             "sofrem uma reação química imediatamente."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "A água e o óleo não se misturam (são líquidos imiscíveis) e apresentam densidades diferentes, fazendo com que o líquido menos denso (óleo) flutue sobre o mais denso (água), formando camadas distintas (alternativa D)."
     },
     {
         "numero": 24,
@@ -453,7 +453,7 @@
             "describe the history of the park."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O aviso em inglês instrui os visitantes a manterem o parque limpo, utilizarem as lixeiras e evitarem descartar lixo na grama. Portanto, o principal objetivo do texto é encorajar os frequentadores a preservarem a limpeza do local (alternativa B)."
     },
     {
         "numero": 25,
@@ -472,7 +472,7 @@
             "1930."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "A escravidão no Brasil foi abolida legalmente em 13 de maio de 1888, por meio da assinatura da Lei Áurea, o que confirma a alternativa D como a correta."
     },
     {
         "numero": 26,
@@ -491,7 +491,7 @@
             "finalidade."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A expressão \"No entanto\" é uma conjunção coordenativa adversativa, utilizada para introduzir uma ideia de contraste ou oposição em relação ao enunciado anterior (estudou bastante, mas errou o que achava fácil). Resposta correta: C."
     },
     {
         "numero": 27,
@@ -510,7 +510,7 @@
             "40 m²."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A área de uma sala retangular é calculada multiplicando-se o comprimento pela largura: 6m * 4m = 24m² (alternativa C)."
     },
     {
         "numero": 28,
@@ -529,7 +529,7 @@
             "20 g/cm³."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A densidade (d) é obtida pela razão entre a massa (m) e o volume (V): d = m/V = 200g/50cm³ = 4g/cm³ (alternativa B)."
     },
     {
         "numero": 29,
@@ -548,7 +548,7 @@
             "hacer que las personas dejen de viajar."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O texto em espanhol afirma claramente que o uso do transporte público reduz a quantidade de veículos particulares circulando simultaneamente nas ruas, correspondendo de forma direta à alternativa B."
     },
     {
         "numero": 30,
@@ -567,7 +567,7 @@
             "a posição econômica de uma pessoa nunca influencia sua trajetória."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A Sociologia demonstra que a estrutura e as desigualdades econômicas de uma sociedade geram assimetrias nas condições de vida, evidenciando que o contexto social impacta diretamente as oportunidades dos indivíduos (alternativa B)."
     },
     {
         "numero": 31,
@@ -586,7 +586,7 @@
             "deixará de depender da tensão."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "Pela Lei de Ohm (U = R * i), mantendo a resistência (R) constante, a corrente elétrica (i) é diretamente proporcional à tensão (U). Portanto, se a tensão aumentar, a corrente elétrica também aumentará (alternativa C)."
     },
     {
         "numero": 32,
@@ -605,7 +605,7 @@
             "R$ 120,00."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "Para calcular o novo preço, aplicamos o aumento de 25% sobre o valor original de R$ 80,00. O acréscimo é 80 * 0,25 = 20. Somando ao preço inicial, temos 80 + 20 = 100. O novo preço é R$ 100,00 (alternativa C)."
     },
     {
         "numero": 33,
@@ -624,7 +624,7 @@
             "explicar os efeitos econômicos das chuvas."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A descrição da chuva no texto serve tanto para compor o cenário (caracterizar o ambiente) quanto para justificar o comportamento do personagem de decidir ficar em casa, o que valida a alternativa B."
     },
     {
         "numero": 34,
@@ -643,7 +643,7 @@
             "a chegada dos portugueses ao Brasil."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O desfecho da Segunda Guerra Mundial na Europa ocorreu em maio de 1945, marcado formalmente pela rendição incondicional da Alemanha nazista diante do avanço das forças aliadas, confirmando a alternativa C."
     },
     {
         "numero": 35,
@@ -662,7 +662,7 @@
             "20 m/s²."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "Pela Segunda Lei de Newton (F = m * a), isolamos a aceleração: a = F/m. Com F = 10N e m = 2kg, temos a = 10/2 = 5m/s² (alternativa B)."
     },
     {
         "numero": 36,
@@ -681,7 +681,7 @@
             "make practice unnecessary."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O texto em inglês explica que errar faz parte do processo de aprendizagem e que os alunos podem usar os erros para identificar o que precisam melhorar, o que corresponde diretamente à alternativa C."
     },
     {
         "numero": 37,
@@ -700,7 +700,7 @@
             "25."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A sequência numérica possui uma razão constante de adição de 4 unidades (3 + 4 = 7; 7 + 4 = 11, e assim por diante). Seguindo o padrão, após o 19, o próximo termo é 19 + 4 = 23 (alternativa C)."
     },
     {
         "numero": 38,
@@ -719,7 +719,7 @@
             "a interrupção das migrações internas."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A intensificação do processo de urbanização brasileira ao longo do século XX provocou um expressivo salto demográfico nas cidades e a expansão da população urbana em detrimento da rural (alternativa B)."
     },
     {
         "numero": 39,
@@ -738,7 +738,7 @@
             "solidificação."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "A mudança de estado físico na qual o gelo (sólido) se transforma em água líquida sob aquecimento é denominada fusão (alternativa D)."
     },
     {
         "numero": 40,
@@ -757,7 +757,7 @@
             "eliminación de todos los medios de transporte."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "O texto em espanhol destaca que as bicicletas não produzem emissões, ajudam a reduzir o tráfego e incentivam a atividade física. Isso valida a alternativa B, que aponta a redução do tráfego e a prática de atividade física como vantagens."
     },
     {
         "numero": 41,
@@ -776,7 +776,7 @@
             "comparação."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "A conjunção coordenativa conclusiva \"portanto\" liga duas orações indicando que a segunda é a decorrência lógica da primeira (estudaram bastante, logo/portanto estavam preparados), o que valida a alternativa D."
     },
     {
         "numero": 42,
@@ -795,7 +795,7 @@
             "80%."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "Para encontrar a porcentagem de mulheres, calculamos a razão entre o número de mulheres e o total de alunos, multiplicando o resultado por 100%: 18/30 = 0,6 = 60% (alternativa C)."
     },
     {
         "numero": 43,
@@ -814,7 +814,7 @@
             "vaporização."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O aquecimento de um objeto exposto ao Sol ocorre por meio de ondas eletromagnéticas (como a luz infravermelha), processo térmico que se propaga mesmo no vácuo e é denominado irradiação (alternativa C)."
     },
     {
         "numero": 44,
@@ -833,7 +833,7 @@
             "existe apenas em sociedades urbanas."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A Sociologia entende a cultura como uma construção social dinâmica e mutável, que se transforma ao longo do tempo e difere conforme o contexto histórico e coletivo de cada grupo, confirmando a alternativa C."
     },
     {
         "numero": 45,
@@ -852,7 +852,7 @@
             "replace water with other liquids."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "O texto em inglês ressalta a escassez da água e sugere ações cotidianas simples — como fechar a torneira e consertar vazamentos — para conter o desperdício, o que corresponde diretamente à alternativa C."
     },
     {
         "numero": 46,
@@ -871,7 +871,7 @@
             "R$ 150,00."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "Para saber o valor que cada pessoa deverá pagar, basta dividir o valor total da dívida pelo número de pessoas: 500/4 = 125, resultando em R$ 125,00 (alternativa D)."
     },
     {
         "numero": 47,
@@ -890,7 +890,7 @@
             "transformar a caixa em um corpo sem peso."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "A força de atrito é a força de contato que se opõe ao movimento (ou à tendência de movimento) relativo entre duas superfícies em atrito, o que valida a alternativa B."
     },
     {
         "numero": 48,
@@ -909,7 +909,7 @@
             "a ausência de transformações nas relações de trabalho."
         ],
         "resposta": "B",
-        "comentario": ""
+        "comentario": "Os movimentos operários e sindicais do início do século XX evidenciam a articulação coletiva da classe trabalhadora em busca de direitos, melhores condições de trabalho e proteção contra as assimetrias capitalistas (alternativa B)."
     },
     {
         "numero": 49,
@@ -928,7 +928,7 @@
             "consequentemente."
         ],
         "resposta": "C",
-        "comentario": ""
+        "comentario": "A conjunção adversativa \"porém\" exprime uma oposição de ideias e pode ser substituída por sinônimos equivalentes, como entretanto ou mas, sem prejuízo ao sentido original da frase (alternativa C)."
     },
     {
         "numero": 50,
@@ -947,7 +947,7 @@
             "sem propriedades químicas."
         ],
         "resposta": "D",
-        "comentario": ""
+        "comentario": "Na escala de pH (que varia de 0 a 14), valores inferiores a 7 indicam caráter ácido, enquanto o valor 7 é neutro e acima de 7 representa basicidade. Logo, um pH igual a 3 caracteriza uma solução ácida (alternativa D)."
     }
 
 

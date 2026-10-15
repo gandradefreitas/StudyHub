@@ -326,7 +326,6 @@ def obter_questoes_filtradas(
     habilidade=None,
     lingua=None
 ):
-
     with open(
         "dados/questoes/questoes.json",
         "r",
@@ -334,42 +333,39 @@ def obter_questoes_filtradas(
     ) as arquivo:
         questoes = json.load(arquivo)
 
+    resultado = questoes
+
     if area:
-        questoes = [
-            questao
-            for questao in questoes
-            if questao.get("area") == area
+        resultado = [
+            q for q in resultado
+            if q.get("area") == area
         ]
 
     if dificuldade:
-        questoes = [
-            questao
-            for questao in questoes
-            if questao.get("dificuldade") == dificuldade
+        resultado = [
+            q for q in resultado
+            if q.get("dificuldade") == dificuldade
         ]
 
     if competencia:
-        questoes = [
-            questao
-            for questao in questoes
-            if questao.get("competencia") == competencia
+        resultado = [
+            q for q in resultado
+            if q.get("competencia") == competencia
         ]
 
     if habilidade:
-        questoes = [
-            questao
-            for questao in questoes
-            if questao.get("habilidade") == habilidade
+        resultado = [
+            q for q in resultado
+            if q.get("habilidade") == habilidade
         ]
 
     if lingua:
-        questoes = [
-            questao
-            for questao in questoes
-            if questao.get("lingua") == lingua
+        resultado = [
+            q for q in resultado
+            if q.get("lingua") == lingua
         ]
 
-    return questoes
+    return resultado
 
 def obter_areas_questoes():
     with open(

@@ -1679,6 +1679,40 @@
 
 }
 
+/* =====================================================
+   QUESTÕES SEM RESULTADOS
+===================================================== */
+
+.questoes-sem-resultados {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    min-height: 260px;
+    padding: 32px 24px;
+
+    text-align: center;
+
+    border: 1px dashed var(--cor-borda);
+    border-radius: 12px;
+
+    margin-top: 24px;
+}
+
+.questoes-sem-resultados h2 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.questoes-sem-resultados p {
+    max-width: 480px;
+    margin: 0;
+
+    line-height: 1.6;
+    color: var(--cor-texto-secundario);
+}
 
 /* =========================================================
    CELULAR

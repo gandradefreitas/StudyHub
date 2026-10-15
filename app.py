@@ -3396,9 +3396,7 @@ def excluir_conta_configuracoes():
 @app.route("/questoes")
 def questoes_inicio():
 
-    usuario_id = session.get(
-        "usuario_id"
-    )
+    usuario_id = session.get("usuario_id")
 
     if not usuario_id:
 
@@ -3412,11 +3410,13 @@ def questoes_inicio():
 
     if not ordem_questoes:
 
+        flash(
+            "Nenhuma questão está disponível no momento.",
+            "info"
+        )
+
         return redirect(
-            url_for(
-                "questoes",
-                numero=1
-            )
+            url_for("dashboard")
         )
 
     return redirect(
@@ -3425,7 +3425,6 @@ def questoes_inicio():
             numero=ordem_questoes[0]
         )
     )
-
 
 @app.route("/questoes/<int:numero>")
 def questoes(numero):
@@ -3531,19 +3530,78 @@ def questoes(numero):
         ]
 
     # =====================================================
+    # VERIFICAR SE EXISTEM QUESTÕES DISPONÍVEIS
+    # =====================================================
+
+    if not ordem_questoes:
+
+        return render_template(
+            "questoes.html",
+
+            usuario=usuario,
+
+            questao=None,
+
+            tem_anterior=False,
+
+            tem_proxima=False,
+
+            numero_anterior=None,
+
+            numero_proxima=None,
+
+            questao_bloqueada=False,
+
+            ultima_resposta=None,
+
+            proxima_tentativa=None,
+
+            estudo_ativo=estudo_ativo,
+
+            modo_revisao=modo_revisao,
+
+            ultima_questao_revisao=False,
+
+            posicao_revisao=None,
+
+            total_revisao=0 if modo_revisao else None,
+
+            areas_questoes=areas_questoes,
+
+            dificuldades_questoes=dificuldades_questoes,
+
+            competencias_questoes=competencias_questoes,
+
+            habilidades_questoes=habilidades_questoes,
+
+            linguas_questoes=linguas_questoes,
+
+            area=area,
+
+            dificuldade=dificuldade,
+
+            competencia=competencia,
+
+            habilidade=habilidade,
+
+            lingua=lingua
+        )
+
+    # =====================================================
     # VERIFICAR SE A QUESTÃO EXISTE NA ORDEM
     # =====================================================
 
     if numero not in ordem_questoes:
+
         return redirect(
             url_for(
                 "questoes",
                 numero=ordem_questoes[0],
-                area=area if not modo_revisao else None,
-                dificuldade=dificuldade if not modo_revisao else None,
-                competencia=competencia if not modo_revisao else None,
-                habilidade=habilidade if not modo_revisao else None,
-                lingua=lingua if not modo_revisao else None,
+                area=area,
+                dificuldade=dificuldade,
+                competencia=competencia,
+                habilidade=habilidade,
+                lingua=lingua,
                 revisao=1 if modo_revisao else None
             )
         )
