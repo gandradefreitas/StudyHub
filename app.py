@@ -1,5 +1,7 @@
+import re
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response, \
-    send_from_directory
+    send_from_directory, abort
 
 import io
 
@@ -95,7 +97,7 @@ from database.resultados_repository import (
     salvar_resultado,
     salvar_respostas_prova,
     obter_desempenho_por_area,
-    converter_tempo_para_segundos
+    converter_tempo_para_segundos, obter_respostas_por_resultado, obter_resultado_por_id
 )
 
 from database.anotacao_repository import (
@@ -916,20 +918,24 @@ def resultado_prova():
         erros = 0
         nao_respondidas = 0
 
+        # Armazena somente as respostas das questões erradas.
+        # O enunciado e o gabarito serão recuperados no GET.
+
+        respostas_erradas = {}
+
         for questao in questoes_realizadas:
 
             resposta_usuario = respostas.get(
                 str(questao.numero)
             )
 
-            # Questão não respondida
-
-            if resposta_usuario is None:
+            if resposta_usuario is None or resposta_usuario == "":
                 nao_respondidas += 1
-
                 continue
 
-            # Validação da alternativa
+            # ------------------------------------------------
+            # VALIDA A ALTERNATIVA
+            # ------------------------------------------------
 
             try:
 
@@ -946,7 +952,18 @@ def resultado_prova():
 
                 continue
 
-            # Resposta correta
+            # Verifica se a alternativa existe na questão
+            if not (
+                    0 <= resposta_usuario < len(questao.alternativas)
+            ):
+
+                return jsonify({
+                    "erro": "Alternativa inválida."
+                }), 400
+
+            # ------------------------------------------------
+            # COMPARA COM O GABARITO OFICIAL
+            # ------------------------------------------------
 
             if resposta_usuario == questao.resposta:
 
@@ -956,22 +973,29 @@ def resultado_prova():
 
                 erros += 1
 
-        # Total de questões efetivamente realizadas.
-        # O cálculo é feito no servidor, sem confiar
-        # no total enviado pelo navegador.
+                # Guarda somente os dados necessários
+                # para reconstruir a revisão posteriormente.
+
+                respostas_erradas[
+                    str(questao.numero)
+                ] = resposta_usuario
+
+
+        # ------------------------------------------------
+        # TOTAL DE QUESTÕES
+        # ------------------------------------------------
 
         total = len(questoes_realizadas)
 
 
         # ------------------------------------------------
-        # PORCENTAGEM CALCULADA NO SERVIDOR
+        # PORCENTAGEM
         # ------------------------------------------------
 
         porcentagem = round(
             (acertos / total) * 100,
             2
         ) if total > 0 else 0
-
 
         # ------------------------------------------------
         # CALCULA O TEMPO NO SERVIDOR
@@ -1077,14 +1101,16 @@ def resultado_prova():
                 porcentagem
         }
 
+        # ------------------------------------------------
+        # SALVA O RESULTADO
+        # ------------------------------------------------
 
-        salvar_resultado(
+        resultado_id = salvar_resultado(
             resultado
         )
 
-
         # ------------------------------------------------
-        # SALVA AS RESPOSTAS
+        # SALVA AS RESPOSTAS DA TENTATIVA
         # ------------------------------------------------
 
         salvar_respostas_prova(
@@ -1092,6 +1118,8 @@ def resultado_prova():
             usuario_id=usuario_id,
 
             prova_id=prova_id,
+
+            resultado_id=resultado_id,
 
             questoes=questoes_realizadas,
 
@@ -1104,15 +1132,22 @@ def resultado_prova():
             None
         )
 
-
         # ------------------------------------------------
         # RESULTADO DA SESSÃO
         # ------------------------------------------------
 
         session["resultado_prova"] = {
 
+            "numeros_questoes": [
+                questao.numero
+                for questao in questoes_realizadas
+            ],
+
             "prova_id":
                 prova_id,
+
+            "lingua":
+                lingua_escolhida,
 
             "acertos":
                 acertos,
@@ -1130,7 +1165,11 @@ def resultado_prova():
                 porcentagem,
 
             "tempo_gasto":
-                tempo_gasto
+                tempo_gasto,
+
+            "respostas_erradas":
+                respostas_erradas
+
         }
 
 
@@ -1138,39 +1177,184 @@ def resultado_prova():
             "status": "ok"
         })
 
-
     # ----------------------------------------------------
     # PÁGINA DE RESULTADO
     # ----------------------------------------------------
 
     if "usuario_id" not in session:
-
         return redirect(
             url_for("pagina_login")
         )
 
+    # ----------------------------------------------------
+    # RECUPERA O RESULTADO DA PROVA
+    # ----------------------------------------------------
 
     resultado = session.get(
-        "resultado_prova",
-        {
-            "prova_id": None,
-            "acertos": 0,
-            "erros": 0,
-            "questoes_erradas": [],
-            "nao_respondidas": 0,
-            "total": 0,
-            "porcentagem": 0,
-            "tempo_gasto": "00:00:00"
-        }
+        "resultado_prova"
     )
 
+    if resultado is None:
+        resultado = {
+
+            "prova_id": None,
+
+            "acertos": 0,
+
+            "erros": 0,
+
+            "questoes_erradas": [],
+
+            "nao_respondidas": 0,
+
+            "total": 0,
+
+            "porcentagem": 0,
+
+            "tempo_gasto": "00:00:00"
+
+        }
+
+    # ----------------------------------------------------
+    # RECONSTRÓI AS QUESTÕES ERRADAS
+    # ----------------------------------------------------
+
+    questoes_erradas = []
+
+    if resultado["prova_id"] is not None:
+
+        # Recupera a prova oficial
+        prova = obter_prova(
+            resultado["prova_id"]
+        )
+
+        if prova is not None:
+
+            # Recupera o idioma utilizado na prova
+            lingua_escolhida = resultado.get(
+                "lingua"
+            )
+
+            # Recupera as respostas erradas
+            respostas_erradas = resultado.get(
+                "respostas_erradas",
+                {}
+            )
+
+            numeros_questoes = set(
+                resultado.get("numeros_questoes", [])
+            )
+
+            questoes_realizadas = [
+                questao
+                for questao in prova.questoes
+                if (
+                        questao.numero in numeros_questoes
+                        and (
+                                not questao.lingua
+                                or questao.lingua == lingua_escolhida
+                        )
+                )
+            ]
+
+            # Monta a revisão
+            for questao in questoes_realizadas:
+
+                numero = str(
+                    questao.numero
+                )
+
+                # Ignora questões que não foram erradas
+                if numero not in respostas_erradas:
+                    continue
+
+                questoes_erradas.append({
+
+                    "numero": questao.numero,
+
+                    "enunciado": questao.enunciado,
+
+                    "imagem": questao.imagem,
+
+                    "pergunta": questao.pergunta,
+
+                    "alternativas": [
+                        preparar_alternativa_revisao(alternativa)
+                        for alternativa in questao.alternativas
+                    ],
+
+                    "respostaUsuario": respostas_erradas[numero],
+
+                    "respostaCorreta": questao.resposta,
+
+                    "comentario": questao.comentario
+
+                })
+
+    # ----------------------------------------------------
+    # ADICIONA AS QUESTÕES ERRADAS AO RESULTADO
+    # ----------------------------------------------------
+
+    resultado["questoes_erradas"] = questoes_erradas
+
+    # ----------------------------------------------------
+    # RENDERIZA A PÁGINA
+    # ----------------------------------------------------
 
     return render_template(
+
         "provas/resultado.html",
+
         resultado=resultado,
+
         titulo="Resultado",
+
         classe_body="sidebar-toggle"
+
     )
+
+def preparar_alternativa_revisao(alternativa):
+    """
+    Prepara uma alternativa para exibição na revisão da prova.
+    Reconhece URLs diretas e links Markdown que representam imagens.
+    """
+
+    alternativa = str(alternativa).strip()
+
+    # Remove aspas externas, se existirem.
+    alternativa = alternativa.strip('"').strip("'").strip()
+
+    # Caso seja um link Markdown: [texto](URL)
+    if alternativa.startswith("[") and "](" in alternativa:
+
+        inicio_url = alternativa.rfind("](")
+
+        url = alternativa[inicio_url + 2:]
+
+        # Remove o parêntese final do Markdown.
+        if url.endswith(")"):
+            url = url[:-1]
+
+        url = url.strip()
+
+        if url.startswith(("https://", "http://")):
+            return {
+                "tipo": "imagem",
+                "conteudo": url
+            }
+
+    # Caso seja uma URL direta.
+    if alternativa.startswith(("https://", "http://")):
+        return {
+            "tipo": "imagem",
+            "conteudo": alternativa
+        }
+
+    # Caso seja texto comum.
+    return {
+        "tipo": "texto",
+        "conteudo": alternativa
+    }
 
 
 @app.route("/provas/historico")
@@ -1197,6 +1381,148 @@ def historico_provas():
         classe_body="sidebar-toggle"
     )
 
+@app.route(
+    "/provas/historico/<int:resultado_id>"
+)
+def visualizar_resultado_historico(resultado_id):
+
+    # ------------------------------------------------
+    # AUTENTICAÇÃO
+    # ------------------------------------------------
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+
+        return redirect(
+            url_for("pagina_login")
+        )
+
+    # ------------------------------------------------
+    # RECUPERA O RESULTADO
+    # ------------------------------------------------
+
+    resultado_db = obter_resultado_por_id(
+        resultado_id,
+        usuario_id
+    )
+
+    if resultado_db is None:
+
+        abort(404)
+
+    # ------------------------------------------------
+    # RECUPERA AS RESPOSTAS DA TENTATIVA
+    # ------------------------------------------------
+
+    respostas_db = obter_respostas_por_resultado(
+        resultado_id,
+        usuario_id
+    )
+
+    respostas_usuario = {
+        str(resposta["questao_numero"]): resposta["resposta"]
+        for resposta in respostas_db
+    }
+
+    # ------------------------------------------------
+    # RECUPERA A PROVA OFICIAL
+    # ------------------------------------------------
+
+    prova = obter_prova(
+        resultado_db["prova_id"]
+    )
+
+    if prova is None:
+
+        abort(404)
+
+    # ------------------------------------------------
+    # RECONSTRÓI AS QUESTÕES ERRADAS
+    # ------------------------------------------------
+
+    questoes_erradas = []
+
+    for questao in prova.questoes:
+
+        numero = str(questao.numero)
+
+        # Ignora questões que não foram respondidas.
+        if numero not in respostas_usuario:
+            continue
+
+        resposta_usuario = respostas_usuario[numero]
+
+        # Ignora questões respondidas corretamente.
+        if resposta_usuario == questao.resposta:
+            continue
+
+        questoes_erradas.append({
+
+            "numero":
+                questao.numero,
+
+            "enunciado":
+                questao.enunciado,
+
+            "alternativas": [
+                preparar_alternativa_revisao(alternativa)
+                for alternativa in questao.alternativas
+            ],
+
+            "respostaUsuario":
+                resposta_usuario,
+
+            "respostaCorreta":
+                questao.resposta,
+
+            "comentario":
+                questao.comentario
+
+        })
+
+    # ------------------------------------------------
+    # MONTA O RESULTADO PARA O TEMPLATE
+    # ------------------------------------------------
+
+    resultado = {
+
+        "prova_id":
+            resultado_db["prova_id"],
+
+        "acertos":
+            resultado_db["acertos"],
+
+        "erros":
+            resultado_db["erros"],
+
+        "nao_respondidas":
+            resultado_db["nao_respondidas"],
+
+        "total":
+            resultado_db["total"],
+
+        "tempo_gasto":
+            resultado_db["tempo_gasto"],
+
+        "porcentagem":
+            resultado_db["porcentagem"],
+
+        "questoes_erradas":
+            questoes_erradas
+
+    }
+
+    # ------------------------------------------------
+    # RENDERIZA O RESULTADO
+    # ------------------------------------------------
+
+    return render_template(
+        "provas/resultado.html",
+        resultado=resultado,
+        titulo="Resultado da Prova",
+        classe_body="sidebar-toggle"
+    )
 
 # ==========================
 # CALENDÁRIO

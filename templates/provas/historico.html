@@ -54,6 +54,7 @@
                             <th>Erros</th>
                             <th>Aproveitamento</th>
                             <th>Tempo</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
 
@@ -91,6 +92,18 @@
 
                             <td class="tempo-prova">
                                 {{ resultado["tempo_gasto"] }}
+                            </td>
+
+                            <td>
+                                <a
+                                    href="{{ url_for(
+                                        'visualizar_resultado_historico',
+                                        resultado_id=resultado['id']
+                                    ) }}"
+                                    class="botao-ver-resultado"
+                                >
+                                    Ver resultado
+                                </a>
                             </td>
 
                         </tr>

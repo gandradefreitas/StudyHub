@@ -169,129 +169,183 @@
 
     </section>
 
-    {#
-        <!-- =====================================================
-             QUESTÕES ERRADAS
-        ====================================================== -->
 
-        <section class="questoes-erradas">
+    <!-- =====================================================
+         QUESTÕES ERRADAS
+    ====================================================== -->
 
-
-            <h2>
-                Questões para revisar
-            </h2>
+    <section class="questoes-erradas">
 
 
-            {% if resultado.questoes_erradas %}
+        <h2>
+            Questões para revisar
+        </h2>
 
 
-                {% for questao in resultado.questoes_erradas %}
+        {% if resultado.questoes_erradas %}
 
 
-                    <article class="card-erro">
+            {% for questao in resultado.questoes_erradas %}
 
 
-                        <h3>
-
-                            Questão {{ questao.numero }}
-
-                        </h3>
+                <article class="card-erro">
 
 
-                        <!-- ENUNCIADO -->
+                    <h3>
 
-                        <div class="enunciado-revisao">
+                        Questão {{ questao.numero }}
+
+                    </h3>
+
+
+                    <!-- ENUNCIADO -->
+
+                    <div class="enunciado-revisao">
+
+                    <strong>Enunciado:</strong>
+
+                    {% if questao.enunciado %}
+                        <p>{{ questao.enunciado }}</p>
+                    {% endif %}
+
+                    {% if questao.imagem %}
+                        <img
+                            src="{{ questao.imagem }}"
+                            alt="Imagem do enunciado da questão {{ questao.numero }}"
+                            class="imagem-enunciado-revisao"
+                            loading="lazy"
+                        >
+                    {% endif %}
+
+                    {% if questao.pergunta %}
+                        <p>{{ questao.pergunta }}</p>
+                    {% endif %}
+
+                    </div>
+
+
+
+                    <!-- RESPOSTAS -->
+
+                    <div class="respostas-revisao">
+
+
+                        <p>
+
+                            Sua resposta:
 
                             <strong>
-                                Enunciado:
+
+                                {{ "ABCDE"[questao.respostaUsuario] }}
+
                             </strong>
 
-                            <p>
-                                {{ questao.enunciado }}
-                            </p>
-
-                        </div>
+                        </p>
 
 
-                        <!-- RESPOSTAS -->
+                        <p>
 
-                        <div class="respostas-revisao">
+                            Resposta correta:
 
+                            <strong>
 
-                            <p>
+                                {{ "ABCDE"[questao.respostaCorreta] }}
 
-                                Sua resposta:
+                            </strong>
 
-                                <strong>
-
-                                    {{ "ABCDE"[questao.respostaUsuario] }}
-
-                                </strong>
-
-                            </p>
+                        </p>
 
 
-                            <p>
+                    </div>
 
-                                Resposta correta:
+                    <!-- ALTERNATIVAS -->
 
-                                <strong>
+                    <div class="alternativas-revisao">
 
-                                    {{ "ABCDE"[questao.respostaCorreta] }}
+                        {% for alternativa in questao.alternativas %}
 
-                                </strong>
+                            <div class="alternativa-revisao">
 
-                            </p>
+                                <strong>{{ "ABCDE"[loop.index0] }})</strong>
 
+                                {% if alternativa.tipo == "imagem" %}
 
-                        </div>
+                                    <img
+                                        src="{{ alternativa.conteudo }}"
+                                        alt="Alternativa {{ "ABCDE"[loop.index0] }}"
+                                        class="imagem-alternativa-revisao"
+                                        loading="lazy"
+                                    >
 
+                                {% else %}
 
-                        <!-- COMENTÁRIO -->
+                                    <span>{{ alternativa.conteudo }}</span>
 
-                        {% if questao.comentario %}
-
-
-                            <div class="comentario-revisao">
-
-
-                                <strong>
-                                    Comentário:
-                                </strong>
-
-
-                                <p>
-                                    {{ questao.comentario }}
-                                </p>
-
+                                {% endif %}
 
                             </div>
 
+                        {% endfor %}
 
-                        {% endif %}
-
-
-                    </article>
+                    </div>
 
 
-                {% endfor %}
+                    <!-- COMENTÁRIO -->
+
+                    {% if questao.comentario %}
+
+
+                        <div class="comentario-revisao">
+
+
+                            <strong>
+                                Comentário:
+                            </strong>
+
+
+                            <p>
+                                {{ questao.comentario }}
+                            </p>
+
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </article>
+
+
+            {% endfor %}
 
 
             {% else %}
 
-
                 <p class="nenhuma-questao-errada">
 
-                    Parabéns! Você não teve nenhuma questão errada.
+                    {% if resultado.total > 0 and resultado.nao_respondidas == resultado.total %}
+
+                        Você ainda não respondeu a nenhuma questão.
+                        Tente novamente e pratique o que aprendeu!
+
+                    {% elif resultado.erros == 0 and resultado.nao_respondidas == 0 %}
+
+                        Parabéns! Você não errou nenhuma questão.
+
+                    {% elif resultado.erros == 0 and resultado.nao_respondidas > 0 %}
+
+                        Você não errou nenhuma das questões respondidas.
+                        Que tal tentar responder às questões que ficaram em branco?
+
+                    {% endif %}
 
                 </p>
 
-
             {% endif %}
 
+    </section>
 
-        </section>
-    #}
 
 
     <!-- =====================================================

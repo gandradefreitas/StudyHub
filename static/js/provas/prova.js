@@ -463,143 +463,134 @@ function iniciarCronometro() {
 
 function finalizarProva() {
 
-    const estatisticas =
-        obterEstatisticas();
 
+// Cria uma cópia contendo somente respostas válidas.
+const respostasValidas = {};
 
-    const dadosResultado = {
+questoesProva.forEach(questao => {
 
-        prova_id:
-            prova.id,
+    const resposta = respostas[questao.numero];
 
-        lingua: linguaEscolhida,
+    if (
+        resposta !== undefined &&
+        resposta !== null &&
+        resposta !== "" &&
+        Number.isInteger(Number(resposta)) &&
+        Number(resposta) >= 0 &&
+        Number(resposta) < questao.alternativas.length
+    ) {
+        respostasValidas[questao.numero] = Number(resposta);
+    }
 
-        acertos:
-            estatisticas.acertos,
+});
 
-        erros:
-            estatisticas.erros,
+// Calcula as estatísticas usando as respostas válidas.
+let acertos = 0;
+let erros = 0;
 
-        naoRespondidas:
-            estatisticas.naoRespondidas,
+questoesProva.forEach(questao => {
 
-        total:
-            estatisticas.total,
+    const resposta = respostasValidas[questao.numero];
 
-        questoesErradas:
-            estatisticas.questoesErradas,
+    if (resposta === undefined) {
+        return;
+    }
 
-        respostas:
-            respostas,
+    if (resposta === questao.resposta) {
+        acertos++;
+    } else {
+        erros++;
+    }
 
-        questoes:
-            questoesProva,
+});
 
-        tempoGasto:
-            converterTempoGasto()
+const estatisticas = {
+    acertos: acertos,
+    erros: erros,
+    naoRespondidas: questoesProva.length - Object.keys(respostasValidas).length,
+    total: questoesProva.length
+};
 
-    };
+const dadosResultado = {
 
+    prova_id: prova.id,
 
+    lingua: linguaEscolhida,
 
-    fetch(
-        "/provas/resultado",
-        {
+    acertos: estatisticas.acertos,
 
-            method: "POST",
+    erros: estatisticas.erros,
 
-            headers: {
+    naoRespondidas: estatisticas.naoRespondidas,
 
-                "Content-Type":
-                    "application/json",
+    total: estatisticas.total,
 
-                "X-CSRFToken":
-                    csrfToken
+    respostas: respostasValidas,
 
-            },
+    questoes: questoesProva,
 
-            body:
-                JSON.stringify(
-                    dadosResultado
-                )
+    tempoGasto: converterTempoGasto()
 
-        }
-    )
+};
 
-    .then(async response => {
+fetch("/provas/resultado", {
 
+    method: "POST",
 
-        const dados = await response.json();
+    headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken
+    },
 
-        if (!response.ok) {
+    body: JSON.stringify(dadosResultado)
 
-            throw new Error(
-                dados.erro ||
-                `Servidor respondeu com ${response.status}`
-            );
+})
 
-        }
+.then(async response => {
 
-        return dados;
+    const dados = await response.json();
 
-    })
-
-    .then(dados => {
-
-        if (
-            dados.status !== "ok"
-        ) {
-
-            throw new Error(
-                "O servidor não confirmou o resultado."
-            );
-
-        }
-
-
-        /*
-            Somente depois de o servidor
-            confirmar que recebeu os dados,
-            limpamos o localStorage.
-        */
-
-        localStorage.removeItem(
-            CHAVE_PROVA
+    if (!response.ok) {
+        throw new Error(
+            dados.erro ||
+            `Servidor respondeu com ${response.status}`
         );
+    }
 
-        localStorage.removeItem(
-            `${CHAVE_PROVA}_questao`
+    return dados;
+
+})
+
+.then(dados => {
+
+    if (dados.status !== "ok") {
+        throw new Error(
+            "O servidor não confirmou o resultado."
         );
+    }
 
-        localStorage.removeItem(
-            `${CHAVE_PROVA}_lingua`
-        );
+    localStorage.removeItem(CHAVE_PROVA);
+    localStorage.removeItem(`${CHAVE_PROVA}_questao`);
+    localStorage.removeItem(`${CHAVE_PROVA}_lingua`);
+    localStorage.removeItem(`${CHAVE_PROVA}_fim`);
 
-        localStorage.removeItem(
-            `${CHAVE_PROVA}_fim`
-        );
+    window.location.href = "/provas/resultado";
 
+})
 
-        window.location.href =
-            "/provas/resultado";
+.catch(erro => {
 
-    })
+    console.error("ERRO AO ENVIAR RESULTADO:", erro);
 
-    .catch(erro => {
+    alert(
+        "Não foi possível enviar o resultado da prova."
+    );
 
-        console.error(
-            "ERRO AO ENVIAR RESULTADO:",
-            erro
-        );
+});
 
-
-        alert(
-            "Não foi possível enviar o resultado da prova."
-        );
-
-    });
 
 }
+
 
 function atualizarCronometro(){
 

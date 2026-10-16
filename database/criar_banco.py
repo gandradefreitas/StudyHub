@@ -149,6 +149,7 @@ def criar_tabelas():
     # =========================
 
     cursor.execute("""
+
         CREATE TABLE IF NOT EXISTS respostas_provas(
 
             id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -156,6 +157,8 @@ def criar_tabelas():
             usuario_id INTEGER NOT NULL,
 
             prova_id INTEGER NOT NULL,
+
+            resultado_id INTEGER,
 
             questao_numero INTEGER NOT NULL,
 
@@ -166,9 +169,14 @@ def criar_tabelas():
             data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
             FOREIGN KEY(usuario_id)
-            REFERENCES usuarios(id)
+            REFERENCES usuarios(id),
+
+            FOREIGN KEY(resultado_id)
+            REFERENCES resultados_provas(id)
+            ON DELETE CASCADE
 
         )
+
     """)
 
     # =========================

@@ -10,36 +10,52 @@ def salvar_resultado(resultado):
     conexao = conectar()
     cursor = conexao.cursor()
 
-    cursor.execute("""
+    try:
 
-        INSERT INTO resultados_provas
-        (
-            usuario_id,
-            prova_id,
-            acertos,
-            erros,
-            nao_respondidas,
-            total,
-            tempo_gasto,
-            porcentagem
-        )
+        cursor.execute("""
 
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO resultados_provas
+            (
+                usuario_id,
+                prova_id,
+                acertos,
+                erros,
+                nao_respondidas,
+                total,
+                tempo_gasto,
+                porcentagem
+            )
 
-    """, (
-        resultado["usuario_id"],
-        resultado["prova_id"],
-        resultado["acertos"],
-        resultado["erros"],
-        resultado["nao_respondidas"],
-        resultado["total"],
-        resultado["tempo_gasto"],
-        resultado["porcentagem"]
-    ))
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
 
-    conexao.commit()
+            RETURNING id
 
-    conexao.close()
+        """, (
+            resultado["usuario_id"],
+            resultado["prova_id"],
+            resultado["acertos"],
+            resultado["erros"],
+            resultado["nao_respondidas"],
+            resultado["total"],
+            resultado["tempo_gasto"],
+            resultado["porcentagem"]
+        ))
+
+        resultado_id = cursor.fetchone()["id"]
+
+        conexao.commit()
+
+        return resultado_id
+
+    except Exception:
+
+        conexao.rollback()
+        raise
+
+    finally:
+
+        cursor.close()
+        conexao.close()
 
 
 def formatar_data_realizacao(data):
@@ -80,6 +96,7 @@ def listar_resultados_usuario(usuario_id):
     cursor.execute("""
 
         SELECT
+            id,
             prova_id,
             acertos,
             erros,
@@ -88,11 +105,11 @@ def listar_resultados_usuario(usuario_id):
             tempo_gasto,
             porcentagem,
             data_realizacao
-
+        
         FROM resultados_provas
-
+        
         WHERE usuario_id = %s
-
+        
         ORDER BY data_realizacao DESC
 
     """, (usuario_id,))
@@ -117,6 +134,8 @@ def listar_resultados_usuario(usuario_id):
         )
 
         historico.append({
+
+            "id": resultado["id"],
 
             "prova_id":
                 resultado["prova_id"],
@@ -220,52 +239,75 @@ def obter_resultados_por_mes(usuario_id, ano, mes):
 def salvar_respostas_prova(
     usuario_id,
     prova_id,
+    resultado_id,
     questoes,
     respostas
 ):
+
     conexao = conectar()
     cursor = conexao.cursor()
 
-    for questao in questoes:
+    try:
 
-        chave_questao = str(
-            questao.numero
-        )
+        for questao in questoes:
 
-        if chave_questao not in respostas:
-            continue
+            chave_questao = str(
+                questao.numero
+            )
 
-        resposta_usuario = respostas[
-            chave_questao
-        ]
+            # Não salva questões que ficaram em branco.
+            if chave_questao not in respostas:
+                continue
 
-        correta = (
-            1
-            if resposta_usuario == questao.resposta
-            else 0
-        )
+            resposta_usuario = respostas[
+                chave_questao
+            ]
 
-        cursor.execute("""
-            INSERT INTO respostas_provas
-            (
+            # Normaliza a resposta para inteiro.
+            resposta_usuario = int(
+                resposta_usuario
+            )
+
+            correta = (
+                1
+                if resposta_usuario == questao.resposta
+                else 0
+            )
+
+            cursor.execute("""
+
+                INSERT INTO respostas_provas
+                (
+                    usuario_id,
+                    prova_id,
+                    resultado_id,
+                    questao_numero,
+                    resposta,
+                    correta
+                )
+
+                VALUES (%s, %s, %s, %s, %s, %s)
+
+            """, (
                 usuario_id,
                 prova_id,
-                questao_numero,
-                resposta,
+                resultado_id,
+                questao.numero,
+                resposta_usuario,
                 correta
-            )
-            VALUES (%s, %s, %s, %s, %s)
-        """, (
-            usuario_id,
-            prova_id,
-            questao.numero,
-            resposta_usuario,
-            correta
-        ))
+            ))
 
-    conexao.commit()
-    conexao.close()
+        conexao.commit()
 
+    except Exception:
+
+        conexao.rollback()
+        raise
+
+    finally:
+
+        cursor.close()
+        conexao.close()
 
 def obter_respostas_usuario(usuario_id):
 
@@ -583,3 +625,72 @@ def converter_tempo_para_segundos(tempo):
         + minutos * 60
         + segundos
     )
+
+def obter_resultado_por_id(resultado_id, usuario_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            SELECT
+                id,
+                usuario_id,
+                prova_id,
+                acertos,
+                erros,
+                nao_respondidas,
+                total,
+                tempo_gasto,
+                porcentagem,
+                data_realizacao
+
+            FROM resultados_provas
+
+            WHERE id = %s
+              AND usuario_id = %s
+
+        """, (
+            resultado_id,
+            usuario_id
+        ))
+
+        return cursor.fetchone()
+
+    finally:
+
+        cursor.close()
+        conexao.close()
+
+def obter_respostas_por_resultado(resultado_id, usuario_id):
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    try:
+
+        cursor.execute("""
+            SELECT
+                questao_numero,
+                resposta,
+                correta
+
+            FROM respostas_provas
+
+            WHERE resultado_id = %s
+              AND usuario_id = %s
+
+            ORDER BY questao_numero
+
+        """, (
+            resultado_id,
+            usuario_id
+        ))
+
+        return cursor.fetchall()
+
+    finally:
+
+        cursor.close()
+        conexao.close()
