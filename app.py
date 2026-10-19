@@ -48,7 +48,8 @@ from controllers.web.configuracoes_controller import (
 from controllers.estudo_controller import (
     iniciar_estudo_controller,
     finalizar_estudo_controller,
-    obter_estudo_ativo_controller
+    obter_estudo_ativo_controller, finalizar_estudo_automatico_controller, registrar_atividade_estudo_controller,
+    iniciar_estudo_automatico_controller
 )
 
 from controllers.web.tarefa_controller import (
@@ -724,6 +725,143 @@ def finalizar_estudo_automatico():
         "mensagem": mensagem
     })
 
+# ==========================
+# CRONÔMETRO AUTOMÁTICO
+# ==========================
+
+@app.route("/questoes/estudo/iniciar", methods=["POST"])
+def iniciar_estudo_automatico():
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return jsonify({
+            "sucesso": False,
+            "erro": "Usuário não autenticado."
+        }), 401
+
+    try:
+        sucesso, mensagem, estudo = (
+            iniciar_estudo_automatico_controller(usuario_id)
+        )
+
+        if not sucesso:
+            return jsonify({
+                "sucesso": False,
+                "erro": mensagem
+            }), 400
+
+        # Reconcilia o estado da sessão com o limite de inatividade.
+        estado = registrar_atividade_estudo_controller(
+            usuario_id,
+            "heartbeat"
+        )
+
+        if estado is None:
+            return jsonify({
+                "sucesso": False,
+                "erro": "Não foi possível recuperar a sessão."
+            }), 409
+
+        return jsonify({
+            "sucesso": True,
+            "mensagem": mensagem,
+            "duracao": estado["duracao"],
+            "pausado": estado["pausado"]
+        })
+
+    except Exception:
+        app.logger.exception(
+            "Erro ao iniciar ou recuperar sessão automática de estudo."
+        )
+
+        return jsonify({
+            "sucesso": False,
+            "erro": "Não foi possível iniciar o cronômetro."
+        }), 500
+
+
+@app.route("/questoes/estudo/atividade", methods=["POST"])
+def registrar_atividade_estudo():
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return jsonify({
+            "sucesso": False,
+            "erro": "Usuário não autenticado."
+        }), 401
+
+    dados = request.get_json(silent=True) or {}
+    tipo_evento = dados.get("tipo_evento")
+
+    if tipo_evento not in ("atividade", "heartbeat"):
+        return jsonify({
+            "sucesso": False,
+            "erro": "Tipo de evento inválido."
+        }), 400
+
+    try:
+        estudo = registrar_atividade_estudo_controller(
+            usuario_id,
+            tipo_evento
+        )
+
+        if estudo is None:
+            return jsonify({
+                "sucesso": False,
+                "erro": "Nenhuma sessão de estudo ativa encontrada."
+            }), 404
+
+        return jsonify({
+            "sucesso": True,
+            "duracao": estudo["duracao"],
+            "pausado": estudo["pausado"]
+        })
+
+    except Exception:
+        app.logger.exception(
+            "Erro ao registrar atividade da sessão de estudo."
+        )
+
+        return jsonify({
+            "sucesso": False,
+            "erro": "Não foi possível atualizar o cronômetro."
+        }), 500
+
+@app.route("/questoes/estudo/finalizar", methods=["POST"])
+def finalizar_sessao_questoes():
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return jsonify({
+            "sucesso": False,
+            "erro": "Usuário não autenticado."
+        }), 401
+
+    try:
+        sucesso, mensagem = (
+            finalizar_estudo_automatico_controller(usuario_id)
+        )
+
+        if not sucesso:
+            return jsonify({
+                "sucesso": False,
+                "erro": mensagem
+            }), 400
+
+        return jsonify({
+            "sucesso": True,
+            "mensagem": mensagem
+        })
+
+    except Exception:
+        app.logger.exception(
+            "Erro ao finalizar sessão automática de estudo."
+        )
+
+        return jsonify({
+            "sucesso": False,
+            "erro": "Não foi possível finalizar a sessão."
+        }), 500
 
 # ==========================
 # PROVAS
@@ -1458,27 +1596,24 @@ def visualizar_resultado_historico(resultado_id):
             continue
 
         questoes_erradas.append({
+            "numero": questao.numero,
 
-            "numero":
-                questao.numero,
+            "enunciado": questao.enunciado,
 
-            "enunciado":
-                questao.enunciado,
+            "imagem": questao.imagem,
+
+            "pergunta": questao.pergunta,
 
             "alternativas": [
                 preparar_alternativa_revisao(alternativa)
                 for alternativa in questao.alternativas
             ],
 
-            "respostaUsuario":
-                resposta_usuario,
+            "respostaUsuario": resposta_usuario,
 
-            "respostaCorreta":
-                questao.resposta,
+            "respostaCorreta": questao.resposta,
 
-            "comentario":
-                questao.comentario
-
+            "comentario": questao.comentario
         })
 
     # ------------------------------------------------

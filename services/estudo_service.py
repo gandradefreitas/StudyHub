@@ -5,7 +5,8 @@ from database.estudos_repository import (
     iniciar_estudo,
     obter_estudo_ativo,
     finalizar_estudo,
-    possui_estudo_ativo
+    possui_estudo_ativo,
+    registrar_atividade_estudo,
 )
 
 from datetime import datetime
@@ -108,3 +109,61 @@ def formatar_duracao(segundos):
         return f"{horas}h"
 
     return f"{minutos}min"
+
+def iniciar_estudo_automatico_service(usuario_id):
+    """
+    Inicia uma sessão automática ou recupera uma já existente.
+    """
+
+    estudo = obter_estudo_ativo(usuario_id)
+
+    if estudo is not None:
+        return True, "Sessão de estudo recuperada.", estudo
+
+    estudo = iniciar_estudo(usuario_id)
+
+    return True, "Sessão de estudo iniciada.", estudo
+
+
+def registrar_atividade_estudo_service(usuario_id, tipo_evento):
+    """
+    Registra uma interação ou um heartbeat do cronômetro.
+    """
+
+    return registrar_atividade_estudo(
+        usuario_id,
+        tipo_evento,
+    )
+
+
+def finalizar_estudo_automatico_service(usuario_id):
+    """
+    Finaliza uma sessão automática preservando o tempo
+    acumulado no banco de dados.
+    """
+
+    # Primeiro, registra o último intervalo contabilizável.
+    registrar_atividade_estudo(
+        usuario_id,
+        "heartbeat",
+    )
+
+    estudo = obter_estudo_ativo(usuario_id)
+
+    if estudo is None:
+        return False, "Nenhuma sessão de estudo ativa encontrada."
+
+    fim = datetime.now()
+    duracao = int(estudo["duracao"] or 0)
+
+    sucesso = finalizar_estudo(
+        estudo["id"],
+        fim,
+        duracao,
+        usuario_id,
+    )
+
+    if not sucesso:
+        return False, "Não foi possível finalizar a sessão."
+
+    return True, "Sessão de estudo finalizada."

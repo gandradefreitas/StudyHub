@@ -292,33 +292,17 @@
 
                         </div>
 
-                        {#
                         <div class="questoes-estudo">
+                            <span
+                                class="questoes-cronometro"
+                                id="cronometro-questoes"
+                            >00:00:00</span>
 
-                            {% if estudo_ativo %}
-
-                                <span class="questoes-cronometro" id="cronometro-questoes" data-inicio="{{ estudo_ativo['inicio'] }}">
-                                    00:00:00
-                                </span>
-
-                                <button type="button" id="botao-finalizar-estudo" class="questoes-botao-estudo">
-                                    Finalizar estudo
-                                </button>
-
-                            {% else %}
-
-                                <span class="questoes-cronometro" id="cronometro-questoes">
-                                    00:00:00
-                                </span>
-
-                                <button type="button" id="botao-iniciar-estudo" class="questoes-botao-estudo">
-                                    Iniciar estudo
-                                </button>
-
-                            {% endif %}
-
+                            <span
+                                id="status-cronometro-questoes"
+                                aria-live="polite"
+                            >Preparando cronômetro...</span>
                         </div>
-                        #}
 
                     </div>
 
@@ -486,17 +470,9 @@
 
     </main>
 
-    <script
-        src="{{ url_for('static', filename='js/questoes.js') }}"
-    ></script>
-
-    <script
-        src="{{ url_for('static', filename='js/cronometro.js') }}"
-    ></script>
-
-    <script
-        src="{{ url_for('static', filename='js/dashboard.js') }}"
-    ></script>
+    <script src="{{ url_for('static', filename='js/questoes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cronometro_questoes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
 </body>
 </html>
