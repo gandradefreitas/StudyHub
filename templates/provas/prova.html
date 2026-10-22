@@ -102,20 +102,21 @@
                 <div>
                     <h1>{{ prova.nome }}</h1>
                     <p>
-                        {{ prova.dia }}
-                        •
-                        {% if prova.dia == "Primeiro Dia" %}
-                            Linguagens • Ciências Humanas
-                        {% else %}
-                            Ciências da Natureza • Matemática
+                        {% if prova.tipo == "ENEM" and prova.dia %}
+                            {{ prova.dia }} •
+                        {% elif prova.tipo == "ITA" and prova.dia %}
+                            {{ prova.dia }} •
                         {% endif %}
+
+                        {{ prova.areas | join(" • ") }}
                     </p>
                 </div>
 
                 <div class="status-prova">
                     <span>
                         Questão
-                        <strong id="contador-questao">1</strong> de <strong id="total-questoes">90</strong>
+                        <strong id="contador-questao">1</strong> de
+                        <strong id="total-questoes">{{ prova.total_questoes }}</strong>
                     </span>
                 </div>
 
@@ -181,7 +182,7 @@
 </script>
 
 <script>
-    const prova = {id: {{ prova.id }},dia: "{{ prova.dia }}"};
+    const prova = {id: {{ prova.id }},tipo: {{ prova.tipo | tojson }},dia: {{ prova.dia | tojson }},areas: {{ prova.areas | tojson }}};
 </script>
 
 <script src="{{ url_for('static', filename='js/provas/prova.js') }}"></script>

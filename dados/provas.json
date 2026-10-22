@@ -1,24 +1,41 @@
 [
     {
         "id": 1,
+        "tipo": "ENEM",
         "nome": "ENEM 2025",
         "dia": "Primeiro Dia",
+        "areas": [
+            "Linguagens",
+            "Ciências Humanas"
+        ],
         "tempo": "05:30:00",
         "arquivo": "enem/2025_dia1.json"
     },
     {
         "id": 2,
+        "tipo": "ENEM",
         "nome": "ENEM 2025",
         "dia": "Segundo Dia",
+        "areas": [
+            "Ciências da Natureza",
+            "Matemática"
+        ],
         "tempo": "05:00:00",
         "arquivo": "enem/2025_dia2.json"
     },
     {
-    "id": 3,
-    "nome": "ITA 2025",
-    "dia": "Primeira Fase",
-    "tempo": "05:00:00",
-    "arquivo": "ita/2025/1_fase.json"
-
+        "id": 3,
+        "tipo": "ITA",
+        "nome": "ITA 2025",
+        "dia": "Primeira Fase",
+        "areas": [
+            "Matemática",
+            "Física",
+            "Química",
+            "Inglês"
+        ],
+        "tempo": "05:00:00",
+        "arquivo": "ita/2025/1_fase.json"
     }
 ]
+

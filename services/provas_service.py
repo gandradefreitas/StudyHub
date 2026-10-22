@@ -51,26 +51,20 @@ def carregar_questoes(caminho_arquivo):
 
 def obter_prova(id_prova):
 
-    catalogo = obter_catalogo_por_id(
-        id_prova
-    )
+    catalogo = obter_catalogo_por_id(id_prova)
 
     if catalogo is None:
-
         return None
 
-    dados = carregar_questoes(
-        catalogo["arquivo"]
-    )
-
-    questoes = criar_questoes(
-        dados
-    )
+    dados = carregar_questoes(catalogo["arquivo"])
+    questoes = criar_questoes(dados)
 
     return Prova(
         id=catalogo["id"],
+        tipo=catalogo["tipo"],
         nome=catalogo["nome"],
-        dia=catalogo["dia"],
+        dia=catalogo.get("dia"),
+        areas=catalogo["areas"],
         tempo=catalogo["tempo"],
         total_questoes=len(questoes),
         questoes=questoes

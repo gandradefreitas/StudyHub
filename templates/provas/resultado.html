@@ -71,7 +71,19 @@
 
             <!-- NOME DA PROVA -->
 
-            <h2>ENEM 2025</h2>
+            <h2>{{ prova.nome }}</h2>
+
+            <p class="identificacao-prova">
+                {% if prova.tipo == "ENEM" and prova.dia %}
+                    {{ prova.dia }}
+                {% elif prova.tipo == "ITA" and prova.dia %}
+                    {{ prova.dia }}
+                {% endif %}
+            </p>
+
+            <p class="areas-prova">
+                {{ prova.areas | join(" • ") }}
+            </p>
 
             <!-- MENSAGEM -->
 

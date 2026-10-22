@@ -30,13 +30,29 @@ let questoesProva = [];
 
 function atualizarQuestoesProva() {
 
+    // O filtro de idioma é exclusivo do ENEM do primeiro dia.
+    if (prova.tipo !== "ENEM" || prova.dia !== "Primeiro Dia") {
+        questoesProva = [...questoes];
+        return;
+    }
+
     questoesProva = questoes.filter(questao => {
 
         if (!questao.lingua) {
             return true;
         }
 
-        return questao.lingua === linguaEscolhida;
+        const lingua = questao.lingua.toLowerCase();
+
+        if (linguaEscolhida === "ingles") {
+            return lingua === "inglês" || lingua === "ingles";
+        }
+
+        if (linguaEscolhida === "espanhol") {
+            return lingua === "espanhol";
+        }
+
+        return false;
 
     });
 
@@ -1073,20 +1089,12 @@ document
     .addEventListener("click", finalizarProva);
 
 
-if (prova.dia === "Primeiro Dia") {
-
+if (prova.tipo === "ENEM" && prova.dia === "Primeiro Dia") {
     if (linguaEscolhida) {
-
         iniciarProva();
-
     } else {
-
         selecionarLingua();
-
     }
-
 } else {
-
     iniciarProva();
-
 }

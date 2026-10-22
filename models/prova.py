@@ -6,9 +6,13 @@ class Prova:
 
     id: int
 
+    tipo: str
+
     nome: str
 
-    dia: str
+    dia: str | None
+
+    areas: list[str]
 
     tempo: str
 

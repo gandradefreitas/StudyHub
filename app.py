@@ -897,7 +897,6 @@ def visualizar_prova(id_prova):
             url_for("pagina_login")
         )
 
-
     prova = obter_prova(id_prova)
 
 
@@ -1027,26 +1026,36 @@ def resultado_prova():
         # FILTRA AS QUESTÕES OFICIAIS DA PROVA
         # ------------------------------------------------
 
-        # Identifica o idioma escolhido para a prova.
         lingua_escolhida = dados.get("lingua")
 
-        # Filtra as questões oficiais pelo número e, quando aplicável,
-        # pelo idioma escolhido.
-        questoes_realizadas = [
-            questao
-            for questao in prova.questoes
-            if questao.numero in numeros_questoes
-               and (
-                       not questao.lingua
-                       or questao.lingua == lingua_escolhida
-               )
-        ]
+        if prova.tipo == "ENEM" and prova.dia == "Primeiro Dia":
+
+            # ENEM: considera o idioma escolhido pelo participante.
+            questoes_realizadas = [
+                questao
+                for questao in prova.questoes
+                if questao.numero in numeros_questoes
+                   and (
+                           not questao.lingua
+                           or questao.lingua == lingua_escolhida
+                   )
+            ]
+
+        else:
+
+            # Outras provas, como o ITA:
+            # considera todas as questões oficiais recebidas,
+            # inclusive aquelas que possuem um campo "lingua".
+            questoes_realizadas = [
+                questao
+                for questao in prova.questoes
+                if questao.numero in numeros_questoes
+            ]
 
         if len(questoes_realizadas) != len(numeros_questoes):
             return jsonify({
                 "erro": "A lista de questões não corresponde à prova oficial."
             }), 400
-
 
         # ------------------------------------------------
         # CALCULA O RESULTADO
@@ -1383,17 +1392,29 @@ def resultado_prova():
                 resultado.get("numeros_questoes", [])
             )
 
-            questoes_realizadas = [
-                questao
-                for questao in prova.questoes
-                if (
-                        questao.numero in numeros_questoes
-                        and (
-                                not questao.lingua
-                                or questao.lingua == lingua_escolhida
-                        )
-                )
-            ]
+
+            # Reconstrói as questões realizadas conforme o tipo de prova.
+            if prova.tipo == "ENEM" and prova.dia == "Primeiro Dia":
+
+                questoes_realizadas = [
+                    questao
+                    for questao in prova.questoes
+                    if (
+                            questao.numero in numeros_questoes
+                            and (
+                                    not questao.lingua
+                                    or questao.lingua == lingua_escolhida
+                            )
+                    )
+                ]
+
+            else:
+
+                questoes_realizadas = [
+                    questao
+                    for questao in prova.questoes
+                    if questao.numero in numeros_questoes
+                ]
 
             # Monta a revisão
             for questao in questoes_realizadas:
@@ -1440,15 +1461,11 @@ def resultado_prova():
     # ----------------------------------------------------
 
     return render_template(
-
         "provas/resultado.html",
-
         resultado=resultado,
-
+        prova=prova if resultado["prova_id"] is not None else None,
         titulo="Resultado",
-
         classe_body="sidebar-toggle"
-
     )
 
 def preparar_alternativa_revisao(alternativa):
@@ -1655,9 +1672,11 @@ def visualizar_resultado_historico(resultado_id):
     return render_template(
         "provas/resultado.html",
         resultado=resultado,
+        prova=prova,
         titulo="Resultado da Prova",
         classe_body="sidebar-toggle"
     )
+
 
 # ==========================
 # CALENDÁRIO
