@@ -12,5 +12,13 @@
         "dia": "Segundo Dia",
         "tempo": "05:00:00",
         "arquivo": "enem/2025_dia2.json"
+    },
+    {
+    "id": 3,
+    "nome": "ITA 2025",
+    "dia": "Primeira Fase",
+    "tempo": "05:00:00",
+    "arquivo": "ita/2025/1_fase.json"
+
     }
 ]
