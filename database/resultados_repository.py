@@ -248,30 +248,6 @@ def salvar_respostas_prova(
     cursor = conexao.cursor()
 
     try:
-        cursor.execute("""
-            SELECT
-                current_database() AS banco,
-                current_schema() AS esquema,
-                current_user AS usuario
-        """)
-
-        print("BANCO EM USO:", cursor.fetchone())
-
-        cursor.execute("""
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_schema = 'public'
-              AND table_name = 'respostas_provas'
-            ORDER BY ordinal_position
-        """)
-
-        print("COLUNAS DA TABELA:", cursor.fetchall())
-
-    finally:
-        cursor.close()
-        conexao.close()
-
-    try:
 
         for questao in questoes:
 
