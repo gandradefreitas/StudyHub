@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/provas/prova_discursiva.css') }}"
+>
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="prova-discursiva-container">
+
+    <header class="prova-discursiva-header">
+
+        <p class="prova-discursiva-instituicao">
+            {{ tentativa.instituicao }} · {{ tentativa.ano }}
+        </p>
+
+        <h1>
+            Resultado — {{ tentativa.disciplina }}
+        </h1>
+
+        <p>{{ tentativa.fase }}</p>
+
+    </header>
+
+    <section class="questao-discursiva">
+
+        <h2>Informações da tentativa</h2>
+
+        <p>
+            <strong>Status:</strong>
+            {% if tentativa.status == 'corrigida' %}
+                Corrigida
+            {% elif tentativa.status == 'finalizada' %}
+                Aguardando correção
+            {% else %}
+                Em andamento
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Início:</strong>
+            {{ tentativa.data_inicio.strftime('%d/%m/%Y às %H:%M') if tentativa.data_inicio else 'Não registrado' }}
+        </p>
+
+        <p>
+            <strong>Finalização:</strong>
+            {{ tentativa.data_finalizacao.strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else 'Ainda não finalizada' }}
+        </p>
+
+        {% if tentativa.status == 'corrigida' %}
+            <p>
+                <strong>Nota:</strong>
+                {{ tentativa.nota_total if tentativa.nota_total is not none else 'Não informada' }}
+                {% if tentativa.nota_maxima is not none %}
+                    / {{ tentativa.nota_maxima }}
+                {% endif %}
+            </p>
+        {% elif tentativa.status == 'finalizada' %}
+            <p>
+                A correção desta prova ainda não está disponível.
+            </p>
+        {% endif %}
+
+    </section>
+
+    <section class="questao-discursiva">
+
+        <h2>Respostas enviadas</h2>
+
+        {% if respostas %}
+
+            {% for chave, resposta in respostas.items() %}
+
+                <article class="item-discursivo">
+
+                    <h3>
+                        Questão {{ chave[0] }}
+                        {% if chave[1] %}
+                            — Item {{ chave[1] }}
+                        {% endif %}
+                    </h3>
+
+                    <div>
+                        {{ resposta if resposta else 'Nenhuma resposta registrada.' }}
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>Nenhuma resposta foi registrada nesta tentativa.</p>
+
+        {% endif %}
+
+    </section>
+
+    <p>
+        <a href="{{ url_for('historico_provas') }}">
+            Consultar histórico
+        </a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('selecionar_provas_ita_segunda_fase') }}">
+            Voltar às provas do ITA
+        </a>
+    </p>
+
+</main>
+
+{% endblock %}

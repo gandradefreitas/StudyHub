@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/provas/prova_discursiva.css') }}"
+>
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="prova-discursiva-container">
+
+    <header class="prova-discursiva-header">
+        <h1>Histórico de provas discursivas</h1>
+        <p>Consulte suas tentativas anteriores do ITA.</p>
+    </header>
+
+    {% if tentativas %}
+
+        {% for tentativa in tentativas %}
+
+            <section class="questao-discursiva">
+
+                <h2>
+                    {{ tentativa.instituicao }} {{ tentativa.ano }}
+                    — {{ tentativa.disciplina }}
+                </h2>
+
+                <p>
+                    <strong>Fase:</strong>
+                    {{ tentativa.fase }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+
+                    {% if tentativa.status == 'corrigida' %}
+                        Corrigida
+                    {% elif tentativa.status == 'finalizada' %}
+                        Aguardando correção
+                    {% else %}
+                        Em andamento
+                    {% endif %}
+                </p>
+
+                <p>
+                    <strong>Início:</strong>
+                    {{ tentativa.data_inicio or 'Não registrado' }}
+                </p>
+
+                {% if tentativa.data_finalizacao %}
+                    <p>
+                        <strong>Finalização:</strong>
+                        {{ tentativa.data_finalizacao }}
+                    </p>
+                {% endif %}
+
+                {% if tentativa.status == 'corrigida' %}
+                    <p>
+                        <strong>Nota:</strong>
+                        {{ tentativa.nota_total if tentativa.nota_total is not none else 'Não informada' }}
+
+                        {% if tentativa.nota_maxima is not none %}
+                            / {{ tentativa.nota_maxima }}
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+                <a href="{{ url_for(
+                    'visualizar_resultado_discursivo',
+                    tentativa_id=tentativa.id
+                ) }}">
+                    Consultar tentativa
+                </a>
+
+            </section>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>Você ainda não possui tentativas discursivas registradas.</p>
+
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('selecionar_provas_ita_segunda_fase') }}">
+            Voltar às provas do ITA
+        </a>
+    </p>
+
+</main>
+
+{% endblock %}

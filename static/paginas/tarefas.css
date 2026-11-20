@@ -801,3 +801,59 @@
     }
 
 }
+
+.tarefa-dialogo {
+    width: min(26rem, calc(100% - 2rem));
+    box-sizing: border-box;
+    margin: auto;
+    padding: 1.5rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    text-align: center;
+}
+
+.tarefa-dialogo::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
+
+.tarefa-dialogo h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.tarefa-dialogo p {
+    margin: .75rem 0 1.25rem;
+    color: var(--cor-texto-secundario);
+}
+
+.tarefa-dialogo-acoes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.tarefa-dialogo-acoes button {
+    min-height: 44px;
+    padding: .6rem .9rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tarefa-dialogo-acoes button[value="excluir"] {
+    border-color: #b42318;
+    background: #b42318;
+    color: #fff;
+}
+
+.tarefa-dialogo-acoes button:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 3px;
+}

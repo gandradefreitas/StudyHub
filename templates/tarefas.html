@@ -133,8 +133,8 @@
                                     value="{{ csrf_token() }}"
                                 >
 
-                                <button type="submit" class="tarefa-acao tarefa-acao-excluir"
-                                    onclick="return confirm('Deseja realmente excluir esta tarefa?')"
+                                <button type="button" class="tarefa-acao tarefa-acao-excluir"
+                                    data-confirmar-exclusao aria-haspopup="dialog"
                                 >
 
                                     <i class="bi bi-trash3"></i>
@@ -178,6 +178,18 @@
 
     </main>
 
+    {% if tarefas %}
+        <dialog id="confirmar-exclusao-tarefa" class="tarefa-dialogo"
+            aria-labelledby="titulo-exclusao-tarefa" aria-describedby="mensagem-exclusao-tarefa">
+            <h2 id="titulo-exclusao-tarefa">Excluir tarefa?</h2>
+            <p id="mensagem-exclusao-tarefa">A tarefa será removida permanentemente.</p>
+            <form method="dialog" class="tarefa-dialogo-acoes">
+                <button type="submit" value="cancelar" autofocus>Cancelar</button>
+                <button type="submit" value="excluir">Excluir tarefa</button>
+            </form>
+        </dialog>
+        <script src="{{ url_for('static', filename='js/tarefas.js') }}" defer></script>
+    {% endif %}
 
     <script
         src="{{ url_for('static', filename='js/dashboard.js') }}"
