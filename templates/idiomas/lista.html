@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block titulo %}Idiomas · StudyHub{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/idiomas.css') }}">
+{% endblock %}
+
+{% macro numero(valor) %}{{ '{:,}'.format(valor).replace(',', '.') }}{% endmacro %}
+
+{% block conteudo %}
+<div class="idiomas">
+    <h1>Idiomas</h1>
+    <p class="idiomas-secundario">Treine sua leitura em inglês e espanhol.</p>
+    <section class="idiomas-cartao" aria-labelledby="palavras-lidas">
+        <h2 id="palavras-lidas">Palavras lidas</h2>
+        <dl class="idiomas-resumo">
+            <div><dt>Hoje</dt><dd>{{ numero(estatisticas.hoje) }}</dd></div>
+            <div><dt>Mês selecionado</dt><dd>{{ numero(estatisticas.total_mes) }}</dd></div>
+            <div><dt>Total acumulado</dt><dd>{{ numero(estatisticas.total) }}</dd></div>
+        </dl>
+        <div class="idiomas-controles">
+            <nav aria-label="Meses do gráfico">
+                {% if estatisticas.anterior %}
+                    <a href="{{ url_for('idiomas.listar', mes=estatisticas.anterior, _anchor='palavras-lidas') }}" aria-label="Mês anterior">‹</a>
+                {% endif %}
+                <h3>{{ estatisticas.rotulo_mes }}</h3>
+                {% if estatisticas.seguinte %}
+                    <a href="{{ url_for('idiomas.listar', mes=estatisticas.seguinte, _anchor='palavras-lidas') }}" aria-label="Próximo mês">›</a>
+                {% endif %}
+            </nav>
+            <form method="get" action="{{ url_for('idiomas.listar', _anchor='palavras-lidas') }}">
+                <label for="mes-idiomas">Ir para o mês</label>
+                <input type="month" id="mes-idiomas" name="mes" value="{{ estatisticas.mes }}" max="{{ estatisticas.mes_atual }}" required>
+                <button type="submit">Exibir</button>
+            </form>
+        </div>
+        {% if not estatisticas.total_mes %}
+            <p class="idiomas-secundario">Nenhuma leitura concluída neste mês.</p>
+        {% endif %}
+        <div class="idiomas-grafico" aria-hidden="true">
+            {% for palavras in estatisticas.dias %}
+                <div class="idiomas-dia" title="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
+                    <div class="idiomas-trilho"><span style="--altura: {{ 100 * palavras / estatisticas.pico }}%"></span></div>
+                    <span class="idiomas-dia-numero">{{ loop.index }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <details class="idiomas-dados">
+            <summary>Ver palavras por dia</summary>
+            <table>
+                <caption>{{ estatisticas.rotulo_mes }}</caption>
+                <thead><tr><th scope="col">Dia</th><th scope="col">Palavras lidas</th></tr></thead>
+                <tbody>
+                    {% for palavras in estatisticas.dias %}
+                        <tr><th scope="row">{{ loop.index }}</th><td>{{ numero(palavras) }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </details>
+    </section>
+
+    <section aria-labelledby="leituras-disponiveis">
+        <h2 id="leituras-disponiveis">Leituras disponíveis</h2>
+        {% for codigo, idioma in idiomas.items() %}
+            <details class="idiomas-grupo"{% if idioma_aberto == codigo %} open{% endif %}>
+                <summary>{{ idioma }}</summary>
+                <ul>
+                    {% for texto in textos if texto.idioma == codigo %}
+                        <li>
+                            <a class="idiomas-texto{% if texto.id in progresso %} idiomas-lido{% endif %}" href="{{ url_for('idiomas.leitura', texto_id=texto.id) }}">
+                                <strong lang="{{ codigo }}">{{ texto.titulo }}</strong>
+                                <span>{{ numero(texto.palavras) }} palavras</span>
+                                {% if texto.id in progresso %}<span class="idiomas-selo">✓ Já lido</span>{% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </details>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
+

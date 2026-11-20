@@ -1,0 +1,251 @@
+.idiomas {
+    max-width: 1080px;
+    margin-inline: auto;
+    padding: clamp(1rem, 4vw, 2rem);
+    color: var(--cor-texto);
+}
+
+.idiomas h1,
+.idiomas h2,
+.idiomas h3 {
+    margin: 0 0 .65rem;
+}
+
+.idiomas :focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 3px;
+}
+
+.idiomas-cartao,
+.idiomas-grupo,
+.idiomas-texto {
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    background: var(--cor-card);
+}
+
+.idiomas-cartao {
+    padding: clamp(1rem, 3vw, 1.4rem);
+    margin: 0 0 1.25rem;
+}
+
+.idiomas-secundario {
+    color: var(--cor-texto-secundario);
+}
+
+.idiomas-resumo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem 2rem;
+    padding-block: .6rem 1rem;
+    margin: 0;
+}
+
+.idiomas-resumo dd {
+    margin: 0;
+    font-size: 1.55rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.idiomas-controles,
+.idiomas-controles nav,
+.idiomas-controles form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.idiomas-controles {
+    justify-content: space-between;
+    margin-bottom: .8rem;
+}
+
+.idiomas-controles h3 {
+    margin: 0;
+}
+
+.idiomas-controles a,
+.idiomas input[type="month"],
+.idiomas button {
+    padding: .45rem .65rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+    font: inherit;
+}
+
+.idiomas-controles a {
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.idiomas button {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.idiomas-controles a:hover,
+.idiomas button:hover {
+    border-color: var(--cor-primaria);
+}
+
+.idiomas-grafico {
+    display: flex;
+    gap: clamp(2px, .5vw, 6px);
+}
+
+.idiomas-dia {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+}
+
+.idiomas-trilho {
+    height: 7rem;
+    display: flex;
+    align-items: end;
+    background: var(--cor-fundo-secundario);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.idiomas-trilho span {
+    width: 100%;
+    height: var(--altura);
+    background: var(--cor-primaria);
+    border-radius: 4px 4px 0 0;
+}
+
+.idiomas-dia-numero {
+    display: block;
+    font-size: .75rem;
+    color: var(--cor-texto-secundario);
+}
+
+.idiomas-dados {
+    margin-top: .8rem;
+}
+
+.idiomas-dados table {
+    width: min(100%, 22rem);
+    margin-top: .65rem;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.idiomas-dados th,
+.idiomas-dados td {
+    padding: .25rem .5rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.idiomas summary {
+    cursor: pointer;
+}
+
+.idiomas-grupo {
+    margin-bottom: .75rem;
+}
+
+.idiomas-grupo > summary {
+    padding: .9rem 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.idiomas-grupo ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: .6rem;
+    list-style: none;
+    padding: 0 1rem 1rem;
+    margin: 0;
+}
+
+.idiomas-texto {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    height: 100%;
+    padding: .75rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.idiomas-texto:hover strong {
+    text-decoration: underline;
+}
+
+.idiomas-lido {
+    background: color-mix(in srgb, var(--cor-sucesso) 12%, var(--cor-card));
+    border-color: var(--cor-sucesso);
+}
+
+.idiomas-selo {
+    font-weight: 700;
+}
+
+.idiomas-leitura {
+    max-width: 800px;
+}
+
+.idiomas-leitura article p {
+    line-height: 1.7;
+}
+
+.idiomas-voltar {
+    display: inline-block;
+    color: inherit;
+    margin-bottom: 1rem;
+}
+
+.idiomas-quiz fieldset {
+    min-width: 0;
+}
+
+.idiomas-quiz legend,
+.idiomas-enunciado {
+    font-weight: 700;
+}
+
+.idiomas-enunciado {
+    margin: 0 0 .5rem;
+}
+
+.idiomas-opcao {
+    display: flex;
+    align-items: baseline;
+    gap: .55rem;
+    padding: .45rem;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.idiomas-opcao:hover,
+.idiomas-opcao:has(:checked) {
+    background: var(--cor-fundo-secundario);
+}
+
+.idiomas-opcao input {
+    accent-color: var(--cor-primaria);
+}
+
+.idiomas-erro {
+    border-left: 3px solid var(--cor-erro);
+    padding-left: .65rem;
+    font-weight: 600;
+}
+
+.idiomas #resultado {
+    margin: 1.25rem 0 0;
+    scroll-margin-top: 1rem;
+}
+
+@media (max-width: 720px) {
+    .idiomas-dia:not(:nth-child(5n + 1)) .idiomas-dia-numero {
+        visibility: hidden;
+    }
+}

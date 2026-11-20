@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block titulo %}{{ texto.titulo }} · Idiomas · StudyHub{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/idiomas.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<div class="idiomas idiomas-leitura">
+    <a class="idiomas-voltar" href="{{ url_for('idiomas.listar', idioma=texto.idioma) }}">← Voltar para Idiomas</a>
+    <article class="idiomas-cartao">
+        <p class="idiomas-secundario">{{ idioma }} · {{ texto.palavras }} palavras</p>
+        <div lang="{{ texto.idioma }}">
+            <h1>{{ texto.titulo }}</h1>
+            {% for paragrafo in texto.paragrafos %}<p>{{ paragrafo }}</p>{% endfor %}
+        </div>
+    </article>
+
+    <section aria-labelledby="perguntas-leitura">
+        <h2 id="perguntas-leitura">Perguntas sobre o texto</h2>
+        <p>Responda às 10 perguntas para concluir a leitura e ver o resultado.</p>
+        {% if erro %}
+            <p class="idiomas-erro" role="alert">Selecione uma alternativa válida em cada pergunta.</p>
+        {% endif %}
+        <form method="post" class="idiomas-quiz">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            {% for questao in texto.questoes %}
+                {% set numero = loop.index %}
+                <fieldset class="idiomas-cartao">
+                    <legend>{{ numero }} · {{ questao.dificuldade }}</legend>
+                    <div lang="{{ texto.idioma }}" role="group" aria-labelledby="enunciado-{{ numero }}">
+                        <p class="idiomas-enunciado" id="enunciado-{{ numero }}">{{ questao.enunciado }}</p>
+                        {% for opcao in questao.opcoes %}
+                            <label class="idiomas-opcao">
+                                <input type="radio" name="questao-{{ numero }}" value="{{ loop.index0 }}"{% if loop.first %} required{% endif %}{% if respostas.get(numero) == loop.index0 %} checked{% endif %}>
+                                <span>{{ opcao }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            {% endfor %}
+            <button type="submit">Ver resultado</button>
+        </form>
+    </section>
+
+    {% if resultado and not erro %}
+        <section id="resultado" class="idiomas-cartao idiomas-lido" aria-labelledby="titulo-resultado" tabindex="-1">
+            <h2 id="titulo-resultado">Resultado</h2>
+            <p>Você acertou <strong>{{ resultado.acertos }} de {{ texto.questoes | length }}</strong> perguntas.</p>
+            <p>✓ Já lido · {{ resultado.palavras }} palavras registradas</p>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

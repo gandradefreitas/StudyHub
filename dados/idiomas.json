@@ -1,0 +1,674 @@
+[
+  {
+    "id": "the-library-of-things",
+    "idioma": "en",
+    "titulo": "The Library of Things",
+    "paragrafos": [
+      "When the public library in Millbridge reopened after repairs, Maya expected to see new bookshelves. Instead, she found a bright cabinet beside the front desk. Inside were a sewing machine, a set of bicycle tools, and a small telescope. A sign called it the Library of Things. Members could borrow any object for a week, just as they could borrow a novel.",
+      "Maya borrowed the telescope to watch the moon with her little brother. On the first night, clouds covered the sky. The next evening was clear, but she could not make the image sharp. A library volunteer showed her how to start with the lowest magnification. Later, Maya wrote the tip on a card and slipped it into the telescope case for the next borrower.",
+      "After three months, the librarian noticed two changes. Fewer people were asking how to use the objects, and more neighbors were donating tools they rarely used. Some items still came back late, so the library began sending a reminder two days before each return date. Maya kept visiting, even when she had nothing to borrow. She wanted to see what other readers had learned and shared."
+    ],
+    "questoes": [
+      {
+        "enunciado": "Where was the cabinet?",
+        "opcoes": [
+          "In the garden",
+          "Behind the library",
+          "Beside the front desk",
+          "On the roof"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "What did Maya borrow?",
+        "opcoes": [
+          "A telescope",
+          "A sewing machine",
+          "A bicycle",
+          "A novel"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "How long could members borrow an object?",
+        "opcoes": [
+          "Two days",
+          "Three months",
+          "One month",
+          "One week"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "What blocked the view on the first night?",
+        "opcoes": [
+          "Trees",
+          "Clouds",
+          "A tall building",
+          "Smoke"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "What helped Maya get a sharp image?",
+        "opcoes": [
+          "Starting at the lowest magnification",
+          "Waiting for the reminder",
+          "Moving closer to the moon",
+          "Reading the sign by the front desk"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "What did Maya do with the tip?",
+        "opcoes": [
+          "She posted it on the cabinet",
+          "She saved it for her brother alone",
+          "She left it in the case for another borrower",
+          "She asked the librarian to email it"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "What did neighbors increasingly do?",
+        "opcoes": [
+          "Request longer borrowing periods",
+          "Donate tools",
+          "Bring telescopes home",
+          "Ask for help with objects"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "Why were reminders introduced?",
+        "opcoes": [
+          "Too few people knew about the library",
+          "People forgot how to use the tools",
+          "The library was about to close",
+          "Some items were returned late"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "How does Maya’s card reflect the larger change described?",
+        "opcoes": [
+          "Donations are effective only when volunteers supervise them",
+          "Borrowers prefer written rules to personal help",
+          "A borrower’s experience can become a resource for others",
+          "Most readers want to learn about astronomy"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "Why does the final paragraph mention both donations and late returns?",
+        "opcoes": [
+          "To show benefits of the project alongside a problem it had to address",
+          "To suggest that donations caused the late returns",
+          "To argue that the project should end",
+          "To compare the value of different donated tools"
+        ],
+        "correta": 0
+      }
+    ]
+  },
+  {
+    "id": "a-garden-between-buildings",
+    "idioma": "en",
+    "titulo": "A Garden Between Buildings",
+    "paragrafos": [
+      "An empty lot lay between two apartment buildings on River Street. In summer, rainwater sat in muddy pools there for days. A group of neighbors wanted to grow vegetables on the lot, but Rosa, who had worked in a nursery, asked them to start by watching the water. After each storm, they marked the edges of the largest pool with wooden sticks. The marks showed that the lowest corner was the last to dry.",
+      "Instead of putting vegetable beds everywhere, the group planted that corner with native grasses and flowers that could handle wet soil. They built raised beds on higher ground and collected water from a shed roof in a barrel. There was another disagreement when residents began picking the first tomatoes. Some wanted a locked gate. A teenager named Leo suggested a sign instead, asking visitors to leave enough for the next person.",
+      "By autumn, children had counted four kinds of butterflies in the wet corner. The residents shared tomatoes at a weekend meal, and Leo’s sign was still standing. The group wrote down what it had learned for a nearby school. Its first piece of advice was simple: spend time looking at the place before deciding what it should become."
+    ],
+    "questoes": [
+      {
+        "enunciado": "Where was the lot?",
+        "opcoes": [
+          "Between two apartment buildings",
+          "Behind a school",
+          "Beside a river",
+          "Inside a nursery"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "What did the neighbors want to grow?",
+        "opcoes": [
+          "Tall trees",
+          "Wheat",
+          "Indoor plants",
+          "Vegetables"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "What did they use to mark the pool?",
+        "opcoes": [
+          "Colored stones",
+          "Wooden sticks",
+          "Metal fences",
+          "Chalk"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "What did the children count?",
+        "opcoes": [
+          "Kinds of butterflies",
+          "Tomato plants",
+          "Rainy days",
+          "Raised beds"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "What determined where the grasses and flowers went?",
+        "opcoes": [
+          "Where the school was located",
+          "Where the shed cast a shadow",
+          "How long the soil in that corner stayed wet",
+          "How many tomatoes had been picked"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "Where did the water in the barrel come from?",
+        "opcoes": [
+          "The largest pool",
+          "The shed roof",
+          "A school tap",
+          "The raised beds"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "What was Leo’s sign asking visitors to do?",
+        "opcoes": [
+          "Record every tomato they picked",
+          "Bring tools to the garden",
+          "Keep the gate locked",
+          "Leave some tomatoes for others"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "Who received the group’s written advice?",
+        "opcoes": [
+          "The owner of the nursery",
+          "A town council",
+          "A nearby school",
+          "A group of shopkeepers"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "Why does the author include the disagreement about the gate?",
+        "opcoes": [
+          "It shows that sharing the garden required decisions as well as planting it",
+          "It explains why the low corner stayed wet",
+          "It proves residents had stopped picking tomatoes",
+          "It suggests that growing vegetables was forbidden"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "Which action best applies the final advice to a new garden?",
+        "opcoes": [
+          "Copy the same design on every lot",
+          "Build a gate before visiting the site",
+          "Observe where sunlight and rain reach the site before choosing plants",
+          "Use the same plants regardless of soil"
+        ],
+        "correta": 2
+      }
+    ]
+  },
+  {
+    "id": "the-quiet-hour",
+    "idioma": "en",
+    "titulo": "The Quiet Hour",
+    "paragrafos": [
+      "Every Thursday after school, Noah helped at his aunt’s grocery shop. The door bell rang, music played above the shelves, and the freezers hummed. One afternoon, a customer named Elise set down her basket and left before paying. The following week she returned and explained that the noise had made it hard to concentrate. Noah’s aunt asked what would make shopping easier for her.",
+      "Together they decided to try a quiet hour on Saturdays. Staff switched off the music, paused shelf deliveries, and spoke softly near the checkout. They could not stop the freezers, but they moved the noisiest trolley out of the way. Noah printed the hours on a sign at the entrance. At first, only a few shoppers came. Within a month, some customers told him they planned their weekly shopping around that hour.",
+      "Noah was surprised when his aunt kept the quiet hour even during the busy holiday season. It required changing delivery schedules, and the shop sold about as much on Saturdays as it had before. But she had noticed that people who once sent relatives to shop were now coming in on their own. For her, that was worth keeping."
+    ],
+    "questoes": [
+      {
+        "enunciado": "Where did Noah help after school?",
+        "opcoes": [
+          "At a music school",
+          "At a library",
+          "At a bus station",
+          "At a grocery shop"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "Who explained why she had left early?",
+        "opcoes": [
+          "Noah’s aunt",
+          "Elise",
+          "A delivery driver",
+          "A cashier"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "When was the quiet hour?",
+        "opcoes": [
+          "On Saturdays",
+          "On Thursdays",
+          "Every afternoon",
+          "During school hours"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "Where did Noah put the sign?",
+        "opcoes": [
+          "Inside a freezer",
+          "Above the checkout",
+          "At the entrance",
+          "On a trolley"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "Which source of noise stayed during quiet hour?",
+        "opcoes": [
+          "The music",
+          "The freezers",
+          "Shelf deliveries",
+          "The noisiest trolley"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "What did some customers change after the trial?",
+        "opcoes": [
+          "Which shop they worked at",
+          "What they bought for relatives",
+          "How they paid for their groceries",
+          "When they did their weekly shopping"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "What extra work did quiet hour require?",
+        "opcoes": [
+          "Building a second entrance",
+          "Replacing every freezer",
+          "Changing delivery schedules",
+          "Hiring more cashiers"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "How did Saturday sales change?",
+        "opcoes": [
+          "They stayed about the same",
+          "They doubled",
+          "They disappeared",
+          "They fell sharply"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "What mattered most to Noah’s aunt in keeping the quiet hour?",
+        "opcoes": [
+          "The sign generated sales",
+          "The shop no longer needed freezers",
+          "More people could shop independently",
+          "Customers spent more per visit"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "What role does Elise’s first visit play in the story?",
+        "opcoes": [
+          "It makes a barrier visible and leads to a practical experiment",
+          "It proves the experiment had already worked",
+          "It shows the shop was short of goods",
+          "It introduces a disagreement about holiday sales"
+        ],
+        "correta": 0
+      }
+    ]
+  },
+  {
+    "id": "un-mapa-para-volver",
+    "idioma": "es",
+    "titulo": "Un mapa para volver",
+    "paragrafos": [
+      "El primer verano que pasó en casa de su abuela, Inés se perdió al regresar del mercado. Las calles del pueblo eran estrechas y casi todas las fachadas tenían el mismo color. Cuando por fin llegó, su abuela le propuso hacer un mapa. En lugar de empezar por los nombres de las calles, anotaron cosas que Inés podía reconocer: una fuente redonda, una puerta azul y el olor a pan cerca de la plaza.",
+      "Al día siguiente, Inés siguió el mapa sin ayuda. Se confundió junto a la iglesia porque habían pintado de verde la puerta azul. Su abuela le sugirió añadir referencias que cambiaran menos, como la forma de las ventanas o la pendiente de una calle. Inés dejó la puerta en su dibujo y agregó una pequeña escalera de piedra que estaba justo al lado.",
+      "Antes de regresar a la ciudad, Inés llevó una copia al mercado. Un vendedor quiso colgarla cerca de la entrada para orientar a los visitantes. Ella le pidió que dejara espacio debajo para que otros vecinos añadieran sus propios caminos. Durante el viaje de vuelta, pensó que el mapa le había enseñado a observar y también a preguntar."
+    ],
+    "questoes": [
+      {
+        "enunciado": "¿Dónde vivía la abuela?",
+        "opcoes": [
+          "En la capital",
+          "En un pueblo",
+          "En una isla",
+          "En el mercado"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "¿De qué lugar volvía Inés cuando se perdió?",
+        "opcoes": [
+          "Del mercado",
+          "De la escuela",
+          "De la iglesia",
+          "De la estación"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿De qué color era la puerta al principio?",
+        "opcoes": [
+          "Verde",
+          "Roja",
+          "Azul",
+          "Blanca"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Quién quiso colgar una copia del mapa?",
+        "opcoes": [
+          "Un turista",
+          "Un vendedor",
+          "Su abuela",
+          "Un pintor"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "¿Por qué se confundió Inés cerca de la iglesia?",
+        "opcoes": [
+          "La plaza estaba cerrada",
+          "La abuela había borrado la iglesia",
+          "Había perdido el mapa en la fuente",
+          "Habían cambiado el color de la puerta"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "¿Qué agregó Inés junto a la puerta?",
+        "opcoes": [
+          "Un puesto de pan",
+          "El nombre de la calle",
+          "Una escalera de piedra",
+          "Una fuente cuadrada"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Para qué quería el vendedor mostrar el mapa?",
+        "opcoes": [
+          "Para orientar a los visitantes",
+          "Para anunciar descuentos",
+          "Para enseñar los colores del pueblo",
+          "Para recordar los horarios del mercado"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Por qué pidió Inés dejar espacio bajo la copia?",
+        "opcoes": [
+          "Para que el vendedor escribiera los precios",
+          "Para que la abuela pudiera firmar",
+          "Para que los vecinos pudieran añadir recorridos",
+          "Para continuar dibujando durante el viaje"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Qué aprendió Inés al combinar la puerta con la escalera?",
+        "opcoes": [
+          "Una referencia más estable puede complementar otra que cambia",
+          "El color siempre es más preciso que la forma",
+          "Los mapas sirven solo cuando incluyen nombres oficiales",
+          "Un camino deja de ser útil si cambia algún detalle"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Qué cambio refleja el destino final del mapa?",
+        "opcoes": [
+          "El mapa pasó a sustituir todos los letreros del pueblo",
+          "Inés decidió guardar en secreto lo que había observado",
+          "Una copia resultó útil solo para el vendedor",
+          "Una herramienta personal se convirtió en una guía que otros podían ampliar"
+        ],
+        "correta": 3
+      }
+    ]
+  },
+  {
+    "id": "el-taller-de-paraguas",
+    "idioma": "es",
+    "titulo": "El taller de paraguas",
+    "paragrafos": [
+      "En el barrio de Clara, los contenedores se llenaban de paraguas rotos después de cada tormenta. Su vecino Julián había trabajado reparando bicicletas y pensó que muchas varillas todavía servían. Pidió permiso para usar una sala del centro vecinal durante una tarde. Clara preparó una mesa con herramientas y dos cajas: una para piezas aprovechables y otra para restos que no se podían reparar.",
+      "Al principio, todos esperaban que Julián hiciera el trabajo. Para cambiar eso, Clara colocó una silla a su lado e invitó a la primera visitante a participar. La mujer observó cómo desmontar una varilla y luego lo intentó con otra. Cuando terminó, explicó el procedimiento a un chico que acababa de llegar. En poco tiempo, varias personas enseñaban algo, incluso quienes habían llegado sin experiencia.",
+      "El taller se repitió una vez al mes. Algunos paraguas seguían sin arreglo, pero otros se prestaban en la entrada del centro en días de lluvia. Clara empezó a guardar instrucciones dibujadas en una carpeta. Así, cuando Julián se ausentó un sábado, el grupo pudo abrir el taller y guiar a quienes llegaban por primera vez."
+    ],
+    "questoes": [
+      {
+        "enunciado": "¿Qué objetos se acumulaban después de las tormentas?",
+        "opcoes": [
+          "Paraguas rotos",
+          "Bicicletas",
+          "Cajas de cartón",
+          "Zapatos mojados"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Qué había reparado Julián en su trabajo anterior?",
+        "opcoes": [
+          "Relojes",
+          "Ventanas",
+          "Bicicletas",
+          "Paraguas"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Dónde se hizo el taller?",
+        "opcoes": [
+          "En un mercado",
+          "En el centro vecinal",
+          "En la casa de Clara",
+          "En una escuela"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "¿Con qué frecuencia se repitió el taller?",
+        "opcoes": [
+          "Cada día",
+          "Una vez al año",
+          "Cada dos semanas",
+          "Una vez al mes"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "¿Cómo ayudaban las dos cajas?",
+        "opcoes": [
+          "Ordenaban los paraguas por color",
+          "Guardaban los paraguas que se prestaban",
+          "Separaban las piezas útiles de los restos",
+          "Separaban herramientas nuevas y viejas"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Cómo animó Clara a la primera visitante a participar?",
+        "opcoes": [
+          "Puso una silla junto a Julián y la invitó a probar",
+          "Le pidió que trajera más herramientas",
+          "Le entregó la carpeta antes de empezar",
+          "Cerró la sala hasta que llegara más gente"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Qué hizo la visitante después de aprender?",
+        "opcoes": [
+          "Guardó la varilla para llevársela",
+          "Prestó su paraguas en la entrada",
+          "Le explicó el procedimiento a otro participante",
+          "Dibujó toda la carpeta de instrucciones"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Qué ocurría con algunos paraguas reparados?",
+        "opcoes": [
+          "Se prestaban en los días de lluvia",
+          "Se vendían en el mercado",
+          "Se guardaban para Julián",
+          "Se devolvían al contenedor"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Por qué es importante el sábado en que faltó Julián?",
+        "opcoes": [
+          "Indica que el taller dejó de ser necesario",
+          "Explica por qué se abandonó el préstamo",
+          "Demuestra que solo él podía enseñar el procedimiento",
+          "Muestra que el grupo había aprendido a mantener el taller por su cuenta"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "¿Qué tienen en común la silla y la carpeta en el relato?",
+        "opcoes": [
+          "Sirven para clasificar restos de paraguas",
+          "Ayudan a transmitir lo aprendido para que más personas participen",
+          "Sustituyen las herramientas del taller",
+          "Se inventaron cuando Julián faltó"
+        ],
+        "correta": 1
+      }
+    ]
+  },
+  {
+    "id": "la-luz-del-anden",
+    "idioma": "es",
+    "titulo": "La luz del andén",
+    "paragrafos": [
+      "Cada mañana, Darío tomaba el primer tren para ir a trabajar. En invierno todavía era de noche, y una lámpara sobre el andén parpadeaba tanto que costaba leer el cartel de los horarios. Algunas personas alumbraban el cartel con sus teléfonos. Otras le preguntaban al guardia, quien a veces tenía que salir de su oficina para responder mientras vigilaba la llegada del tren.",
+      "Darío envió un aviso a la empresa ferroviaria. Al principio recibió una respuesta automática que prometía revisar el caso. Pasaron dos semanas sin cambios. Su compañera Sara sugirió redactar un segundo aviso con información concreta. Anotaron el número de la lámpara, la ubicación exacta y las horas en que se notaba más el problema. El guardia añadió que una lámpara nueva facilitaría tanto leer el cartel como ver el borde del andén.",
+      "La semana siguiente, un técnico cambió la lámpara y ajustó la dirección de la luz. Desde entonces, el cartel se veía con claridad, pero el guardia todavía ayudaba a quienes no sabían qué tren debían tomar. Darío entendió que las dos cosas podían mejorar el viaje: tener información fácil de leer y contar con alguien que respondiera preguntas."
+    ],
+    "questoes": [
+      {
+        "enunciado": "¿Para qué tomaba Darío el primer tren?",
+        "opcoes": [
+          "Para ir de vacaciones",
+          "Para llevar una lámpara",
+          "Para ir a trabajar",
+          "Para visitar a Sara"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Qué hacía la lámpara?",
+        "opcoes": [
+          "Giraba",
+          "Parpadeaba",
+          "Hacía ruido",
+          "Cambiaba de color"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "¿Con qué alumbraban el cartel algunas personas?",
+        "opcoes": [
+          "Con velas",
+          "Con la luz del tren",
+          "Con las luces de la oficina",
+          "Con sus teléfonos"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "¿Quién cambió la lámpara?",
+        "opcoes": [
+          "Darío",
+          "Sara",
+          "Un técnico",
+          "El guardia"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Qué propuso Sara después del primer aviso?",
+        "opcoes": [
+          "Enviar otro con datos precisos",
+          "Borrar el cartel",
+          "Cambiar de estación",
+          "Pedir al guardia que reparara la lámpara"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿Por qué el guardia mencionó el borde del andén?",
+        "opcoes": [
+          "Allí estaba su oficina",
+          "El cartel se había caído al suelo",
+          "La iluminación también ayudaba a verlo",
+          "El tren no llegaba hasta allí"
+        ],
+        "correta": 2
+      },
+      {
+        "enunciado": "¿Qué hizo el técnico además de cambiar la lámpara?",
+        "opcoes": [
+          "Ajustó hacia dónde apuntaba",
+          "Movió el cartel a la oficina",
+          "Pintó el borde de otro color",
+          "Cambió el horario del tren"
+        ],
+        "correta": 0
+      },
+      {
+        "enunciado": "¿En qué siguió ayudando el guardia?",
+        "opcoes": [
+          "En encender los teléfonos",
+          "En ajustar la nueva lámpara cada mañana",
+          "En escribir avisos a la empresa",
+          "En orientar a quienes no sabían qué tren tomar"
+        ],
+        "correta": 3
+      },
+      {
+        "enunciado": "¿Por qué el segundo aviso era más útil para resolver el problema?",
+        "opcoes": [
+          "Garantizaba una respuesta automática más rápida",
+          "Permitía localizar la lámpara y entender cuándo y a quién afectaba",
+          "Proponía eliminar los horarios impresos",
+          "Demostraba que la estación debía cerrar"
+        ],
+        "correta": 1
+      },
+      {
+        "enunciado": "¿Qué idea expresa el último párrafo?",
+        "opcoes": [
+          "La información visible y la ayuda humana resuelven necesidades distintas",
+          "Con buena iluminación, nadie necesita preguntar",
+          "La información escrita siempre es menos útil que una explicación",
+          "Para mejorar un viaje hay que cambiar los horarios"
+        ],
+        "correta": 0
+      }
+    ]
+  }
+]
