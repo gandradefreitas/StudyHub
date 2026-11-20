@@ -21,6 +21,17 @@ def criar_tabelas():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS leituras_idiomas (
+            usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+            texto_id TEXT NOT NULL,
+            palavras INTEGER NOT NULL CHECK (palavras > 0),
+            acertos INTEGER NOT NULL CHECK (acertos BETWEEN 0 AND 10),
+            concluido_em DATE NOT NULL DEFAULT ((CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo')::date),
+            PRIMARY KEY (usuario_id, texto_id)
+        )
+    """)
+
     # =========================
     # CONFIGURAÇÕES DO USUÁRIO
     # =========================

@@ -127,6 +127,7 @@ from database.questoes_repository import (
     obter_habilidades_questoes, obter_linguas_questoes, obter_desempenho_questoes_por_area, obter_desempenho_questoes
 )
 
+from controllers.idiomas_controller import idiomas
 from database.criar_banco import criar_tabelas
 from services.autenticacao import autenticar
 from services.configuracoes import definir_senha_usuario
@@ -164,6 +165,7 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
 
 csrf = CSRFProtect(app)
+app.register_blueprint(idiomas)
 
 criar_tabelas()
 

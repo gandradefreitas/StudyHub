@@ -31,6 +31,11 @@
             Notas
         </a>
 
+        <a href="{{ url_for('idiomas.listar') }}"{% if request.blueprint == 'idiomas' %} aria-current="page"{% endif %}>
+            <i class="bi bi-translate" aria-hidden="true"></i>
+            Idiomas
+        </a>
+
         <a href="{{ url_for('pagina_tarefas') }}">
             <i class="bi bi-list-check"></i>
             Tarefas
