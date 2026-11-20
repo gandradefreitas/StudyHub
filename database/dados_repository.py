@@ -127,6 +127,12 @@ def limpar_historico(usuario_id):
             WHERE usuario_id = %s
         """, (usuario_id,))
 
+        # As respostas discursivas são removidas pela chave estrangeira.
+        cursor.execute("""
+            DELETE FROM tentativas_provas_discursivas
+            WHERE usuario_id = %s
+        """, (usuario_id,))
+
         cursor.execute("""
             DELETE FROM estudos
             WHERE usuario_id = %s

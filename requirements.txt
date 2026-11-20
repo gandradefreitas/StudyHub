@@ -7,3 +7,5 @@ Flask-WTF
 Authlib
 requests
 reportlab>=4.0
+google-genai
+sympy

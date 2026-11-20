@@ -261,6 +261,120 @@ def criar_tabelas():
         )
     """)
 
+    # =========================
+    # TENTATIVAS DE PROVAS DISCURSIVAS
+    # =========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tentativas_provas_discursivas(
+
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+            usuario_id INTEGER NOT NULL,
+
+            instituicao TEXT NOT NULL,
+
+            ano INTEGER NOT NULL,
+
+            fase TEXT NOT NULL,
+
+            status TEXT NOT NULL DEFAULT 'em_andamento'
+                CHECK (
+                    status IN (
+                        'em_andamento',
+                        'finalizada',
+                        'corrigida'
+                    )
+                ),
+
+            nota_total REAL,
+
+            nota_maxima REAL,
+
+            data_inicio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            data_finalizacao TIMESTAMP,
+
+            data_correcao TIMESTAMP,
+
+            FOREIGN KEY(usuario_id)
+                REFERENCES usuarios(id)
+                ON DELETE CASCADE,
+
+            CHECK (
+                nota_total IS NULL
+                OR nota_total >= 0
+            ),
+
+            CHECK (
+                nota_maxima IS NULL
+                OR nota_maxima >= 0
+            ),
+
+            CHECK (
+                nota_total IS NULL
+                OR nota_maxima IS NULL
+                OR nota_total <= nota_maxima
+            )
+
+        )
+    """)
+
+    cursor.execute("""
+        ALTER TABLE tentativas_provas_discursivas
+        ADD COLUMN IF NOT EXISTS disciplina TEXT
+    """)
+
+    cursor.execute("""
+        ALTER TABLE tentativas_provas_discursivas
+        ADD COLUMN IF NOT EXISTS resultado_correcao JSONB
+    """)
+
+    cursor.execute("""
+        ALTER TABLE tentativas_provas_discursivas
+        ADD COLUMN IF NOT EXISTS tentativas_correcao INTEGER NOT NULL DEFAULT 0
+    """)
+
+    cursor.execute("""
+        ALTER TABLE tentativas_provas_discursivas
+        ADD COLUMN IF NOT EXISTS proxima_tentativa_correcao TIMESTAMPTZ
+    """)
+
+    cursor.execute("""
+        ALTER TABLE tentativas_provas_discursivas
+        ADD COLUMN IF NOT EXISTS correcao_reivindicada_ate TIMESTAMPTZ
+    """)
+
+    # =========================
+    # RESPOSTAS DAS PROVAS DISCURSIVAS
+    # =========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respostas_discursivas(
+
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+            tentativa_id INTEGER NOT NULL,
+
+            questao_numero INTEGER NOT NULL,
+
+            item_letra TEXT,
+
+            resposta TEXT NOT NULL DEFAULT '',
+
+            data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            data_atualizacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY(tentativa_id)
+                REFERENCES tentativas_provas_discursivas(id)
+                ON DELETE CASCADE,
+
+            UNIQUE(tentativa_id, questao_numero, item_letra)
+
+        )
+    """)
+
     conexao.commit()
 
     cursor.close()

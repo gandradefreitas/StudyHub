@@ -1,5 +1,4 @@
-import re
-
+from calendar import monthrange
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response, \
     send_from_directory, abort
 
@@ -21,7 +20,6 @@ from reportlab.platypus import (
     Spacer,
     Table,
     TableStyle,
-    KeepTogether
 )
 
 import os
@@ -30,6 +28,10 @@ from flask_wtf.csrf import CSRFProtect
 
 from authlib.integrations.flask_client import OAuth
 
+from database.conexao import conectar
+from database.respostas_discursivas_repository import obter_respostas, obter_tentativa_discursiva_por_id, \
+    listar_tentativas_discursivas_usuario, salvar_resultado_correcao_discursiva, \
+    reivindicar_correcao_discursiva, obter_segundos_restantes_tentativa
 from security.limite_login import (
     verificar_bloqueio,
     registrar_tentativa_falha,
@@ -43,6 +45,17 @@ from controllers.web.configuracoes_controller import (
     atualizar_metas_configuracoes,
     atualizar_tema,
     excluir_conta as excluir_conta_controller
+)
+
+from controllers.prova_discursiva_controller import (
+    carregar_prova_ita_segunda_fase,
+    obter_campos_permitidos,
+    preparar_tentativa_discursiva,
+    salvar_respostas_tentativa,
+)
+
+from services.correcao_por_resposta_final import (
+    corrigir_tentativa_resposta_final,
 )
 
 from controllers.estudo_controller import (
@@ -62,6 +75,7 @@ from controllers.web.tarefa_controller import (
 from controllers.web.cadastro_controller import realizar_cadastro
 from controllers.web.login_controller import realizar_login
 from controllers.resultados_controller import obter_historico
+from database.respostas_discursivas_repository import obter_duracao_discursiva_por_dia
 from controllers.dados_controller import (
     obter_dados_exportacao,
     limpar_historico
@@ -95,10 +109,8 @@ from database.resultados_repository import (
     obter_resumo_usuario,
     listar_resultados_usuario,
     obter_resultados_por_mes,
-    salvar_resultado,
-    salvar_respostas_prova,
     obter_desempenho_por_area,
-    converter_tempo_para_segundos, obter_respostas_por_resultado, obter_resultado_por_id
+    converter_tempo_para_segundos, obter_respostas_por_resultado, obter_resultado_por_id, salvar_resultado_com_respostas
 )
 
 from database.anotacao_repository import (
@@ -119,6 +131,7 @@ from database.criar_banco import criar_tabelas
 from services.autenticacao import autenticar
 from services.configuracoes import definir_senha_usuario
 from services.dashboard_service import carregar_dashboard
+from services.notas_service import carregar_notas
 from services.provas_service import (
     obter_prova,
     listar_provas,
@@ -889,6 +902,396 @@ def pagina_provas():
     )
 
 
+# ============================================================
+# ITA 2025 — SEGUNDA FASE DISCURSIVA
+# ============================================================
+
+DISCIPLINAS_ITA_SEGUNDA_FASE = {
+    "matematica": "Matemática",
+    "fisica": "Física",
+    "quimica": "Química",
+}
+
+
+def obter_disciplina_ita(slug):
+    return DISCIPLINAS_ITA_SEGUNDA_FASE.get(slug)
+
+
+def redirecionar_prova_ita(slug):
+    return redirect(
+        url_for(
+            "visualizar_prova_ita_segunda_fase",
+            disciplina=slug,
+        )
+    )
+
+
+# ============================================================
+# ITA 2025 — SELEÇÃO DA SEGUNDA FASE
+# ============================================================
+
+@app.route("/provas/ita/2025/segunda-fase")
+def selecionar_provas_ita_segunda_fase():
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    disciplinas = [
+        {
+            "nome": "Matemática",
+            "slug": "matematica",
+            "tipo": "Discursiva",
+            "questoes": 10,
+            "tempo": "4 horas",
+            "descricao": (
+                "Resolva os problemas apresentando "
+                "seus cálculos e justificativas."
+            ),
+        },
+        {
+            "nome": "Física",
+            "slug": "fisica",
+            "tipo": "Discursiva",
+            "questoes": 10,
+            "tempo": "4 horas",
+            "descricao": (
+                "Desenvolva as resoluções e apresente "
+                "o raciocínio utilizado."
+            ),
+        },
+        {
+            "nome": "Química",
+            "slug": "quimica",
+            "tipo": "Discursiva",
+            "questoes": 10,
+            "tempo": "4 horas",
+            "descricao": (
+                "Resolva os problemas com cálculos "
+                "e justificativas quando necessários."
+            ),
+        },
+        {
+            "nome": "Português",
+            "slug": "portugues",
+            "tipo": "Objetiva",
+            "questoes": 20,
+            "tempo": "4 horas",
+            "descricao": (
+                "Responda às questões objetivas "
+                "de Língua Portuguesa."
+            ),
+        },
+    ]
+
+    return render_template(
+        "provas/ita_segunda_fase.html",
+        disciplinas=disciplinas,
+        titulo="ITA 2025 — Segunda Fase",
+        classe_body="sidebar-toggle",
+    )
+
+@app.route(
+    "/provas/ita/2025/segunda-fase/<disciplina>"
+)
+def visualizar_prova_ita_segunda_fase(disciplina):
+
+    if "usuario_id" not in session:
+        return redirect(url_for("pagina_login"))
+
+    nome_disciplina = obter_disciplina_ita(disciplina)
+
+    if nome_disciplina is None:
+        abort(404)
+
+    usuario_id = session["usuario_id"]
+
+    prova = carregar_prova_ita_segunda_fase(disciplina)
+
+    tentativa_id, respostas, status = preparar_tentativa_discursiva(
+        usuario_id=usuario_id,
+        disciplina=nome_disciplina,
+    )
+
+    if tentativa_id is None and status == "limite_diario":
+        flash(
+            f"Você já iniciou a prova de {nome_disciplina} hoje. "
+            "Você poderá iniciar outra amanhã.",
+            "warning",
+        )
+        return redirect(url_for("selecionar_provas_ita_segunda_fase"))
+
+    tempo_restante_segundos = 0
+    if status == "em_andamento":
+        partes_tempo = prova.tempo.strip().lower().split()
+        if len(partes_tempo) == 2 and partes_tempo[0].isdigit():
+            quantidade_tempo = int(partes_tempo[0])
+            unidade_tempo = partes_tempo[1]
+            multiplicadores_tempo = {
+                "hora": 3600,
+                "horas": 3600,
+                "minuto": 60,
+                "minutos": 60,
+                "segundo": 1,
+                "segundos": 1,
+            }
+            duracao_segundos = (
+                quantidade_tempo * multiplicadores_tempo[unidade_tempo]
+            )
+        else:
+            raise ValueError(
+                f"Duração inválida para a prova discursiva: {prova.tempo!r}"
+            )
+
+        tempo_restante_segundos = obter_segundos_restantes_tentativa(
+            tentativa_id,
+            usuario_id,
+            duracao_segundos,
+        )
+
+    return render_template(
+        "provas/prova_discursiva.html",
+        prova=prova,
+        tentativa_id=tentativa_id,
+        respostas=respostas,
+        status=status,
+        tempo_restante_segundos=tempo_restante_segundos,
+        disciplina_slug=disciplina,
+        titulo=f"ITA 2025 — Segunda Fase — {nome_disciplina}",
+        classe_body="sidebar-toggle",
+    )
+
+
+@app.route(
+    "/provas/ita/2025/segunda-fase/<disciplina>/salvar",
+    methods=["POST"],
+)
+def salvar_prova_ita_segunda_fase(disciplina):
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return redirect(url_for("pagina_login"))
+
+    nome_disciplina = obter_disciplina_ita(disciplina)
+
+    if nome_disciplina is None:
+        abort(404)
+
+    tentativa_id = request.form.get("tentativa_id", type=int)
+
+    if not tentativa_id:
+        flash("Não foi possível identificar sua tentativa.", "error")
+        return redirecionar_prova_ita(disciplina)
+
+    prova = carregar_prova_ita_segunda_fase(disciplina)
+
+    try:
+        salvar_respostas_tentativa(
+            tentativa_id, usuario_id, prova, request.form
+        )
+    except ValueError as erro:
+        flash(str(erro), "error")
+        return redirecionar_prova_ita(disciplina)
+
+    flash("Respostas salvas com sucesso!", "success")
+
+    return redirecionar_prova_ita(disciplina)
+
+
+@app.route(
+    "/provas/ita/2025/segunda-fase/resultado/<int:tentativa_id>"
+)
+def visualizar_resultado_discursivo(tentativa_id):
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return redirect(url_for("pagina_login"))
+
+    tentativa = obter_tentativa_discursiva_por_id(
+        tentativa_id=tentativa_id,
+        usuario_id=usuario_id,
+    )
+
+    if tentativa is None:
+        abort(404)
+
+    respostas = obter_respostas(tentativa_id)
+    proxima_tentativa = tentativa.get("proxima_tentativa_correcao")
+    reivindicada_ate = tentativa.get("correcao_reivindicada_ate")
+    agora_utc = datetime.now(timezone.utc)
+    if proxima_tentativa is not None and proxima_tentativa.tzinfo is None:
+        proxima_tentativa = proxima_tentativa.replace(tzinfo=timezone.utc)
+    if reivindicada_ate is not None and reivindicada_ate.tzinfo is None:
+        reivindicada_ate = reivindicada_ate.replace(tzinfo=timezone.utc)
+    tentativa["correcao_em_andamento"] = bool(
+        reivindicada_ate is not None and reivindicada_ate > agora_utc
+    )
+    tentativa["pode_tentar_correcao"] = bool(
+        tentativa["status"] == "finalizada"
+        and (tentativa.get("resultado_correcao") or {}).get("status") == "indisponivel"
+        and (proxima_tentativa is None or proxima_tentativa <= agora_utc)
+        and (
+            tentativa.get("correcao_reivindicada_ate") is None
+            or tentativa["correcao_reivindicada_ate"] <= agora_utc
+        )
+    )
+
+    respostas_esperadas = {}
+    pacote = tentativa.get("resultado_correcao") or {}
+    if pacote.get("modo_correcao") == "resposta_final" and pacote.get("correcao"):
+        disciplina_slug = next(
+            slug for slug, nome in DISCIPLINAS_ITA_SEGUNDA_FASE.items()
+            if nome == tentativa["disciplina"]
+        )
+        prova = carregar_prova_ita_segunda_fase(disciplina_slug)
+        respostas_esperadas = {
+            f"Q{questao.numero}{str(item.letra or '').strip()}": item.resposta_esperada
+            for questao in prova.questoes
+            for item in questao.itens
+        }
+
+    return render_template(
+        "provas/resultado.html",
+        tentativa=tentativa,
+        respostas=respostas,
+        respostas_esperadas=respostas_esperadas,
+        tipo_resultado="discursivo",
+        titulo=f"Resultado — {tentativa['disciplina']}",
+        classe_body="sidebar-toggle"
+    )
+
+
+@app.route(
+    "/provas/ita/2025/segunda-fase/resultado/<int:tentativa_id>/tentar-correcao",
+    methods=["POST"],
+)
+def tentar_correcao_discursiva(tentativa_id):
+    usuario_id = session.get("usuario_id")
+    if not usuario_id:
+        return redirect(url_for("pagina_login"))
+
+    tentativa = obter_tentativa_discursiva_por_id(tentativa_id, usuario_id)
+    if (
+        tentativa is None
+        or tentativa["disciplina"] not in ("Matemática", "Física", "Química")
+        or tentativa["status"] != "finalizada"
+        or (tentativa.get("resultado_correcao") or {}).get("status") != "indisponivel"
+    ):
+        abort(404)
+
+    if not reivindicar_correcao_discursiva(tentativa_id, usuario_id):
+        flash(
+            "Uma nova tentativa de correção já está programada ou em andamento.",
+            "info",
+        )
+        return redirect(
+            url_for("visualizar_resultado_discursivo", tentativa_id=tentativa_id)
+        )
+
+    try:
+        pacote = corrigir_tentativa_resposta_final(
+            tentativa_id, obter_respostas(tentativa_id),
+            disciplina=tentativa["disciplina"],
+        )
+        salvo = salvar_resultado_correcao_discursiva(
+            tentativa_id, usuario_id, pacote,
+            "corrigida" if pacote["status"] == "corrigida" else "finalizada",
+            pacote["nota"], pacote["nota_maxima"],
+        )
+        if not salvo:
+            abort(404)
+        flash(
+            "Correção concluída." if pacote["status"] == "corrigida"
+            else "Correção concluída com itens encaminhados para revisão humana.",
+            "success" if pacote["status"] == "corrigida" else "warning",
+        )
+    except Exception:
+        app.logger.exception("Falha ao repetir correção discursiva da tentativa %s", tentativa_id)
+        indisponivel = {
+            "status": "indisponivel",
+            "mensagem": "O serviço de correção está temporariamente indisponível. Tente novamente mais tarde.",
+        }
+        salvar_resultado_correcao_discursiva(
+            tentativa_id, usuario_id, indisponivel, "finalizada"
+        )
+        flash(indisponivel["mensagem"], "error")
+
+    return redirect(url_for("visualizar_resultado_discursivo", tentativa_id=tentativa_id))
+
+@app.route(
+    "/provas/ita/2025/segunda-fase/<disciplina>/finalizar",
+    methods=["POST"],
+)
+def finalizar_prova_ita_segunda_fase(disciplina):
+
+    usuario_id = session.get("usuario_id")
+
+    if not usuario_id:
+        return redirect(url_for("pagina_login"))
+
+    nome_disciplina = obter_disciplina_ita(disciplina)
+
+    if nome_disciplina is None:
+        abort(404)
+
+    tentativa_id = request.form.get("tentativa_id", type=int)
+
+    if not tentativa_id:
+        flash(
+            "Não foi possível identificar sua tentativa.",
+            "error",
+        )
+        return redirecionar_prova_ita(disciplina)
+
+    prova = carregar_prova_ita_segunda_fase(disciplina)
+    try:
+        salvar_respostas_tentativa(
+            tentativa_id, usuario_id, prova, request.form, finalizar=True
+        )
+    except ValueError as erro:
+        flash(str(erro), "error")
+        return redirecionar_prova_ita(disciplina)
+
+    if disciplina in ("matematica", "fisica", "quimica") and not app.testing:
+        try:
+            pacote = corrigir_tentativa_resposta_final(
+                tentativa_id, obter_respostas(tentativa_id),
+                disciplina=disciplina,
+            )
+            salvar_resultado_correcao_discursiva(
+                tentativa_id, usuario_id, pacote,
+                "corrigida" if pacote["status"] == "corrigida" else "finalizada",
+                pacote["nota"], pacote["nota_maxima"],
+            )
+            if pacote["status"] == "corrigida":
+                flash("Prova finalizada e corrigida.", "success")
+            else:
+                flash("Prova finalizada; alguns itens precisam de revisão humana.", "warning")
+        except Exception:
+            app.logger.exception("Falha na correção automática da tentativa %s", tentativa_id)
+            indisponivel = {
+                "status": "indisponivel",
+                "mensagem": "O serviço de correção está temporariamente indisponível. Tente novamente mais tarde.",
+            }
+            salvar_resultado_correcao_discursiva(
+                tentativa_id, usuario_id, indisponivel, "finalizada"
+            )
+            return render_template(
+                "provas/correcao_pendente.html",
+                url_menu=url_for("selecionar_provas_ita_segunda_fase"),
+            ), 202
+    else:
+        flash("Prova finalizada com sucesso!", "success")
+
+    return redirect(
+        url_for(
+            "visualizar_resultado_discursivo",
+            tentativa_id=tentativa_id,
+        )
+    )
+
+
 @app.route("/provas/<int:id_prova>")
 def visualizar_prova(id_prova):
 
@@ -992,18 +1395,22 @@ def resultado_prova():
                 "erro": "Prova não encontrada."
             }), 404
 
+
         # ------------------------------------------------
         # IDENTIFICA E VALIDA AS QUESTÕES REALIZADAS
         # ------------------------------------------------
 
         questoes_recebidas = dados.get("questoes")
 
-        if not isinstance(questoes_recebidas, list) or not questoes_recebidas:
+        if (
+                not isinstance(questoes_recebidas, list)
+                or not questoes_recebidas
+        ):
             return jsonify({
                 "erro": "Questões da prova não foram informadas."
             }), 400
 
-        numeros_questoes = set()
+        numeros_recebidos = []
 
         for questao in questoes_recebidas:
 
@@ -1020,42 +1427,66 @@ def resultado_prova():
                     "erro": "Número de questão inválido."
                 }), 400
 
-            numeros_questoes.add(numero)
+            numeros_recebidos.append(numero)
+
+        # Rejeita números duplicados.
+        if len(numeros_recebidos) != len(set(numeros_recebidos)):
+            return jsonify({
+                "erro": "A lista contém questões duplicadas."
+            }), 400
+
+        numeros_questoes = set(numeros_recebidos)
 
         # ------------------------------------------------
-        # FILTRA AS QUESTÕES OFICIAIS DA PROVA
+        # IDENTIFICA AS QUESTÕES OFICIAIS ESPERADAS
         # ------------------------------------------------
 
         lingua_escolhida = dados.get("lingua")
 
         if prova.tipo == "ENEM" and prova.dia == "Primeiro Dia":
+            if isinstance(lingua_escolhida, str):
+                lingua_escolhida = lingua_escolhida.strip().lower().replace("ê", "e")
 
-            # ENEM: considera o idioma escolhido pelo participante.
-            questoes_realizadas = [
+            # Verifica se o idioma informado é válido.
+            if lingua_escolhida not in ("ingles", "espanhol"):
+                return jsonify({
+                    "erro": "Idioma da prova inválido."
+                }), 400
+
+            questoes_esperadas = [
                 questao
                 for questao in prova.questoes
-                if questao.numero in numeros_questoes
-                   and (
-                           not questao.lingua
-                           or questao.lingua == lingua_escolhida
-                   )
+                if (
+                        not questao.lingua
+                        or questao.lingua.lower().replace("ê", "e") == lingua_escolhida
+                )
             ]
 
         else:
 
-            # Outras provas, como o ITA:
-            # considera todas as questões oficiais recebidas,
-            # inclusive aquelas que possuem um campo "lingua".
-            questoes_realizadas = [
-                questao
-                for questao in prova.questoes
-                if questao.numero in numeros_questoes
-            ]
+            questoes_esperadas = list(prova.questoes)
 
-        if len(questoes_realizadas) != len(numeros_questoes):
+        numeros_esperados = {
+            questao.numero
+            for questao in questoes_esperadas
+        }
+
+        # ------------------------------------------------
+        # CONFERE SE A LISTA RECEBIDA É EXATAMENTE A ESPERADA
+        # ------------------------------------------------
+
+        if numeros_questoes != numeros_esperados:
             return jsonify({
-                "erro": "A lista de questões não corresponde à prova oficial."
+                "erro": (
+                    "A lista de questões não corresponde "
+                    "ao conjunto oficial da prova."
+                )
             }), 400
+
+        # Utiliza os objetos oficiais carregados no servidor.
+        # Não confia nos enunciados ou dados enviados pelo cliente.
+        questoes_realizadas = questoes_esperadas
+
 
         # ------------------------------------------------
         # CALCULA O RESULTADO
@@ -1085,19 +1516,19 @@ def resultado_prova():
             # ------------------------------------------------
 
             try:
+                resposta_usuario = int(resposta_usuario)
 
-                resposta_usuario = int(
-                    resposta_usuario
-                )
+            except (TypeError, ValueError):
+                return jsonify({
+                    "erro": "Uma ou mais respostas são inválidas."
+                }), 400
 
-            except (
-                    TypeError,
-                    ValueError
+            if not (
+                0 <= resposta_usuario < len(questao.alternativas)
             ):
-
-                erros += 1
-
-                continue
+                return jsonify({
+                    "erro": "Alternativa inválida."
+                }), 400
 
             # Verifica se a alternativa existe na questão
             if not (
@@ -1249,30 +1680,29 @@ def resultado_prova():
         }
 
         # ------------------------------------------------
-        # SALVA O RESULTADO
+        # SALVA RESULTADO E RESPOSTAS EM UMA ÚNICA TRANSAÇÃO
         # ------------------------------------------------
 
-        resultado_id = salvar_resultado(
-            resultado
-        )
+        try:
 
-        # ------------------------------------------------
-        # SALVA AS RESPOSTAS DA TENTATIVA
-        # ------------------------------------------------
+            resultado_id = salvar_resultado_com_respostas(
+                resultado=resultado,
+                questoes=questoes_realizadas,
+                respostas=respostas,
+            )
 
-        salvar_respostas_prova(
+        except Exception:
 
-            usuario_id=usuario_id,
+            app.logger.exception(
+                "Erro ao salvar resultado e respostas da prova."
+            )
 
-            prova_id=prova_id,
-
-            resultado_id=resultado_id,
-
-            questoes=questoes_realizadas,
-
-            respostas=respostas
-
-        )
+            return jsonify({
+                "erro": (
+                    "Não foi possível salvar o resultado. "
+                    "Tente novamente."
+                )
+            }), 500
 
         session.pop(
             "prova_inicio",
@@ -1378,9 +1808,7 @@ def resultado_prova():
         if prova is not None:
 
             # Recupera o idioma utilizado na prova
-            lingua_escolhida = resultado.get(
-                "lingua"
-            )
+            lingua_escolhida = (resultado.get("lingua") or "").lower().replace("ê", "e")
 
             # Recupera as respostas erradas
             respostas_erradas = resultado.get(
@@ -1403,7 +1831,7 @@ def resultado_prova():
                             questao.numero in numeros_questoes
                             and (
                                     not questao.lingua
-                                    or questao.lingua == lingua_escolhida
+                                    or questao.lingua.lower().replace("ê", "e") == lingua_escolhida
                             )
                     )
                 ]
@@ -1464,6 +1892,7 @@ def resultado_prova():
         "provas/resultado.html",
         resultado=resultado,
         prova=prova if resultado["prova_id"] is not None else None,
+        tipo_resultado="objetivo",
         titulo="Resultado",
         classe_body="sidebar-toggle"
     )
@@ -1510,6 +1939,20 @@ def preparar_alternativa_revisao(alternativa):
         "tipo": "texto",
         "conteudo": alternativa
     }
+
+
+@app.route("/notas")
+def pagina_notas():
+    usuario_id = session.get("usuario_id")
+    if not usuario_id:
+        return redirect(url_for("pagina_login"))
+
+    return render_template(
+        "provas/notas.html",
+        usuario=obter_usuario_por_id(usuario_id),
+        classe_body="sidebar-toggle",
+        **carregar_notas(usuario_id),
+    )
 
 
 @app.route("/provas/historico")
@@ -1673,6 +2116,7 @@ def visualizar_resultado_historico(resultado_id):
         "provas/resultado.html",
         resultado=resultado,
         prova=prova,
+        tipo_resultado="objetivo",
         titulo="Resultado da Prova",
         classe_body="sidebar-toggle"
     )
@@ -2270,51 +2714,19 @@ def estatisticas_evolucao():
         }), 401
 
     hoje = date.today()
-
-    ano = request.args.get(
-        "ano",
-        default=hoje.year,
-        type=int
-    )
-
-    mes = request.args.get(
-        "mes",
-        default=hoje.month,
-        type=int
-    )
-
-    if mes < 1 or mes > 12:
-
-        return jsonify({
-            "erro": "Mês inválido."
-        }), 400
-
-    inicio = date(
-        ano,
-        mes,
-        1
-    )
-
-    if mes == 12:
-
-        proximo_mes = date(
-            ano + 1,
-            1,
-            1
-        )
-
+    if "dias" in request.args:
+        dias = request.args.get("dias", type=int)
+        if dias is None or not 1 <= dias <= 366:
+            return jsonify({"erro": "Período inválido."}), 400
+        inicio = hoje - timedelta(days=dias - 1)
+        fim = hoje
     else:
-
-        proximo_mes = date(
-            ano,
-            mes + 1,
-            1
-        )
-
-    fim = (
-        proximo_mes
-        - timedelta(days=1)
-    )
+        ano = request.args.get("ano", default=hoje.year, type=int)
+        mes = request.args.get("mes", default=hoje.month, type=int)
+        if not 1 <= ano <= 9999 or not 1 <= mes <= 12:
+            return jsonify({"erro": "Ano ou mês inválido."}), 400
+        inicio = date(ano, mes, 1)
+        fim = date(ano, mes, monthrange(ano, mes)[1])
 
     estudos = obter_estudos_por_periodo(
         usuario_id,
@@ -2361,6 +2773,10 @@ def estatisticas_evolucao():
             + segundos
         )
 
+    for dia in obter_duracao_discursiva_por_dia(usuario_id, inicio, fim):
+        data = dia["data"].isoformat()
+        provas_por_data[data] = provas_por_data.get(data, 0) + dia["duracao"]
+
     resultado = []
 
     data_atual = inicio
@@ -2399,9 +2815,9 @@ def estatisticas_evolucao():
                 duracao_total
         })
 
-        data_atual += timedelta(
-            days=1
-        )
+        if data_atual == fim:
+            break
+        data_atual += timedelta(days=1)
 
     return jsonify(resultado)
 

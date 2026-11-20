@@ -50,9 +50,9 @@
                         <tr>
                             <th>Data</th>
                             <th>Prova</th>
-                            <th>Acertos</th>
-                            <th>Erros</th>
-                            <th>Aproveitamento</th>
+                            <th>Modalidade</th>
+                            <th>Situação</th>
+                            <th>Resultado</th>
                             <th>Tempo</th>
                             <th>Ações</th>
                         </tr>
@@ -70,24 +70,51 @@
 
                             <td class="nome-prova">
                                 {{ resultado["prova"] }}
+
+                                {% if resultado["modalidade"] == "discursiva" %}
+                                    <br>
+                                    <small>{{ resultado["disciplina"] }}</small>
+                                {% endif %}
                             </td>
 
                             <td>
-                                <span class="resultado acerto">
-                                    {{ resultado["acertos"] }}
-                                </span>
+                                {% if resultado["modalidade"] == "discursiva" %}
+                                    Discursiva
+                                {% else %}
+                                    Objetiva
+                                {% endif %}
                             </td>
 
                             <td>
-                                <span class="resultado erro">
-                                    {{ resultado["erros"] }}
-                                </span>
+                                {{ resultado["situacao"] }}
                             </td>
 
                             <td>
-                                <span class="aproveitamento">
-                                    {{ resultado["porcentagem"] }}%
-                                </span>
+
+                                {% if resultado["modalidade"] == "discursiva" %}
+
+                                    {{ resultado["resultado_formatado"] }}
+
+                                {% else %}
+
+                                    <span class="resultado acerto">
+                                        {{ resultado["acertos"] }} acertos
+                                    </span>
+
+                                    <br>
+
+                                    <span class="resultado erro">
+                                        {{ resultado["erros"] }} erros
+                                    </span>
+
+                                    <br>
+
+                                    <span class="aproveitamento">
+                                        {{ resultado["porcentagem"] }}%
+                                    </span>
+
+                                {% endif %}
+
                             </td>
 
                             <td class="tempo-prova">
@@ -95,15 +122,33 @@
                             </td>
 
                             <td>
-                                <a
-                                    href="{{ url_for(
-                                        'visualizar_resultado_historico',
-                                        resultado_id=resultado['id']
-                                    ) }}"
-                                    class="botao-ver-resultado"
-                                >
-                                    Ver resultado
-                                </a>
+
+                                {% if resultado["modalidade"] == "discursiva" %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'visualizar_resultado_discursivo',
+                                            tentativa_id=resultado['id']
+                                        ) }}"
+                                        class="botao-ver-resultado"
+                                    >
+                                        Ver resultado
+                                    </a>
+
+                                {% else %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'visualizar_resultado_historico',
+                                            resultado_id=resultado['id']
+                                        ) }}"
+                                        class="botao-ver-resultado"
+                                    >
+                                        Ver resultado
+                                    </a>
+
+                                {% endif %}
+
                             </td>
 
                         </tr>

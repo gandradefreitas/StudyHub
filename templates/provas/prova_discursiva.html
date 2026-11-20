@@ -1,0 +1,481 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/provas/prova_discursiva.css') }}"
+>
+{% endblock %}
+
+
+{% block conteudo %}
+
+<main class="prova-discursiva-container">
+
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            <div class="mensagens-flash" role="status" aria-live="polite">
+                {% for categoria, mensagem in mensagens %}
+                    <div class="mensagem-flash mensagem-{{ categoria }}">
+                        {{ mensagem }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header class="prova-discursiva-header">
+
+        <p class="prova-discursiva-instituicao">
+            {{ prova.instituicao }} · {{ prova.ano }}
+        </p>
+
+        <h1>
+            {{ prova.disciplina }} — {{ prova.fase }}
+        </h1>
+
+        <p>
+            Responda cada questão com o resultado final. Não é necessário digitar
+            o desenvolvimento nesta etapa.
+        </p>
+
+    </header>
+
+
+    {% if status == 'finalizada' %}
+        <div class="aviso-prova-finalizada" role="status">
+            <strong>Prova finalizada.</strong>
+            Suas respostas estão disponíveis para consulta,
+            mas não podem mais ser alteradas.
+        </div>
+    {% endif %}
+
+    {% if status == 'em_andamento' %}
+        <aside
+            class="cronometro-prova-discursiva"
+            id="cronometro-prova-discursiva"
+            data-segundos-restantes="{{ tempo_restante_segundos }}"
+            role="timer"
+            aria-label="Tempo restante para finalizar a prova"
+        >
+            <span>Tempo restante</span>
+            <time id="tempo-restante-discursiva">
+                {{ "%02d:%02d:%02d"|format(
+                    tempo_restante_segundos // 3600,
+                    (tempo_restante_segundos % 3600) // 60,
+                    tempo_restante_segundos % 60
+                ) }}
+            </time>
+            <p>A prova será finalizada automaticamente quando o tempo acabar.</p>
+        </aside>
+        <div
+            class="aviso-tempo-esgotado"
+            id="aviso-tempo-esgotado"
+            role="alert"
+            hidden
+        >
+            O tempo terminou. Salvando suas respostas e finalizando a prova…
+        </div>
+    {% endif %}
+
+
+    {% if prova.convencoes %}
+        <section class="prova-convencoes">
+
+            <h2>Convenções</h2>
+
+            <ul>
+                {% for convencao in prova.convencoes %}
+                    <li>{{ convencao }}</li>
+                {% endfor %}
+            </ul>
+
+        </section>
+    {% endif %}
+
+
+    <form
+        id="form-prova-discursiva"
+        method="POST"
+        action="{{ url_for(
+            'salvar_prova_ita_segunda_fase',
+            disciplina=disciplina_slug
+        ) }}"
+    >
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token() }}"
+        >
+
+        <input
+            type="hidden"
+            name="tentativa_id"
+            value="{{ tentativa_id }}"
+        >
+
+        <p class="aviso-respostas-opcionais">
+            O preenchimento é opcional. Questões sem resposta recebem zero ponto.
+        </p>
+
+        <div class="aviso-resposta-final" role="note">
+            <strong>A correção considera somente a resposta final.</strong>
+            Ela não verifica seu raciocínio. Confira se o caminho que você usou
+            para chegar ao resultado está correto.
+        </div>
+
+        {% for questao in prova.questoes %}
+
+            <section class="questao-discursiva">
+
+                <div class="questao-discursiva-identificacao">
+
+                    <span>Questão {{ questao.numero }}</span>
+
+                    <span>{{ questao.area }}</span>
+
+                </div>
+
+                <div class="questao-discursiva-enunciado">
+                    {{ questao.enunciado }}
+                </div>
+
+                {% if questao.imagem %}
+                    <img
+                        src="{{ questao.imagem }}"
+                        alt="Imagem da questão {{ questao.numero }}"
+                    >
+                {% endif %}
+
+                {% for item in questao.itens %}
+
+                    <div class="item-discursivo">
+
+                        {% if item.letra %}
+                            <h3>Item {{ item.letra }}</h3>
+                        {% endif %}
+
+                        {% if item.enunciado %}
+                            <p>{{ item.enunciado }}</p>
+                        {% endif %}
+
+                        <label
+                            for="resposta_{{ questao.numero }}_{{ loop.index }}"
+                        >
+                            Sua resposta final
+                        </label>
+
+                        <textarea
+                            id="resposta_{{ questao.numero }}_{{ loop.index }}"
+                            name="resposta_{{ questao.numero }}_{{ loop.index }}"
+                            rows="3"
+                            maxlength="2000"
+                            placeholder="Digite somente o resultado final..."
+                            {% if status != 'em_andamento' %}disabled{% endif %}
+                        >{{ respostas.get((questao.numero, item.letra), '') }}</textarea>
+
+                        <p class="limite-resposta">
+                            Limite: 2.000 caracteres.
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </section>
+
+        {% endfor %}
+
+        {% if status == 'em_andamento' %}
+            <p
+                class="status-salvamento-prova"
+                id="status-salvamento-prova"
+                role="status"
+                aria-live="polite"
+                hidden
+            ></p>
+        {% endif %}
+
+    </form>
+
+
+    {% if status == 'em_andamento' %}
+        <details class="paleta-simbolos" id="paleta-simbolos-discursiva">
+            <summary aria-controls="conteudo-paleta-simbolos">
+                <span aria-hidden="true">∑</span>
+                Símbolos para resposta
+            </summary>
+            <div class="paleta-simbolos-conteudo" id="conteudo-paleta-simbolos">
+                <p class="paleta-simbolos-instrucao">
+                    Clique em um símbolo para inseri-lo na resposta selecionada.
+                </p>
+                <label class="paleta-visualmente-oculto" for="buscar-simbolo-discursivo">
+                    Buscar símbolo, função ou unidade
+                </label>
+                <input
+                    type="search"
+                    id="buscar-simbolo-discursivo"
+                    class="buscar-simbolo-discursivo"
+                    placeholder="Buscar símbolo ou função..."
+                    autocomplete="off"
+                >
+
+                <div class="paleta-categoria" data-categoria="potencias">
+                    <h3>Potências e índices</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('⁰', 'expoente zero'), ('¹', 'expoente um'),
+                            ('²', 'ao quadrado'), ('³', 'ao cubo'),
+                            ('⁴', 'expoente quatro'), ('⁵', 'expoente cinco'),
+                            ('⁶', 'expoente seis'), ('⁷', 'expoente sete'),
+                            ('⁸', 'expoente oito'), ('⁹', 'expoente nove'),
+                            ('⁺', 'expoente positivo'), ('⁻', 'expoente negativo'),
+                            ('₀', 'índice zero'), ('₁', 'índice um'),
+                            ('₂', 'índice dois'), ('₃', 'índice três'),
+                            ('₄', 'índice quatro'), ('₅', 'índice cinco'),
+                            ('₆', 'índice seis'), ('₇', 'índice sete'),
+                            ('₈', 'índice oito'), ('₉', 'índice nove'),
+                            ('ₐ', 'índice a'), ('ₑ', 'índice e'), ('ₘ', 'índice m'),
+                            ('ₙ', 'índice n'), ('ₖ', 'índice k'),
+                            ('ᵉ', 'expoente e'), ('ᵀ', 'expoente T'),
+                            ('ⁿ', 'expoente n'), ('^', 'operador de potência'),
+                            ('**', 'operador de potência Python')
+                        ] %}
+                            <button type="button" class="paleta-simbolo"
+                                data-inserir="{{ simbolo[0] }}"
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paleta-categoria" data-categoria="grego">
+                    <h3>Letras gregas</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('α', 'alfa'), ('β', 'beta'), ('γ', 'gama'),
+                            ('δ', 'delta minusculo'), ('Δ', 'delta maiusculo'),
+                            ('ε', 'epsilon'), ('θ', 'teta'), ('λ', 'lambda'),
+                            ('μ', 'mi'), ('π', 'pi'), ('ρ', 'rô'),
+                            ('ζ', 'zeta'), ('η', 'eta'), ('ι', 'iota'),
+                            ('κ', 'capa'), ('ν', 'ni'), ('ξ', 'xi'),
+                            ('ο', 'omicron'), ('υ', 'upsilon'), ('χ', 'qui'),
+                            ('ψ', 'psi'), ('σ', 'sigma'), ('τ', 'tau'), ('φ', 'fi'),
+                            ('Α', 'alfa maiusculo'), ('Β', 'beta maiusculo'),
+                            ('Γ', 'gama maiusculo'), ('Ε', 'epsilon maiusculo'),
+                            ('Ζ', 'zeta maiusculo'), ('Η', 'eta maiusculo'),
+                            ('Θ', 'teta maiusculo'), ('Ι', 'iota maiusculo'),
+                            ('Κ', 'capa maiusculo'), ('Λ', 'lambda maiusculo'),
+                            ('Μ', 'mi maiusculo'), ('Ν', 'ni maiusculo'),
+                            ('Ξ', 'xi maiusculo'), ('Ο', 'omicron maiusculo'),
+                            ('Π', 'pi maiusculo'), ('Ρ', 'rô maiusculo'),
+                            ('Τ', 'tau maiusculo'), ('Υ', 'upsilon maiusculo'),
+                            ('Χ', 'qui maiusculo'), ('Ψ', 'psi maiusculo'),
+                            ('Φ', 'fi maiusculo'), ('ω', 'omega'),
+                            ('Ω', 'ômega maiusculo'), ('Σ', 'sigma maiusculo')
+                        ] %}
+                            <button type="button" class="paleta-simbolo"
+                                data-inserir="{{ simbolo[0] }}"
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paleta-categoria" data-categoria="operacoes">
+                    <h3>Operações e relações</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('±', 'mais ou menos'), ('∓', 'menos ou mais'),
+                            ('×', 'multiplicação'), ('÷', 'divisão'),
+                            ('·', 'produto ou ponto'), ('−', 'sinal de menos'),
+                            ('≈', 'aproximadamente'), ('≠', 'diferente'),
+                            ('≤', 'menor ou igual'), ('≥', 'maior ou igual'),
+                            ('≡', 'equivalência ou congruência'),
+                            ('∝', 'proporcional'), ('∞', 'infinito'),
+                            ('√', 'raiz quadrada'), ('∛', 'raiz cúbica'),
+                            ('∜', 'raiz quarta'), ('∑', 'somatório'),
+                            ('∏', 'produtório'), ('∫', 'integral'),
+                            ('∂', 'derivada parcial'), ('∇', 'nabla'),
+                            ('∈', 'pertence'), ('∉', 'não pertence'),
+                            ('⊂', 'subconjunto'), ('∪', 'união'),
+                            ('∩', 'interseção'), ('∅', 'conjunto vazio'),
+                            ('⊥', 'perpendicular'), ('∥', 'paralelo'),
+                            ('∠', 'ângulo'), ('∴', 'portanto'),
+                            ('→', 'seta ou reação'), ('↔', 'equivalência ou equilíbrio'),
+                            ('⇌', 'equilíbrio químico'), ('↑', 'gás ou seta para cima'),
+                            ('↓', 'precipitado ou seta para baixo')
+                        ] %}
+                            <button type="button" class="paleta-simbolo"
+                                data-inserir="{{ simbolo[0] }}"
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paleta-categoria" data-categoria="funcoes">
+                    <h3>Funções e expressões</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('sqrt()', 'raiz quadrada sqrt'),
+                            ('sqr()', 'raiz quadrada sqr'),
+                            ('sin()', 'seno'), ('cos()', 'cosseno'),
+                            ('tan()', 'tangente'), ('cot()', 'cotangente'),
+                            ('sec()', 'secante'), ('csc()', 'cossecante'),
+                            ('log()', 'logaritmo'),
+                            ('ln()', 'logaritmo natural'), ('abs()', 'valor absoluto'),
+                            ('lim()', 'limite'), ('exp()', 'exponencial'),
+                            ('()', 'parenteses'), ('[]', 'colchetes'),
+                            ('| |', 'modulo ou valor absoluto'),
+                            ('/', 'fração ou divisão'), ('=', 'igual'),
+                            ('≃', 'aproximadamente equivalente')
+                        ] %}
+                            <button type="button" class="paleta-simbolo paleta-simbolo-texto"
+                                data-inserir="{{ simbolo[0] }}"
+                                {% if simbolo[0].endswith('()') %}data-deslocamento-cursor="-1"{% endif %}
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paleta-categoria" data-categoria="fisica">
+                    <h3>Física e unidades</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('m/s', 'metros por segundo'), ('m/s²', 'metros por segundo ao quadrado'),
+                            ('m²', 'metro quadrado'), ('m³', 'metro cúbico'),
+                            ('kg', 'quilograma'), ('N', 'newton'), ('J', 'joule'),
+                            ('W', 'watt'), ('Pa', 'pascal'), ('C', 'coulomb'),
+                            ('V', 'volt'), ('Ω', 'ohm'), ('T', 'tesla'),
+                            ('eV', 'elétron-volt'), ('°C', 'graus Celsius'),
+                            ('mol/L', 'mol por litro'), ('g/mol', 'gramas por mol'),
+                            ('Δt', 'variação de tempo'), ('Δx', 'variação de posição'),
+                            ('λ', 'comprimento de onda'), ('Φ', 'fluxo ou fi maiusculo'),
+                            ('μ', 'mi ou coeficiente de atrito'), ('ħ', 'h cortado ou h barra'),
+                            ('ℓ', 'litro ou ele cursivo'), ('m·s⁻¹', 'metro vezes segundo menos um'),
+                            ('kg·m/s²', 'quilograma metro por segundo ao quadrado')
+                        ] %}
+                            <button type="button" class="paleta-simbolo paleta-simbolo-texto"
+                                data-inserir="{{ simbolo[0] }}"
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paleta-categoria" data-categoria="quimica">
+                    <h3>Química e fórmulas</h3>
+                    <div class="paleta-simbolos-grade">
+                        {% for simbolo in [
+                            ('H₂O', 'água'), ('CO₂', 'dióxido de carbono'),
+                            ('O₂', 'oxigênio molecular'), ('H₂', 'hidrogênio molecular'),
+                            ('N₂', 'nitrogênio molecular'), ('NH₃', 'amônia'),
+                            ('CH₃', 'grupo metil'), ('CH₄', 'metano'),
+                            ('C₂H₆', 'etano'), ('C₂H₄', 'eteno'),
+                            ('C₂H₂', 'etino'), ('C₆H₆', 'benzeno'),
+                            ('C₃H₆O', 'fórmula molecular C3H6O'),
+                            ('HCl', 'ácido clorídrico'), ('NaOH', 'hidróxido de sódio'),
+                            ('NaCl', 'cloreto de sódio'), ('H₂SO₄', 'ácido sulfúrico'),
+                            ('K₂Cr₂O₇', 'dicromato de potássio'),
+                            ('SO₄²⁻', 'íon sulfato'), ('CO₃²⁻', 'íon carbonato'),
+                            ('NO₃⁻', 'íon nitrato'), ('PO₄³⁻', 'íon fosfato'),
+                            ('Fe³⁺', 'íon ferro três mais'), ('Cl⁻', 'íon cloreto'),
+                            ('e⁻', 'elétron'), ('H⁺', 'íon hidrogênio'),
+                            ('OH⁻', 'íon hidróxido'), ('Na⁺', 'íon sódio'),
+                            ('(s)', 'estado sólido'), ('(l)', 'estado líquido'),
+                            ('(g)', 'estado gasoso'), ('(aq)', 'estado aquoso')
+                        ] %}
+                            <button type="button" class="paleta-simbolo paleta-simbolo-texto"
+                                data-inserir="{{ simbolo[0] }}"
+                                data-pesquisa="{{ simbolo[1] }} {{ simbolo[0] }}"
+                                aria-label="Inserir {{ simbolo[1] }}"
+                                title="{{ simbolo[1] }}">{{ simbolo[0] }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <p class="paleta-simbolos-status" id="status-paleta-simbolos" role="status" aria-live="polite"></p>
+            </div>
+        </details>
+
+        <button
+            type="submit"
+            form="form-prova-discursiva"
+            formaction="{{ url_for(
+                'finalizar_prova_ita_segunda_fase',
+                disciplina=disciplina_slug
+            ) }}"
+            class="botao-finalizar-prova"
+            id="botao-finalizar-prova-discursiva"
+        >
+            Finalizar prova
+        </button>
+
+        <dialog
+            class="modal-finalizacao-prova"
+            id="modal-finalizacao-prova"
+            aria-labelledby="titulo-modal-finalizacao"
+            aria-describedby="descricao-modal-finalizacao"
+        >
+            <div class="modal-finalizacao-conteudo">
+                <span class="modal-finalizacao-icone" aria-hidden="true">!</span>
+                <h2 id="titulo-modal-finalizacao">Finalizar prova?</h2>
+                <p id="descricao-modal-finalizacao">
+                    Depois de finalizar, você não poderá alterar suas respostas.
+                    Vamos salvá-las antes de enviar a prova.
+                </p>
+                <div class="modal-finalizacao-acoes">
+                    <button
+                        type="button"
+                        class="modal-botao-cancelar"
+                        id="cancelar-finalizacao-prova"
+                    >
+                        Continuar respondendo
+                    </button>
+                    <button
+                        type="button"
+                        class="modal-botao-confirmar"
+                        id="confirmar-finalizacao-prova"
+                    >
+                        Finalizar prova
+                    </button>
+                </div>
+            </div>
+        </dialog>
+    {% endif %}
+
+</main>
+
+{% endblock %}
+
+
+{% block scripts %}
+{% if status == 'em_andamento' %}
+<script src="{{ url_for('static', filename='js/provas/cronometro_discursivo.js') }}"></script>
+<script src="{{ url_for('static', filename='js/provas/paleta_simbolos_discursiva.js') }}"></script>
+{% endif %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const mensagens = document.querySelectorAll(".mensagem-flash");
+
+    mensagens.forEach((mensagem) => {
+        setTimeout(() => {
+            mensagem.style.transition = "opacity 0.5s ease";
+            mensagem.style.opacity = "0";
+
+            setTimeout(() => {
+                mensagem.remove();
+            }, 500);
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

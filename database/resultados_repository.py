@@ -2,6 +2,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from database.conexao import conectar
+from database.respostas_discursivas_repository import obter_duracao_discursiva_por_dia
 from services.provas_service import obter_prova, listar_provas
 
 
@@ -144,6 +145,8 @@ def listar_resultados_usuario(usuario_id):
                 formatar_data_realizacao(
                     resultado["data_realizacao"]
                 ),
+
+            "_data_ordem": resultado["data_realizacao"],
 
             "prova":
                 (
@@ -577,7 +580,9 @@ def obter_segundos_provas(usuario_id):
             + segundos
         )
 
-    return total_segundos
+    return total_segundos + sum(
+        dia["duracao"] for dia in obter_duracao_discursiva_por_dia(usuario_id)
+    )
 
 
 def obter_provas_por_periodo(
@@ -663,6 +668,18 @@ def obter_resultado_por_id(resultado_id, usuario_id):
         cursor.close()
         conexao.close()
 
+def listar_acertos_por_tentativa(usuario_id):
+    with conectar() as conexao:
+        return conexao.execute(
+            """
+            SELECT resultado_id, questao_numero
+            FROM respostas_provas
+            WHERE usuario_id = %s AND resultado_id IS NOT NULL AND correta = 1
+            """,
+            (usuario_id,),
+        ).fetchall()
+
+
 def obter_respostas_por_resultado(resultado_id, usuario_id):
 
     conexao = conectar()
@@ -693,4 +710,206 @@ def obter_respostas_por_resultado(resultado_id, usuario_id):
     finally:
 
         cursor.close()
+        conexao.close()
+
+
+def salvar_resultado_com_respostas(
+    resultado,
+    questoes,
+    respostas,
+):
+    """
+    Salva o resultado de uma prova objetiva e suas respostas
+    em uma única transação.
+
+    Se ocorrer qualquer erro, todas as alterações são revertidas.
+    """
+
+    conexao = conectar()
+    cursor = None
+
+    try:
+        cursor = conexao.cursor()
+
+        # ------------------------------------------------
+        # 1. VALIDA OS DADOS BÁSICOS
+        # ------------------------------------------------
+
+        if not isinstance(respostas, dict):
+            raise ValueError("Formato de respostas inválido.")
+
+        if not questoes:
+            raise ValueError("A prova não possui questões.")
+
+        numeros = [
+            questao.numero
+            for questao in questoes
+        ]
+
+        if len(numeros) != len(set(numeros)):
+            raise ValueError("Existem questões duplicadas.")
+
+        total = len(questoes)
+
+        if resultado["total"] != total:
+            raise ValueError(
+                "O total informado não corresponde às questões."
+            )
+
+        # ------------------------------------------------
+        # 2. VALIDA E PROCESSA AS RESPOSTAS
+        # ------------------------------------------------
+
+        acertos = 0
+        erros = 0
+        nao_respondidas = 0
+        respostas_processadas = []
+
+        for questao in questoes:
+
+            resposta_usuario = respostas.get(
+                str(questao.numero)
+            )
+
+            if resposta_usuario is None or resposta_usuario == "":
+                nao_respondidas += 1
+                continue
+
+            # Não aceita booleanos como alternativas numéricas.
+            if isinstance(resposta_usuario, bool):
+                raise ValueError("Alternativa inválida.")
+
+            try:
+                resposta_usuario = int(resposta_usuario)
+
+            except (TypeError, ValueError):
+                raise ValueError("Alternativa inválida.")
+
+            if not (
+                0 <= resposta_usuario < len(questao.alternativas)
+            ):
+                raise ValueError("Alternativa fora dos limites.")
+
+            correta = int(
+                resposta_usuario == questao.resposta
+            )
+
+            if correta:
+                acertos += 1
+            else:
+                erros += 1
+
+            respostas_processadas.append(
+                (
+                    resultado["usuario_id"],
+                    resultado["prova_id"],
+                    questao.numero,
+                    resposta_usuario,
+                    correta,
+                )
+            )
+
+        # ------------------------------------------------
+        # 3. CONFERE A CONSISTÊNCIA DO RESULTADO
+        # ------------------------------------------------
+
+        if (
+            resultado["acertos"] != acertos
+            or resultado["erros"] != erros
+            or resultado["nao_respondidas"] != nao_respondidas
+        ):
+            raise ValueError(
+                "Os totais do resultado não correspondem às respostas."
+            )
+
+        # ------------------------------------------------
+        # 4. INSERE O RESULTADO
+        # ------------------------------------------------
+
+        cursor.execute(
+            """
+            INSERT INTO resultados_provas (
+                usuario_id,
+                prova_id,
+                acertos,
+                erros,
+                nao_respondidas,
+                total,
+                tempo_gasto,
+                porcentagem
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id
+            """,
+            (
+                resultado["usuario_id"],
+                resultado["prova_id"],
+                acertos,
+                erros,
+                nao_respondidas,
+                total,
+                resultado["tempo_gasto"],
+                resultado["porcentagem"],
+            ),
+        )
+
+        resultado_salvo = cursor.fetchone()
+
+        if resultado_salvo is None:
+            raise RuntimeError(
+                "O banco não retornou o ID do resultado."
+            )
+
+        resultado_id = (
+            resultado_salvo["id"]
+            if isinstance(resultado_salvo, dict)
+            else resultado_salvo[0]
+        )
+
+        # ------------------------------------------------
+        # 5. INSERE AS RESPOSTAS
+        # ------------------------------------------------
+
+        for resposta in respostas_processadas:
+
+            usuario_id, prova_id, numero, alternativa, correta = resposta
+
+            cursor.execute(
+                """
+                INSERT INTO respostas_provas (
+                    usuario_id,
+                    prova_id,
+                    resultado_id,
+                    questao_numero,
+                    resposta,
+                    correta
+                )
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    usuario_id,
+                    prova_id,
+                    resultado_id,
+                    numero,
+                    alternativa,
+                    correta,
+                ),
+            )
+
+        # ------------------------------------------------
+        # 6. CONFIRMA A TRANSAÇÃO
+        # ------------------------------------------------
+
+        conexao.commit()
+
+        return resultado_id
+
+    except Exception:
+        conexao.rollback()
+        raise
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+
         conexao.close()

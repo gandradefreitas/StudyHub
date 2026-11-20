@@ -38,43 +38,193 @@
             </a>
         </section>
 
+
         <section class="lista-provas">
 
-            {% for prova in provas %}
+            <!-- ENEM -->
+            <details class="pasta-prova">
 
-            <article class="card-prova">
+                <summary class="pasta-prova-cabecalho">
 
-                <div class="cabecalho-prova">
+                    <span class="pasta-icone">📁</span>
 
-                    <h2>{{ prova.nome }}</h2>
+                    <div class="pasta-informacoes">
+                        <h2>ENEM</h2>
+                        <p>Exame Nacional do Ensino Médio</p>
+                    </div>
 
-                    <span class="status">Disponível</span>
+                    <span class="pasta-seta">⌄</span>
+
+                </summary>
+
+                <div class="pasta-conteudo">
+
+                    <details class="pasta-ano">
+
+                        <summary class="pasta-ano-cabecalho">
+                            <span class="pasta-icone">📁</span>
+                            <span>2025</span>
+                            <span class="pasta-seta">⌄</span>
+                        </summary>
+
+                        <div class="provas-disponiveis">
+
+                            {% for prova in provas %}
+
+                                {% if prova.tipo == "ENEM" %}
+
+                                    <article class="item-prova">
+
+                                        <div class="item-prova-informacoes">
+
+                                            <h3>{{ prova.nome }}</h3>
+
+                                            <p>
+                                                {{ prova.dia }}
+                                                ·
+                                                {{ prova.total_questoes }} questões
+                                            </p>
+
+                                            <p>
+                                                Duração: {{ prova.tempo }}
+                                            </p>
+
+                                        </div>
+
+                                        <a
+                                            href="{{ url_for(
+                                                'visualizar_prova',
+                                                id_prova=prova.id
+                                            ) }}"
+                                            class="botao-iniciar"
+                                        >
+                                            Iniciar
+                                        </a>
+
+                                    </article>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </details>
 
                 </div>
 
-                <div class="informacoes-prova">
+            </details>
 
-                    <p><strong>Dia:</strong> {{ prova.dia }}</p>
 
-                    <p><strong>Questões:</strong> {{ prova.total_questoes }}</p>
+            <!-- ITA -->
+            <details class="pasta-prova">
 
-                    <p><strong>Duração:</strong> {{ prova.tempo }}</p>
+                <summary class="pasta-prova-cabecalho">
+
+                    <span class="pasta-icone">📁</span>
+
+                    <div class="pasta-informacoes">
+                        <h2>ITA</h2>
+                        <p>Instituto Tecnológico de Aeronáutica</p>
+                    </div>
+
+                    <span class="pasta-seta">⌄</span>
+
+                </summary>
+
+                <div class="pasta-conteudo">
+
+                    <details class="pasta-ano">
+
+                        <summary class="pasta-ano-cabecalho">
+                            <span class="pasta-icone">📁</span>
+                            <span>2025</span>
+                            <span class="pasta-seta">⌄</span>
+                        </summary>
+
+                        <div class="provas-disponiveis">
+
+                            <!-- ITA - PRIMEIRA FASE -->
+
+                            {% for prova in provas %}
+
+                                {% if prova.tipo == "ITA" and prova.id != 4 %}
+
+                                    <article class="item-prova">
+
+                                        <div class="item-prova-informacoes">
+
+                                            <h3>{{ prova.nome }}</h3>
+
+                                            <p>
+                                                {{ prova.dia }}
+                                                ·
+                                                {{ prova.total_questoes }} questões
+                                            </p>
+
+                                            <p>
+                                                Duração: {{ prova.tempo }}
+                                            </p>
+
+                                        </div>
+
+                                        <a
+                                            href="{{ url_for(
+                                                'visualizar_prova',
+                                                id_prova=prova.id
+                                            ) }}"
+                                            class="botao-iniciar"
+                                        >
+                                            Iniciar
+                                        </a>
+
+                                    </article>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+
+                            <!-- ITA - SEGUNDA FASE -->
+                            <article class="item-prova">
+
+                                <div class="item-prova-informacoes">
+
+                                    <h3>Segunda fase</h3>
+
+                                    <p>
+                                        Provas discursivas de Matemática,
+                                        Física, Química e Português.
+                                    </p>
+
+                                    <p>
+                                        Responda digitando suas resoluções.
+                                    </p>
+
+                                </div>
+
+                                <a
+                                    href="{{ url_for(
+                                        'selecionar_provas_ita_segunda_fase'
+                                    ) }}"
+                                    class="botao-iniciar"
+                                >
+                                    Escolher disciplina
+                                </a>
+
+                            </article>
+
+                        </div>
+
+                    </details>
 
                 </div>
 
-                <div class="acoes-prova">
-
-                    <a href="{{ url_for('visualizar_prova', id_prova=prova.id) }}" class="botao-iniciar">
-                        Iniciar prova
-                    </a>
-
-                </div>
-
-            </article>
-
-            {% endfor %}
+            </details>
 
         </section>
+
+
 
     </main>
 

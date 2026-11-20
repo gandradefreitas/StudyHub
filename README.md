@@ -286,6 +286,19 @@ python app.py
 
 Após a inicialização, a aplicação estará disponível no endereço local configurado pelo Flask.
 
+## Testes
+
+Na raiz do repositório, instale as dependências de desenvolvimento com
+`python -m pip install -r requirements-dev.txt`.
+
+Para executar a suíte inteira, configure `DATABASE_URL` para o banco PostgreSQL
+`studyhub_test` e rode `python -m pytest`. Os testes de integração conferem o
+nome do banco antes de aplicar o esquema e usam usuários criados para os próprios
+testes.
+
+Os testes do motor matemático podem ser executados sem PostgreSQL. Por exemplo,
+`python -m pytest tests/test_expressoes.py tests/test_sistemas_lineares.py`.
+
 ## Deploy
 
 A versão de produção do StudyHub utiliza **Render** como plataforma de hospedagem.

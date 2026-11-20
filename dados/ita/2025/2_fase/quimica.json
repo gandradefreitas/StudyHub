@@ -1,0 +1,550 @@
+{
+    "instituicao": "ITA",
+    "ano": 2025,
+    "fase": "Segunda Fase",
+    "tipo": "discursiva",
+    "tempo": "4 horas",
+    "convencoes": [
+        "constante_avogadro : Nₐ = 6,02 · 10²³ mol⁻¹",
+        "constante_faraday : F = 9,65 · 10⁴ C·mol⁻¹",
+        "carga_elementar : e = 1,60 · 10⁻¹⁹ C",
+        "constante_gases : R = 8,21 · 10⁻² atm·L·K⁻¹·mol⁻¹ = 8,31 J·K⁻¹·mol⁻¹",
+        "constante_planck : h = 6,63 · 10⁻³⁴ J·s",
+        "velocidade_luz : c = 3,0 · 10⁸ m·s⁻¹",
+        "numero_euler : e = 2,72",
+        "Pressão: 1 atm = 760 Torr = 1,01325 · 10⁵ N·m⁻² = 1,01325 bar[cite: 13]\nEnergia: 1 J = 1 N m = 1 kg m² s⁻² = 6,24 · 10¹⁸ eV[cite: 13]\nCondições normais de temperatura e pressão (CNTP): 0 °C e 1 atm, equivalente a um volume de um gás ideal de 22,4 L.[cite: 13]\nCondições ambiente: 25 °C e 1 atm[cite: 13]\nCondições padrão: 1 bar; concentração das soluções = 1 mol·L⁻¹ (rigorosamente: atividade unitária das espécies); sólido com estrutura cristalina mais estável nas condições de pressão e temperatura em questão.[cite: 13]\n(s) = sólido. (ℓ) = líquido. (g) = gás. (aq) = aquoso. (conc) = concentrado. (ua) = unidades arbitrárias. u.m.a. = unidade de massa atômica. [X] = concentração da espécie química X em mol·L⁻¹[cite: 13]\nln X = 2,3 log X[cite: 13]\nlog 2 = 0,301[cite: 13]\nln 2 = 0,693. ln 3 = 1,099. ln 5 = 1,609[cite: 13]"
+    ],
+    "questoes": [
+        {
+            "numero": 1,
+            "area": "Química",
+            "enunciado": "Uma substância orgânica X é constituída de 18,06 · 10²³ átomos de carbono, 36,12 · 10²³ átomos de hidrogênio e 6,02 · 10²³ átomos de oxigênio. Sabendo-se que 0,174 g dessa substância X contém 18,06 · 10²⁰ moléculas, responda às seguintes questões:",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Escreva a fórmula empírica de X.",
+                    "valor": 3.3,
+                    "resposta_esperada": "C3H6O.",
+                    "resolucao_referencia": "A razão entre os números de átomos é C:H:O = 3:6:1.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Determinar corretamente a proporção molar entre os elementos C, H e O.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Escrever a fórmula empírica correta C₃H₆O.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Escreva a fórmula molecular de X.",
+                    "valor": 3.3,
+                    "resposta_esperada": "C3H6O.",
+                    "resolucao_referencia": "A amostra contém 0,003 mol; sua massa molar é 58 g/mol, igual à massa molar empírica.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Calcular corretamente a massa molar da substância X.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Determinar a fórmula molecular C₃H₆O.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Desenhe as fórmulas estruturais de, no mínimo, 6 isômeros de X.",
+                    "valor": 3.4,
+                    "resposta_esperada": "Seis exemplos: propanona (CH3COCH3); propanal (CH3CH2CHO); prop-2-en-1-ol (CH2=CHCH2OH); prop-1-en-1-ol (CH3CH=CHOH); prop-1-en-2-ol (CH2=C(OH)CH3); metoxieteno (CH2=CH-O-CH3). Também são válidos ciclopropanol e 2-metiloxirano.",
+                    "resolucao_referencia": "A fórmula C3H6O admite isômeros de função e cadeia; foram listadas seis estruturas distintas com essa fórmula molecular.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Apresentar estruturas químicas válidas compatíveis com a fórmula C₃H₆O.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Desenhar corretamente pelo menos 6 isômeros distintos.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "area": "Química",
+            "enunciado": "Considere a seguinte reação química, em que A, B e C são espécies químicas hipotéticas: A(s) + B(g) ⇌ 2 C(g), com K_c = 2,0. No início, o sistema contém 1,0 mol de B(g). Após atingir o equilíbrio, é adicionada uma quantidade y de B(g) no sistema, fazendo com que se atinja um novo equilíbrio em que as concentrações de B(g) e C(g) são iguais. Considere que o volume do sistema é constante e igual a 1 L. A partir das informações fornecidas, determine os seguintes valores numéricos:",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "concentração, em mol·L⁻¹ de B(g) e C(g) no primeiro equilíbrio;",
+                    "valor": 3.3,
+                    "resposta_esperada": "[B]=0.5 mol/L e [C]=1.0 mol/L.",
+                    "resolucao_referencia": "Com avanço x, [B]=1-x e [C]=2x. Kc=(2x)^2/(1-x)=2 fornece x=0.5.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Montar corretamente a expressão da constante de equilíbrio K_c.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Calcular as concentrações de B e C no primeiro equilíbrio.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "número de mols dessa quantidade y adicionada;",
+                    "valor": 3.3,
+                    "resposta_esperada": "y=2.0 mol.",
+                    "resolucao_referencia": "No novo equilíbrio [B]=[C]. Como Kc=[C]^2/[B]=2, a concentração comum vale 2 mol/L. O deslocamento é z=0.5 mol/L e o balanço dá 0.5+y-z=2, portanto y=2.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Estabelecer a relação algébrica para o segundo equilíbrio com a adição de y.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Determinar corretamente o valor numérico de y.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "concentração, em mol·L⁻¹, de B(g) e C(g) no segundo equilíbrio.",
+                    "valor": 3.4,
+                    "resposta_esperada": "[B]=[C]=2.0 mol/L.",
+                    "resolucao_referencia": "Usando [B]=[C] e Kc=2, a concentração comum deve ser 2 mol/L.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Utilizar a condição de igualdade das concentrações no segundo equilíbrio.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Calcular corretamente os valores finais das concentrações.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 3,
+            "area": "Química",
+            "enunciado": "Considere um experimento no qual o fundo de um balão de pescoço de cisne (B) foi posicionado sobre um suporte de aquecimento (A), enquanto seu pescoço se encontrava apoiado em um reservatório aberto (R), colocado sobre uma mesa de suporte (S). Uma certa quantidade de mercúrio foi colocada no balão (B) e no reservatório (R), e uma campânula (C) foi colocada sobre o reservatório (R). Um dado volume de ar ficou confinado dentro da campânula e no balão, conforme a figura. O experimento iniciou-se com o aquecimento prolongado do mercúrio no balão (B); depois, o aquecimento foi interrompido. Com base nessas informações, analise as transformações químicas e as mudanças dos níveis de mercúrio nos dois recipientes.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206725/Captura_de_tela_2026-10-28_135838.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "transformações químicas no mercúrio contido no balão (B);",
+                    "valor": 2.5,
+                    "resposta_esperada": "Sim. O mercúrio aquecido reage com o oxigênio do ar confinado, formando óxido de mercúrio(II): 2 Hg(l) + O2(g) -> 2 HgO(s).",
+                    "resolucao_referencia": "O aquecimento prolongado promove uma transformação química: oxidação do mercúrio a HgO, sólido vermelho.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar corretamente que ocorreu apenas mudança de estado físico.",
+                            "pontos": 1.25
+                        },
+                        {
+                            "criterio": "Justificar a ausência de reação química.",
+                            "pontos": 1.25
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "transformações químicas no mercúrio contido sob a campânula (C);",
+                    "valor": 2.5,
+                    "resposta_esperada": "Não. O mercúrio sob a campânula não reage quimicamente; a reação ocorre no balão aquecido.",
+                    "resolucao_referencia": "O Hg sob a campânula não está na região aquecida da reação; não sofre transformação química.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Reconhecer o processo de condensação física.",
+                            "pontos": 1.25
+                        },
+                        {
+                            "criterio": "Justificar a ausência de novas substâncias químicas.",
+                            "pontos": 1.25
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "mudança no nível do mercúrio contido no balão (B);",
+                    "valor": 2.5,
+                    "resposta_esperada": "Sim. O nível do mercúrio líquido no balão aumenta ligeiramente, devido à formação de HgO, menos denso.",
+                    "resolucao_referencia": "O óxido formado ocupa volume maior que o mercúrio consumido e eleva um pouco o nível observado no balão.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Indicar que o nível diminuiu.",
+                            "pontos": 1.25
+                        },
+                        {
+                            "criterio": "Explicar o esgotamento por evaporação/destilação.",
+                            "pontos": 1.25
+                        }
+                    ]
+                },
+                {
+                    "letra": "d",
+                    "enunciado": "mudança no nível do mercúrio contido na campânula (C).",
+                    "valor": 2.5,
+                    "resposta_esperada": "Sim. O nível de mercúrio na campânula aumenta.",
+                    "resolucao_referencia": "O consumo de O2 reduz a pressão no interior da campânula; a pressão atmosférica externa empurra o mercúrio para dentro, elevando seu nível.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Indicar que o nível aumentou.",
+                            "pontos": 1.25
+                        },
+                        {
+                            "criterio": "Explicar o acúmulo do mercúrio condensado.",
+                            "pontos": 1.25
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 4,
+            "area": "Química",
+            "enunciado": "Durante o inverno, pretende-se elevar a temperatura de uma câmara experimental de 17 °C para 27 °C. A câmara possui área de 41 m² e altura de 3 m. Utilizará gás natural composto por 80% de metano (CH₄) e 20% de etano (C₂H₆). Dados: Calor específico molar do ar = 29,1 J·mol⁻¹·K⁻¹; Massa molar média do ar seco = 28,96 g·mol⁻¹; Densidade do ar = 1,22 g·L⁻¹; Calor de combustão do metano = -889,5 kJ·mol⁻¹; Calor de combustão do etano = -1527,2 kJ·mol⁻¹.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "massa molar média do gás natural;",
+                    "valor": 3.3,
+                    "resposta_esperada": "18.856 g/mol (aproximadamente 18.9 g/mol).",
+                    "resolucao_referencia": "Média ponderada pelas frações molares: 0.80*16.05 + 0.20*30.08 = 18.856 g/mol.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Utilizar as massas molares corretas dos componentes do gás natural.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Calcular a média ponderada com base nas porcentagens fornecidas.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "quantidade de calor necessário para aumentar a temperatura do ar na sala de 17 °C para 27 °C;",
+                    "valor": 3.3,
+                    "resposta_esperada": "Q = 1.50785e6 J (aproximadamente 1.51e6 J, ou 1507.85 kJ).",
+                    "resolucao_referencia": "V=41*3=123 m3; massa de ar=1.22 kg/m3*123=150.06 kg. n=m/0.02896 kg/mol. Q=n*29.1*10=1.50785e6 J.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Calcular corretamente o volume e a quantidade em mols de ar na sala.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Aplicar a fórmula Q = nCΔT para determinar o calor necessário.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "massa de gás natural consumida para aquecer a sala.",
+                    "valor": 3.4,
+                    "resposta_esperada": "m_gas = 27.956 g (aproximadamente 28.0 g).",
+                    "resolucao_referencia": "A entalpia molar média de combustão em módulo é 1017.04 kJ/mol. n=1507.85/1017.04 mol; multiplicando pela massa molar média 18.856 g/mol resulta 27.956 g.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Determinar o calor de combustão médio do gás natural.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Calcular corretamente a massa de gás consumida.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 5,
+            "area": "Química",
+            "enunciado": "Um objeto de madeira foi encontrado em um sítio arqueológico. Duas amostras (A e B) foram submetidas à datação por radiocarbono. A amostra A apresentou atividade de 10 desintegrações por minuto por grama de carbono, e a amostra B, 12 desintegrações por minuto por grama de carbono. Constatou-se que a amostra B continha uma contaminação por madeira \"nova\". Informações: I. A atividade do ¹⁴C em equilíbrio com a atmosfera é 15 despmin⁻¹·g⁻¹; II. Meia-vida do ¹⁴C = 5730 anos; III. Atividade proporcional à quantidade de átomos.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "a diferença de idade, em anos, obtida a partir da análise das amostras A e B;",
+                    "valor": 5,
+                    "resposta_esperada": "1513 anos (aproximadamente).",
+                    "resolucao_referencia": "As idades aparentes são tA=(5730/ln2)*ln(15/10)≈3357 anos e tB=(5730/ln2)*ln(15/12)≈1844 anos; diferença ≈1513 anos.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar corretamente a lei do decaimento radioativo para calcular a idade da amostra pura A.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Calcular a idade aparente da amostra B e determinar a diferença de idade.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "o percentual de contaminação da amostra B, sabendo que a amostra A é \"pura\" e que a B está contaminada.",
+                    "valor": 5,
+                    "resposta_esperada": "40%.",
+                    "resolucao_resistência": "A atividade medida na amostra B contaminada é a soma da atividade da madeira antiga (com idade real igual à da amostra A) e da madeira nova (atividade de 15 des·min⁻¹·g⁻¹). Utilizando a proporção de mistura, calcula-se o percentual de material novo presente na amostra B.",
+                    "resolucao_referencia": "A atividade da mistura satisfaz 12=15p+10(1-p), em que p é a fração de madeira nova. Logo p=0.40.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Formular a equação de adição de atividades para a amostra contaminada.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Calcular corretamente o percentual de contaminação.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 6,
+            "area": "Química",
+            "enunciado": "O etilômetro detecta etanol no ar expirado através da reação com solução de dicromato de potássio em meio ácido (H₂SO₄). O etanol é oxidado a ácido acético, e o crômio(VI), de cor amarelo-alaranjado, é reduzido a crômio(III), de cor verde. Subprodutos: sulfato de potássio e água.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Escreva a equação química balanceada, que representa a reação que ocorre no etilômetro.",
+                    "valor": 5,
+                    "resposta_esperada": "3 CH3CH2OH + 2 K2Cr2O7 + 8 H2SO4 -> 3 CH3COOH + 2 Cr2(SO4)3 + 2 K2SO4 + 11 H2O.",
+                    "resolucao_referencia": "Somam-se as semirreações de oxidação do etanol e redução do dicromato em meio ácido; a equação molecular balanceada é a indicada.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever corretamente as semirreações de oxidação e redução.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Balancear corretamente a equação estequiométrica global.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Considere, hipoteticamente, um limite permitido de etanol de 0,05 mg·L⁻¹. Em uma aferição, foi gerada uma quantidade de 0,0207 mg de água no reservatório do etilômetro. Considerando o volume de 200 mL para o reservatório, verifique se a quantidade de etanol presente nesse teste é superior ao limite estabelecido e apresente os cálculos.",
+                    "valor": 5,
+                    "resposta_esperada": "Sim. A concentração calculada é 0.072 mg/L, maior que 0.05 mg/L.",
+                    "resolucao_referencia": "0.0207 mg de água correspondem a 1.15e-6 mol. Pela razão estequiométrica 3 mol etanol/11 mol água, há 3.136e-7 mol de etanol = 0.0144 mg. Em 0.200 L, C=0.072 mg/L > 0.05 mg/L.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Utilizar a estequiometria entre água e etanol para calcular a massa de etanol.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Calcular a concentração no reservatório e compará-la com o limite estabelecido.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 7,
+            "area": "Química",
+            "enunciado": "Deseja-se separar os compostos orgânicos R-NH₂, R-COOCH₃, R-OH, R-COOH, solubilizados em éter dietílico, em que R é uma cadeia aromática sem substituintes. Soluções disponíveis: I. HCl 5% (m/m); II. NaHCO₃ 5% (m/m); III. NaOH 5% (m/m).",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "apresente as equações químicas que representam as etapas de separação de cada um dos compostos orgânicos, utilizando uma única vez cada uma das soluções a frio;",
+                    "valor": 5,
+                    "resposta_esperada": "HCl: R-NH2 + HCl -> R-NH3+ Cl-. NaHCO3: R-COOH + NaHCO3 -> R-COO- Na+ + H2O + CO2. NaOH: R-OH + NaOH -> R-O- Na+ + H2O.",
+                    "resolucao_referencia": "Adiciona-se HCl para protonar a amina; NaHCO3 extrai o ácido carboxílico; NaOH desprotona o fenol (R-OH aromático). Cada espécie iônica passa à fase aquosa.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever as equações químicas de extração acido-base para a amina e o ácido carboxílico.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Utilizar corretamente os reagentes propostos em ordem adequada.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "indique as fases em que cada um dos reagentes e produtos estará dissolvido.",
+                    "valor": 5,
+                    "resposta_esperada": "Fase aquosa: R-NH3+Cl-, R-COO-Na+ e R-O-Na+ após as respectivas extrações. Fase etérea: R-COOCH3. Os compostos neutros não reagidos permanecem inicialmente na fase etérea; CO2 sai como gás.",
+                    "resolucao_referencia": "Os sais iônicos formados são solúveis na fase aquosa. O éster neutro permanece no éter; as fases devem ser separadas após cada extração.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Indicar corretamente a distribuição dos produtos ionizados na fase aquosa.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Indicar a permanência dos compostos orgânicos neutros na fase orgânica.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 8,
+            "area": "Química",
+            "enunciado": "Considere as equações termoquímicas (em kJ·mol⁻¹ a 25 °C): I. A + B → C + D (ΔH = +150); II. C + F → G (ΔH = -200); III. 2 G + 3 H → 2 I (ΔH = +90); IV. 3/2 J + Y → D + 1/2 F (ΔH = +190); V. B + T → Y (ΔH = -155); VI. J → H + F (ΔH = -40).",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Apresente todas as equações termoquímicas balanceadas utilizadas para obter o valor numérico do calor de formação do composto A, formado pela reação I + T → A.",
+                    "valor": 3.3,
+                    "resposta_esperada": "Combinação de Hess: inverter I; inverter II; usar -1/2 da III; manter IV e V; inverter e multiplicar VI por 3/2. As equações resultantes se somam para I + T -> A.",
+                    "resolucao_referencia": "As operações cancelam B, C, D, F, G, H, J e Y e deixam I+T->A.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Manipular corretamente as equações termoquímicas (inversão e multiplicação).",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Apresentar o conjunto final de equações balanceadas.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Calcule o valor numérico do calor de formação (ΔH) do composto A.",
+                    "valor": 3.3,
+                    "resposta_esperada": "Delta H = +100 kJ/mol.",
+                    "resolucao_referencia": "Delta H = -150 -(-200) -(1/2)(90) +190 -155 -(3/2)(-40) = +100 kJ/mol.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar corretamente a Lei de Hess com os sinais adequados.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Calcular o valor numérico final de ΔH.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Dado que o valor da variação da energia de Gibbs da reação I + T → A é 994,45 kJ·mol⁻¹, calcule o valor numérico da variação da entropia em kJ·K⁻¹·mol⁻¹.",
+                    "valor": 3.4,
+                    "resposta_esperada": "Delta S = -3.00 kJ/(K mol).",
+                    "resolucao_referencia": "Delta S=(Delta H-Delta G)/T=(100-994.45)/298.15≈-3.00 kJ/(K mol).",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Utilizar a equação termodinâmica ΔG = ΔH - TΔS.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Calcular corretamente a variação de entropia ΔS.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 9,
+            "area": "Química",
+            "enunciado": "Uma tira de gelatina incolor foi imersa em solução aquosa contendo K₄[Fe(CN)₆], NaOH e fenolftaleína. Após secagem ao ar, depositou-se uma gota de FeCl₃(aq) na extremidade esquerda. Fe³⁺ reage com [Fe(CN)₆]⁴⁻ formando um complexo azul. Observações: a) antes do FeCl₃, a gelatina era inteiramente vermelha; b) 1 h após, extremidade direita vermelha, centro incolor, esquerda azul; c) 2 h após, metade esquerda azul, metade direita incolor; d) 3 h após, toda a tira azul.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": "Com base nas informações fornecidas, explique a cor da tira de gelatina em cada uma das etapas descritas acima, utilizando, sempre que possível, equações químicas para justificar sua resposta.",
+                    "valor": 10,
+                    "resposta_esperada": "Inicialmente a fita fica vermelha porque o NaOH torna o meio básico e a fenolftaleína fica rosa/vermelha. Após adicionar FeCl3 à esquerda, forma-se azul da Prússia: 4 FeCl3 + 3 K4[Fe(CN)6] -> Fe4[Fe(CN)6]3 + 12 KCl. A hidrólise do FeCl3 gera acidez (FeCl3 + 3 H2O -> Fe(OH)3 + 3 HCl), neutralizando NaOH e deixando a região central incolor; por isso, após 1 h a esquerda é azul, centro incolor e direita vermelha. Com a difusão, a região azul avança e a neutralização tira a cor vermelha da metade direita; após 2 h, a esquerda está azul e a direita incolor. Após 3 h, Fe3+ alcança toda a tira e forma o complexo azul em toda ela.",
+                    "resolucao_referencia": "A sequência decorre da difusão de FeCl3, da formação do azul da Prússia com [Fe(CN)6]4- e da neutralização progressiva do meio básico que descolore a fenolftaleína.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Explicar a coloração vermelha inicial devido à basicidade (NaOH e fenolftaleína).",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Justificar a formação do complexo azul (azul da Prússia) pela reação entre Fe³⁺ e [Fe(CN)₆]⁴⁻.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Explicar o processo de descoloração da fenolftaleína devido à acidez/hidrólise do FeCl₃.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Descrever o processo cinético de difusão ao longo do tempo (etapas b, c e d).",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 10,
+            "area": "Química",
+            "enunciado": "Considere uma célula eletrolítica constituída por duas placas de platina imersas em solução aquosa 1 mol·L⁻¹ de HCl. Uma das placas foi recoberta por cloreto de prata e conectada ao polo negativo de uma fonte de tensão. Aplicou-se uma corrente contínua de 1,5 A durante 10,72 min. Considere que não há formação de gases no catodo.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Apresente as semiequações químicas que representam as semirreações que ocorreram no anodo e no catodo e indique a polaridade dos eletrodos.",
+                    "valor": 3.3,
+                    "resposta_esperada": "Catodo negativo (placa revestida): AgCl(s) + e- -> Ag(s) + Cl-(aq). Anodo positivo (Pt): 2 Cl-(aq) -> Cl2(g) + 2 e-.",
+                    "resolucao_referencia": "O polo negativo é o catodo, onde AgCl é reduzido sem formação de H2. No anodo positivo, cloreto é oxidado a cloro.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever corretamente as semirreações de anodo e catodo com indicação de polaridade.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Considerar a redução do AgCl no catodo conforme o enunciado.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Apresente a equação química que representa a reação global.",
+                    "valor": 3.3,
+                    "resposta_esperada": "2 AgCl(s) -> 2 Ag(s) + Cl2(g).",
+                    "resolucao_referencia": "Somam-se as semirreações após multiplicar por dois a redução catódica.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Combinar corretamente as semirreações para formar a equação global.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Balancear estequiometricamente a equação global.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Determine o valor numérico da variação de massa do catodo e do anodo.",
+                    "valor": 3.4,
+                    "resposta_esperada": "Catodo: delta m = -0.355 g. Anodo: delta m = 0 g.",
+                    "resolucao_referencia": "Q=1.5*10.72*60=964.8 C, equivalente a aproximadamente 0.0100 mol de elétrons. Cada mol de elétrons remove um mol de Cl do revestimento de AgCl do catodo: perda 0.355 g. O anodo de Pt é inerte e não muda de massa.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Calcular a carga elétrica total Q passada no circuito.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Determinar a variação de massa nos eletrodos utilizando as Leis de Faraday.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

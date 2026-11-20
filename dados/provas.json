@@ -36,6 +36,17 @@
         ],
         "tempo": "05:00:00",
         "arquivo": "ita/2025/1_fase.json"
+    },
+    {
+        "id": 4,
+        "tipo": "ITA",
+        "nome": "ITA 2025 — Segunda Fase",
+        "dia": "Português",
+        "areas": [
+        "Língua Portuguesa"
+        ],
+        "tempo": "04:00:00",
+        "arquivo": "ita/2025/2_fase/portugues.json"
     }
 ]
 

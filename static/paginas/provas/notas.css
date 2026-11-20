@@ -1,0 +1,143 @@
+.notas {
+    max-width: 1080px;
+    margin-inline: auto;
+    padding: clamp(1rem, 4vw, 2rem);
+    color: var(--cor-texto);
+}
+
+.notas-cabecalho {
+    margin-bottom: 1.75rem;
+}
+
+.notas-secao {
+    margin-bottom: .75rem;
+}
+
+.notas-secao-titulo {
+    padding: .9rem 1.15rem;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.notas-secao[open] > .notas-secao-titulo {
+    margin-bottom: .75rem;
+}
+
+.notas h1,
+.notas h3,
+.notas h4 {
+    margin: 0 0 .6rem;
+}
+
+.notas-cabecalho p,
+.notas-data,
+.notas-fonte,
+.notas-equivalencia {
+    color: var(--cor-texto-secundario);
+}
+
+.notas-lista,
+.notas-dias,
+.notas-media {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.notas-cartao {
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    margin: 0 0 .75rem;
+    padding: clamp(1rem, 3vw, 1.4rem);
+}
+
+.notas-eliminado {
+    background: color-mix(in srgb, #c34d4d 12%, var(--cor-card));
+    border-color: #c34d4d;
+}
+
+.notas-dia {
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.notas label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .25rem;
+}
+
+.notas select,
+.notas input {
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: .55rem .65rem;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    font: inherit;
+}
+
+.notas :focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+}
+
+.notas-areas > div {
+    padding-block: .65rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.notas-areas dt {
+    font-weight: 600;
+}
+
+.notas-areas dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    margin: .2rem 0 0;
+}
+
+.notas-media {
+    margin-top: 1rem;
+    align-items: end;
+}
+
+.notas-media-valor {
+    display: block;
+    min-height: 2.5rem;
+    padding-block: .45rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.notas-fonte,
+.notas-data,
+.notas-equivalencia {
+    font-size: .875rem;
+}
+
+.notas-fonte a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.notas-valor strong {
+    font-size: 1.3rem;
+    margin-inline-start: .4rem;
+}
+
+@media (max-width: 640px) {
+    .notas-lista,
+    .notas-dias,
+    .notas-media {
+        grid-template-columns: 1fr;
+    }
+}

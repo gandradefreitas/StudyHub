@@ -1,0 +1,495 @@
+{
+    "instituicao": "ITA",
+    "ano": 2025,
+    "fase": "Segunda Fase",
+    "tipo": "discursiva",
+    "tempo": "4 horas",
+    "convencoes": [
+        "aceleracao_gravidade : g = 10 m/s²",
+        "velocidade_luz : c = 3,0 · 10⁸ m/s",
+        "constante_gravitacao_universal : G = 6,7 · 10⁻¹¹ N·m²/kg²",
+        "massa_terra : M_Terra = 6,0 · 10²⁴ kg",
+        "raio_terra : R_Terra = 6,4 · 10⁶ m",
+        "permissividade_eletrica : ε₀ = 8,85 · 10⁻¹² C²·N⁻¹·m⁻²",
+        "energia_ionizacao_hidrogenio : I_H = 13,6 eV",
+        "massa_proton : m_p = 1,6 · 10⁻²⁷ kg = 938 MeV/c²",
+        "carga_elementar : e = 1,6 · 10⁻¹⁹ C"
+    ],
+    "questoes": [
+        {
+            "numero": 1,
+            "area": "Física",
+            "enunciado": "O quantum de fluxo magnético Φ₀ pode ser definido como metade do fluxo magnético obtido a partir da combinação da constante de Planck h, da velocidade da luz c e da carga fundamental e. Considere um elétron se movendo em uma órbita circular de raio R, sob a ação de um campo magnético de modo que o fluxo magnético dentro de sua órbita é igual a Φ₀. Faça o que se pede nos itens a seguir.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Obtenha a expressão para Φ₀.",
+                    "valor": 5,
+                    "resposta_esperada": "Phi_0 = h/(2e).",
+                    "resolucao_referencia": "Pela definição informada no enunciado, o quantum de fluxo é metade de h/e.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Relacionar corretamente as constantes h, c e e conforme o enunciado.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Obter a expressão dimensional e algébrica correta para Φ₀.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Sabendo que a velocidade do elétron é dada por βc (β ≪ 1), calcule o raio R, em termos de h, c, β e mₑ (a massa do elétron).",
+                    "valor": 5,
+                    "resposta_esperada": "R = h/(2*pi*beta*m_e*c).",
+                    "resolucao_referencia": "Da força magnética centrípeta, e*beta*c*B = m_e*(beta*c)^2/R, então B = m_e*beta*c/(eR). Substituindo em pi*R^2*B = h/(2e), resulta R = h/(2*pi*beta*m_e*c).",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Expressar corretamente a relação entre o campo magnético, o raio R e o fluxo Φ₀.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Substituir a velocidade v = βc e resolver o sistema para isolar R.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "area": "Física",
+            "enunciado": "Considere uma barra homogênea de comprimento L e massa M, suspensa horizontalmente por uma corda vertical que tem um nó fixo no teto e outro numa das extremidades da barra (x = 0). Uma massa m está pendurada na outra extremidade (x = L), e uma distribuição de forças é aplicada ao longo da barra, de forma que o sistema se encontra em equilíbrio estático. Essa distribuição pode ser descrita por N forças, que obedecem à relação de recorrência Fₙ = Fₙ₋₁ / 2 (n = 0, 1, ..., N - 1), aplicadas nos pontos xₙ = 2⁻ⁿ · L.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Calcule, em termos de M, m, g, L e N, a força F₀.",
+                    "valor": 5,
+                    "resposta_esperada": "F_0 = 3*(M+2m)*g/[8*(1-4^(-N))].",
+                    "resolucao_referencia": "O equilíbrio dos torques em x=0 dá (M/2+m)gL = F_0*L*sum(n=0..N-1)(1/4)^n. Usando a soma geométrica, obtém-se a expressão indicada.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Montar corretamente a equação de equilíbrio de torques em relação ao ponto de suspensão.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Somar a série geométrica correspondente às forças Fₙ e isolar F₀.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Calcule a força de tração da corda.",
+                    "valor": 5,
+                    "resposta_esperada": "T = g*[(M+m) - 3*(M+2m)/(4*(1+2^(-N)))].",
+                    "resolucao_referencia": "O equilíbrio vertical fornece T + sum(F_n) = (M+m)g. Com F_n=F_0/2^n, soma-se a PG e substitui-se F_0 do item (a).",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar o equilíbrio de forças verticais.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Determinar a expressão final da tração T.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 3,
+            "area": "Física",
+            "enunciado": "Considere um objeto de massa m que se movimenta sobre uma cunha de massa M, inclinação α e coeficiente de atrito μ. A cunha se move horizontalmente para a direita, sob a ação de uma força F em uma superfície lisa. Considere que, inicialmente, o sistema se encontra em repouso, com esse objeto no topo da cunha. Sabe-se que o intervalo de tempo que ele leva para chegar ao solo com a cunha em movimento é o triplo do que levaria se a cunha estivesse fixa. Com base nessas informações, calcule, em função de m, M, α, μ e g, a magnitude...",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206404/Captura_de_tela_2026-10-28_135031.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "...da aceleração da cunha.",
+                    "valor": 3.3,
+                    "resposta_esperada": "a_cunha = (8g/9)*(sin(alpha)-mu*cos(alpha))/(mu*sin(alpha)+cos(alpha)).",
+                    "resolucao_referencia": "A aceleração relativa do bloco sobre a cunha é determinada pela razão entre os tempos de descida, t_movel=3*t_fixa. Substituindo nas equações de movimento no referencial da cunha, resulta a expressão.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Relacionar a cinemática do tempo de descida com a aceleração efetiva.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Obter a expressão da aceleração da cunha.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "...da força normal que o plano inclinado faz no objeto.",
+                    "valor": 3.3,
+                    "resposta_esperada": "N = m*g*(8+cos(alpha)^2+mu*sin(alpha)*cos(alpha))/(9*(mu*sin(alpha)+cos(alpha))).",
+                    "resolucao_referencia": "Na direção normal ao plano, N = m*(g*cos(alpha)+a_cunha*sin(alpha)). Substitui-se a aceleração obtida no item (a).",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar as forças atuantes no bloco incluindo a força de inércia.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Calcular corretamente o módulo da força normal N.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "...da força F.",
+                    "valor": 3.4,
+                    "resposta_esperada": "F = N*(sin(alpha)-mu*cos(alpha)) + M*a_cunha.",
+                    "resolucao_referencia": "A equação horizontal do conjunto cunha-bloco dá F = M*a_cunha + N*(sin(alpha)-mu*cos(alpha)); substituem-se N e a_cunha dos itens anteriores.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Considerar o sistema conjunto (bloco + cunha) para a direção horizontal.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Determinar a expressão final da força F.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 4,
+            "area": "Física",
+            "enunciado": "Um objeto de massa m se movimenta em direção a outro objeto de massa M inicialmente em repouso. Após a colisão, a velocidade dos objetos forma, respectivamente, ângulos α e θ com a horizontal. Faça o que se pede nos itens a seguir.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206404/Captura_de_tela_2026-10-28_135020.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Determine as expressões para os módulos de v₁ e v₂ em função de α, θ e v₀.",
+                    "valor": 3.3,
+                    "resposta_esperada": "v_1 = (m/M)*v_0*sin(alpha)/sin(alpha+theta); v_2 = v_0*sin(theta)/sin(alpha+theta).",
+                    "resolucao_referencia": "Conservação do momento linear nas direções horizontal e vertical após a colisão.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever as equações de conservação do momento linear nos eixos x e y.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Isolar os módulos v₁ e v₂.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Denotando a variação relativa entre a energia cinética final e inicial do sistema por δ, determine a razão m / M em função de θ e α, para α = 90°.",
+                    "valor": 3.3,
+                    "resposta_esperada": "Para alpha=90 graus: m/M = cos(2*theta) + delta*cos(theta)^2, com delta=(K_final-K_inicial)/K_inicial.",
+                    "resolucao_referencia": "Substituindo as velocidades do item (a) na definição da variação relativa da energia cinética e usando alpha=90 graus.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar a condição α = 90° nas equações de momento.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Relacionar com a energia cinética e isolar a razão m / M.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Calcule o valor numérico da razão M / m para θ = 30°, α = 90° e perda relativa de 60% de energia cinética depois da colisão.",
+                    "valor": 3.4,
+                    "resposta_esperada": "M/m = 20.",
+                    "resolucao_referencia": "Com theta=30 graus e delta=-0.60, m/M=cos(60 graus)-0.60*cos(30 graus)^2=1/20; logo M/m=20.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Substituir corretamente os dados numéricos (incluindo δ = -0,6 e θ = 30°).",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Chegar ao resultado numérico correto.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 5,
+            "area": "Física",
+            "enunciado": "Considere um veículo lançador de nanossatélites (VLNS) de massa Mᵥ a uma altitude h e com velocidade v₀ perpendicular ao raio da Terra em relação a um referencial inercial centrado na Terra. Um nanossatélite (NS) de massa m encontra-se imerso em um fluido incompressível armazenado em um tubo localizado na extremidade do VLNS. O tubo possui dois diâmetros distintos: um de valor d₁ e outro de valor d₂ < d₁. Durante a ejeção, o NS acompanha a velocidade do fluido, que vale v₁ em d₁, em relação ao VLNS. Considere M_T, R_T, G e massa do fluido desprezível. Determine...",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206441/Captura_de_tela_2026-10-28_135009.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "...a velocidade de ejeção do NS, com relação ao VLNS, em termos de v₀, v₁, d₁ e d₂.",
+                    "valor": 5,
+                    "resposta_esperada": "v_ejecao = v_1*(d_1/d_2)^2.",
+                    "resolucao_referencia": "Pela continuidade do fluido incompressível, A_1*v_1=A_2*v_2; como A é proporcional a d^2, a velocidade no trecho estreito é v_1*(d_1/d_2)^2.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar corretamente a equação da continuidade para escoamento incompressível.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Determinar a velocidade de ejeção em função de v₁, d₁ e d₂.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "...qual diâmetro d₂ permite que o NS entre em órbita circular.",
+                    "valor": 5,
+                    "resposta_esperada": "d_2 = d_1*sqrt(((1-m/M_v)*v_1)/(sqrt(G*M_T/(R_T+h))-v_0)).",
+                    "resolucao_referencia": "Combina-se a velocidade do fluido relativa ao lançador com a conservação do momento na ejeção. Igualando a velocidade inercial resultante do nanossatélite à velocidade orbital circular sqrt(G*M_T/(R_T+h)), isola-se d_2. Considera-se a ejeção na direção tangencial favorável e denominador positivo.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Definir a condição de velocidade para órbita circular em função de M_T, R_T e h.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Compor a velocidade no referencial inercial e determinar o valor de d₂.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 6,
+            "area": "Física",
+            "enunciado": "Uma sonda tripulada foi projetada para resistir ao calor da atmosfera de mercúrio, que pode atingir uma temperatura T₀ = 430 °C. A sonda tem estrutura semelhante a uma casca esférica de duas camadas. A camada externa (espessura d₁, condutividade K₁) e a interna (espessura d₂, condutividade K₂). O raio externo é R, com d = d₁ = d₂ e R ≫ d.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206404/Captura_de_tela_2026-10-28_135001.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Expresse a condutividade térmica efetiva da sonda em função de R, K₁, K₂ e d.",
+                    "valor": 5,
+                    "resposta_esperada": "K_ef = 2*(R-d)*K_1*K_2/[R*K_1+(R-2*d)*K_2]. Para R >> d: K_ef aproximadamente 2*K_1*K_2/(K_1+K_2).",
+                    "resolucao_referencia": "Somam-se as resistências térmicas esféricas das duas camadas em série, entre os raios R, R-d e R-2d, e iguala-se à resistência de uma casca equivalente.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever corretamente a expressão de resistência térmica para cascas esféricas.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Obter a condutividade térmica efetiva considerando R ≫ d.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Estime a potência, em kW, que um refrigerador deve ter para manter a temperatura interna em Tᵢ = 23 °C, assumindo R = 20 m, d₁ = d₂ = 30 cm, K₁ = 50 W/(m·°C), K₂ = 0,020 W/(m·°C) e que a máquina refrigeradora tem COP ideal.",
+                    "valor": 5,
+                    "resposta_esperada": "P aproximadamente 182 kW.",
+                    "resolucao_referencia": "A condução esférica fornece o fluxo de calor para T_ext=703 K e T_int=296 K. Com K_ef aproximadamente 0.04 W/(m K), R=20 m e d=0.30 m, o fluxo é cerca de 407 kW. Para o refrigerador ideal, COP=296/(703-296); portanto, P=fluxo/COP, cerca de 182 kW.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Calcular o fluxo térmico através da estrutura esférica.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Aplicar o COP ideal para determinar a potência do refrigerador em kW.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 7,
+            "area": "Física",
+            "enunciado": "O interferômetro de Mach-Zehnder divide um feixe de luz em duas partes iguais que percorrem caminhos C₁ e C₂ e são recombinadas em dois detectores, D₁ e D₂. Cada reflexão em espelhos E causa um avanço de fase de λ/4 (desfasagem de π/2), enquanto a onda transmitida não sofre defasagem. O feixe incidente tem intensidade I₀.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206404/Captura_de_tela_2026-10-28_134952.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Determine a intensidade medida por cada um dos detectores. Justifique.",
+                    "valor": 3.3,
+                    "resposta_esperada": "I(D1)=I_0; I(D2)=0.",
+                    "resolucao_referencia": "No arranjo sem material, os feixes chegam em fase a D1 (interferência construtiva) e em oposição de fase a D2 (destrutiva).",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Contabilizar corretamente as defasagens introduzidas pelos espelhos em cada braço.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Determinar as intensidades finais em D₁ e D₂.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Considere agora que um material M, que causa um deslocamento de fase de ϕ na onda transmitida, seja inserido no caminho entre E e S₂. Esboce os gráficos de intensidade versus deslocamento de fase ϕ, correspondentes à detecção de fótons em D₁ e D₂, para ϕ ∈ [0, 2π].",
+                    "valor": 3.3,
+                    "resposta_esperada": "I(D1)=I_0*cos(phi/2)^2; I(D2)=I_0*sin(phi/2)^2, para 0<=phi<=2*pi.",
+                    "resolucao_referencia": "A fase adicional em um dos braços transfere a intensidade entre detectores; as intensidades são complementares e somam I_0.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Escrever a dependência funcional da intensidade com o desfasamento ϕ.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Esboçar qualitativamente e corretamente os gráficos para D₁ e D₂ no intervalo [0, 2π].",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Se o feixe incidente fosse composto por apenas um fóton, discuta se ele iria percorrer um caminho específico até um dos detectores.",
+                    "valor": 3.4,
+                    "resposta_esperada": "Não. Um fóton único não tem um caminho clássico determinado no interferômetro; as probabilidades de detecção em D1 e D2 seguem as amplitudes de interferência dos dois caminhos.",
+                    "resolucao_referencia": "A resposta é probabilística para cada detecção, enquanto muitos fótons reproduzem as intensidades de interferência.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Argumentar com base na superposição quântica e dualidade onda-partícula.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Explicar coerentemente o comportamento do fóton individual no interferômetro.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 8,
+            "area": "Física",
+            "enunciado": "N partículas (N > 2) de massa m e carga de módulo q descrevem movimentos circulares uniformes de raio R com a mesma velocidade angular. As partículas interagem gravitacional e eletricamente. Sabendo que todas as partículas descrevem a mesma trajetória e que apenas duas delas possuem cargas positivas, faça o que se pede nos itens a seguir.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "Determine uma configuração para a qual a situação descrita seja fisicamente possível.",
+                    "valor": 3.3,
+                    "resposta_esperada": "N=4 nos vértices de um quadrado; as duas cargas positivas ocupam vértices opostos e as duas negativas os outros vértices opostos.",
+                    "resolucao_referencia": "A simetria da configuração faz a força resultante sobre cada partícula apontar para o centro e ter o mesmo módulo.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Propor uma distribuição espacial simétrica sobre a circunferência de raio R.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Especificar corretamente a posição das duas cargas positivas na estrutura.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Calcule o módulo da força resultante em cada partícula na configuração determinada.",
+                    "valor": 3.3,
+                    "resposta_esperada": "F_resultante = [(1+2*sqrt(2))*G*m^2 + (2*sqrt(2)-1)*k_e*q^2]/(4*R^2).",
+                    "resolucao_referencia": "Somam-se vetorialmente as forças gravitacionais e elétricas sobre uma partícula na configuração quadrada, obtendo a força centrípeta radial indicada.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Reconhecer que a força resultante corresponde à força centrípeta do MCU.",
+                            "pontos": 1.6
+                        },
+                        {
+                            "criterio": "Expressar o módulo da força em função de m, ω e R.",
+                            "pontos": 1.7
+                        }
+                    ]
+                },
+                {
+                    "letra": "c",
+                    "enunciado": "Calcule a velocidade angular de cada partícula na configuração determinada.",
+                    "valor": 3.4,
+                    "resposta_esperada": "omega = sqrt([(1+2*sqrt(2))*G*m^2 + (2*sqrt(2)-1)*k_e*q^2]/(4*m*R^3)).",
+                    "resolucao_referencia": "Igualando F_resultante=m*omega^2*R e isolando omega.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Somar as forças gravitacionais e coulombianas atuantes sobre uma partícula genérica.",
+                            "pontos": 1.7
+                        },
+                        {
+                            "criterio": "Isolar e determinar a expressão correta para a velocidade angular ω.",
+                            "pontos": 1.7
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 9,
+            "area": "Física",
+            "enunciado": "Uma balança de corrente montada sobre base isolante é composta por um ímã (campo magnético uniforme B horizontal de comprimento l = 10 cm), um circuito elétrico, uma massa móvel m = 10 mg e um contrapeso. O arranjo metálico móvel tem comprimento L = 1,0 m entre os apoios. A massa móvel está a uma distância d dos apoios. A partir do gráfico fornecido de d versus corrente i, estime o valor do campo magnético do ímã.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206432/Captura_de_tela_2026-10-28_134932.png",
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": "A partir dos dados do gráfico de d versus i, estime o valor do campo magnético B do ímã.",
+                    "valor": 10,
+                    "resposta_esperada": "B aproximadamente 6.9e-4 T (0.69 mT).",
+                    "resolucao_referencia": "Do equilíbrio dos torques, d/i = B*l*L/(m*g). A inclinação aproximada do gráfico é 0.69 m/A; usando l=0.10 m, L=1.0 m, m=10 mg e g=10 m/s^2, resulta B aproximadamente 6.9e-4 T.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Estabelecer a equação de equilíbrio de torques envolvendo a força magnética e a massa móvel.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Relacionar a inclinação do gráfico d versus i com os parâmetros do problema.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Calcular corretamente o valor numérico do campo magnético B.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 10,
+            "area": "Física",
+            "enunciado": "Em câmara de alto vácuo, um feixe monoenergético de elétrons é misturado a um feixe colimado e monoenergético de íons totalmente ionizados com iguais velocidades. A abertura de um detector de fótons é apontada perpendicularmente à direção dos feixes (experimentos 1 a 3: prótons, hélio e oxigênio a baixas energias). No quarto experimento (prótons relativísticos), o detector é apontado paralelamente, com energia cinética dos íons de 234,5 MeV.",
+            "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/v1793206432/Captura_de_tela_2026-10-28_134915.png",
+            "itens": [
+                {
+                    "letra": "a",
+                    "enunciado": "As energias máximas dos fótons em eV detectadas no primeiro, segundo e terceiro experimentos.",
+                    "valor": 5,
+                    "resposta_esperada": "E_max = 13.6 eV (próton), 54.4 eV (He2+) e 870.4 eV (O8+).",
+                    "resolucao_referencia": "Para íons totalmente ionizados, a energia de ionização hidrogenoide é Z^2*13.6 eV: Z=1, 2 e 8.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Relacionar a velocidade igual dos feixes com as respectivas energias cinéticas e massas.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Calcular corretamente as energias máximas dos fótons para prótons, hélio e oxigênio.",
+                            "pontos": 2.5
+                        }
+                    ]
+                },
+                {
+                    "letra": "b",
+                    "enunciado": "Um valor aproximado para o desvio percentual da máxima energia do fóton no quarto experimento com relação à máxima energia do fóton do primeiro experimento, considerando a energia cinética dos íons de 234,5 MeV no quarto experimento (relativístico).",
+                    "valor": 5,
+                    "resposta_esperada": "Desvio de +100% se o detector estiver voltado contra o sentido do feixe (fóton observado no sentido do movimento da fonte); desvio de -50% se estiver no sentido do feixe.",
+                    "resolucao_referencia": "Com K=234.5 MeV e energia de repouso do próton 938 MeV, gamma=1.25 e beta=0.6. O efeito Doppler longitudinal multiplica a energia por sqrt((1+beta)/(1-beta))=2 no sentido de aproximação (+100%) ou por 1/2 no sentido de afastamento (-50%). O enunciado diz apenas paralelo e não especifica o sentido.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Aplicar as transformações e fórmulas relativísticas corretas para o feixe de prótons.",
+                            "pontos": 2.5
+                        },
+                        {
+                            "criterio": "Determinar o desvio percentual em relação ao primeiro experimento.",
+                            "pontos": 2.5
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

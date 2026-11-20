@@ -1,0 +1,41 @@
+{% extends "base_publico.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='404.css') }}">
+{% endblock %}
+
+{% block atributos_body %}
+data-tema="{{ usuario['tema'] if usuario else 'sistema' }}"
+{% endblock %}
+
+{% block titulo %}Prova finalizada — StudyHub{% endblock %}
+
+{% block conteudo %}
+<main class="pagina-404">
+    <div class="container">
+        <section class="erro-404" aria-labelledby="titulo-correcao-pendente">
+            <div class="erro-404-numero" aria-hidden="true">✓</div>
+            <h1 id="titulo-correcao-pendente">
+                Parabéns por finalizar a prova, vá descansar e retorne mais tarde com a correção pronta
+            </h1>
+            <p>
+                A correção automática não ficou disponível agora. O StudyHub tentará novamente
+                em segundo plano; consulte o histórico de provas mais tarde.
+            </p>
+            <a href="{{ url_menu }}" class="erro-404-botao">
+                <i class="bi bi-house"></i>
+                Ir para o menu de provas
+            </a>
+            <p>Você será levado ao menu de provas em alguns segundos.</p>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.setTimeout(function () {
+        window.location.replace({{ url_menu | tojson }});
+    }, 8000);
+</script>
+{% endblock %}

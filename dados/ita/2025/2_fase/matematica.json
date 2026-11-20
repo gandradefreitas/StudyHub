@@ -1,0 +1,316 @@
+{
+    "instituicao": "ITA",
+    "ano": 2025,
+    "fase": "Segunda Fase",
+    "tipo": "discursiva",
+    "tempo": "4 horas",
+    "convencoes": [
+        "Considere o sistema de coordenadas cartesiano, a menos que haja indicação contrária.",
+        "Os eixos horizontal e vertical são indicados respectivamente por Ox e Oy, e o centro do sistema, por O.",
+        "i denota a unidade imaginária, sendo i² = -1.",
+        "AB com uma barra sobre as letras denota o segmento de reta de extremidades nos pontos A e B.",
+        "AB sem barra denota a reta que passa pelos pontos A e B.",
+        "m(AB), com uma barra sobre AB, denota o comprimento do segmento AB.",
+        "max{i, j} denota o maior dentre os valores i e j.",
+        "det A denota o determinante da matriz A.",
+        "Aᵀ denota a transposta da matriz A.",
+        "A⁻¹ denota a inversa da matriz A.",
+        "(aᵢⱼ) representa uma matriz cuja entrada na linha i e coluna j é indexada por aᵢⱼ."
+    ],
+    "questoes": [
+        {
+            "numero": 1,
+            "area": "Matemática",
+            "enunciado": "Encontre os valores reais a e b tais que o polinômio p(x) = x⁵⁷ + ax¹⁴ + bx⁷ + 1, ao ser dividido por x² - x + 1, deixe resto 2x + 1.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "a = -1 e b = 3",
+                    "resolucao_referencia": "Como x² - x + 1 divide a diferença entre x² - x + 1 e zero, temos x² ≡ x - 1 (mod x² - x + 1). Daí, x³ ≡ -1, x⁶ ≡ 1, x⁷ ≡ x e x¹⁴ ≡ x² ≡ x - 1. Além disso, x⁵⁷ = (x³)¹⁹ ≡ (-1)¹⁹ = -1. Portanto, p(x) ≡ -1 + a(x - 1) + bx + 1 = (a + b)x - a. Comparando com o resto 2x + 1, obtemos a + b = 2 e -a = 1. Logo, a = -1 e b = 3.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Obter a relação x² ≡ x - 1 módulo x² - x + 1.",
+                            "pontos": 2
+                        },
+                        {
+                            "criterio": "Deduzir corretamente as relações necessárias para reduzir x⁷, x¹⁴ e x⁵⁷.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Reduzir o polinômio a um resto da forma (a + b)x - a.",
+                            "pontos": 2
+                        },
+                        {
+                            "criterio": "Comparar com o resto 2x + 1 e determinar corretamente a e b.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 2,
+            "area": "Matemática",
+            "enunciado": "Seja E uma elipse com eixo focal no eixo Ox do sistema de coordenadas cartesiano. O centro de E é o ponto (r, 0), com r > 0, sua excentricidade é (√2)/2, e seu semieixo maior mede √2. Considerando os pontos (x, y) ∈ E, determine o valor de r para que y/x tenha valor máximo igual a 1.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "r = √3",
+                    "resolucao_referencia": "A excentricidade fornece c = ae = 1, então b² = a² - c² = 1. A elipse é (x-r)²/2 + y² = 1. Para que o maior valor de y/x seja 1, a reta y = x deve ser tangente à elipse. Substituindo y = x: (x-r)²/2 + x² = 1, isto é, 3x² - 2rx + r² - 2 = 0. A tangência exige discriminante zero: 4r² - 12(r² - 2) = 0, logo r² = 3. Como r > 0, r = √3.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Determinar os parâmetros a, b e c da elipse.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Montar a condição de tangência entre a reta y = tx e a elipse.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Calcular corretamente o valor de r.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 3,
+            "area": "Matemática",
+            "enunciado": "Sejam α, β ∈ [π/2, 3π/2] tais que sen(α) - sen(β) = 1/4 e sen(α) - 2sen(β) + cos(β) = 3/4. Calcule o valor de sen(α + β).",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "sen(α + β) = (5 + √7)/8",
+                    "resolucao_referencia": "Subtraindo as equações, obtemos cos(β) - sen(β) = 1/2. Como β está em [π/2, 3π/2], isso força β ao terceiro quadrante. Das identidades sen²β + cos²β = 1 e cosβ - senβ = 1/2, segue cosβ = (1-√7)/4 e senβ = -(1+√7)/4. Da primeira equação, senα = senβ + 1/4 = -√7/4. Como α também está no terceiro quadrante, cosα = -3/4. Portanto, sen(α+β) = senα cosβ + senβ cosα = (5+√7)/8.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Isolar e determinar a relação entre sen(β) e cos(β).",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Encontrar os valores individuais das funções trigonométricas para α e β.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Aplicar a fórmula de adição de arcos e calcular sen(α + β).",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 4,
+            "area": "Matemática",
+            "enunciado": "Seja ABC um triângulo de lados m(AB) = 6, m(AC) = 10 e m(BC) = 14. Calcule o raio da circunferência externa ao triângulo ABC que tangencia simultaneamente o segmento BC e as retas suportes AB e AC.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "R = 15√3",
+                    "resolucao_referencia": "A circunferência externa tangente ao segmento BC e às retas AB e AC é a ex-inscrita oposta a A. O semiperímetro é s = (6+10+14)/2 = 15. Pela fórmula de Heron, a área é Δ = √(15·9·5·1) = 15√3. Como BC = 14, o raio ex-inscrito oposto a A é r_a = Δ/(s-14) = 15√3.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar corretamente a propriedade da circunferência ex-inscrita ao triângulo.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Calcular a área e o semiperímetro do triângulo ABC.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Determinar o valor correto do raio.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 5,
+            "area": "Matemática",
+            "enunciado": "Usando as aproximações log₁₀(2) = 0,3010, log₁₀(3) = 0,4771 e log₁₀(7) = 0,8450, determine o primeiro algarismo (da esquerda para a direita) do resultado de 3¹⁰⁰.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "5",
+                    "resolucao_referencia": "Calculamos log₁₀(3¹⁰⁰) = 100 · log₁₀(3) = 100 · 0,4771 = 47,71. Escrevemos 47,71 na forma 47 + 0,71. Como log₁₀(5) = log₁₀(10/2) = 1 - log₁₀(2) = 1 - 0,3010 = 0,6990 e log₁₀(6) = log₁₀(2) + log₁₀(3) = 0,3010 + 0,4771 = 0,7781, temos que 0,6990 < 0,71 < 0,7781, o que implica log₁₀(5) < 0,71 < log₁₀(6). Logo, 3¹⁰⁰ = 10⁴⁷,⁷¹ = 10⁴⁷ · 10⁰,⁷¹, cujo primeiro algarismo é 5.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Calcular log₁₀(3¹⁰⁰) utilizando a propriedade dos logaritmos.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Separar a parte inteira e a parte fracionária do logaritmo.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Estimar o valor entre logaritmos conhecidos para determinar o primeiro algarismo.",
+                            "pontos": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 6,
+            "area": "Matemática",
+            "enunciado": "Uma moeda não viciada é lançada n vezes. Encontre os valores de n que maximizam a probabilidade de sair cara pela quarta vez exatamente no enésimo lançamento.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "n = 6 ou n = 7",
+                    "resolucao_referencia": "A probabilidade é P(n) = C(n-1,3)/2ⁿ, para n ≥ 4. Para n ≥ 5, P(n)/P(n-1) = (n-1)/(2(n-4)). Essa razão é maior que 1 para n < 7, igual a 1 em n = 7, e menor que 1 para n > 7. Em particular, P(7) = P(6); portanto, os dois valores que maximizam a probabilidade são n = 6 e n = 7.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Formular corretamente a expressão da probabilidade P(n).",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Estabelecer a inequação de maximização usando a razão P(n)/P(n - 1).",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Concluir o valor correto de n.",
+                            "pontos": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 7,
+            "area": "Matemática",
+            "enunciado": "Considere o polinômio p(x) = x³ + ax² + b. Determine os valores reais a e b, sabendo que: I. p(x) tem uma raiz real dupla; II. Os pontos (x₁, 0), (x₂, 0) e (0, b) são vértices de um triângulo retângulo, em que x₁ e x₂ são raízes distintas de p(x).",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "(a,b) = (-(3/2)·2^(1/4), 2^(-1/4)) ou ((3/2)·2^(1/4), -2^(-1/4))",
+                    "resolucao_referencia": "Se r é a raiz dupla e s a raiz simples, o coeficiente de x é zero, então r²+2rs=0. Como o triângulo não é degenerado, r≠0 e s=-r/2. Pelas relações de Girard, a=-(2r+s)=-3r/2 e b=-r²s=r³/2. O ângulo reto só pode estar no vértice (0,b); a perpendicularidade dos vetores dá rs+b²=0. Substituindo s=-r/2 e b=r³/2, obtemos r⁴=2, logo r=±2^(1/4). Isso produz os dois pares indicados.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Utilizar as condições de raiz dupla para o polinômio cúbico.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Relacionar os vértices do triângulo retângulo com as raízes e o termo constante b.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Determinar os valores de a e b.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 8,
+            "area": "Matemática",
+            "enunciado": "Seja Aₖ = (aᵢⱼ) uma matriz quadrada de ordem k, em que aᵢⱼ = max{i, j} para todo i, j em {1, 2, ..., k}. Determine a soma ∑(k=1 até 2025) det(Aₖ).",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "1013",
+                    "resolucao_referencia": "Subtraindo a linha i-1 da linha i, de baixo para cima, a matriz fica triangular por blocos e resulta det(A_k)=(-1)^(k-1)·k. Assim, a soma de k=1 até 2025 é 1-2+3-4+...+2025. Agrupando em pares, cada par vale -1; há 1012 pares e sobra 2025, portanto a soma é 2025-1012=1013.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar o padrão ou aplicar operações elementares para calcular det(Aₖ).",
+                            "pontos": 5
+                        },
+                        {
+                            "criterio": "Expressar o determinante de forma genérica para a ordem k.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Calcular a somatória até 2025.",
+                            "pontos": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 9,
+            "area": "Matemática",
+            "enunciado": "Determine a quantidade de matrizes 5 × 5 invertíveis e com entradas inteiras que satisfazem a propriedade A⁻¹ = Aᵀ.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "2⁵ · 5! (ou 3840)",
+                    "resolucao_referencia": "A condição A⁻¹ = Aᵀ implica que A · Aᵀ = I, ou seja, A é uma matriz ortogonal com entradas inteiras. As únicas matrizes ortogonais com entradas inteiras são as matrizes de permutação assinadas (matrizes de signed permutation), que possuem exatamente um elemento não nulo por linha e coluna, sendo esse elemento igual a 1 ou -1. Para uma matriz de ordem 5, existem 5! maneiras de posicionar os elementos não nulos e 2⁵ maneiras de escolher os sinais de cada um.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar que a matriz deve ser ortogonal com entradas inteiras.",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Reconhecer que tais matrizes são matrizes de permutação assinadas.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Calcular corretamente o total de matrizes (5! · 2⁵).",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "numero": 10,
+            "area": "Matemática",
+            "enunciado": "Calcule a área da projeção ortogonal de um cubo de aresta 2 sobre um plano perpendicular a uma das diagonais do cubo.",
+            "imagem": null,
+            "itens": [
+                {
+                    "letra": null,
+                    "enunciado": null,
+                    "valor": 10,
+                    "resposta_esperada": "4√3",
+                    "resolucao_referencia": "A projeção ortogonal de um cubo sobre um plano perpendicular a uma de suas diagonais principais resulta em um hexágono regular (ou simétrico). O comprimento da projeção de cada uma das 3 arestas concorrentes em cada vértice sobre a diagonal principal forma um ângulo cujo cosseno é 1/√3. A área da projeção é dada pela soma das projeções das faces ou calculada diretamente pela área do polígono projetado, resultando em A = 3 · (aresta)² · (1/√3) ou por relação geométrica direta, obtendo 4√3.",
+                    "criterios_correcao": [
+                        {
+                            "criterio": "Identificar a forma geométrica da projeção ortogonal (hexágono regular).",
+                            "pontos": 3
+                        },
+                        {
+                            "criterio": "Determinar os ângulos ou fatores de projeção em relação à diagonal do cubo.",
+                            "pontos": 4
+                        },
+                        {
+                            "criterio": "Calcular corretamente a área total da projeção.",
+                            "pontos": 3
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

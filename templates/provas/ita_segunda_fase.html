@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/provas/provas.css') }}"
+>
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='paginas/provas/prova_discursiva.css') }}"
+>
+{% endblock %}
+
+{% block conteudo %}
+
+<main class="container-provas">
+
+{% with mensagens = get_flashed_messages(with_categories=true) %}
+    {% if mensagens %}
+        <div class="mensagens-flash" role="status" aria-live="polite">
+            {% for categoria, mensagem in mensagens %}
+                <div class="mensagem-flash mensagem-{{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<section class="cabecalho-provas">
+
+    <div class="cabecalho-provas-texto">
+
+        <span class="subtitulo-provas">ITA 2025</span>
+
+        <h1>Segunda fase</h1>
+
+        <p>
+            Escolha a disciplina que deseja resolver.
+            Você pode iniciar uma prova por disciplina ao dia e retomar uma tentativa que ainda esteja em andamento.
+        </p>
+
+    </div>
+
+    <a
+        href="{{ url_for('pagina_provas') }}"
+        class="botao-historico"
+    >
+        Voltar às provas
+    </a>
+
+</section>
+
+<section class="lista-provas">
+
+    {% for disciplina in disciplinas %}
+
+        <article class="card-prova card-prova-discursiva">
+
+            <div class="cabecalho-prova">
+
+                <h2>{{ disciplina.nome }}</h2>
+
+                <span class="status status-discursiva">
+                    {{ disciplina.tipo }}
+                </span>
+
+            </div>
+
+            <div class="informacoes-prova">
+
+                <p>
+                    <strong>Questões:</strong>
+                    {{ disciplina.questoes }}
+                </p>
+
+                <p>
+                    <strong>Duração:</strong>
+                    {{ disciplina.tempo }}
+                </p>
+
+                <p>
+                    {{ disciplina.descricao }}
+                </p>
+
+            </div>
+
+            <div class="acoes-prova">
+
+                {% if disciplina.slug == "portugues" %}
+
+                    <a
+                        href="{{ url_for('visualizar_prova', id_prova=4) }}"
+                        class="botao-iniciar"
+                    >
+                        Iniciar prova
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{{ url_for(
+                            'visualizar_prova_ita_segunda_fase',
+                            disciplina=disciplina.slug
+                        ) }}"
+                        class="botao-iniciar"
+                    >
+                        Iniciar prova
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </article>
+
+    {% endfor %}
+
+</section>
+
+
+</main>
+
+{% endblock %}

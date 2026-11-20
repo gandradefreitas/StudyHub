@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block titulo %}Notas · StudyHub{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/provas/notas.css') }}">
+{% endblock %}
+
+{% macro numero(valor) %}{{ ('%.1f' | format(valor)).replace('.', ',') }}{% endmacro %}
+
+{% block conteudo %}
+<div class="notas">
+    <header class="notas-cabecalho">
+        <h1>Notas</h1>
+        <p>Consulte suas notas do ITA e simule sua média do ENEM.</p>
+    </header>
+
+    <details class="notas-secao">
+        <summary class="notas-secao-titulo">ENEM</summary>
+        {% for edicao, dias in enem.items() %}
+            {% set indice_edicao = loop.index %}
+            <article class="notas-cartao" data-notas-enem>
+                <h3>{{ edicao }}</h3>
+                <div class="notas-dias">
+                    {% for dia, tentativas in dias.items() %}
+                        {% set seletor = 'notas-' ~ indice_edicao ~ '-' ~ loop.index %}
+                        <section class="notas-dia" data-notas-dia>
+                            <h4>{{ dia }}</h4>
+                            {% if tentativas %}
+                                <label for="{{ seletor }}">Tentativa</label>
+                                <select id="{{ seletor }}" data-selecionar-tentativa>
+                                    {% for tentativa in tentativas %}
+                                        <option value="{{ tentativa.id }}">{{ tentativa.data_realizacao }} · #{{ tentativa.id }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% for tentativa in tentativas %}
+                                    <div data-tentativa="{{ tentativa.id }}"{% if not loop.first %} hidden{% endif %}>
+                                        {% if tentativa.areas %}
+                                            <dl class="notas-areas">
+                                                {% for area in tentativa.areas %}
+                                                    <div data-faixa="{{ area.faixa | tojson }}">
+                                                        <dt>{{ area.nome }}</dt>
+                                                        <dd><strong>{{ area.acertos }}/{{ area.total }}</strong><span>{{ numero(area.faixa[0]) }}–{{ numero(area.faixa[2]) }}</span></dd>
+                                                        {% if area.total != area.maximo %}
+                                                            <dd class="notas-equivalencia">Referência proporcional: {{ area.equivalente }}/{{ area.maximo }}</dd>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endfor %}
+                                            </dl>
+                                        {% else %}
+                                            <p>O histórico desta tentativa guarda apenas o total de acertos.</p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>Nenhuma tentativa registrada.</p>
+                            {% endif %}
+                        </section>
+                    {% endfor %}
+                </div>
+                <div class="notas-media">
+                    <div>
+                        <label for="redacao-{{ indice_edicao }}">Nota da redação</label>
+                        <input id="redacao-{{ indice_edicao }}" data-redacao type="number" min="0" max="1000" step="any" placeholder="0 a 1000">
+                    </div>
+                    <div>
+                        <strong>Média esperada</strong>
+                        <output class="notas-media-valor" data-media aria-live="polite"></output>
+                    </div>
+                </div>
+                <p class="notas-fonte">As faixas mostram do percentil 10 ao 90 na aplicação regular de 2025. A média simples usa a mediana das quatro áreas e a nota de redação informada. A faixa da média combina os limites de cada área.
+                    <a href="https://www.spesedu.com.br/calculadora-tri-enem#metodo">SPES, com microdados do Inep (CC BY 4.0)</a>.
+                </p>
+            </article>
+        {% else %}
+            <p class="notas-cartao">As tentativas do ENEM aparecerão aqui depois que você concluir uma prova.</p>
+        {% endfor %}
+    </details>
+
+    <details class="notas-secao">
+        <summary class="notas-secao-titulo">ITA</summary>
+        <div class="notas-lista">
+            {% for tentativa in ita_objetivas %}
+                {% set avaliacao = tentativa.avaliacao %}
+                <article class="notas-cartao{% if avaliacao and avaliacao.eliminado %} notas-eliminado{% endif %}">
+                    <h3>{{ tentativa.prova }}</h3>
+                    <p class="notas-data">{{ tentativa.data_realizacao }}</p>
+                    {% if not tentativa.primeira_fase %}
+                        <p class="notas-valor">Aproveitamento <strong>{{ numero(tentativa.porcentagem) }}%</strong></p>
+                    {% elif not avaliacao %}
+                        <p>Nota indisponível. O histórico guarda apenas o total de acertos.</p>
+                    {% elif avaliacao.eliminado %}
+                        <p class="notas-valor">Nota <strong>Eliminado</strong></p>
+                        <ul>
+                            {% if avaliacao.disciplinas_abaixo %}
+                                <li>Mínimo de 5 acertos por disciplina, incluindo Inglês. Abaixo do mínimo em {{ avaliacao.disciplinas_abaixo | join(', ') }}.</li>
+                            {% endif %}
+                            {% if avaliacao.ciencias < 18 %}
+                                <li>Média mínima de 5,0. Foram {{ avaliacao.ciencias }} acertos em Matemática, Física e Química, de 18 necessários.</li>
+                            {% endif %}
+                        </ul>
+                    {% else %}
+                        <p class="notas-valor">Nota <strong>{{ ('%.4f' | format(avaliacao.nota)).rstrip('0').rstrip('.').replace('.', ',') }}</strong></p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+            {% for tentativa in ita_discursivas %}
+                <article class="notas-cartao">
+                    <h3>ITA {{ tentativa.ano }} — {{ tentativa.fase }}</h3>
+                    <p>{{ tentativa.disciplina }}</p>
+                    <p class="notas-data">{{ tentativa.data_finalizacao.strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else '' }}</p>
+                    {% if tentativa.nota_total is not none and tentativa.nota_maxima is not none %}
+                        <p class="notas-valor">Nota <strong>{{ '%g' | format(tentativa.nota_total) }}/{{ '%g' | format(tentativa.nota_maxima) }}</strong></p>
+                    {% else %}
+                        <p>Aguardando nota final</p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+        {% if not ita_objetivas and not ita_discursivas %}
+            <p class="notas-cartao">As tentativas do ITA aparecerão aqui depois que você concluir uma prova.</p>
+        {% endif %}
+    </details>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/provas/notas.js') }}" defer></script>
+{% endblock %}

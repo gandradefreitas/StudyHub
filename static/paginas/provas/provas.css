@@ -489,7 +489,7 @@
    CELULAR
 ========================================================= */
 
-@media (min-width:481px) and (max-width:767px) {
+@media (min-width:381px) and (max-width:767px) {
 
     .container-provas {
 
@@ -670,6 +670,201 @@
 
         transition:none;
 
+    }
+
+}
+
+/* =========================================================
+PROVA DISCURSIVA
+========================================================= */
+
+.card-prova-discursiva {
+    border-left-color: var(--cor-secundaria);
+}
+
+.status-discursiva {
+    background: color-mix(in srgb,
+    var(--cor-secundaria) 15%, transparent
+);
+
+    color: var(--cor-secundaria);
+
+
+}
+
+
+/* Lista principal de instituições */
+
+.lista-provas {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* Pasta da instituição */
+
+.pasta-prova {
+    overflow: hidden;
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    background: var(--cor-card);
+    transition: border-color 0.2s ease;
+}
+
+.pasta-prova:hover {
+    border-color: var(--cor-primaria);
+}
+
+
+/* Cabeçalho da instituição */
+
+.pasta-prova-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.pasta-prova-cabecalho::-webkit-details-marker,
+.pasta-ano-cabecalho::-webkit-details-marker {
+    display: none;
+}
+
+.pasta-icone {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.pasta-informacoes {
+    flex: 1;
+}
+
+.pasta-informacoes h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.pasta-informacoes p {
+    margin: 5px 0 0;
+    opacity: 0.7;
+    font-size: 14px;
+}
+
+.pasta-seta {
+    margin-left: auto;
+    font-size: 22px;
+    transition: transform 0.2s ease;
+}
+
+.pasta-prova[open] > .pasta-prova-cabecalho .pasta-seta,
+.pasta-ano[open] > .pasta-ano-cabecalho .pasta-seta {
+    transform: rotate(180deg);
+}
+
+
+/* Conteúdo da instituição */
+
+.pasta-conteudo {
+    padding: 0 18px 18px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+
+/* Pasta do ano */
+
+.pasta-ano {
+    margin-top: 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pasta-ano-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+}
+
+.pasta-ano-cabecalho .pasta-icone {
+    font-size: 22px;
+}
+
+
+/* Provas disponíveis */
+
+.provas-disponiveis {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 14px 14px;
+}
+
+.item-prova {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+}
+
+.item-prova-informacoes {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-prova-informacoes h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+.item-prova-informacoes p {
+    margin: 4px 0;
+    font-size: 14px;
+    opacity: 0.75;
+}
+
+
+/* Botão de iniciar */
+
+.item-prova .botao-iniciar {
+    flex-shrink: 0;
+}
+
+
+/* Responsividade */
+
+@media (max-width: 600px) {
+
+    .pasta-prova-cabecalho {
+        padding: 16px;
+    }
+
+    .pasta-informacoes h2 {
+        font-size: 18px;
+    }
+
+    .pasta-conteudo {
+        padding: 0 10px 10px;
+    }
+
+    .item-prova {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .item-prova .botao-iniciar {
+        width: 100%;
+        text-align: center;
     }
 
 }

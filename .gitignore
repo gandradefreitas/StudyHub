@@ -3,11 +3,15 @@
 venv/
 
 # Cache do Python
+.pytest_cache/
 __pycache__/
 *.py[cod]
 
 # Banco de dados
 *.db
+
+# Cópias locais
+*.bak
 
 # Logs
 logs/

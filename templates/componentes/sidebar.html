@@ -26,6 +26,11 @@
             Histórico
         </a>
 
+        <a href="{{ url_for('pagina_notas') }}"{% if request.endpoint == 'pagina_notas' %} aria-current="page"{% endif %}>
+            <i class="bi bi-card-checklist" aria-hidden="true"></i>
+            Notas
+        </a>
+
         <a href="{{ url_for('pagina_tarefas') }}">
             <i class="bi bi-list-check"></i>
             Tarefas

@@ -1,0 +1,359 @@
+<div class="resultado-prova">
+    <!-- =====================================================
+         RESULTADO PRINCIPAL
+    ====================================================== -->
+
+    <section class="card-resultado">
+
+        <h1>Resultado da prova</h1>
+
+        <div class="resultado-dados">
+
+            <!-- DESEMPENHO -->
+
+            <div class="desempenho">
+
+                {% if resultado.porcentagem >= 70 %}
+
+                    {% set cor = "#22c55e" %}
+
+                {% elif resultado.porcentagem >= 50 %}
+
+                    {% set cor = "#f59e0b" %}
+
+                {% else %}
+
+                    {% set cor = "#ef4444" %}
+
+                {% endif %}
+
+
+                <div id="grafico" class="grafico-desempenho" data-porcentagem="{{ resultado.porcentagem }}"
+                    style="
+                        --porcentagem: 0;
+                        --cor: {{ cor }};
+                    "
+                >
+                    <div class="valor-desempenho">{{ resultado.porcentagem }}%</div>
+
+                </div>
+
+            </div>
+
+            <!-- NOME DA PROVA -->
+
+            <h2>{{ prova.nome }}</h2>
+
+            <p class="identificacao-prova">
+                {% if prova.tipo == "ENEM" and prova.dia %}
+                    {{ prova.dia }}
+                {% elif prova.tipo == "ITA" and prova.dia %}
+                    {{ prova.dia }}
+                {% endif %}
+            </p>
+
+            <p class="areas-prova">
+                {{ prova.areas | join(" • ") }}
+            </p>
+
+            <!-- MENSAGEM -->
+
+            <p class="mensagem-desempenho">
+
+                {% if resultado.porcentagem >= 70 %}
+
+                    Excelente desempenho! Continue assim.
+
+                {% elif resultado.porcentagem >= 50 %}
+
+                    Bom resultado! Continue praticando para melhorar.
+
+                {% else %}
+
+                    Continue estudando.
+                    A prática fará diferença nas próximas tentativas.
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- ACERTOS -->
+
+            <p>
+
+                Acertos:
+
+                <strong>
+
+                    {{ resultado.acertos }}
+                    /
+                    {{ resultado.total }}
+
+                </strong>
+
+            </p>
+
+
+            <!-- APROVEITAMENTO -->
+
+            <p>
+
+                Aproveitamento:
+
+                <strong>{{ resultado.porcentagem }}%</strong>
+
+            </p>
+
+
+            <!-- TEMPO -->
+
+            <p>
+
+                Tempo utilizado:
+
+                <strong>{{ resultado.tempo_gasto }}</strong>
+
+            </p>
+
+        </div>
+
+        <!-- =================================================
+             ESTATÍSTICAS
+        ================================================== -->
+
+        <div class="cards-estatisticas">
+
+            <div class="card-estatistica">
+
+                <span>Acertos</span>
+
+                <strong>{{ resultado.acertos }}</strong>
+
+            </div>
+
+            <div class="card-estatistica">
+
+                <span>Erros</span>
+
+                <strong>{{ resultado.erros }}</strong>
+
+            </div>
+
+            <div class="card-estatistica">
+
+                <span>Não respondidas</span>
+
+                <strong>{{ resultado.nao_respondidas }}</strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUESTÕES ERRADAS
+    ====================================================== -->
+
+    <section class="questoes-erradas">
+
+
+        <h2>
+            Questões para revisar
+        </h2>
+
+
+        {% if resultado.questoes_erradas %}
+
+
+            {% for questao in resultado.questoes_erradas %}
+
+
+                <article class="card-erro">
+
+
+                    <h3>
+
+                        Questão {{ questao.numero }}
+
+                    </h3>
+
+
+                    <!-- ENUNCIADO -->
+
+                    <div class="enunciado-revisao">
+
+                    <strong>Enunciado:</strong>
+
+                    {% if questao.enunciado %}
+                        <p>{{ questao.enunciado }}</p>
+                    {% endif %}
+
+                    {% if questao.imagem %}
+                        <img
+                            src="{{ questao.imagem }}"
+                            alt="Imagem do enunciado da questão {{ questao.numero }}"
+                            class="imagem-enunciado-revisao"
+                            loading="lazy"
+                        >
+                    {% endif %}
+
+                    {% if questao.pergunta %}
+                        <p>{{ questao.pergunta }}</p>
+                    {% endif %}
+
+                    </div>
+
+
+
+                    <!-- RESPOSTAS -->
+
+                    <div class="respostas-revisao">
+
+
+                        <p>
+
+                            Sua resposta:
+
+                            <strong>
+
+                                {{ "ABCDE"[questao.respostaUsuario] }}
+
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            Resposta correta:
+
+                            <strong>
+
+                                {{ "ABCDE"[questao.respostaCorreta] }}
+
+                            </strong>
+
+                        </p>
+
+
+                    </div>
+
+                    <!-- ALTERNATIVAS -->
+
+                    <div class="alternativas-revisao">
+
+                        {% for alternativa in questao.alternativas %}
+
+                            <div class="alternativa-revisao">
+
+                                <strong>{{ "ABCDE"[loop.index0] }})</strong>
+
+                                {% if alternativa.tipo == "imagem" %}
+
+                                    <img
+                                        src="{{ alternativa.conteudo }}"
+                                        alt="Alternativa {{ "ABCDE"[loop.index0] }}"
+                                        class="imagem-alternativa-revisao"
+                                        loading="lazy"
+                                    >
+
+                                {% else %}
+
+                                    <span>{{ alternativa.conteudo }}</span>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- COMENTÁRIO -->
+
+                    {% if questao.comentario %}
+
+
+                        <div class="comentario-revisao">
+
+
+                            <strong>
+                                Comentário:
+                            </strong>
+
+
+                            <p>
+                                {{ questao.comentario }}
+                            </p>
+
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+            {% else %}
+
+                <p class="nenhuma-questao-errada">
+
+                    {% if resultado.total > 0 and resultado.nao_respondidas == resultado.total %}
+
+                        Você ainda não respondeu a nenhuma questão.
+                        Tente novamente e pratique o que aprendeu!
+
+                    {% elif resultado.erros == 0 and resultado.nao_respondidas == 0 %}
+
+                        Parabéns! Você não errou nenhuma questão.
+
+                    {% elif resultado.erros == 0 and resultado.nao_respondidas > 0 %}
+
+                        Você não errou nenhuma das questões respondidas.
+                        Que tal tentar responder às questões que ficaram em branco?
+
+                    {% endif %}
+
+                </p>
+
+            {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         AÇÕES
+    ====================================================== -->
+
+    <section class="acoes-resultado">
+
+        <a href="{{ url_for('pagina_provas') }}" class="botao-resultado botao-secundario">
+
+            <i class="bi bi-arrow-left-circle"></i>
+
+            Voltar para provas
+
+        </a>
+
+        {% if resultado.get('prova_id') %}
+
+            <a href="{{ url_for('visualizar_prova', id_prova=resultado['prova_id']) }}" class="botao-resultado botao-principal">
+                <i class="bi bi-arrow-repeat"></i>
+                Refazer prova
+            </a>
+
+        {% endif %}
+
+    </section>
+
+</div>

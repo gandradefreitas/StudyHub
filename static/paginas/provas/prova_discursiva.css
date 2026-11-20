@@ -1,0 +1,796 @@
+@charset "UTF-8";
+
+/* =========================================================
+PÁGINA DA PROVA
+========================================================= */
+
+.prova-discursiva-container {
+    width: 100%;
+    max-width: 1000px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2rem);
+    box-sizing: border-box;
+    color: var(--cor-texto);
+}
+
+/* =========================================================
+MENSAGENS DE FEEDBACK
+========================================================= */
+
+.mensagens-flash {
+    margin: 0 0 1.5rem;
+}
+
+.mensagem-flash {
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.mensagem-success {
+    background-color: #e8f7ed;
+    color: #176534;
+    border-color: #a9dfba;
+}
+
+.mensagem-error {
+    background-color: #fdecec;
+    color: #a12626;
+    border-color: #f3b4b4;
+}
+
+.mensagem-warning {
+    background-color: #fff7e0;
+    color: #704d00;
+    border-color: #efd28a;
+}
+
+/* =========================================================
+CABEÇALHO DA PROVA
+========================================================= */
+
+.prova-discursiva-header {
+    margin-bottom: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.prova-discursiva-instituicao {
+    margin: 0 0 0.5rem;
+    color: var(--cor-primaria);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.prova-discursiva-header h1 {
+    margin: 0;
+    color: var(--cor-texto);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.prova-discursiva-header > p:last-child {
+    margin: 0.75rem 0 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* =========================================================
+AVISO DE PROVA FINALIZADA
+========================================================= */
+
+.aviso-prova-finalizada {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: color-mix(in srgb, var(--cor-sucesso) 10%, var(--cor-card));
+    border: 1px solid var(--cor-sucesso);
+    border-radius: 10px;
+    color: var(--cor-texto);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.aviso-prova-finalizada strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.aviso-resposta-final {
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.2rem;
+    background: color-mix(in srgb, var(--cor-aviso, #d99b16) 12%, var(--cor-card));
+    border: 1px solid color-mix(in srgb, var(--cor-aviso, #d99b16) 55%, var(--cor-borda));
+    border-radius: 10px;
+    color: var(--cor-texto);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+
+.aviso-resposta-final strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.cronometro-prova-discursiva {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 10;
+    display: grid;
+    justify-items: center;
+    gap: 0.25rem;
+    margin: 0 0 1.5rem;
+    padding: 0.9rem 1.25rem;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    color: var(--cor-texto);
+}
+
+.cronometro-prova-discursiva > span {
+    color: var(--cor-texto-secundario);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.cronometro-prova-discursiva time {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: clamp(1.7rem, 5vw, 2.25rem);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+}
+
+.cronometro-prova-discursiva p {
+    margin: 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.cronometro-prova-discursiva.tempo-esgotado time {
+    color: #b42318;
+}
+
+.aviso-tempo-esgotado {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 20;
+    max-width: min(34rem, calc(100vw - 2rem));
+    padding: 1rem 1.2rem;
+    background: var(--cor-card);
+    border: 1px solid #b42318;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    color: var(--cor-texto);
+    line-height: 1.5;
+}
+
+.status-salvamento-prova {
+    margin: 0.25rem 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.paleta-simbolos {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
+    color: var(--cor-texto);
+}
+
+.paleta-simbolos summary {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1rem;
+    background: var(--cor-primaria);
+    border: 1px solid color-mix(in srgb, var(--cor-primaria) 72%, var(--cor-borda));
+    border-radius: 999px;
+    box-shadow: var(--sombra-hover);
+    color: var(--cor-texto-claro);
+    font-size: 0.9rem;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.paleta-simbolos summary::-webkit-details-marker {
+    display: none;
+}
+
+.paleta-simbolos summary::after {
+    content: "+";
+    margin-left: 0.2rem;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.paleta-simbolos[open] summary::after {
+    content: "−";
+}
+
+.paleta-simbolos summary > span {
+    font-size: 1.15rem;
+}
+
+.paleta-simbolos-conteudo {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.65rem);
+    width: min(27rem, calc(100vw - 2rem));
+    max-height: min(72vh, 42rem);
+    overflow-y: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    box-shadow: var(--sombra-hover);
+}
+
+.paleta-simbolos-instrucao {
+    margin: 0 0 0.8rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.paleta-visualmente-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.buscar-simbolo-discursivo {
+    width: 100%;
+    min-height: 42px;
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    box-sizing: border-box;
+    background: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    color: var(--cor-texto);
+    font: inherit;
+    font-size: 0.88rem;
+}
+
+.buscar-simbolo-discursivo:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--cor-primaria) 45%, transparent);
+    outline-offset: 1px;
+}
+
+.paleta-categoria {
+    padding: 0.65rem 0;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.paleta-categoria h3 {
+    margin: 0 0 0.55rem;
+    color: var(--cor-texto);
+    font-size: 0.82rem;
+}
+
+.paleta-simbolos-grade {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.4rem;
+}
+
+.paleta-simbolo {
+    min-width: 0;
+    min-height: 40px;
+    padding: 0.35rem 0.25rem;
+    background: var(--cor-fundo-secundario);
+    border: 1px solid var(--cor-borda);
+    border-radius: 7px;
+    color: var(--cor-texto);
+    font: inherit;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.paleta-simbolo-texto {
+    font-size: 0.76rem;
+    overflow-wrap: anywhere;
+}
+
+.paleta-simbolo:hover {
+    background: color-mix(in srgb, var(--cor-primaria) 13%, var(--cor-card));
+    border-color: var(--cor-primaria);
+}
+
+.paleta-simbolo:focus-visible,
+.paleta-simbolos summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--cor-primaria) 48%, transparent);
+    outline-offset: 2px;
+}
+
+.paleta-simbolos-status {
+    min-height: 1.2em;
+    margin: 0.4rem 0 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.78rem;
+}
+
+#botao-finalizar-prova-discursiva:disabled {
+    cursor: wait;
+    opacity: 0.7;
+    transform: none;
+}
+
+/* =========================================================
+CONVENÇÕES
+========================================================= */
+
+.prova-convencoes {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+.prova-convencoes h2 {
+    margin: 0 0 0.75rem;
+    color: var(--cor-texto);
+    font-size: 1.05rem;
+}
+
+.prova-convencoes ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.8;
+}
+
+/* =========================================================
+FORMULÁRIO
+========================================================= */
+
+#form-prova-discursiva {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+/* =========================================================
+CARTÃO DA QUESTÃO
+========================================================= */
+
+.questao-discursiva {
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.75rem);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.questao-discursiva-identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.questao-discursiva-identificacao span:first-child {
+    color: var(--cor-texto);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.questao-discursiva-identificacao span:last-child {
+    padding: 0.35rem 0.7rem;
+    background: color-mix(in srgb, var(--cor-primaria) 12%, transparent);
+    border-radius: 6px;
+    color: var(--cor-primaria);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* =========================================================
+ENUNCIADO
+========================================================= */
+
+.questao-discursiva-enunciado {
+    margin-bottom: 1.5rem;
+    color: var(--cor-texto);
+    font-size: 1rem;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+}
+
+.questao-discursiva > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1rem auto 1.5rem;
+    border-radius: 8px;
+}
+
+/* =========================================================
+ITEM DA QUESTÃO
+========================================================= */
+
+.item-discursivo {
+    min-width: 0;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.item-discursivo h3 {
+    margin: 0 0 0.75rem;
+    color: var(--cor-texto);
+    font-size: 1rem;
+}
+
+.item-discursivo > p {
+    margin: 0 0 1.25rem;
+    color: var(--cor-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.resultado-resposta-final {
+    padding: 1rem;
+    background: color-mix(in srgb, var(--cor-resultado, transparent) 12%, transparent);
+    border: 1px solid var(--cor-resultado, var(--cor-borda));
+    border-radius: 10px;
+}
+
+.resultado-resposta-final--incorreta {
+    --cor-resultado: #c34d4d;
+}
+
+.resultado-resposta-final--incompleta {
+    --cor-resultado: #b37f0e;
+}
+
+.resultado-resposta-final--correta {
+    --cor-resultado: #318c58;
+}
+
+.resultado-resposta-final > h3,
+.resultado-resposta-final > p {
+    color: var(--cor-texto);
+}
+
+
+.resultado-resposta-final > p:last-child {
+    margin-bottom: 0;
+}
+
+.resposta-esperada {
+    white-space: pre-wrap;
+}
+
+/* =========================================================
+CAMPO DE RESOLUÇÃO
+========================================================= */
+
+.item-discursivo label {
+    display: block;
+    margin-bottom: 0.65rem;
+    color: var(--cor-texto);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.item-discursivo textarea {
+    display: block;
+    width: 100%;
+    min-height: 260px;
+    padding: 1rem;
+    box-sizing: border-box;
+    resize: vertical;
+
+
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+
+    font: inherit;
+    font-size: 0.95rem;
+    line-height: 1.8;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+#form-prova-discursiva .item-discursivo textarea {
+    min-height: 110px;
+}
+
+.item-discursivo textarea::placeholder {
+    color: var(--cor-texto-secundario);
+    opacity: 0.8;
+}
+
+.item-discursivo textarea:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-primaria) 18%, transparent);
+}
+
+.item-discursivo textarea:disabled {
+    background: var(--cor-card);
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.limite-resposta {
+    margin: 0.5rem 0 0;
+    color: var(--cor-texto-secundario);
+    font-size: 0.78rem;
+    text-align: right;
+}
+
+/* =========================================================
+BOTÕES DE AÇÃO
+========================================================= */
+
+#botao-finalizar-prova-discursiva {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0.8rem 1.4rem;
+    box-sizing: border-box;
+
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+
+}
+
+#botao-finalizar-prova-discursiva:hover {
+    background: var(--cor-secundaria);
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-hover);
+}
+
+.botao-finalizar-prova {
+    margin-top: 1rem;
+    background: #b42318;
+    color: #ffffff;
+}
+
+#botao-finalizar-prova-discursiva:hover {
+    background: #912018;
+}
+
+.modal-finalizacao-prova {
+    position: fixed;
+    inset: 0;
+    width: min(30rem, calc(100vw - 2rem));
+    height: fit-content;
+    max-height: calc(100vh - 2rem);
+    max-width: none;
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 16px;
+    box-shadow: var(--sombra-hover);
+    color: var(--cor-texto);
+}
+
+.paleta-simbolos[open] {
+    z-index: 45;
+}
+
+.modal-finalizacao-prova::backdrop {
+    background: rgb(7 12 20 / 0.62);
+    backdrop-filter: blur(3px);
+}
+
+.modal-finalizacao-conteudo {
+    display: grid;
+    justify-items: center;
+    padding: clamp(1.5rem, 5vw, 2rem);
+    text-align: center;
+}
+
+.modal-finalizacao-icone {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    margin-bottom: 1rem;
+    background: color-mix(in srgb, #d99b16 16%, var(--cor-card));
+    border: 1px solid color-mix(in srgb, #d99b16 45%, var(--cor-borda));
+    border-radius: 50%;
+    color: #b77905;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+[data-tema="escuro"] .modal-finalizacao-icone {
+    color: #f4c45e;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-tema="sistema"] .modal-finalizacao-icone {
+        color: #f4c45e;
+    }
+}
+
+.modal-finalizacao-conteudo h2 {
+    margin: 0;
+    color: var(--cor-texto);
+    font-size: 1.35rem;
+}
+
+.modal-finalizacao-conteudo > p {
+    max-width: 25rem;
+    margin: 0.75rem 0 1.5rem;
+    color: var(--cor-texto-secundario);
+    line-height: 1.65;
+}
+
+.modal-finalizacao-acoes {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.modal-finalizacao-acoes button {
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 9px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modal-botao-cancelar {
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto);
+}
+
+.modal-botao-confirmar {
+    background: #b42318;
+    border-color: #b42318 !important;
+    color: #ffffff;
+}
+
+.modal-finalizacao-acoes button:focus-visible {
+    outline: 3px solid var(--cor-primaria);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 600px) {
+.prova-discursiva-container {
+    padding: 0.75rem;
+}
+
+.paleta-simbolos {
+    right: 0.6rem;
+    bottom: 0.6rem;
+}
+
+.paleta-simbolos-conteudo {
+    width: calc(100vw - 1.2rem);
+    max-height: 68vh;
+}
+
+.paleta-simbolos-grade {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+
+.prova-discursiva-header,
+.questao-discursiva {
+    border-radius: 10px;
+}
+
+.prova-discursiva-header {
+    padding: 1.1rem;
+}
+
+.questao-discursiva {
+    padding: 1rem;
+}
+
+.questao-discursiva-identificacao {
+    align-items: flex-start;
+}
+
+.item-discursivo textarea {
+    min-height: 220px;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+}
+
+#botao-finalizar-prova-discursiva {
+    width: 100%;
+}
+
+.modal-finalizacao-acoes {
+    flex-direction: column-reverse;
+}
+
+.modal-finalizacao-acoes button {
+    width: 100%;
+}
+
+
+}
+
+/* =========================================================
+ACESSIBILIDADE
+========================================================= */
+
+@media (hover: none) {
+#botao-finalizar-prova-discursiva:hover {
+    transform: none;
+}
+}
+
+@media (prefers-reduced-motion: reduce) {
+.item-discursivo textarea,
+#botao-finalizar-prova-discursiva {
+    transition: none;
+}
+}

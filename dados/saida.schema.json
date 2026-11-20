@@ -1,0 +1,303 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://studyhub.local/schemas/saida.schema.json",
+  "title": "Contrato de saída da correção discursiva",
+  "description": "Define a estrutura da resposta produzida pela IA durante a correção de questões discursivas.",
+  "type": "object",
+
+  "additionalProperties": false,
+
+  "required": [
+    "versao_contrato",
+    "status",
+    "resumo",
+    "itens",
+    "alertas",
+    "observacoes_gerais"
+  ],
+
+  "properties": {
+
+    "versao_contrato": {
+      "const": "1.0"
+    },
+
+    "status": {
+      "type": "string",
+      "enum": [
+        "corrigido",
+        "revisao_necessaria",
+        "nao_avaliavel"
+      ]
+    },
+
+    "resumo": {
+      "type": "object",
+      "additionalProperties": false,
+
+      "required": [
+        "pontos_fortes",
+        "pontos_a_melhorar"
+      ],
+
+      "properties": {
+
+        "pontos_fortes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "pontos_a_melhorar": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+    "itens": {
+      "type": "array",
+
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+
+        "required": [
+          "letra",
+          "status",
+          "pontos_maximos",
+          "criterios",
+          "justificativa"
+        ],
+
+        "properties": {
+
+          "letra": {
+            "type": "string",
+            "minLength": 1
+          },
+
+          "status": {
+            "type": "string",
+            "enum": [
+              "avaliado",
+              "revisao_necessaria",
+              "nao_avaliavel"
+            ]
+          },
+
+          "pontos_maximos": {
+            "type": "number",
+            "minimum": 0
+          },
+
+          "criterios": {
+            "type": "array",
+
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+
+              "required": [
+                "criterio",
+                "pontos_maximos",
+                "pontos_sugeridos",
+                "status",
+                "justificativa",
+                "evidencias",
+                "erros",
+                "omissoes"
+              ],
+
+              "properties": {
+
+                "criterio": {
+                  "type": "string",
+                  "minLength": 1
+                },
+
+                "pontos_maximos": {
+                  "type": "number",
+                  "minimum": 0
+                },
+
+                "pontos_sugeridos": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "atendido",
+                    "parcialmente_atendido",
+                    "nao_atendido",
+                    "nao_avaliavel",
+                    "revisao_necessaria"
+                  ]
+                },
+
+                "justificativa": {
+                  "type": "string"
+                },
+
+                "evidencias": {
+                  "type": "array",
+
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+
+                    "required": [
+                      "trecho",
+                      "tipo"
+                    ],
+
+                    "properties": {
+
+                      "trecho": {
+                        "type": "string"
+                      },
+
+                      "tipo": {
+                        "type": "string",
+                        "enum": [
+                          "evidencia_positiva",
+                          "evidencia_negativa",
+                          "contexto"
+                        ]
+                      }
+
+                    }
+                  }
+                },
+
+                "erros": {
+                  "type": "array",
+
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+
+                    "required": [
+                      "descricao",
+                      "evidencia"
+                    ],
+
+                    "properties": {
+
+                      "descricao": {
+                        "type": "string"
+                      },
+
+                      "evidencia": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+
+                    }
+                  }
+                },
+
+                "omissoes": {
+                  "type": "array",
+
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+
+                    "required": [
+                      "descricao"
+                    ],
+
+                    "properties": {
+
+                      "descricao": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+
+              }
+            }
+          },
+
+          "justificativa": {
+            "type": "string"
+          }
+
+        }
+      }
+    },
+
+    "alertas": {
+      "type": "array",
+
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+
+        "required": [
+          "tipo",
+          "descricao",
+          "gravidade",
+          "item"
+        ],
+
+        "properties": {
+
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "gabarito_inconsistente",
+              "enunciado_ambiguo",
+              "resposta_ambigua",
+              "informacao_insuficiente",
+              "erro_conceitual",
+              "erro_algebrico",
+              "erro_de_unidade",
+              "problema_de_correcao"
+            ]
+          },
+
+          "descricao": {
+            "type": "string"
+          },
+
+          "gravidade": {
+            "type": "string",
+            "enum": [
+              "baixa",
+              "media",
+              "alta"
+            ]
+          },
+
+          "item": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+
+        }
+      }
+    },
+
+    "observacoes_gerais": {
+      "type": "string"
+    }
+
+  }
+}
