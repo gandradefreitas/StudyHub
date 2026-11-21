@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from database.conexao import conectar
-from database.respostas_discursivas_repository import obter_duracao_discursiva_por_dia
+from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 
 
 TEMPO_INATIVIDADE = 300  # 5 minutos
@@ -506,5 +506,5 @@ def obter_segundos_provas_hoje(usuario_id):
         )
 
     return total_segundos + sum(
-        dia["duracao"] for dia in obter_duracao_discursiva_por_dia(usuario_id, hoje=True)
+        dia["duracao"] for dia in obter_duracao_provas_escritas_por_dia(usuario_id, hoje=True)
     )

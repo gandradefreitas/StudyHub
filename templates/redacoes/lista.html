@@ -1,0 +1,49 @@
+{% extends "redacoes/base.html" %}
+{% block redacoes %}
+<header class="redacoes-cabecalho">
+    <h1>Redações</h1>
+    <p>Pratique a redação do ENEM e do ITA e acompanhe suas notas.</p>
+</header>
+<section class="redacoes-cartao" aria-labelledby="surpresas">
+    <h2 id="surpresas">Redações surpresa</h2>
+    <p>Escolha uma prova para revelar o tema. O cronômetro pausa quando você sai da página.</p>
+    <button type="button" id="abrir-surpresa">Escolher prova</button>
+    <dialog id="escolher-surpresa" class="redacoes-dialogo" aria-labelledby="titulo-surpresa">
+        <h2 id="titulo-surpresa">Qual prova você quer fazer?</h2>
+        <ul class="redacoes-temas">
+            {% for prova, limite in limites.items() %}
+                <li><a class="redacoes-tema" href="{{ url_for('redacoes.surpresa', instituicao=prova) }}">
+                    <strong>{{ prova }}</strong>
+                    <small>{{ limite // 60 }} min{% if prova in iniciadas %} · Rascunho em andamento{% endif %}</small>
+                </a></li>
+            {% endfor %}
+        </ul>
+        <form method="dialog"><button type="submit">Fechar</button></form>
+    </dialog>
+</section>
+<script src="{{ url_for('static', filename='js/redacoes_surpresa_dialogo.js') }}" defer></script>
+{% for instituicao, grupo in grupos.items() %}
+<section class="redacoes-cartao redacoes-media" aria-labelledby="media-{{ instituicao | lower }}">
+    <h2 id="media-{{ instituicao | lower }}">Média das notas estimadas</h2>
+    <h3>{{ instituicao }}</h3>
+    {% if grupo.media is none %}
+        <p>Sua média aparecerá após a primeira correção.</p>
+    {% else %}
+        <p><strong>{{ ('%.1f' | format(grupo.media)).replace('.', ',') }} / {{ grupo.maximo }}</strong></p>
+    {% endif %}
+</section>
+<details class="redacoes-cartao">
+    <summary>{{ instituicao }}</summary>
+    <ul class="redacoes-temas">
+        {% for tema_id, tema in grupo.temas.items() %}
+            <li>
+                <a class="redacoes-tema" href="{{ url_for('redacoes.escrever', tema_id=tema_id) }}">
+                    <small>{{ instituicao }} {{ tema.ano }} · {{ tema.edicao }}</small>
+                    <strong>{{ tema.titulo }}</strong>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</details>
+{% endfor %}
+{% endblock %}

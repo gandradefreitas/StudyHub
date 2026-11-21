@@ -1,0 +1,63 @@
+{% extends "redacoes/base.html" %}
+{% block redacoes %}
+<a class="redacoes-voltar" href="{{ url_for('redacoes.listar') }}">← Voltar para Redações</a>
+<p>{{ instituicao }}{% if tema.ano %} {{ tema.ano }}{% endif %} · {{ tema.edicao }}</p>
+<h1>{{ tema.titulo }}</h1>
+{% if surpresa %}
+    <div class="redacoes-cartao redacoes-cronometro">
+        <strong>Tempo restante</strong>
+        <output id="cronometro-redacao" role="timer" aria-live="off">--:--</output>
+        <span id="estado-cronometro" role="status"></span>
+    </div>
+    <noscript><p>Ative o JavaScript para usar o cronômetro e escrever.</p></noscript>
+    <script src="{{ url_for('static', filename='js/redacoes_surpresa.js') }}" defer></script>
+{% endif %}
+{% if tema.proposta %}
+    {% include tema.proposta %}
+{% else %}
+    <section class="redacoes-cartao" aria-labelledby="proposta-redacao">
+        <h2 id="proposta-redacao">Proposta de redação</h2>
+        <p>{{ tema.enunciado | default("Escreva um texto dissertativo-argumentativo em português formal e apresente uma proposta de intervenção que respeite os direitos humanos.") }}</p>
+    </section>
+    <section class="redacoes-cartao" aria-labelledby="apoio">
+        <h2 id="apoio">Textos de apoio</h2>
+        <p>{{ "Textos autorais para treino." if ita or surpresa else "Material provisório para treino." }}</p>
+        {% for paragrafo in tema.apoio %}
+            <h3>Texto {{ loop.index }}</h3>
+            <p>{{ paragrafo }}</p>
+        {% endfor %}
+    </section>
+{% endif %}
+{% if ita %}{% include "redacoes/instrucoes_ita.html" %}
+{% else %}{% include "redacoes/instrucoes_enem.html" %}{% endif %}
+<form method="post"{% if surpresa %} data-registrar-tempo="{{ url_for('redacoes.salvar_tempo_surpresa', instituicao=instituicao) }}"
+    data-restante="{{ limite - surpresa.segundos }}" data-revisao="{{ surpresa.revisao }}"{% endif %}>
+    {% if surpresa %}<input type="hidden" name="chave" value="{{ surpresa.chave }}">{% endif %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <p id="aviso-linhas" class="redacoes-aviso">{% if ita %}No ITA, a redação deve ter de 25 a 35 linhas manuscritas. As 35 pautas são uma referência visual. A quebra do texto digitado varia conforme a tela e pode ocupar outra quantidade de linhas no papel.{% else %}No ENEM, a folha oficial tem até 30 linhas manuscritas. As 30 pautas abaixo são uma referência visual. A quebra do texto digitado varia com o tamanho da tela e pode ocupar uma quantidade diferente de linhas no papel.{% endif %}</p>
+    <h2><label for="texto-redacao">Folha de redação</label></h2>
+    {% if invalido %}<p role="alert">Digite sua redação com até 6.000 caracteres{% if ita %} e informe um título de até 200 caracteres{% endif %}.</p>{% endif %}
+    {% if ita %}
+        <div class="redacoes-titulo">
+            <label for="titulo-redacao">Título da dissertação</label>
+            <input id="titulo-redacao" name="titulo" maxlength="200" required{% if surpresa %} readonly{% endif %} value="{{ titulo }}">
+        </div>
+    {% endif %}
+    {% set linhas = 35 if ita else 30 %}
+    <div class="redacoes-folha" style="--linhas: {{ linhas }}">
+        <div class="redacoes-numeros" aria-hidden="true">
+            {% for linha in range(1, linhas + 1) %}<span>{{ linha }}</span>{% endfor %}
+        </div>
+        <textarea id="texto-redacao" name="texto" required{% if surpresa %} readonly{% endif %} maxlength="6000" aria-describedby="aviso-linhas aviso-estimativa" placeholder="Digite sua redação aqui.">{{ '\n' ~ texto }}</textarea>
+    </div>
+    <p id="aviso-estimativa">Ao enviar, seu texto será salvo no Histórico e analisado pelo Gemini para estimar a nota.</p>
+    <button type="submit"{% if surpresa %} disabled{% endif %}>Enviar redação</button>
+</form>
+{% if surpresa %}
+<form id="descartar-surpresa" method="post" action="{{ url_for('redacoes.encerrar_surpresa', instituicao=instituicao) }}"{% if surpresa.segundos < limite %} hidden{% endif %}>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="chave" value="{{ surpresa.chave }}">
+    <button type="submit">Descartar rascunho e tentar outro tema</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -33,6 +33,52 @@ def criar_tabelas():
     """)
 
     # =========================
+    # REDAÇÕES
+    # =========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS redacoes (
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+            tema TEXT NOT NULL,
+            ano INTEGER NOT NULL,
+            texto TEXT NOT NULL CHECK (char_length(texto) BETWEEN 1 AND 6000),
+            notas JSONB,
+            nota INTEGER CHECK (nota BETWEEN 0 AND 1000),
+            criado_em TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'America/Sao_Paulo')
+        )
+    """)
+    cursor.execute("""
+        ALTER TABLE redacoes
+            ADD COLUMN IF NOT EXISTS instituicao TEXT NOT NULL DEFAULT 'ENEM',
+            ADD COLUMN IF NOT EXISTS titulo TEXT NOT NULL DEFAULT '',
+            ADD COLUMN IF NOT EXISTS tempo_segundos INTEGER CHECK (tempo_segundos >= 0)
+    """)
+    cursor.execute("""
+        CREATE INDEX IF NOT EXISTS idx_redacoes_usuario
+        ON redacoes (usuario_id, criado_em DESC, id DESC)
+    """)
+
+    # =========================
+    # RASCUNHOS DE REDAÇÕES SURPRESA
+    # =========================
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS redacoes_surpresa (
+            usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+            instituicao TEXT NOT NULL CHECK (instituicao IN ('ENEM', 'ITA')),
+            rodada BIGINT NOT NULL DEFAULT 0,
+            segundos DOUBLE PRECISION NOT NULL DEFAULT 0,
+            ativo_desde DOUBLE PRECISION,
+            texto TEXT NOT NULL DEFAULT '',
+            titulo TEXT NOT NULL DEFAULT '',
+            chave TEXT,
+            revisao INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY (usuario_id, instituicao)
+        )
+    """)
+
+    # =========================
     # CONFIGURAÇÕES DO USUÁRIO
     # =========================
 

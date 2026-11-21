@@ -1,0 +1,3 @@
+{% if envio.tempo_segundos is not none -%}
+    {{ "%02d:%02d" | format(envio.tempo_segundos // 60, envio.tempo_segundos % 60) }}
+{%- else -%}—{%- endif %}

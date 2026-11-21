@@ -75,7 +75,7 @@ from controllers.web.tarefa_controller import (
 from controllers.web.cadastro_controller import realizar_cadastro
 from controllers.web.login_controller import realizar_login
 from controllers.resultados_controller import obter_historico
-from database.respostas_discursivas_repository import obter_duracao_discursiva_por_dia
+from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 from controllers.dados_controller import (
     obter_dados_exportacao,
     limpar_historico
@@ -128,6 +128,7 @@ from database.questoes_repository import (
 )
 
 from controllers.idiomas_controller import idiomas
+from controllers.redacoes_controller import listar_envios, redacoes
 from database.criar_banco import criar_tabelas
 from services.autenticacao import autenticar
 from services.configuracoes import definir_senha_usuario
@@ -166,6 +167,7 @@ app.config["SESSION_COOKIE_SECURE"] = True
 
 csrf = CSRFProtect(app)
 app.register_blueprint(idiomas)
+app.register_blueprint(redacoes)
 
 criar_tabelas()
 
@@ -1978,6 +1980,7 @@ def historico_provas():
         historico=historico,
         usuario=usuario,
         titulo="Histórico de Provas",
+        redacoes=listar_envios(session["usuario_id"]),
         classe_body="sidebar-toggle"
     )
 
@@ -2775,7 +2778,7 @@ def estatisticas_evolucao():
             + segundos
         )
 
-    for dia in obter_duracao_discursiva_por_dia(usuario_id, inicio, fim):
+    for dia in obter_duracao_provas_escritas_por_dia(usuario_id, inicio, fim):
         data = dia["data"].isoformat()
         provas_por_data[data] = provas_por_data.get(data, 0) + dia["duracao"]
 

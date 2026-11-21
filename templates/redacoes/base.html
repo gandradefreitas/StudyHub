@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% set classe_body = "sidebar-toggle" %}
+{% block titulo %}Redações · StudyHub{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/redacoes.css') }}">
+{% endblock %}
+{% block conteudo %}
+<div class="redacoes">
+    {% block redacoes %}{% endblock %}
+</div>
+{% endblock %}

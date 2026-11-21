@@ -1,0 +1,41 @@
+{% extends "redacoes/base.html" %}
+{% block redacoes %}
+<a class="redacoes-voltar" href="{{ url_for('redacoes.listar') }}">← Voltar para Redações</a>
+<h1>Resultado da redação</h1>
+<p>{{ envio.instituicao }}{% if envio.ano %} {{ envio.ano }}{% else %} · Redação surpresa{% endif %} · {{ envio.criado_em.strftime('%d/%m/%Y às %H:%M') }}</p>
+<h2>{{ envio.tema }}</h2>
+{% if envio.tempo_segundos is not none %}<p>Tempo de escrita · {% include "redacoes/tempo.html" %}</p>{% endif %}
+<section class="redacoes-cartao" aria-labelledby="nota-redacao">
+    <h3 id="nota-redacao">Nota estimada</h3>
+    {% if envio.nota is not none %}
+        <div class="redacoes-nota-total">
+            <strong>{{ ("%g" | format(envio.nota / divisor)).replace(".", ",") }} / {{ maximo }}</strong>
+            <span>Estimativa do Gemini para treino</span>
+        </div>
+        <h4>Pontuação por competência</h4>
+        <dl class="redacoes-competencias">
+            {% for competencia, nota in competencias %}
+                <div class="redacoes-competencia">
+                    <dt>{{ loop.index }}. {{ competencia }}</dt>
+                    <dd>
+                        <strong>{{ ("%g" | format(nota)).replace(".", ",") }} / {{ nota_maxima }}</strong>
+                        <meter min="0" max="{{ nota_maxima }}" value="{{ nota }}" aria-label="{{ competencia }}"></meter>
+                    </dd>
+                </div>
+            {% endfor %}
+        </dl>
+    {% else %}
+        <p>Sua redação foi salva. A estimativa está indisponível no momento.</p>
+        <form method="post" action="{{ url_for('redacoes.corrigir', envio_id=envio_id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Tentar correção novamente</button>
+        </form>
+    {% endif %}
+</section>
+<section class="redacoes-cartao">
+    <h3>Texto enviado</h3>
+    {% if envio.titulo %}<h4>{{ envio.titulo }}</h4>{% endif %}
+    <div class="redacoes-texto">{{ envio.texto }}</div>
+</section>
+<a href="{{ url_for('historico_provas', _anchor='historico-redacoes') }}">Ver Histórico</a>
+{% endblock %}

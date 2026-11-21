@@ -1,0 +1,21 @@
+{% if redacoes %}
+<section id="historico-redacoes" class="historico-card">
+    <h2>Redações</h2>
+    <div class="tabela-wrapper">
+        <table>
+            <thead><tr><th>Data</th><th>Tema</th><th>Nota estimada</th><th>Tempo</th><th>Ações</th></tr></thead>
+            <tbody>
+                {% for envio in redacoes %}
+                    <tr>
+                        <td>{{ envio.criado_em.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ envio.instituicao }}{% if envio.ano %} {{ envio.ano }}{% else %} · Redação surpresa{% endif %} · {{ envio.tema }}</td>
+                        <td>{{ 'Aguardando correção' if envio.nota is none else (('%g' | format(envio.nota / (10 if envio.instituicao == 'ITA' else 1))).replace('.', ',') ~ (' / 10' if envio.instituicao == 'ITA' else ' / 1000')) }}</td>
+                        <td>{% include "redacoes/tempo.html" %}</td>
+                        <td><a href="{{ url_for('redacoes.resultado', envio_id=envio.id) }}">Ver redação</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endif %}

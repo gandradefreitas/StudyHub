@@ -134,6 +134,16 @@ def limpar_historico(usuario_id):
         """, (usuario_id,))
 
         cursor.execute("""
+            DELETE FROM redacoes_surpresa
+            WHERE usuario_id = %s
+        """, (usuario_id,))
+
+        cursor.execute("""
+            DELETE FROM redacoes
+            WHERE usuario_id = %s
+        """, (usuario_id,))
+
+        cursor.execute("""
             DELETE FROM estudos
             WHERE usuario_id = %s
         """, (usuario_id,))

@@ -2,7 +2,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from database.conexao import conectar
-from database.respostas_discursivas_repository import obter_duracao_discursiva_por_dia
+from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 from services.provas_service import obter_prova, listar_provas
 
 
@@ -581,7 +581,7 @@ def obter_segundos_provas(usuario_id):
         )
 
     return total_segundos + sum(
-        dia["duracao"] for dia in obter_duracao_discursiva_por_dia(usuario_id)
+        dia["duracao"] for dia in obter_duracao_provas_escritas_por_dia(usuario_id)
     )
 
 

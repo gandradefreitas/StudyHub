@@ -36,6 +36,11 @@
             Idiomas
         </a>
 
+        <a href="{{ url_for('redacoes.listar') }}"{% if request.blueprint == 'redacoes' %} aria-current="page"{% endif %}>
+            <i class="bi bi-pencil-square" aria-hidden="true"></i>
+            Redações
+        </a>
+
         <a href="{{ url_for('pagina_tarefas') }}">
             <i class="bi bi-list-check"></i>
             Tarefas
