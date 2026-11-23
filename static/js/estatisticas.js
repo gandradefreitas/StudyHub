@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carregarProvas();
 
-    carregarDesempenhoAreas();
 
     carregarDesempenhoQuestoesAreas();
 
@@ -337,27 +336,6 @@ async function carregarResumo() {
         });
 
 
-        renderizarQuestoes({
-
-            resolvidas:
-                Number(dados.acertos) +
-                Number(dados.erros),
-
-            acertos:
-                Number(dados.acertos),
-
-            erros:
-                Number(dados.erros),
-
-            naoRespondidas:
-                Number(dados.nao_respondidas),
-
-            aproveitamento:
-                Number(dados.porcentagem)
-
-        });
-
-
     } catch (erro) {
 
         console.error(
@@ -580,49 +558,6 @@ function atualizarTituloMes(ano, mes) {
 }
 
 
-async function carregarDesempenhoAreas() {
-
-    try {
-
-        const resposta = await fetch(
-            "/estatisticas/areas"
-        );
-
-
-        if (!resposta.ok) {
-
-            throw new Error(
-                "Não foi possível carregar o desempenho por área."
-            );
-
-        }
-
-
-        const dados = await resposta.json();
-
-
-        renderizarDesempenhoAreas(
-            dados
-        );
-
-
-        renderizarAnalise(
-            dados
-        );
-
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao carregar desempenho por área:",
-            erro
-        );
-
-    }
-
-}
-
-
 async function carregarProvas() {
 
     try {
@@ -820,6 +755,10 @@ function renderizarGraficoEstudos(dados) {
     }
 
 
+    const tema = getComputedStyle(canvas);
+    const corTexto = tema.getPropertyValue("--cor-texto-secundario").trim();
+    const corGrade = tema.getPropertyValue("--cor-borda").trim();
+
     const labels =
         dados.map(
             item =>
@@ -906,6 +845,8 @@ function renderizarGraficoEstudos(dados) {
                     scales: {
 
                         y: {
+                            ticks: { color: corTexto },
+                            grid: { color: corGrade },
 
                             beginAtZero:
                                 true,
@@ -915,6 +856,7 @@ function renderizarGraficoEstudos(dados) {
                                 display:
                                     true,
 
+                                color: corTexto,
                                 text:
                                     "Minutos"
 
@@ -924,6 +866,7 @@ function renderizarGraficoEstudos(dados) {
 
 
                         x: {
+                            ticks: { color: corTexto },
 
                             grid: {
 
@@ -946,313 +889,6 @@ function renderizarGraficoEstudos(dados) {
 
 /* =========================================================
    QUESTÕES
-========================================================= */
-
-function renderizarQuestoes(questoes) {
-
-    const total =
-        document.querySelector(
-            "#estatisticas-total-questoes"
-        );
-
-
-    const acertos =
-        document.querySelector(
-            "#estatisticas-total-acertos"
-        );
-
-
-    const erros =
-        document.querySelector(
-            "#estatisticas-total-erros"
-        );
-
-
-    const aproveitamento =
-        document.querySelector(
-            "#estatisticas-aproveitamento"
-        );
-
-
-    if (total) {
-
-        total.textContent =
-            Number(
-                questoes.resolvidas
-            ).toLocaleString("pt-BR");
-
-    }
-
-
-    if (acertos) {
-
-        acertos.textContent =
-            Number(
-                questoes.acertos
-            ).toLocaleString("pt-BR");
-
-    }
-
-
-    if (erros) {
-
-        erros.textContent =
-            Number(
-                questoes.erros
-            ).toLocaleString("pt-BR");
-
-    }
-
-
-    if (aproveitamento) {
-
-        aproveitamento.textContent =
-            `${Number(
-                questoes.aproveitamento
-            ).toLocaleString("pt-BR")}%`;
-
-    }
-
-
-    renderizarDistribuicaoQuestoes(
-        questoes
-    );
-
-}
-
-
-/* =========================================================
-   DISTRIBUIÇÃO DAS QUESTÕES
-========================================================= */
-
-function renderizarDistribuicaoQuestoes(questoes) {
-
-    const total =
-        Number(questoes.acertos) +
-        Number(questoes.erros) +
-        Number(questoes.naoRespondidas);
-
-
-    if (total === 0) {
-        return;
-    }
-
-
-    const porcentagemAcertos =
-        (
-            Number(questoes.acertos) /
-            total
-        ) * 100;
-
-
-    const porcentagemErros =
-        (
-            Number(questoes.erros) /
-            total
-        ) * 100;
-
-
-    const porcentagemNaoRespondidas =
-        (
-            Number(questoes.naoRespondidas) /
-            total
-        ) * 100;
-
-
-    const barraAcertos =
-        document.querySelector(
-            "#estatisticas-barra-acertos"
-        );
-
-
-    const barraErros =
-        document.querySelector(
-            "#estatisticas-barra-erros"
-        );
-
-
-    const barraNaoRespondidas =
-        document.querySelector(
-            "#estatisticas-barra-nao-respondidas"
-        );
-
-
-    if (barraAcertos) {
-
-        barraAcertos.style.width =
-            `${porcentagemAcertos}%`;
-
-    }
-
-
-    if (barraErros) {
-
-        barraErros.style.width =
-            `${porcentagemErros}%`;
-
-    }
-
-
-    if (barraNaoRespondidas) {
-
-        barraNaoRespondidas.style.width =
-            `${porcentagemNaoRespondidas}%`;
-
-    }
-
-}
-
-
-/* =========================================================
-   DESEMPENHO POR ÁREA
-========================================================= */
-
-function renderizarDesempenhoAreas(dados) {
-
-    const container =
-        document.querySelector(
-            "#estatisticas-desempenho-areas"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    const areas =
-        Object.entries(dados);
-
-
-    if (areas.length === 0) {
-
-        container.innerHTML = `
-
-            <p class="estado-vazio">
-
-                Ainda não há questões suficientes
-                para calcular seu desempenho.
-
-            </p>
-
-        `;
-
-        return;
-    }
-
-
-    areas.forEach(
-        ([area, dadosArea]) => {
-
-            const elemento =
-                document.createElement(
-                    "div"
-                );
-
-
-            elemento.className =
-                "item-desempenho-area";
-
-
-            const porcentagem =
-                Number(
-                    dadosArea.porcentagem
-                );
-
-
-            const acertos =
-                Number(
-                    dadosArea.acertos
-                );
-
-
-            const questoes =
-                Number(
-                    dadosArea.questoes
-                );
-
-
-            elemento.innerHTML = `
-
-                <div class="cabecalho-area">
-
-                    <span class="nome-area"></span>
-
-                    <strong class="porcentagem-area"></strong>
-
-                </div>
-
-
-                <div class="barra-desempenho">
-
-                    <div
-                        class="progresso-desempenho"
-                    ></div>
-
-                </div>
-
-
-                <span class="detalhes-area"></span>
-
-            `;
-
-
-            const nomeArea =
-                elemento.querySelector(
-                    ".nome-area"
-                );
-
-
-            const porcentagemElemento =
-                elemento.querySelector(
-                    ".porcentagem-area"
-                );
-
-
-            const progresso =
-                elemento.querySelector(
-                    ".progresso-desempenho"
-                );
-
-
-            const detalhes =
-                elemento.querySelector(
-                    ".detalhes-area"
-                );
-
-
-            nomeArea.textContent =
-                area;
-
-
-            porcentagemElemento.textContent =
-                `${porcentagem}%`;
-
-
-            progresso.style.width =
-                `${porcentagem}%`;
-
-
-            detalhes.textContent =
-                `${acertos} acertos de ${questoes} questões`;
-
-
-            container.appendChild(
-                elemento
-            );
-
-        }
-    );
-
-}
-
-
-
-/* =========================================================
-   PROVAS
 ========================================================= */
 
 function renderizarProvas(provas) {
@@ -1442,149 +1078,3 @@ function renderizarProvas(provas) {
 /* =========================================================
    ANÁLISE
 ========================================================= */
-
-function renderizarAnalise(dados) {
-
-    const container =
-        document.querySelector(
-            "#estatisticas-analise-desempenho"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const areas =
-        Object.entries(dados);
-
-
-    if (areas.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="analise-vazia">
-
-                <i class="bi bi-bar-chart"></i>
-
-                <p>
-
-                    Ainda não há dados suficientes
-                    para analisar seu desempenho.
-
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    const areasOrdenadas =
-        [...areas].sort(
-            (a, b) =>
-                Number(b[1].porcentagem) -
-                Number(a[1].porcentagem)
-        );
-
-
-    const melhor =
-        areasOrdenadas[0];
-
-
-    const pior =
-        areasOrdenadas[
-            areasOrdenadas.length - 1
-        ];
-
-
-    const porcentagemMelhor =
-        Number(
-            melhor[1].porcentagem
-        );
-
-
-    const porcentagemPior =
-        Number(
-            pior[1].porcentagem
-        );
-
-
-    container.innerHTML = `
-
-        <div class="card-analise">
-
-            <div class="icone-analise">
-
-                <i class="bi bi-arrow-up-circle"></i>
-
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Ponto forte
-                </h3>
-
-
-                <p class="texto-melhor-area"></p>
-
-            </div>
-
-        </div>
-
-
-        <div class="card-analise">
-
-            <div class="icone-analise">
-
-                <i class="bi bi-exclamation-circle"></i>
-
-            </div>
-
-
-            <div>
-
-                <h3>
-                    Área de atenção
-                </h3>
-
-
-                <p class="texto-pior-area"></p>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    const textoMelhor =
-        container.querySelector(
-            ".texto-melhor-area"
-        );
-
-
-    const textoPior =
-        container.querySelector(
-            ".texto-pior-area"
-        );
-
-
-    textoMelhor.textContent =
-        `${melhor[0]} apresenta seu melhor ` +
-        `aproveitamento, com ` +
-        `${porcentagemMelhor}% de acertos.`;
-
-
-    textoPior.textContent =
-        `${pior[0]} apresenta seu menor ` +
-        `aproveitamento, com ` +
-        `${porcentagemPior}% de acertos.`;
-
-}
-

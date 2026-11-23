@@ -1,6 +1,6 @@
 <section class="prova-discursiva-container">
 
-    <header class="prova-discursiva-header">
+    <header class="prova-discursiva-header sh-resultado-prova">
 
         <p class="prova-discursiva-instituicao">
             {{ tentativa.instituicao }} · {{ tentativa.ano }}
@@ -73,7 +73,7 @@
                 <p><strong>Nota provisória: {{ pacote.nota_provisoria }} / {{ tentativa.nota_maxima }}.</strong></p>
                 <p class="aviso-correcao-ia">A IA pode cometer erros. Confira as análises e evidências; esta nota é uma estimativa automática e pode precisar de correção humana.</p>
             {% else %}
-                <p>A correção desta prova ainda não está disponível.</p>
+                <p>A prova está na fila de correção. Esta página será atualizada automaticamente.</p>
             {% endif %}
         {% endif %}
 

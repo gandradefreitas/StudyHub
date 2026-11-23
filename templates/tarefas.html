@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='paginas/tarefas.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Tarefas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
 </head>
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
@@ -40,7 +41,7 @@
 
             </div>
 
-            <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova">
+            <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova" data-abrir-tarefa>
                 <i class="bi bi-plus-lg"></i>
                 Nova tarefa
             </a>
@@ -51,7 +52,9 @@
 
             {% if tarefas %}
 
-                {% for tarefa in tarefas %}
+                {% for concluida, grupo in tarefas | groupby('concluida') %}
+                    <h2 class="sh-tarefas-grupo">{{ 'Concluídas' if concluida else 'Pendentes' }} · {{ grupo | length }}</h2>
+                    {% for tarefa in grupo %}
 
                     <article class="tarefa-card">
 
@@ -87,7 +90,7 @@
                         <div class="tarefa-acoes">
 
 
-                            <a href="{{ url_for('editar_tarefa', id_tarefa=tarefa['id']) }}" class="tarefa-acao tarefa-acao-editar">
+                            <a href="{{ url_for('editar_tarefa', id_tarefa=tarefa['id']) }}" class="tarefa-acao tarefa-acao-editar" data-abrir-tarefa data-descricao="{{ tarefa['descricao'] }}">
 
                                 <i class="bi bi-pencil-square"></i>
 
@@ -150,6 +153,7 @@
 
                     </article>
 
+                    {% endfor %}
                 {% endfor %}
 
             {% else %}
@@ -162,7 +166,7 @@
 
                     <p>Crie sua primeira tarefa para começar a organizar suas atividades.</p>
 
-                    <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova">
+                    <a href="{{ url_for('nova_tarefa') }}" class="tarefas-botao-nova" data-abrir-tarefa>
 
                         <i class="bi bi-plus-lg"></i>
 
@@ -178,6 +182,19 @@
 
     </main>
 
+    <dialog id="editor-tarefa" class="tarefa-dialogo" aria-labelledby="titulo-editor-tarefa">
+        <h2 id="titulo-editor-tarefa">Nova tarefa</h2>
+        <form method="post" id="formulario-editor-tarefa">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label for="descricao-editor-tarefa">Descrição</label>
+            <input id="descricao-editor-tarefa" name="descricao" type="text" required autofocus>
+            <div class="tarefa-dialogo-acoes">
+                <button type="button" id="cancelar-editor-tarefa">Cancelar</button>
+                <button type="submit">Salvar tarefa</button>
+            </div>
+        </form>
+    </dialog>
+    <script src="{{ url_for('static', filename='js/editor_tarefa.js') }}" defer></script>
     {% if tarefas %}
         <dialog id="confirmar-exclusao-tarefa" class="tarefa-dialogo"
             aria-labelledby="titulo-exclusao-tarefa" aria-describedby="mensagem-exclusao-tarefa">

@@ -432,6 +432,8 @@ function iniciarCronometro() {
     }
 
 
+    let avisoFimExibido = false;
+
     function contarTempo() {
 
         const agora = Date.now();
@@ -449,17 +451,17 @@ function iniciarCronometro() {
         atualizarCronometro();
 
 
-        if (tempoRestante <= 0) {
+        if (tempoRestante <= 0 && !avisoFimExibido) {
+            avisoFimExibido = true;
 
             clearInterval(
                 intervaloCronometro
             );
 
-            alert(
-                "Tempo encerrado! A prova será finalizada."
+            avisoStudyHub(
+                "Tempo encerrado! A prova será finalizada.",
+                finalizarProva
             );
-
-            finalizarProva();
 
         }
 
@@ -467,13 +469,9 @@ function iniciarCronometro() {
 
 
     contarTempo();
-
-
-    intervaloCronometro =
-        setInterval(
-            contarTempo,
-            1000
-        );
+    if (!avisoFimExibido) {
+        intervaloCronometro = setInterval(contarTempo, 1000);
+    }
 }
 
 
@@ -598,7 +596,7 @@ fetch("/provas/resultado", {
 
     console.error("ERRO AO ENVIAR RESULTADO:", erro);
 
-    alert(
+    avisoStudyHub(
         "Não foi possível enviar o resultado da prova."
     );
 

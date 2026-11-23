@@ -1247,7 +1247,7 @@ async function salvarAnotacao() {
 
     if (!texto) {
 
-        alert(
+        avisoStudyHub(
             "Escreva alguma coisa antes de salvar."
         );
 
@@ -1381,7 +1381,7 @@ async function salvarAnotacao() {
             erro
         );
 
-        alert(
+        avisoStudyHub(
             "Não foi possível salvar a anotação."
         );
 

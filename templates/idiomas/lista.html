@@ -8,8 +8,10 @@
 
 {% block conteudo %}
 <div class="idiomas">
-    <h1>Idiomas</h1>
-    <p class="idiomas-secundario">Treine sua leitura em inglês e espanhol.</p>
+    <header>
+        <h1>Idiomas</h1>
+        <p class="idiomas-secundario">Treine sua leitura em inglês e espanhol.</p>
+    </header>
     <section class="idiomas-cartao" aria-labelledby="palavras-lidas">
         <h2 id="palavras-lidas">Palavras lidas</h2>
         <dl class="idiomas-resumo">
@@ -36,13 +38,21 @@
         {% if not estatisticas.total_mes %}
             <p class="idiomas-secundario">Nenhuma leitura concluída neste mês.</p>
         {% endif %}
-        <div class="idiomas-grafico" aria-hidden="true">
+        <div class="sh-grafico-mensal">
+        <div class="sh-grafico-escala" aria-hidden="true"><span>{{ numero(estatisticas.pico) }}</span><span>0</span></div>
+        <div class="idiomas-grafico" role="group" aria-label="Palavras lidas por dia">
             {% for palavras in estatisticas.dias %}
                 <div class="idiomas-dia" title="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
+                    {% if palavras %}
+                        <button type="button" class="sh-grafico-dia" aria-label="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
+                            <span>{{ numero(palavras) }}</span>
+                        </button>
+                    {% endif %}
                     <div class="idiomas-trilho"><span style="--altura: {{ 100 * palavras / estatisticas.pico }}%"></span></div>
                     <span class="idiomas-dia-numero">{{ loop.index }}</span>
                 </div>
             {% endfor %}
+        </div>
         </div>
         <details class="idiomas-dados">
             <summary>Ver palavras por dia</summary>

@@ -64,7 +64,19 @@ def obter_historico(usuario_id):
             minutos, segundos = divmod(restante, 60)
             tempo_gasto = f"{horas:02d}:{minutos:02d}:{segundos:02d}"
 
-        if status == "corrigida":
+        parecer = tentativa.get("resultado_correcao") or {}
+        if parecer.get("status") == "provisoria":
+            situacao = "Correção provisória"
+            nota_total = parecer.get("nota_provisoria")
+            nota_maxima = nota_maxima if nota_maxima is not None else parecer.get("nota_maxima")
+
+        elif parecer.get("status") == "revisao_necessaria":
+            situacao = "Revisão necessária"
+
+        elif status == "corrigida" or parecer.get("status") == "corrigida":
+            situacao = "Corrigida"
+            nota_total = nota_total if nota_total is not None else parecer.get("nota")
+            nota_maxima = nota_maxima if nota_maxima is not None else parecer.get("nota_maxima")
             situacao = "Corrigida"
 
         elif status == "finalizada":
@@ -86,7 +98,11 @@ def obter_historico(usuario_id):
         if nota_total is not None and nota_maxima is not None:
             resultado_formatado = f"{nota_total}/{nota_maxima}"
         else:
-            resultado_formatado = "Ainda não disponível"
+            resultado_formatado = (
+                "Parecer disponível" if parecer.get("correcao")
+                else "Correção pendente" if status == "finalizada"
+                else "—"
+            )
 
         historico.append({
             "id": tentativa_id,

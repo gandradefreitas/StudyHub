@@ -348,17 +348,17 @@
 
 .resultado.acerto {
 
-    background:#ecfdf3;
-
-    color:#15803d;
+    background:color-mix(in srgb, var(--cor-sucesso) 12%, var(--cor-card));
+    border:1px solid color-mix(in srgb, var(--cor-sucesso) 55%, var(--cor-borda));
+    color:var(--cor-texto);
 
 }
 
 .resultado.erro {
 
-    background:#fef2f2;
-
-    color:#dc2626;
+    background:color-mix(in srgb, var(--cor-erro) 12%, var(--cor-card));
+    border:1px solid color-mix(in srgb, var(--cor-erro) 55%, var(--cor-borda));
+    color:var(--cor-texto);
 
 }
 
@@ -379,9 +379,9 @@
 
     border-radius:8px;
 
-    background:#eff6ff;
-
-    color:#2563eb;
+    background:color-mix(in srgb, var(--cor-primaria) 12%, var(--cor-card));
+    border:1px solid color-mix(in srgb, var(--cor-primaria) 55%, var(--cor-borda));
+    color:var(--cor-texto);
 
     font-weight:700;
 

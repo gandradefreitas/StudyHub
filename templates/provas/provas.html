@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
     <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
 </head>
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
@@ -39,6 +40,10 @@
         </section>
 
 
+        <nav class="sh-atalhos" aria-label="Pratique outras modalidades">
+            <a href="{{ url_for('selecionar_provas_ita_segunda_fase') }}"><strong>ITA · Segunda fase</strong><span>Provas discursivas por disciplina</span></a>
+            <a href="{{ url_for('pagina_notas') }}"><strong>Notas</strong><span>Consulte resultados e estimativas</span></a>
+        </nav>
         <section class="lista-provas">
 
             <!-- ENEM -->
@@ -46,7 +51,7 @@
 
                 <summary class="pasta-prova-cabecalho">
 
-                    <span class="pasta-icone">📁</span>
+                    <span class="pasta-icone" aria-hidden="true"><i class="bi bi-journal-text"></i></span>
 
                     <div class="pasta-informacoes">
                         <h2>ENEM</h2>
@@ -62,7 +67,7 @@
                     <details class="pasta-ano">
 
                         <summary class="pasta-ano-cabecalho">
-                            <span class="pasta-icone">📁</span>
+                            <span class="pasta-icone" aria-hidden="true"><i class="bi bi-calendar3"></i></span>
                             <span>2025</span>
                             <span class="pasta-seta">⌄</span>
                         </summary>
@@ -121,7 +126,7 @@
 
                 <summary class="pasta-prova-cabecalho">
 
-                    <span class="pasta-icone">📁</span>
+                    <span class="pasta-icone" aria-hidden="true"><i class="bi bi-mortarboard"></i></span>
 
                     <div class="pasta-informacoes">
                         <h2>ITA</h2>
@@ -137,7 +142,7 @@
                     <details class="pasta-ano">
 
                         <summary class="pasta-ano-cabecalho">
-                            <span class="pasta-icone">📁</span>
+                            <span class="pasta-icone" aria-hidden="true"><i class="bi bi-calendar3"></i></span>
                             <span>2025</span>
                             <span class="pasta-seta">⌄</span>
                         </summary>

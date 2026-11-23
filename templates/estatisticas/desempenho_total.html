@@ -1,0 +1,21 @@
+<section class="secao-estatisticas sh-total-questoes" aria-labelledby="desempenho-total">
+    <h2 id="desempenho-total">Desempenho Totais de Questões</h2>
+    <p>Questões objetivas do ENEM e do ITA somadas.</p>
+    {% set taxa = total_acertos * 100 / total_questoes if total_questoes else 0 %}
+    <dl class="sh-metricas">
+        <div><dt>Resolvidas</dt><dd>{{ total_questoes }}</dd></div>
+        <div><dt>Acertos</dt><dd>{{ total_acertos }}</dd></div>
+        <div><dt>Erros</dt><dd>{{ total_questoes - total_acertos }}</dd></div>
+        <div><dt>Aproveitamento</dt><dd>{{ ('%.1f' | format(taxa)).replace('.', ',') }}%</dd></div>
+    </dl>
+    {% if total_questoes %}
+        <div class="barra-distribuicao-questoes-estatisticas" aria-hidden="true">
+            <div class="barra-questoes-acertos" style="width: {{ taxa }}%"></div>
+            <div class="barra-questoes-erros" style="width: {{ 100 - taxa }}%"></div>
+        </div>
+        <div class="legenda-distribuicao-questoes-estatisticas">
+            <span><i class="bi bi-circle-fill" aria-hidden="true"></i> Acertos</span>
+            <span><i class="bi bi-circle-fill" aria-hidden="true"></i> Erros</span>
+        </div>
+    {% endif %}
+</section>

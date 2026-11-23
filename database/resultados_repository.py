@@ -447,7 +447,7 @@ def obter_resumo_usuario(usuario_id):
     }
 
 
-def obter_desempenho_por_area(usuario_id):
+def obter_desempenho_por_area(usuario_id, *, por_prova=False):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -489,7 +489,7 @@ def obter_desempenho_por_area(usuario_id):
         if questao is None:
             continue
 
-        area = questao.area
+        area = (prova.tipo, "Matemática" if questao.area == "Matematica" else questao.area) if por_prova else questao.area
 
         if area not in desempenho:
 

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/header_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
 </head>
 
 <body class="{{ classe_body }}" data-tema="{{ usuario['tema'] }}">
@@ -38,9 +39,21 @@
             </a>
         </section>
 
+        {% if historico or redacoes %}
+        <div class="sh-filtros">
+            <label for="filtro-historico">Mostrar</label>
+            <select id="filtro-historico">
+                <option value="todas">Todos os registros</option>
+                <option value="objetiva">Provas objetivas</option>
+                <option value="discursiva">Provas discursivas</option>
+                <option value="redacao">Redações</option>
+            </select>
+            <p id="estado-filtro-historico" role="status"></p>
+        </div>
+        {% endif %}
         {% if historico %}
 
-        <section class="historico-card">
+        <section id="historico-simulados" class="historico-card">
 
             <div class="tabela-wrapper">
 
@@ -62,7 +75,7 @@
 
                         {% for resultado in historico %}
 
-                        <tr>
+                        <tr data-modalidade-historico="{{ resultado.modalidade }}">
 
                             <td class="data-prova">
                                 {{ resultado["data_realizacao"] }}
@@ -86,7 +99,7 @@
                             </td>
 
                             <td>
-                                {{ resultado["situacao"] }}
+                                <span class="sh-situacao">{{ resultado["situacao"] }}</span>
                             </td>
 
                             <td>
@@ -163,7 +176,7 @@
 
         </section>
 
-        {% else %}
+        {% elif not redacoes %}
 
         <section class="historico-vazio">
 
@@ -186,5 +199,6 @@
 
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
+<script src="{{ url_for('static', filename='js/filtrar_historico.js') }}" defer></script>
 </body>
 </html>

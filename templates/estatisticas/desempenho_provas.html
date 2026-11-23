@@ -1,0 +1,31 @@
+<div class="grid-desempenho-estatisticas">
+    {% for prova, areas in desempenho_provas.items() %}
+        {% set resolvidas = areas.values() | sum(attribute='questoes') %}
+        {% set acertos = areas.values() | sum(attribute='acertos') %}
+        <section class="secao-estatisticas sh-painel" aria-labelledby="desempenho-{{ prova | lower }}">
+            <header>
+                <h2 id="desempenho-{{ prova | lower }}">{{ prova }}</h2>
+                <p>Desempenho em questões objetivas</p>
+            </header>
+            {% if resolvidas %}
+                <dl class="sh-metricas">
+                    <div><dt>Respondidas</dt><dd>{{ resolvidas }}</dd></div>
+                    <div><dt>Acertos</dt><dd>{{ acertos }}</dd></div>
+                    <div><dt>Erros</dt><dd>{{ resolvidas - acertos }}</dd></div>
+                    <div><dt>Aproveitamento</dt><dd>{{ ('%.1f' | format(acertos * 100 / resolvidas)).replace('.', ',') }}%</dd></div>
+                </dl>
+                <h3>Desempenho por área</h3>
+                <ul class="sh-areas">
+                    {% for area, dados in areas | dictsort %}
+                        <li>
+                            <div><strong>{{ area }}</strong><span>{{ dados.acertos }} / {{ dados.questoes }} · {{ dados.porcentagem | default((dados.acertos * 100 / dados.questoes) | round(1)) }}%</span></div>
+                            <progress aria-label="{{ area }}" value="{{ dados.acertos }}" max="{{ dados.questoes }}"></progress>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Nenhuma questão objetiva respondida nesta prova.</p>
+            {% endif %}
+        </section>
+    {% endfor %}
+</div>

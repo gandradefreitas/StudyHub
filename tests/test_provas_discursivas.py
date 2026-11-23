@@ -1263,3 +1263,154 @@ def test_grafico_menu_restringe_evolucao_a_sete_dias(cliente, dados_discursivos)
     assert resposta.json[-1]["data"] == date.today().isoformat()
     assert cliente.get("/estatisticas/evolucao?dias=0").status_code == 400
     assert cliente.get("/estatisticas/evolucao?ano=0&mes=1").status_code == 400
+
+
+def test_salvamento_ajax_confirma_antes_de_finalizar(cliente, dados_discursivos):
+    usuario, outro = dados_discursivos["usuarios"]
+    tentativa, tentativa_alheia = dados_discursivos["tentativas"]
+    caminho = "/provas/ita/2025/segunda-fase/matematica"
+    headers = {"X-Requested-With": "XMLHttpRequest"}
+    assert cliente.post(caminho + "/salvar", headers=headers).status_code == 401
+    with cliente.session_transaction() as sessao:
+        sessao["usuario_id"] = usuario
+    dados = {"tentativa_id": tentativa, "resposta_1_1": "Resposta do teste"}
+    invalida = cliente.post(caminho + "/salvar", headers=headers,
+                            data=dict(dados, tentativa_id=tentativa_alheia))
+    assert invalida.status_code == 400
+    assert invalida.json["status"] == "erro"
+    salva = cliente.post(caminho + "/salvar", headers=headers, data=dados)
+    assert salva.status_code == 200
+    assert salva.json == {"status": "ok"}
+    finaliza = cliente.post(caminho + "/finalizar", data=dados)
+    assert finaliza.status_code == 302
+    assert f"/resultado/{tentativa}" in finaliza.location
+
+
+@pytest.mark.parametrize("disciplina", ["fisica", "quimica"])
+def test_finaliza_tentativa_aberta_pela_pagina_da_disciplina(cliente, dados_discursivos, disciplina):
+    import re
+
+    from database.conexao import conectar
+
+    with cliente.session_transaction() as sessao:
+        sessao["usuario_id"] = dados_discursivos["usuarios"][0]
+    caminho = f"/provas/ita/2025/segunda-fase/{disciplina}"
+    prova = cliente.get(caminho)
+    assert prova.status_code == 200
+    tentativa = int(re.search(r'name="tentativa_id"\s+value="(\d+)"', prova.get_data(as_text=True))[1])
+    campo = min(obter_campos_permitidos(carregar_prova_ita_segunda_fase(disciplina)))
+    respostas = {"tentativa_id": tentativa, campo: "Resposta de teste"}
+    salva = cliente.post(caminho + "/salvar", data=respostas, headers={"X-Requested-With": "XMLHttpRequest"})
+    assert salva.status_code == 200
+    assert salva.json == {"status": "ok"}
+    finaliza = cliente.post(caminho + "/finalizar", data=respostas)
+    assert finaliza.status_code == 302
+    assert finaliza.location.endswith(f"/resultado/{tentativa}")
+    with conectar() as conexao:
+        registro = conexao.execute("""
+            SELECT t.status, r.resposta
+            FROM tentativas_provas_discursivas t
+            JOIN respostas_discursivas r ON r.tentativa_id = t.id
+            WHERE t.id = %s
+        """, (tentativa,)).fetchone()
+    assert registro == {"status": "finalizada", "resposta": "Resposta de teste"}
+
+
+def test_resultado_provisorio_aparece_no_historico_e_no_backup(cliente, dados_discursivos):
+    from database.conexao import conectar
+    from database.respostas_discursivas_repository import (
+        reivindicar_correcao_discursiva, salvar_resultado_correcao_discursiva,
+    )
+
+    usuario = dados_discursivos["usuarios"][0]
+    tentativa = dados_discursivos["tentativas"][0]
+    with cliente.session_transaction() as sessao:
+        sessao["usuario_id"] = usuario
+    with conectar() as conexao:
+        conexao.execute("""
+            UPDATE tentativas_provas_discursivas
+            SET status = 'finalizada', disciplina = 'Física', data_finalizacao = CURRENT_TIMESTAMP
+            WHERE id = %s
+        """, (tentativa,))
+    assert reivindicar_correcao_discursiva(tentativa, usuario)
+    assert not reivindicar_correcao_discursiva(tentativa, usuario)
+    assert salvar_resultado_correcao_discursiva(
+        tentativa, usuario,
+        {"status": "provisoria", "nota_provisoria": 55, "nota_maxima": 100},
+        "finalizada", None, 100,
+    )
+    historico = cliente.get("/provas/historico").get_data(as_text=True)
+    assert "Correção provisória" in historico
+    assert "55/100.0" in historico
+    backup = cliente.get("/configuracoes/dados/exportar").json
+    assert backup["provas_discursivas"][0]["resultado_correcao"]["nota_provisoria"] == 55
+    assert {"leituras_idiomas", "redacoes", "respostas_discursivas"} <= backup.keys()
+    pdf = cliente.get("/configuracoes/dados/exportar/pdf")
+    assert pdf.status_code == 200
+    assert pdf.data.startswith(b"%PDF")
+
+
+def test_painel_e_estatisticas_separam_as_provas(cliente, dados_discursivos, monkeypatch):
+    import app as modulo
+
+    monkeypatch.setattr(modulo, "obter_desempenho_por_area", lambda _, **__: {
+        ("ENEM", "Matemática"): {"questoes": 5, "acertos": 3},
+        ("ITA", "Matemática"): {"questoes": 4, "acertos": 1},
+    })
+    with cliente.session_transaction() as sessao:
+        sessao["usuario_id"] = dados_discursivos["usuarios"][0]
+    estatisticas = cliente.get("/estatisticas").get_data(as_text=True)
+    assert 'id="desempenho-enem"' in estatisticas
+    assert 'id="desempenho-ita"' in estatisticas
+    assert 'value="3" max="5"' in estatisticas
+    assert 'value="1" max="4"' in estatisticas
+    assert "Desempenho Totais de Questões" in estatisticas
+    assert "<dt>Resolvidas</dt><dd>9</dd>" in estatisticas
+    assert "<dt>Acertos</dt><dd>4</dd>" in estatisticas
+    assert "ENEM · Matemática · 60,0%" in estatisticas
+    assert "ITA · Matemática · 25,0%" in estatisticas
+    menu = cliente.get("/dashboard").get_data(as_text=True)
+    assert "Prática e resultados" in menu
+    tarefas = cliente.get("/tarefas").get_data(as_text=True)
+    assert 'id="editor-tarefa"' in tarefas
+
+
+def test_exportacoes_identificam_provas_ita_e_incluem_estatisticas(cliente, dados_discursivos, monkeypatch):
+    from database.conexao import conectar
+    from reportlab import rl_config
+
+    usuario = dados_discursivos["usuarios"][0]
+    with cliente.session_transaction() as sessao:
+        sessao["usuario_id"] = usuario
+    monkeypatch.setattr(rl_config, "pageCompression", 0)
+    try:
+        with conectar() as conexao:
+            conexao.execute("""
+                INSERT INTO resultados_provas
+                    (usuario_id, prova_id, acertos, erros, tempo_gasto, nao_respondidas, total, porcentagem)
+                VALUES (%s, 3, 13, 35, '00:02:33', 0, 48, 27.08),
+                       (%s, 4, 2, 13, '00:00:35', 0, 15, 13.33)
+            """, (usuario, usuario))
+
+        backup = cliente.get("/configuracoes/dados/exportar").json
+        assert [(item["prova_id"], item["instituicao"], item["prova"])
+                for item in backup["resultados_provas"]] == [
+            (3, "ITA", "ITA 2025 — Primeira Fase"),
+            (4, "ITA", "ITA 2025 — Segunda Fase — Português"),
+        ]
+        estatisticas = backup["estatisticas"]
+        assert estatisticas["evolucao_mensal"] == cliente.get("/estatisticas/evolucao").json
+        assert estatisticas["tempo_total_segundos"] == 188
+        assert "ITA" in estatisticas["desempenho_provas"]
+        assert "dificuldade" in estatisticas["analise_questoes_praticadas"]
+        pdf = cliente.get("/configuracoes/dados/exportar/pdf")
+        assert pdf.status_code == 200
+        assert b"ITA 2025" in pdf.data
+        assert b"Primeira" in pdf.data
+        assert b"Segunda" in pdf.data
+        assert b"Prova 3" not in pdf.data
+        assert b"Prova 4" not in pdf.data
+    finally:
+        with conectar() as conexao:
+            conexao.execute("DELETE FROM resultados_provas WHERE usuario_id = %s", (usuario,))
+

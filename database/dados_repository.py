@@ -97,6 +97,25 @@ def obter_dados_exportacao(usuario_id):
 
     respostas_provas = cursor.fetchall()
 
+    adicionais = {}
+    consultas = {
+        "provas_discursivas": """SELECT id, instituicao, ano, fase, disciplina, status,
+            nota_total, nota_maxima, data_inicio, data_finalizacao, resultado_correcao
+            FROM tentativas_provas_discursivas WHERE usuario_id = %s ORDER BY id""",
+        "respostas_discursivas": """SELECT r.tentativa_id, r.questao_numero, r.item_letra, r.resposta
+            FROM respostas_discursivas r JOIN tentativas_provas_discursivas t ON t.id = r.tentativa_id
+            WHERE t.usuario_id = %s ORDER BY r.id""",
+        "leituras_idiomas": """SELECT texto_id, palavras, concluido_em, acertos
+            FROM leituras_idiomas WHERE usuario_id = %s ORDER BY concluido_em, texto_id""",
+        "redacoes": """SELECT instituicao, ano, tema, titulo, texto, notas, nota, tempo_segundos, criado_em
+            FROM redacoes WHERE usuario_id = %s ORDER BY id""",
+        "rascunhos_redacoes_surpresa": """SELECT instituicao, rodada, segundos, texto, titulo
+            FROM redacoes_surpresa WHERE usuario_id = %s AND chave IS NOT NULL ORDER BY instituicao""",
+    }
+    for nome, consulta in consultas.items():
+        cursor.execute(consulta, (usuario_id,))
+        adicionais[nome] = cursor.fetchall()
+
     conexao.close()
 
     return {
@@ -106,7 +125,8 @@ def obter_dados_exportacao(usuario_id):
         "tarefas": tarefas,
         "anotacoes": anotacoes,
         "resultados_provas": resultados_provas,
-        "respostas_provas": respostas_provas
+        "respostas_provas": respostas_provas,
+        **adicionais,
     }
 
 

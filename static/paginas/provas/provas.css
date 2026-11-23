@@ -734,7 +734,14 @@ PROVA DISCURSIVA
 }
 
 .pasta-icone {
-    font-size: 28px;
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--cor-primaria) 12%, var(--cor-card));
+    color: var(--cor-texto);
+    font-size: 1.2rem;
     flex-shrink: 0;
 }
 

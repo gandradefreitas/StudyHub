@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='paginas/configuracoes.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/bootstrap-icons-studyhub.css') }}">
     <title>Configurações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
 </head>
 
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
@@ -522,44 +523,9 @@
 
                         </div>
 
-                        <div class="botoes-exportacao">
-
-                            <form
-                                action="{{ url_for('exportar_dados') }}"
-                                method="GET"
-                            >
-
-                                <button
-                                    type="submit"
-                                    class="botao-configuracao-secundario"
-                                >
-
-                                    <i class="bi bi-filetype-json"></i>
-
-                                    Backup JSON
-
-                                </button>
-
-                            </form>
-
-                            <form
-                                action="{{ url_for('exportar_dados_pdf') }}"
-                                method="GET"
-                            >
-
-                                <button
-                                    type="submit"
-                                    class="botao-configuracao-secundario"
-                                >
-
-                                    <i class="bi bi-file-earmark-pdf"></i>
-
-                                    Relatório PDF
-
-                                </button>
-
-                            </form>
-
+                        <div class="sh-atalhos sh-exportacao">
+                            <a href="{{ url_for('exportar_dados') }}"><strong>Baixar backup JSON</strong><span>Registros da conta em formato estruturado</span></a>
+                            <a href="{{ url_for('exportar_dados_pdf') }}"><strong>Baixar relatório PDF</strong><span>Resumo de estudos e resultados para leitura</span></a>
                         </div>
 
                     </div>

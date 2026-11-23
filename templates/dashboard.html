@@ -40,6 +40,11 @@ Dashboard | StudyHub
          CARDS DE RESUMO
     ========================================== -->
 
+    <section class="sh-atalhos" aria-label="Prática e resultados">
+        <a href="{{ url_for('pagina_notas') }}"><strong>Notas</strong><span>Simule o ENEM e consulte as notas do ITA</span></a>
+        <a href="{{ url_for('idiomas.listar') }}"><strong>Idiomas</strong><span>{{ leituras_concluidas }} leituras · {{ palavras_lidas }} palavras</span></a>
+        <a href="{{ url_for('redacoes.listar') }}"><strong>Redações</strong><span>{{ redacoes_enviadas }} envios · Temas e redações surpresa</span></a>
+    </section>
     <section class="dashboard-resumo">
 
 

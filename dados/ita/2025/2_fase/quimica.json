@@ -3,6 +3,7 @@
     "ano": 2025,
     "fase": "Segunda Fase",
     "tipo": "discursiva",
+    "disciplina": "Química",
     "tempo": "4 horas",
     "convencoes": [
         "constante_avogadro : Nₐ = 6,02 · 10²³ mol⁻¹",

@@ -458,6 +458,7 @@
 
 
 {% block scripts %}
+<script src="{{ url_for('static', filename='js/aviso_studyhub.js') }}"></script>
 {% if status == 'em_andamento' %}
 <script src="{{ url_for('static', filename='js/provas/cronometro_discursivo.js') }}"></script>
 <script src="{{ url_for('static', filename='js/provas/paleta_simbolos_discursiva.js') }}"></script>

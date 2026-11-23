@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         botaoIniciarEstudo.textContent =
                             "Iniciar estudo";
 
-                        alert(
+                        avisoStudyHub(
                             erro.message
                         );
 
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         botaoFinalizarEstudo.textContent =
                             "Finalizar estudo";
 
-                        alert(
+                        avisoStudyHub(
                             erro.message
                         );
 
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!selecionada) {
 
-                alert(
+                avisoStudyHub(
                     "Selecione uma alternativa antes de responder."
                 );
 
@@ -599,7 +599,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         "Responder";
 
 
-                    alert(
+                    avisoStudyHub(
                         "Não foi possível registrar sua resposta."
                     );
 

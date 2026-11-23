@@ -129,6 +129,8 @@ from database.questoes_repository import (
 
 from controllers.idiomas_controller import idiomas
 from controllers.redacoes_controller import listar_envios, redacoes
+from database.idiomas_repository import obter_progresso
+from services.fila_discursivas import iniciar_correcao_em_segundo_plano
 from database.criar_banco import criar_tabelas
 from services.autenticacao import autenticar
 from services.configuracoes import definir_senha_usuario
@@ -170,6 +172,12 @@ app.register_blueprint(idiomas)
 app.register_blueprint(redacoes)
 
 criar_tabelas()
+
+
+@app.before_request
+def ativar_fila_discursiva():
+    if not app.testing and session.get("usuario_id"):
+        iniciar_correcao_em_segundo_plano(app)
 
 
 @app.context_processor
@@ -244,8 +252,13 @@ def dashboard():
         session["usuario_id"]
     )
 
+    _, leituras = obter_progresso(session["usuario_id"])
+    envios = listar_envios(session["usuario_id"])
     return render_template(
         "dashboard.html",
+        leituras_concluidas=len(leituras),
+        palavras_lidas=sum(leitura["palavras"] for leitura in leituras.values()),
+        redacoes_enviadas=len(envios),
         **dados,
         classe_body="sidebar-toggle",
         mostrar_pesquisa=True,
@@ -1071,9 +1084,12 @@ def visualizar_prova_ita_segunda_fase(disciplina):
 )
 def salvar_prova_ita_segunda_fase(disciplina):
 
+    ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
     usuario_id = session.get("usuario_id")
 
     if not usuario_id:
+        if ajax:
+            return jsonify(status="erro", mensagem="Sua sessão expirou. Entre novamente para salvar as respostas."), 401
         return redirect(url_for("pagina_login"))
 
     nome_disciplina = obter_disciplina_ita(disciplina)
@@ -1084,6 +1100,8 @@ def salvar_prova_ita_segunda_fase(disciplina):
     tentativa_id = request.form.get("tentativa_id", type=int)
 
     if not tentativa_id:
+        if ajax:
+            return jsonify(status="erro", mensagem="Não foi possível identificar sua tentativa."), 400
         flash("Não foi possível identificar sua tentativa.", "error")
         return redirecionar_prova_ita(disciplina)
 
@@ -1094,8 +1112,13 @@ def salvar_prova_ita_segunda_fase(disciplina):
             tentativa_id, usuario_id, prova, request.form
         )
     except ValueError as erro:
+        if ajax:
+            return jsonify(status="erro", mensagem=str(erro)), 400
         flash(str(erro), "error")
         return redirecionar_prova_ita(disciplina)
+
+    if ajax:
+        return jsonify(status="ok")
 
     flash("Respostas salvas com sucesso!", "success")
 
@@ -1257,36 +1280,7 @@ def finalizar_prova_ita_segunda_fase(disciplina):
         flash(str(erro), "error")
         return redirecionar_prova_ita(disciplina)
 
-    if disciplina in ("matematica", "fisica", "quimica") and not app.testing:
-        try:
-            pacote = corrigir_tentativa_resposta_final(
-                tentativa_id, obter_respostas(tentativa_id),
-                disciplina=disciplina,
-            )
-            salvar_resultado_correcao_discursiva(
-                tentativa_id, usuario_id, pacote,
-                "corrigida" if pacote["status"] == "corrigida" else "finalizada",
-                pacote["nota"], pacote["nota_maxima"],
-            )
-            if pacote["status"] == "corrigida":
-                flash("Prova finalizada e corrigida.", "success")
-            else:
-                flash("Prova finalizada; alguns itens precisam de revisão humana.", "warning")
-        except Exception:
-            app.logger.exception("Falha na correção automática da tentativa %s", tentativa_id)
-            indisponivel = {
-                "status": "indisponivel",
-                "mensagem": "O serviço de correção está temporariamente indisponível. Tente novamente mais tarde.",
-            }
-            salvar_resultado_correcao_discursiva(
-                tentativa_id, usuario_id, indisponivel, "finalizada"
-            )
-            return render_template(
-                "provas/correcao_pendente.html",
-                url_menu=url_for("selecionar_provas_ita_segunda_fase"),
-            ), 202
-    else:
-        flash("Prova finalizada com sucesso!", "success")
+    flash("Prova finalizada. A correção será processada pelo StudyHub.", "success")
 
     return redirect(
         url_for(
@@ -2619,8 +2613,31 @@ def pagina_estatisticas():
             url_for("pagina_login")
         )
 
-    return render_template(
-        "estatisticas/estatisticas.html"
+    return render_template("estatisticas/estatisticas.html", **_desempenho_objetivo(usuario_id))
+
+
+def _desempenho_objetivo(usuario_id):
+    grupos = {prova: {} for prova in ("ENEM", "ITA")}
+    for (prova, area), dados in obter_desempenho_por_area(usuario_id, por_prova=True).items():
+        if prova in grupos:
+            grupos[prova][area] = dados
+
+    areas = [
+        (prova, area, dados["acertos"] * 100 / dados["questoes"])
+        for prova, disciplinas in grupos.items()
+        for area, dados in disciplinas.items()
+        if dados["questoes"]
+    ]
+    areas.sort(key=lambda item: item[2], reverse=True)
+    total_questoes = sum(dados["questoes"] for disciplinas in grupos.values() for dados in disciplinas.values())
+    total_acertos = sum(dados["acertos"] for disciplinas in grupos.values() for dados in disciplinas.values())
+
+    return dict(
+        desempenho_provas=grupos,
+        total_questoes=total_questoes,
+        total_acertos=total_acertos,
+        ponto_forte=areas[0] if areas else None,
+        ponto_atencao=areas[-1] if areas else None,
     )
 
 
@@ -2733,6 +2750,10 @@ def estatisticas_evolucao():
         inicio = date(ano, mes, 1)
         fim = date(ano, mes, monthrange(ano, mes)[1])
 
+    return jsonify(_evolucao_estudos(usuario_id, inicio, fim))
+
+
+def _evolucao_estudos(usuario_id, inicio, fim):
     estudos = obter_estudos_por_periodo(
         usuario_id,
         inicio.isoformat(),
@@ -2824,7 +2845,7 @@ def estatisticas_evolucao():
             break
         data_atual += timedelta(days=1)
 
-    return jsonify(resultado)
+    return resultado
 
 
 @app.route("/estatisticas/provas")
@@ -3236,6 +3257,38 @@ def atualizar_metas_configuracoes_rota():
     )
 
 
+def _dados_relatorio(usuario_id):
+    dados = obter_dados_exportacao(usuario_id)
+    catalogo = {prova["id"]: prova for prova in listar_provas()}
+    for chave in ("resultados_provas", "respostas_provas"):
+        for registro in dados[chave]:
+            prova_id = registro["prova_id"]
+            prova = catalogo.get(prova_id)
+            if prova:
+                dia = {"Primeiro Dia": "Dia 1", "Segundo Dia": "Dia 2"}.get(prova["dia"], prova["dia"])
+                registro["prova"] = f'{prova["nome"]} — {dia}' if dia else prova["nome"]
+                registro["instituicao"] = prova["tipo"]
+            else:
+                registro["prova"] = f"Prova {prova_id}"
+                registro["instituicao"] = None
+
+    hoje = date.today()
+    inicio = hoje.replace(day=1)
+    fim = hoje.replace(day=monthrange(hoje.year, hoje.month)[1])
+    dados["estatisticas"] = {
+        **_desempenho_objetivo(usuario_id),
+        "resumo": obter_resumo_usuario(usuario_id),
+        "tempo_total_segundos": obter_total_segundos(usuario_id) + obter_segundos_provas(usuario_id),
+        "evolucao_mensal": _evolucao_estudos(usuario_id, inicio, fim),
+        "questoes_praticadas_por_area": obter_desempenho_questoes_por_area(usuario_id),
+        "analise_questoes_praticadas": {
+            criterio: obter_desempenho_questoes(usuario_id, criterio)
+            for criterio in ("dificuldade", "competencia", "habilidade", "lingua")
+        },
+    }
+    return dados
+
+
 @app.route(
     "/configuracoes/dados/exportar",
     methods=["GET"]
@@ -3247,7 +3300,7 @@ def exportar_dados():
             url_for("pagina_login")
         )
 
-    dados = obter_dados_exportacao(
+    dados = _dados_relatorio(
         session["usuario_id"]
     )
 
@@ -3276,7 +3329,7 @@ def exportar_dados_pdf():
     if "usuario_id" not in session:
         return redirect(url_for("pagina_login"))
 
-    dados = obter_dados_exportacao(
+    dados = _dados_relatorio(
         session["usuario_id"]
     )
 
@@ -3794,12 +3847,9 @@ def exportar_dados_pdf():
 
     usuario_id = session["usuario_id"]
 
-    resumo = obter_resumo_usuario(usuario_id)
-
-    segundos_estudo = obter_total_segundos(usuario_id)
-    segundos_provas = obter_segundos_provas(usuario_id)
-
-    tempo_total = segundos_estudo + segundos_provas
+    estatisticas = dados["estatisticas"]
+    resumo = estatisticas["resumo"]
+    tempo_total = estatisticas["tempo_total_segundos"]
 
     total_questoes = (
             resumo["acertos"]
@@ -3838,92 +3888,46 @@ def exportar_dados_pdf():
     # DESEMPENHO EM QUESTÕES
     # --------------------------------------------------
 
-    adicionar_secao("Desempenho em questões")
-
-    acertos = resumo["acertos"]
-    erros = resumo["erros"]
-    questoes_respondidas = acertos + erros
-
-    if questoes_respondidas > 0:
-        aproveitamento = (
-                                 acertos / questoes_respondidas
-                         ) * 100
-    else:
-        aproveitamento = 0
-
+    adicionar_secao("Desempenho total de questões objetivas")
+    questoes_respondidas = estatisticas["total_questoes"]
+    acertos = estatisticas["total_acertos"]
+    aproveitamento = acertos * 100 / questoes_respondidas if questoes_respondidas else 0
     adicionar_indicadores([
-        (
-            questoes_respondidas,
-            "Questões resolvidas"
-        ),
-        (
-            acertos,
-            "Acertos"
-        ),
-        (
-            erros,
-            "Erros"
-        ),
-        (
-            f"{aproveitamento:.1f}%".replace(".", ","),
-            "Aproveitamento"
-        )
+        (questoes_respondidas, "Questões resolvidas"),
+        (acertos, "Acertos"),
+        (questoes_respondidas - acertos, "Erros"),
+        (f"{aproveitamento:.1f}%".replace(".", ","), "Aproveitamento"),
     ])
+
+    evolucao = estatisticas["evolucao_mensal"]
+    if evolucao:
+        mes = date.fromisoformat(evolucao[0]["data"]).strftime("%m/%Y")
+        adicionar_secao(f"Evolução dos estudos — {mes}")
+        dias_com_atividade = [
+            [formatar_data(dia["data"]), formatar_duracao(dia["duracao"])]
+            for dia in evolucao if dia["duracao"]
+        ]
+        if dias_com_atividade:
+            adicionar_tabela(["Dia", "Tempo estudado"], dias_com_atividade, [8 * cm, 8 * cm])
+        else:
+            elementos.append(Paragraph("Nenhum tempo registrado neste mês.", estilos["TextoStudyHub"]))
 
     # --------------------------------------------------
     # DESEMPENHO POR ÁREA — PROVAS
     # --------------------------------------------------
 
-    adicionar_secao("Desempenho por área")
-
-    desempenho_areas = obter_desempenho_por_area(usuario_id)
-
-    if desempenho_areas:
-
-        linhas = []
-
-        for area, resultado in sorted(
-                desempenho_areas.items(),
-                key=lambda item: item[1]["porcentagem"],
-                reverse=True
-        ):
-            linhas.append([
-                area,
-                resultado["questoes"],
-                resultado["acertos"],
-                resultado["erros"],
-                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
-            ])
-
+    for prova, areas in estatisticas["desempenho_provas"].items():
+        adicionar_secao(f"{prova} — Questões objetivas por área")
+        if not areas:
+            elementos.append(Paragraph("Nenhuma questão respondida.", estilos["TextoStudyHub"]))
+            continue
         adicionar_tabela(
-            [
-                "Área do conhecimento",
-                "Questões",
-                "Acertos",
-                "Erros",
-                "Aproveitamento"
-            ],
-            linhas,
-            [
-                5.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                3.0 * cm
-            ]
+            ["Área", "Questões", "Acertos", "Erros", "Aproveitamento"],
+            [[area, item["questoes"], item["acertos"], item["questoes"] - item["acertos"],
+              f'{item["acertos"] * 100 / item["questoes"]:.1f}%'.replace(".", ",")]
+             for area, item in sorted(areas.items())],
+            [6 * cm, 2 * cm, 2 * cm, 2 * cm, 4 * cm],
         )
-
-    else:
-
-        elementos.append(
-            Paragraph(
-                "Ainda não há respostas de provas suficientes "
-                "para apresentar o desempenho por área.",
-                estilos["TextoStudyHub"]
-            )
-        )
-
-        elementos.append(Spacer(1, 0.25 * cm))
 
     # --------------------------------------------------
     # DESEMPENHO NAS QUESTÕES PRATICADAS
@@ -3931,9 +3935,7 @@ def exportar_dados_pdf():
 
     adicionar_secao("Desempenho nas questões")
 
-    desempenho_questoes = obter_desempenho_questoes_por_area(
-        usuario_id
-    )
+    desempenho_questoes = estatisticas["questoes_praticadas_por_area"]
 
     if desempenho_questoes:
 
@@ -3997,10 +3999,7 @@ def exportar_dados_pdf():
 
     for criterio, titulo in criterios:
 
-        desempenho = obter_desempenho_questoes(
-            usuario_id,
-            criterio
-        )
+        desempenho = estatisticas["analise_questoes_praticadas"][criterio]
 
         if not desempenho:
             continue
@@ -4046,53 +4045,15 @@ def exportar_dados_pdf():
 
     adicionar_secao("Análise do desempenho")
 
-    if desempenho_areas:
-
-        areas_ordenadas = sorted(
-            desempenho_areas.items(),
-            key=lambda item: item[1]["porcentagem"],
-            reverse=True
-        )
-
-        melhor_area, melhor_resultado = areas_ordenadas[0]
-        pior_area, pior_resultado = areas_ordenadas[-1]
-
-        adicionar_tabela(
-            ["Indicador", "Resultado"],
-            [
-                [
-                    "Maior aproveitamento em provas",
-                    (
-                        f'{melhor_area} — '
-                        f'{melhor_resultado["porcentagem"]:.1f}%'
-                    ).replace(".", ",")
-                ],
-                [
-                    "Menor aproveitamento em provas",
-                    (
-                        f'{pior_area} — '
-                        f'{pior_resultado["porcentagem"]:.1f}%'
-                    ).replace(".", ",")
-                ]
-            ],
-            [
-                7.5 * cm,
-                7.5 * cm
-            ]
-        )
-
+    destaques = []
+    for rotulo, chave in (("Ponto forte", "ponto_forte"), ("Ponto de atenção", "ponto_atencao")):
+        if estatisticas[chave]:
+            prova, area, percentual = estatisticas[chave]
+            destaques.append([rotulo, f"{prova} — {area} — {percentual:.1f}%".replace(".", ",")])
+    if destaques:
+        adicionar_tabela(["Indicador", "Resultado"], destaques, [6 * cm, 10 * cm])
     else:
-
-        elementos.append(
-            Paragraph(
-                "Ainda não existem dados suficientes para "
-                "identificar os pontos fortes e os pontos "
-                "que precisam de atenção nas provas.",
-                estilos["TextoStudyHub"]
-            )
-        )
-
-        elementos.append(Spacer(1, 0.25 * cm))
+        elementos.append(Paragraph("Nenhuma questão respondida.", estilos["TextoStudyHub"]))
 
     # --------------------------------------------------
     # RESULTADOS DAS PROVAS
@@ -4104,13 +4065,7 @@ def exportar_dados_pdf():
 
         linhas = []
 
-        nomes_provas = {
-            1: "ENEM 2025 — Dia 1",
-            2: "ENEM 2025 — Dia 2"
-        }
-
         for resultado in resultados_provas:
-            prova_id = resultado["prova_id"]
             acertos = resultado["acertos"]
             erros = resultado["erros"]
             nao_respondidas = resultado["nao_respondidas"]
@@ -4119,13 +4074,8 @@ def exportar_dados_pdf():
             porcentagem = resultado["porcentagem"]
             data_realizacao = resultado["data_realizacao"]
 
-            nome_prova = nomes_provas.get(
-                prova_id,
-                f"Prova {prova_id}"
-            )
-
             linhas.append([
-                nome_prova,
+                resultado["prova"],
                 f"{acertos}/{total}",
                 erros,
                 nao_respondidas,
@@ -4199,6 +4149,54 @@ def exportar_dados_pdf():
         )
 
         canvas.restoreState()
+
+    discursivas = [prova for prova in dados["provas_discursivas"] if prova["data_finalizacao"]]
+    if discursivas:
+        adicionar_secao("Resultados das provas discursivas")
+        linhas = []
+        for prova in discursivas:
+            parecer = prova["resultado_correcao"] or {}
+            provisoria = parecer.get("status") == "provisoria"
+            nota = parecer.get("nota_provisoria") if provisoria else prova["nota_total"]
+            maxima = prova["nota_maxima"]
+            if maxima is None:
+                maxima = parecer.get("nota_maxima")
+            if nota is not None and maxima is not None:
+                resultado = f"{nota:g} / {maxima:g}" + (" (provisória)" if provisoria else "")
+            elif parecer.get("correcao"):
+                resultado = "Parecer disponível"
+            else:
+                resultado = "Correção pendente"
+            linhas.append([
+                f'{prova["instituicao"]} {prova["ano"]} — {prova["fase"]} — {prova["disciplina"]}',
+                resultado,
+                formatar_data(prova["data_finalizacao"], incluir_hora=True),
+            ])
+        adicionar_tabela(["Prova", "Resultado", "Finalização"], linhas, [8 * cm, 4 * cm, 4 * cm])
+
+    adicionar_secao("Leitura e produção de texto")
+    leituras = dados.get("leituras_idiomas") or []
+    redacoes_concluidas = dados.get("redacoes") or []
+    adicionar_tabela(
+        ["Indicador", "Total"],
+        [
+            ["Leituras concluídas", len(leituras)],
+            ["Palavras lidas", sum(leitura["palavras"] for leitura in leituras)],
+            ["Redações enviadas", len(redacoes_concluidas)],
+            ["Provas discursivas finalizadas", sum(
+                prova["data_finalizacao"] is not None for prova in dados.get("provas_discursivas", [])
+            )],
+        ],
+        [11 * cm, 5.5 * cm],
+    )
+    if redacoes_concluidas:
+        adicionar_tabela(
+            ["Prova", "Tema", "Nota estimada"],
+            [[envio["instituicao"], envio["tema"], "Pendente" if envio["nota"] is None else
+              (f'{envio["nota"] / 10:g} / 10' if envio["instituicao"] == "ITA" else f'{envio["nota"]} / 1000')]
+             for envio in redacoes_concluidas],
+            [2.5 * cm, 10.5 * cm, 3.5 * cm],
+        )
 
     documento.build(
         elementos,

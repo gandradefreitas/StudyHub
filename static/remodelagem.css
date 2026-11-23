@@ -1,0 +1,240 @@
+body {
+    --sh-contorno: color-mix(in srgb, var(--cor-primaria) 30%, var(--cor-borda));
+    --sh-destaque: color-mix(in srgb, var(--cor-primaria) 9%, var(--cor-card));
+}
+.cabecalho-provas,
+.cabecalho-historico,
+.notas-cabecalho,
+.redacoes-cabecalho,
+.tarefas-cabecalho,
+.idiomas > header {
+    background: linear-gradient(120deg, var(--sh-destaque), var(--cor-card) 70%);
+    border: 1px solid var(--sh-contorno);
+    border-radius: 18px;
+    padding: clamp(1rem, 3vw, 2rem);
+    margin-bottom: 1.35rem;
+}
+.pasta-prova,
+.historico-card,
+.notas-secao-titulo,
+.redacoes-cartao,
+.tarefa-card,
+.idiomas-cartao,
+.sh-painel {
+    border-color: var(--sh-contorno);
+    border-radius: 16px;
+}
+.pasta-prova-cabecalho,
+.notas-secao-titulo,
+.redacoes-cartao > summary,
+.idiomas-grupo > summary {
+    color: var(--cor-texto);
+    font-weight: 750;
+}
+.notas-secao-titulo {
+    border-inline-start: 4px solid var(--cor-primaria);
+}
+.notas-cartao {
+    padding: clamp(1rem, 3vw, 1.65rem);
+}
+.card-resultado,
+.prova-discursiva-container .resultado-resumo,
+.resultado-discursivo > section:first-of-type {
+    border-top: 4px solid var(--cor-primaria);
+}
+.resultado-dados {
+    gap: clamp(1rem, 3vw, 2rem);
+}
+.sh-atalhos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: .85rem;
+    margin-block: 1rem 1.35rem;
+}
+.sh-atalhos a {
+    display: grid;
+    gap: .35rem;
+    padding: 1rem;
+    color: var(--cor-texto);
+    background: var(--sh-destaque);
+    border: 1px solid var(--sh-contorno);
+    border-radius: 12px;
+    text-decoration: none;
+}
+.sh-atalhos a:is(:hover, :focus-visible) {
+    border-color: var(--cor-primaria);
+    text-decoration: underline;
+}
+.sh-atalhos span {
+    color: var(--cor-texto-secundario);
+}
+.sh-exportacao { margin: 0; }
+.sh-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: .65rem;
+    margin-block: 1.1rem;
+}
+.sh-metricas div {
+    padding: .75rem;
+    background: var(--sh-destaque);
+    border-radius: 8px;
+}
+.sh-metricas dd {
+    margin: .25rem 0 0;
+    font-size: 1.35rem;
+    font-weight: 750;
+}
+.sh-areas { list-style: none; padding: 0; }
+.sh-areas li { margin-top: .75rem; }
+.sh-areas li > div { display: flex; justify-content: space-between; gap: .75rem; }
+.sh-areas progress { width: 100%; accent-color: var(--cor-primaria); }
+.sh-filtros { margin-block: 1rem; }
+.sh-filtros select {
+    font: inherit;
+    color: var(--cor-texto);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: .45rem;
+}
+.sh-grafico-mensal { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem; }
+.sh-grafico-escala {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: .4rem 1.7rem;
+    color: var(--cor-texto-secundario);
+    font-variant-numeric: tabular-nums;
+    font-size: .8rem;
+}
+.idiomas-grafico {
+    padding: .5rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    background: var(--cor-fundo);
+}
+.idiomas-grafico .idiomas-trilho {
+    height: clamp(7rem, 18vw, 13rem);
+    background: repeating-linear-gradient(to top, var(--cor-borda) 0 1px, transparent 1px 25%);
+}
+.idiomas-dia { position: relative; }
+.idiomas .sh-grafico-dia {
+    position: absolute;
+    inset: 0 0 1rem;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+.sh-grafico-dia span {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    background: var(--cor-card);
+    padding: .2rem .4rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+}
+.sh-grafico-dia:is(:hover, :focus) span { opacity: 1; z-index: 2; }
+.studyhub-aviso {
+    position: fixed;
+    inset: 0;
+    width: min(calc(100vw - 2rem), 26rem);
+    margin: auto;
+    padding: 1.25rem;
+    color: var(--cor-texto);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+}
+.studyhub-aviso p { margin-block: .6rem 1rem; }
+.studyhub-aviso form { text-align: right; }
+.studyhub-aviso button {
+    background: var(--cor-primaria);
+    color: var(--cor-texto-claro);
+    border: 0;
+    border-radius: 8px;
+    padding: .55rem 1rem;
+    font: inherit;
+    cursor: pointer;
+}
+.studyhub-aviso::backdrop { background: rgb(0 0 0 / .55); }
+#editor-tarefa input[type=text] {
+    display: block;
+    width: 100%;
+    margin: .35rem 0 1rem;
+    padding: .65rem;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    font: inherit;
+}
+#editor-tarefa .tarefa-dialogo-acoes button {
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: .55rem .85rem;
+    font: inherit;
+    cursor: pointer;
+}
+
+.sh-tarefas-grupo {
+    color: var(--cor-texto);
+    font-size: 1rem;
+    margin: .55rem 0 .2rem;
+}
+
+.sh-resultado-prova {
+    background: linear-gradient(135deg, var(--sh-destaque), var(--cor-card) 65%);
+    border-color: var(--sh-contorno);
+    border-radius: 18px;
+}
+
+.lista-provas .item-prova {
+    background: var(--cor-card);
+    border: 1px solid var(--sh-contorno);
+    border-radius: 12px;
+    margin-block: .5rem;
+}
+
+.sh-situacao {
+    display: inline-block;
+    padding: .25rem .65rem;
+    border-radius: 999px;
+    background: var(--sh-destaque);
+}
+
+#historico-simulados[hidden],
+#historico-redacoes[hidden],
+[data-modalidade-historico][hidden] { display: none; }
+
+.sh-redacoes-grupos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: .85rem;
+}
+.sh-redacoes-grupo .redacoes-media { margin-top: 0; }
+.sh-redacoes-surpresa {
+    background: linear-gradient(120deg, var(--sh-destaque), var(--cor-card));
+    border-inline-start: 4px solid var(--cor-primaria);
+}
+.sh-redacoes-surpresa p { margin-block: .4rem .9rem; }
+.card-prova-discursiva { border-top: 3px solid var(--cor-primaria); }
+
+.sh-areas progress {
+    appearance: none;
+    height: .55rem;
+    border: 0;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--cor-fundo-secundario);
+}
+.sh-areas progress::-webkit-progress-bar { background: var(--cor-fundo-secundario); }
+.sh-areas progress::-webkit-progress-value { background: var(--cor-primaria); }
+.sh-areas progress::-moz-progress-bar { background: var(--cor-primaria); }
+.sh-total-questoes { margin-bottom: 1.25rem; }

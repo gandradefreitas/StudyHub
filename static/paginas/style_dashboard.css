@@ -172,7 +172,7 @@
 
 .dashboard-icone-estudo {
 
-    background:#E8EEFF;
+    background:color-mix(in srgb, var(--cor-primaria) 13%, var(--cor-card));
 
     color:var(--cor-primaria);
 
@@ -180,7 +180,7 @@
 
 .dashboard-icone-tarefas {
 
-    background:#E8F3FF;
+    background:color-mix(in srgb, var(--cor-secundaria) 13%, var(--cor-card));
 
     color:var(--cor-secundaria);
 
@@ -188,7 +188,7 @@
 
 .dashboard-icone-concluidas {
 
-    background:#EAF9F0;
+    background:color-mix(in srgb, var(--cor-sucesso) 13%, var(--cor-card));
 
     color:var(--cor-sucesso);
 
@@ -196,7 +196,7 @@
 
 .dashboard-icone-desempenho {
 
-    background:#FFF5D9;
+    background:color-mix(in srgb, var(--cor-atencao) 13%, var(--cor-card));
 
     color:var(--cor-atencao);
 

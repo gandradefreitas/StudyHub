@@ -27,6 +27,7 @@
         StudyHub
         {% endblock %}
     </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
 </head>
 <body class="{{ classe_body | default('sidebar-fixa') }}" data-tema="{{ usuario['tema'] if usuario else 'sistema' }}">
 

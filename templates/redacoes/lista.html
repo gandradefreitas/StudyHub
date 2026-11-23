@@ -4,7 +4,7 @@
     <h1>Redações</h1>
     <p>Pratique a redação do ENEM e do ITA e acompanhe suas notas.</p>
 </header>
-<section class="redacoes-cartao" aria-labelledby="surpresas">
+<section class="redacoes-cartao sh-redacoes-surpresa" aria-labelledby="surpresas">
     <h2 id="surpresas">Redações surpresa</h2>
     <p>Escolha uma prova para revelar o tema. O cronômetro pausa quando você sai da página.</p>
     <button type="button" id="abrir-surpresa">Escolher prova</button>
@@ -22,7 +22,9 @@
     </dialog>
 </section>
 <script src="{{ url_for('static', filename='js/redacoes_surpresa_dialogo.js') }}" defer></script>
+<div class="sh-redacoes-grupos">
 {% for instituicao, grupo in grupos.items() %}
+<div class="sh-redacoes-grupo">
 <section class="redacoes-cartao redacoes-media" aria-labelledby="media-{{ instituicao | lower }}">
     <h2 id="media-{{ instituicao | lower }}">Média das notas estimadas</h2>
     <h3>{{ instituicao }}</h3>
@@ -45,5 +47,7 @@
         {% endfor %}
     </ul>
 </details>
+</div>
 {% endfor %}
+</div>
 {% endblock %}

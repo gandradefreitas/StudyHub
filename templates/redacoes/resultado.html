@@ -5,6 +5,7 @@
 <p>{{ envio.instituicao }}{% if envio.ano %} {{ envio.ano }}{% else %} · Redação surpresa{% endif %} · {{ envio.criado_em.strftime('%d/%m/%Y às %H:%M') }}</p>
 <h2>{{ envio.tema }}</h2>
 {% if envio.tempo_segundos is not none %}<p>Tempo de escrita · {% include "redacoes/tempo.html" %}</p>{% endif %}
+<p class="redacoes-aviso" role="note">Verifique sua redação em outros meios para melhor veracidade de nota.</p>
 <section class="redacoes-cartao" aria-labelledby="nota-redacao">
     <h3 id="nota-redacao">Nota estimada</h3>
     {% if envio.nota is not none %}

@@ -3,6 +3,7 @@
     "ano": 2025,
     "fase": "Segunda Fase",
     "tipo": "discursiva",
+    "disciplina": "Física",
     "tempo": "4 horas",
     "convencoes": [
         "aceleracao_gravidade : g = 10 m/s²",

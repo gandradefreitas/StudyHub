@@ -645,7 +645,7 @@ def buscar_correcao_discursiva_pendente():
             FROM tentativas_provas_discursivas
             WHERE status = 'finalizada'
               AND disciplina IN ('Matemática', 'Física', 'Química')
-              AND resultado_correcao->>'status' = 'indisponivel'
+              AND (resultado_correcao IS NULL OR resultado_correcao->>'status' = 'indisponivel')
               AND (proxima_tentativa_correcao IS NULL
                    OR proxima_tentativa_correcao <= CURRENT_TIMESTAMP)
               AND (correcao_reivindicada_ate IS NULL
@@ -672,7 +672,7 @@ def reivindicar_correcao_discursiva(tentativa_id, usuario_id):
             WHERE id = %s AND usuario_id = %s
               AND status = 'finalizada'
               AND disciplina IN ('Matemática', 'Física', 'Química')
-              AND resultado_correcao->>'status' = 'indisponivel'
+              AND (resultado_correcao IS NULL OR resultado_correcao->>'status' = 'indisponivel')
               AND (proxima_tentativa_correcao IS NULL
                    OR proxima_tentativa_correcao <= CURRENT_TIMESTAMP)
               AND (correcao_reivindicada_ate IS NULL
@@ -713,6 +713,7 @@ def listar_tentativas_discursivas_usuario(
                 data_inicio,
                 data_finalizacao,
                 data_correcao,
+                resultado_correcao,
                 {_DURACAO_DISCURSIVA_SQL} AS duracao_segundos
             FROM tentativas_provas_discursivas
             WHERE usuario_id = %s

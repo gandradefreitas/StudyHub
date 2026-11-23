@@ -70,13 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
             avisoTempo.hidden = false;
         }
 
-        if (typeof formulario.requestSubmit === "function") {
+        avisoStudyHub("Tempo encerrado! A prova será finalizada.", () => {
             formulario.requestSubmit(botaoFinalizar);
-            return;
-        }
-
-        formulario.action = botaoFinalizar.formAction;
-        formulario.submit();
+        });
     }
 
     function atualizarCronometro() {
@@ -89,6 +85,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (segundos === 0) {
             finalizarAoAcabarTempo();
+        }
+    }
+
+
+    function exibirFalha(mensagem) {
+        salvandoAntesDeFinalizar = false;
+        botaoFinalizar.disabled = false;
+        if (statusSalvamento) {
+            statusSalvamento.hidden = false;
+            statusSalvamento.textContent = mensagem;
+        }
+        if (avisoTempo && finalizacaoAutomatica) {
+            avisoTempo.textContent =
+                "O tempo terminou e a tentativa ainda está aberta. " + mensagem;
         }
     }
 
@@ -134,16 +144,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
             .then(async resposta => {
-                if (!resposta.ok) {
-                    throw new Error("O servidor não confirmou o salvamento.");
+                const dados = resposta.headers.get("Content-Type")?.includes("application/json")
+                    ? await resposta.json()
+                    : null;
+                if (!resposta.ok || dados?.status !== "ok") {
+                    return dados?.mensagem || "Não foi possível salvar as respostas. A prova continua aberta.";
                 }
-
-                const dados = await resposta.json();
-                if (dados.status !== "ok") {
-                    throw new Error("O servidor não confirmou o salvamento.");
-                }
+                return null;
             })
-            .then(() => {
+            .then(mensagem => {
+                if (mensagem) {
+                    exibirFalha(mensagem);
+                    return;
+                }
                 salvandoAntesDeFinalizar = false;
                 salvamentoConfirmado = true;
                 botaoFinalizar.disabled = false;
@@ -151,19 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(erro => {
                 console.error("Não foi possível salvar antes de finalizar:", erro);
-                salvandoAntesDeFinalizar = false;
-                botaoFinalizar.disabled = false;
-                if (statusSalvamento) {
-                    statusSalvamento.hidden = false;
-                    statusSalvamento.textContent =
-                        "Não foi possível salvar as respostas. " +
-                        "A prova continua aberta; tente salvar ou finalizar novamente.";
-                }
-                if (avisoTempo && finalizacaoAutomatica) {
-                    avisoTempo.textContent =
-                        "O tempo terminou, mas o salvamento falhou. " +
-                        "Verifique sua conexão e tente finalizar novamente.";
-                }
+                exibirFalha("Não foi possível salvar as respostas. Verifique sua conexão e tente novamente.");
             });
     });
 
