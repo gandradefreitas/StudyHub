@@ -21,7 +21,7 @@ def estado_atual(tentativa, limite, acao, texto, titulo):
     if inicio is not None:
         segundos = min(limite, segundos + min(JANELA_ATIVA, max(0, agora - inicio)))
 
-    if tentativa["segundos"] >= limite:
+    if segundos >= limite:
         texto, titulo = tentativa["texto"], tentativa["titulo"]
     return {
         "segundos": segundos,

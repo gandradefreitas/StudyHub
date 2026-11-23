@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
 from database.resultados_repository import listar_resultados_usuario
+from services.resumo_discursivas import resumir_correcao_discursiva
 from database.respostas_discursivas_repository import (
 listar_tentativas_discursivas_usuario,
 )
@@ -52,9 +53,6 @@ def obter_historico(usuario_id):
         ano = tentativa["ano"]
         fase = tentativa["fase"]
         disciplina = tentativa["disciplina"]
-        status = tentativa["status"]
-        nota_total = tentativa["nota_total"]
-        nota_maxima = tentativa["nota_maxima"]
         data_inicio = tentativa["data_inicio"]
         data_finalizacao = tentativa["data_finalizacao"]
         duracao = tentativa["duracao_segundos"]
@@ -63,27 +61,6 @@ def obter_historico(usuario_id):
             horas, restante = divmod(duracao, 3600)
             minutos, segundos = divmod(restante, 60)
             tempo_gasto = f"{horas:02d}:{minutos:02d}:{segundos:02d}"
-
-        parecer = tentativa.get("resultado_correcao") or {}
-        if parecer.get("status") == "provisoria":
-            situacao = "Correção provisória"
-            nota_total = parecer.get("nota_provisoria")
-            nota_maxima = nota_maxima if nota_maxima is not None else parecer.get("nota_maxima")
-
-        elif parecer.get("status") == "revisao_necessaria":
-            situacao = "Revisão necessária"
-
-        elif status == "corrigida" or parecer.get("status") == "corrigida":
-            situacao = "Corrigida"
-            nota_total = nota_total if nota_total is not None else parecer.get("nota")
-            nota_maxima = nota_maxima if nota_maxima is not None else parecer.get("nota_maxima")
-            situacao = "Corrigida"
-
-        elif status == "finalizada":
-            situacao = "Aguardando correção"
-
-        else:
-            situacao = "Em andamento"
 
         data_historico = (
             data_finalizacao
@@ -95,25 +72,13 @@ def obter_historico(usuario_id):
         if data_historico is not None:
             data_historico = data_historico.strftime("%d/%m/%Y às %H:%M")
 
-        if nota_total is not None and nota_maxima is not None:
-            resultado_formatado = f"{nota_total}/{nota_maxima}"
-        else:
-            resultado_formatado = (
-                "Parecer disponível" if parecer.get("correcao")
-                else "Correção pendente" if status == "finalizada"
-                else "—"
-            )
-
         historico.append({
             "id": tentativa_id,
             "modalidade": "discursiva",
             "data_realizacao": data_historico,
             "prova": f"{instituicao} {ano} — {fase}",
             "disciplina": disciplina,
-            "situacao": situacao,
-            "nota_total": nota_total,
-            "nota_maxima": nota_maxima,
-            "resultado_formatado": resultado_formatado,
+            **resumir_correcao_discursiva(tentativa),
             "tempo_gasto": tempo_gasto,
             "_data_ordem": data_para_ordenacao,
         })

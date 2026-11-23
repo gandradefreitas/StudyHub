@@ -1,223 +1,182 @@
-"""Reprocessa correções discursivas indisponíveis, usando a fila no PostgreSQL.
+"""Worker persistente de correções do StudyHub. Veja docs/fila-correcoes.md."""
 
-Execute em um processo separado da aplicação Flask e mantenha-o ativo.
-"""
-
+import argparse
+import json
 import logging
 import os
 from pathlib import Path
 import sys
-import time
-from logging.handlers import RotatingFileHandler
+from time import monotonic, sleep
 
-# O worker é executado como arquivo dentro de studyhub/, mas alguns serviços
-# também importam módulos pelo nome do pacote studyhub. Inclua a raiz do
-# projeto sem remover studyhub/ do caminho usado pelos imports existentes.
-RAIZ_PROJETO = Path(__file__).resolve().parent.parent
-if str(RAIZ_PROJETO) not in sys.path:
-    sys.path.insert(0, str(RAIZ_PROJETO))
+from psycopg.conninfo import conninfo_to_dict
+
+# Alguns módulos do corretor também importam studyhub como pacote.
+raiz = Path(__file__).resolve().parent.parent
+if str(raiz) not in sys.path:
+    sys.path.insert(0, str(raiz))
 
 from database.conexao import conectar
-from database.criar_banco import criar_tabelas
-from database.respostas_discursivas_repository import (
-    buscar_correcao_discursiva_pendente,
-    obter_respostas,
-    reivindicar_correcao_discursiva,
-    salvar_resultado_correcao_discursiva,
+from database.fila_redacoes_repository import (
+    MAX_TENTATIVAS, PRAZOS_RETRY, encerrar_redacao, recuperar_redacoes_esgotadas,
+    reivindicar_redacao,
 )
+from database.respostas_discursivas_repository import (
+    obter_respostas, recuperar_discursivas_esgotadas,
+    reivindicar_correcao_discursiva, salvar_resultado_correcao_discursiva,
+)
+from gemini_client import enviar_mensagem
 from services.correcao_por_resposta_final import corrigir_tentativa_resposta_final
+from services.redacoes_service import estimar_notas, estimar_notas_ita
+
+INTERVALO_VERIFICACAO = 10
+INTERVALO_METRICAS = 300
 
 
-INTERVALO_VERIFICACAO_SEGUNDOS = 30
-CHAVE_LOCK_WORKER = 731905214
-BANCOS_PERMITIDOS = {"studyhub", "studyhub_test"}
-
-
-def _configurar_logging():
-    formato = "%(asctime)s %(levelname)s %(message)s"
-    handlers = [logging.StreamHandler()]
-
-    pasta_local = os.environ.get("LOCALAPPDATA")
-    if pasta_local:
-        diretorio_logs = Path(pasta_local) / "StudyHub"
-        diretorio_logs.mkdir(parents=True, exist_ok=True)
-        handlers.append(
-            RotatingFileHandler(
-                diretorio_logs / "worker_correcao_discursiva.log",
-                maxBytes=2_000_000,
-                backupCount=3,
-                encoding="utf-8",
-            )
-        )
-
-    logging.basicConfig(level=logging.INFO, format=formato, handlers=handlers)
-
-
-def _processar(tentativa_id, usuario_id, disciplina):
+def processar_discursiva(tentativa):
+    tentativa_id = tentativa["id"]
+    prazo = None
     try:
         pacote = corrigir_tentativa_resposta_final(
-            tentativa_id, obter_respostas(tentativa_id), disciplina=disciplina
+            tentativa_id, obter_respostas(tentativa_id), disciplina=tentativa["disciplina"],
         )
-        status_banco = (
-            "corrigida" if pacote["status"] == "corrigida" else "finalizada"
-        )
-        salvo = salvar_resultado_correcao_discursiva(
-            tentativa_id,
-            usuario_id,
-            pacote,
-            status_banco,
-            pacote["nota"],
-            pacote["nota_maxima"],
-        )
-        if salvo:
-            logging.info(
-                "Tentativa %s processada; status do parecer: %s",
-                tentativa_id,
-                pacote["status"],
-            )
-        else:
-            logging.warning(
-                "Tentativa %s não foi atualizada; pode ter mudado de estado.",
-                tentativa_id,
-            )
-    except Exception:
-        logging.exception(
-            "Falha temporária ao processar tentativa %s; será reagendada.",
-            tentativa_id,
-        )
+    except Exception as erro:
+        numero = tentativa["tentativas_correcao"]
+        terminou = numero >= MAX_TENTATIVAS
         pacote = {
-            "status": "indisponivel",
-            "mensagem": (
-                "O serviço de correção está temporariamente indisponível. "
-                "Uma nova tentativa automática foi programada."
-            ),
+            "status": "falha_definitiva" if terminou else "indisponivel",
+            "mensagem": "O serviço de correção está temporariamente indisponível.",
         }
-        try:
-            salvar_resultado_correcao_discursiva(
-                tentativa_id,
-                usuario_id,
-                pacote,
-                "finalizada",
-            )
-        except Exception:
-            logging.exception(
-                "Não foi possível reagendar a tentativa %s no banco.",
-                tentativa_id,
-            )
-
-
-def _executar_worker_ate_falha():
-    conexao_verificacao = conectar()
-    try:
-        banco = conexao_verificacao.execute(
-            "SELECT current_database() AS nome"
-        ).fetchone()["nome"]
-    finally:
-        conexao_verificacao.close()
-
-    # Limita o worker aos bancos conhecidos para evitar processar por engano
-    # uma base diferente da usada pelo StudyHub.
-    if banco not in BANCOS_PERMITIDOS:
-        logging.error(
-            "Worker cancelado: DATABASE_URL aponta para '%s'; bancos permitidos: %s.",
-            banco,
-            ", ".join(sorted(BANCOS_PERMITIDOS)),
-        )
-        return False
-
-    logging.info("Banco ativo: %s", banco)
-    # O worker é separado de app.py e aplica as migrações idempotentes antes
-    # de consultar a fila.
-    criar_tabelas()
-    conexao_lock = conectar()
-    cursor_lock = conexao_lock.cursor()
-    cursor_lock.execute(
-        "SELECT pg_try_advisory_lock(%s) AS adquirido",
-        (CHAVE_LOCK_WORKER,),
+        if not terminou:
+            prazo = PRAZOS_RETRY[numero - 1]
+        logging.warning("Discursiva %s, tentativa %s: %s.", tentativa_id, numero, type(erro).__name__)
+    salvo = salvar_resultado_correcao_discursiva(
+        tentativa_id, tentativa["usuario_id"], pacote,
+        "corrigida" if pacote["status"] == "corrigida" else "finalizada",
+        pacote.get("nota"), pacote.get("nota_maxima"),
+        reivindicada_ate=tentativa["correcao_reivindicada_ate"], tentar_em=prazo,
     )
-    if not cursor_lock.fetchone()["adquirido"]:
-        logging.warning(
-            "Outro worker já possui o lock deste banco; nova verificação em %s segundos.",
-            INTERVALO_VERIFICACAO_SEGUNDOS,
-        )
-        conexao_lock.close()
-        return True
+    logging.info("Discursiva %s: %s.", tentativa_id, pacote["status"] if salvo else "reserva expirada")
 
-    logging.info("Worker de correção discursiva iniciado.")
+
+def processar_redacao(envio):
     try:
-        ciclos_sem_pendente = 0
-        while True:
-            try:
-                pendente = buscar_correcao_discursiva_pendente()
-            except Exception:
-                logging.exception(
-                    "Falha ao consultar a fila; nova tentativa em %s segundos.",
-                    INTERVALO_VERIFICACAO_SEGUNDOS,
-                )
-                time.sleep(INTERVALO_VERIFICACAO_SEGUNDOS)
-                continue
+        if envio["instituicao"] == "ITA":
+            notas = estimar_notas_ita(enviar_mensagem, envio["tema"], envio["titulo"], envio["texto"])
+        else:
+            notas = estimar_notas(enviar_mensagem, envio["tema"], envio["texto"])
+    except (RuntimeError, ValueError) as erro:
+        notas = None
+        logging.warning("Redação %s, tentativa %s: %s.",
+                        envio["id"], envio["correcao_tentativas"], type(erro).__name__)
 
-            if pendente is None:
-                ciclos_sem_pendente += 1
-                if ciclos_sem_pendente % 10 == 0:
-                    logging.info(
-                        "Worker ativo; nenhuma correção vencida na fila."
-                    )
-                time.sleep(INTERVALO_VERIFICACAO_SEGUNDOS)
-                continue
+    salvo = encerrar_redacao(envio, notas)
+    if salvo:
+        logging.info("Redação %s: %s.", envio["id"], "corrigida" if notas is not None else "falha")
+    else:
+        logging.info("Redação %s: reserva expirada.", envio["id"])
 
-            ciclos_sem_pendente = 0
-            tentativa_id = pendente["id"]
-            usuario_id = pendente["usuario_id"]
-            disciplina = pendente["disciplina"]
-            try:
-                reivindicada = reivindicar_correcao_discursiva(
-                    tentativa_id, usuario_id
-                )
-            except Exception:
-                logging.exception(
-                    "Falha ao reivindicar tentativa %s; nova tentativa em %s segundos.",
-                    tentativa_id,
-                    INTERVALO_VERIFICACAO_SEGUNDOS,
-                )
-                time.sleep(INTERVALO_VERIFICACAO_SEGUNDOS)
-                continue
 
-            if not reivindicada:
-                logging.info(
-                    "Tentativa %s não pôde ser reivindicada; verificando novamente.",
-                    tentativa_id,
-                )
-                time.sleep(INTERVALO_VERIFICACAO_SEGUNDOS)
-                continue
-            _processar(tentativa_id, usuario_id, disciplina)
-    except KeyboardInterrupt:
-        logging.info("Worker encerrado pelo operador.")
-    finally:
-        cursor_lock.execute(
-            "SELECT pg_advisory_unlock(%s)",
-            (CHAVE_LOCK_WORKER,),
-        )
-        conexao_lock.close()
+def processar_pendencias():
+    recuperar_discursivas_esgotadas()
+    recuperar_redacoes_esgotadas()
+    # Busque a segunda fila somente após concluir o trabalho da primeira.
+    # Assim uma reserva nunca expira enquanto aguarda processamento local.
+    movimentou = False
+    for reivindicar, processar in (
+        (reivindicar_correcao_discursiva, processar_discursiva),
+        (reivindicar_redacao, processar_redacao),
+    ):
+        item = reivindicar()
+        if item:
+            movimentou = True
+            processar(item)
+    return movimentou
+
+
+def status_filas():
+    with conectar() as conexao:
+        return conexao.execute("""
+            WITH trabalhos AS (
+                SELECT 'discursivas' AS fila,
+                    data_finalizacao AT TIME ZONE current_setting('TimeZone') AS criado_em,
+                    correcao_reivindicada_ate AS reserva,
+                    proxima_tentativa_correcao AS disponivel_em,
+                    COALESCE(resultado_correcao->>'status' = 'falha_definitiva', FALSE) AS falhou
+                FROM tentativas_provas_discursivas
+                WHERE status = 'finalizada' AND disciplina IN ('Matemática', 'Física', 'Química')
+                    AND (resultado_correcao IS NULL OR resultado_correcao->>'status'
+                         IN ('indisponivel', 'falha_definitiva'))
+                UNION ALL
+                SELECT 'redacoes', criado_em AT TIME ZONE 'America/Sao_Paulo',
+                    correcao_reivindicada_ate, correcao_tentar_apos, correcao_falhou
+                FROM redacoes WHERE nota IS NULL
+            )
+            SELECT catalogo.fila,
+                COUNT(*) FILTER (WHERE NOT falhou AND reserva > CURRENT_TIMESTAMP) AS processando,
+                COUNT(*) FILTER (WHERE NOT falhou AND (reserva IS NULL OR reserva <= CURRENT_TIMESTAMP)
+                       AND disponivel_em > CURRENT_TIMESTAMP) AS reagendadas,
+                COUNT(*) FILTER (WHERE NOT falhou AND (reserva IS NULL OR reserva <= CURRENT_TIMESTAMP)
+                       AND (disponivel_em IS NULL OR disponivel_em <= CURRENT_TIMESTAMP)) AS pendentes,
+                COUNT(*) FILTER (WHERE falhou) AS falhas,
+                EXTRACT(EPOCH FROM CURRENT_TIMESTAMP - MIN(criado_em) FILTER (WHERE NOT falhou))::bigint
+                    AS idade_mais_antiga_segundos
+            FROM (VALUES ('discursivas'), ('redacoes')) AS catalogo(fila)
+            LEFT JOIN trabalhos USING (fila)
+            GROUP BY catalogo.fila ORDER BY catalogo.fila
+        """).fetchall()
+
+
+def verificar_banco():
+    esperado = os.environ.get("STUDYHUB_BANCO_WORKER")
+    if not esperado:
+        esperado = conninfo_to_dict(os.environ["DATABASE_URL"]).get("dbname")
+        if esperado not in {"studyhub", "studyhub_test"}:
+            raise SystemExit("Configure STUDYHUB_BANCO_WORKER com o nome esperado do banco.")
+    with conectar() as conexao:
+        atual = conexao.execute("SELECT current_database() AS nome").fetchone()["nome"]
+    if atual != esperado:
+        raise SystemExit("O banco configurado difere de STUDYHUB_BANCO_WORKER.")
+    logging.info("Worker conectado ao banco %s.", atual)
 
 
 def executar_worker():
-    _configurar_logging()
+    parser = argparse.ArgumentParser(description=__doc__)
+    opcoes = parser.add_mutually_exclusive_group()
+    opcoes.add_argument("--status", action="store_true", help="mostra totais e idade da fila em JSON")
+    opcoes.add_argument("--uma-vez", action="store_true", help="processa até uma tarefa por fila e termina")
+    args = parser.parse_args()
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+
+    if args.status or args.uma_vez:
+        verificar_banco()
+        if args.status:
+            print(json.dumps(status_filas(), ensure_ascii=False))
+        else:
+            processar_pendencias()
+        return
+
+    banco_verificado = False
+    ultima_medicao = None
     while True:
         try:
-            continuar = _executar_worker_ate_falha()
-            if not continuar:
-                return
-        except KeyboardInterrupt:
-            logging.info("Worker encerrado pelo operador.")
-            return
-        except Exception:
-            logging.exception(
-                "Falha ao iniciar ou manter o worker; nova tentativa em %s segundos.",
-                INTERVALO_VERIFICACAO_SEGUNDOS,
-            )
-        time.sleep(INTERVALO_VERIFICACAO_SEGUNDOS)
+            if not banco_verificado:
+                verificar_banco()
+                banco_verificado = True
+            agora = monotonic()
+            if ultima_medicao is None or agora - ultima_medicao >= INTERVALO_METRICAS:
+                logging.info("Estado das filas: %s", json.dumps(status_filas(), ensure_ascii=False))
+                ultima_medicao = agora
+            if processar_pendencias():
+                continue
+        except Exception as erro:
+            banco_verificado = False
+            logging.error("Erro ao processar as filas: %s. Nova verificação em %s segundos.",
+                          type(erro).__name__, INTERVALO_VERIFICACAO)
+        sleep(INTERVALO_VERIFICACAO)
 
 
 if __name__ == "__main__":
-    executar_worker()
+    try:
+        executar_worker()
+    except KeyboardInterrupt:
+        logging.info("Worker encerrado pelo operador.")

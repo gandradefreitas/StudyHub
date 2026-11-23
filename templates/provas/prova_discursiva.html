@@ -463,7 +463,7 @@
 <script src="{{ url_for('static', filename='js/provas/cronometro_discursivo.js') }}"></script>
 <script src="{{ url_for('static', filename='js/provas/paleta_simbolos_discursiva.js') }}"></script>
 {% endif %}
-<script>
+<script nonce="{{ nonce_csp() }}">
 document.addEventListener("DOMContentLoaded", () => {
     const mensagens = document.querySelectorAll(".mensagem-flash");
 

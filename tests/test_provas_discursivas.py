@@ -1332,12 +1332,13 @@ def test_resultado_provisorio_aparece_no_historico_e_no_backup(cliente, dados_di
             SET status = 'finalizada', disciplina = 'Física', data_finalizacao = CURRENT_TIMESTAMP
             WHERE id = %s
         """, (tentativa,))
-    assert reivindicar_correcao_discursiva(tentativa, usuario)
+    reserva = reivindicar_correcao_discursiva(tentativa, usuario)
+    assert reserva
     assert not reivindicar_correcao_discursiva(tentativa, usuario)
     assert salvar_resultado_correcao_discursiva(
         tentativa, usuario,
         {"status": "provisoria", "nota_provisoria": 55, "nota_maxima": 100},
-        "finalizada", None, 100,
+        "finalizada", None, 100, reivindicada_ate=reserva["correcao_reivindicada_ate"],
     )
     historico = cliente.get("/provas/historico").get_data(as_text=True)
     assert "Correção provisória" in historico
@@ -1351,9 +1352,9 @@ def test_resultado_provisorio_aparece_no_historico_e_no_backup(cliente, dados_di
 
 
 def test_painel_e_estatisticas_separam_as_provas(cliente, dados_discursivos, monkeypatch):
-    import app as modulo
+    from controllers.web import estatisticas_controller
 
-    monkeypatch.setattr(modulo, "obter_desempenho_por_area", lambda _, **__: {
+    monkeypatch.setattr(estatisticas_controller, "obter_desempenho_por_area", lambda _, **__: {
         ("ENEM", "Matemática"): {"questoes": 5, "acertos": 3},
         ("ITA", "Matemática"): {"questoes": 4, "acertos": 1},
     })
@@ -1414,3 +1415,22 @@ def test_exportacoes_identificam_provas_ita_e_incluem_estatisticas(cliente, dado
         with conectar() as conexao:
             conexao.execute("DELETE FROM resultados_provas WHERE usuario_id = %s", (usuario,))
 
+
+
+def test_cabecalhos_defensivos_e_cache_privado(cliente, dados_discursivos):
+    base = "https://studyhub.example"
+    publica = cliente.get("/login", base_url=base)
+    assert publica.headers["X-Content-Type-Options"] == "nosniff"
+    assert publica.headers["X-Frame-Options"] == "DENY"
+    assert "frame-ancestors 'none'" in publica.headers["Content-Security-Policy"]
+    assert "object-src 'none'" in publica.headers["Content-Security-Policy"]
+    assert "max-age=31536000" in publica.headers["Strict-Transport-Security"]
+
+    with cliente.session_transaction(base_url=base) as sessao:
+        sessao["usuario_id"] = dados_discursivos["usuarios"][0]
+    for caminho in ("/dashboard", "/configuracoes/dados/exportar", "/configuracoes/dados/exportar/pdf"):
+        resposta = cliente.get(caminho, base_url=base)
+        assert resposta.status_code == 200
+        assert resposta.cache_control.no_store
+        assert resposta.cache_control.private
+    assert not cliente.get("/static/global.css", base_url=base).cache_control.no_store

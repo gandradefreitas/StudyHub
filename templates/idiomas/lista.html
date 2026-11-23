@@ -44,9 +44,9 @@
             {% for palavras in estatisticas.dias %}
                 <div class="idiomas-dia" title="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
                     {% if palavras %}
-                        <button type="button" class="sh-grafico-dia" aria-label="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
-                            <span>{{ numero(palavras) }}</span>
-                        </button>
+                        <span tabindex="0" role="img" class="sh-grafico-dia" aria-label="Dia {{ loop.index }} · {{ numero(palavras) }} palavras">
+                            <span aria-hidden="true">{{ numero(palavras) }}</span>
+                        </span>
                     {% endif %}
                     <div class="idiomas-trilho"><span style="--altura: {{ 100 * palavras / estatisticas.pico }}%"></span></div>
                     <span class="idiomas-dia-numero">{{ loop.index }}</span>

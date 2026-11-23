@@ -99,6 +99,12 @@ def obter_dados_exportacao(usuario_id):
 
     adicionais = {}
     consultas = {
+        "respostas_questoes": """SELECT questao_numero, resposta, correta, tentativa,
+            intervalo_revisao, data_resposta, proxima_tentativa FROM respostas_questoes
+            WHERE usuario_id = %s ORDER BY id""",
+        "resultados_questoes": """SELECT questao_numero, resposta_usuario, resposta_correta,
+            correta, data_resposta, proxima_tentativa FROM resultados_questoes
+            WHERE usuario_id = %s ORDER BY id""",
         "provas_discursivas": """SELECT id, instituicao, ano, fase, disciplina, status,
             nota_total, nota_maxima, data_inicio, data_finalizacao, resultado_correcao
             FROM tentativas_provas_discursivas WHERE usuario_id = %s ORDER BY id""",
@@ -130,7 +136,7 @@ def obter_dados_exportacao(usuario_id):
     }
 
 
-def limpar_historico(usuario_id):
+def limpar_historico(usuario_id, *, incluir_leituras=False):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -146,6 +152,12 @@ def limpar_historico(usuario_id):
             DELETE FROM resultados_provas
             WHERE usuario_id = %s
         """, (usuario_id,))
+
+        cursor.execute("DELETE FROM tentativas_provas_objetivas WHERE usuario_id = %s", (usuario_id,))
+        cursor.execute("DELETE FROM respostas_questoes WHERE usuario_id = %s", (usuario_id,))
+        cursor.execute("DELETE FROM resultados_questoes WHERE usuario_id = %s", (usuario_id,))
+        if incluir_leituras:
+            cursor.execute("DELETE FROM leituras_idiomas WHERE usuario_id = %s", (usuario_id,))
 
         # As respostas discursivas são removidas pela chave estrangeira.
         cursor.execute("""

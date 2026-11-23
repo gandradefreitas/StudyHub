@@ -3,7 +3,7 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXV3F6JX2D"></script>
-    <script>
+    <script nonce="{{ nonce_csp() }}">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -575,10 +575,10 @@
 
 
                     <p>
-                        Seus registros de estudos e atividades, incluindo as
-                        tentativas de provas discursivas e suas respostas,
-                        serão removidos permanentemente.
-                        Essa ação não poderá ser desfeita.
+                        Serão apagados o tempo de estudo, as questões praticadas, as provas e
+                        suas respostas, as redações e seus rascunhos, as anotações e as tarefas
+                        concluídas. As tarefas pendentes e as configurações da conta serão mantidas.
+                        Essa ação é permanente.
                     </p>
 
                     <form method="POST" action="{{ url_for('limpar_historico_rota') }}">
@@ -588,6 +588,9 @@
                             name="csrf_token"
                             value="{{ csrf_token() }}"
                         >
+
+                        <p><label><input type="checkbox" name="incluir_leituras" value="1">
+                            Apagar também meu progresso em Idiomas</label></p>
 
                         <div class="acoes-modal-configuracoes">
 
@@ -684,7 +687,7 @@
                         resultados e respostas de provas serão apagados.
                     </p>
 
-                    <form method="POST" action="{{ url_for('excluir_conta_configuracoes') }}">
+                    <form method="POST" action="{{ url_for('excluir_conta_configuracoes' if possui_senha else 'confirmar_exclusao_google') }}">
 
                         <input
                             type="hidden"
@@ -692,13 +695,12 @@
                             value="{{ csrf_token() }}"
                         >
 
-                        <label for="senha-exclusao">
-
-                            Digite sua senha para confirmar:
-
-                        </label>
-
-                        <input type="password" id="senha-exclusao" name="senha_atual" required autocomplete="current-password">
+                        {% if possui_senha %}
+                            <label for="senha-exclusao">Digite sua senha para confirmar</label>
+                            <input type="password" id="senha-exclusao" name="senha_atual" required autocomplete="current-password">
+                        {% else %}
+                            <p>Selecione sua conta Google vinculada para confirmar a exclusão.</p>
+                        {% endif %}
 
                         <div class="acoes-modal-configuracoes">
 
@@ -710,7 +712,7 @@
 
                                 <i class="bi bi-person-x"></i>
 
-                                Excluir permanentemente
+                                {{ 'Excluir permanentemente' if possui_senha else 'Confirmar exclusão com Google' }}
 
                             </button>
 

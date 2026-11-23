@@ -1,11 +1,12 @@
+"""Migrações explícitas do StudyHub. Execute com python -m database.criar_banco."""
+
+import re
+from pathlib import Path
+
 from database.conexao import conectar
 
 
-def criar_tabelas():
-
-    conexao = conectar()
-    cursor = conexao.cursor()
-
+def _migracao_inicial(cursor):
     # =========================
     # USUÁRIOS
     # =========================
@@ -432,12 +433,42 @@ def criar_tabelas():
         )
     """)
 
-    conexao.commit()
 
-    cursor.close()
-    conexao.close()
+def aplicar_migracoes(conexao):
+    """Aplica as versões em uma transação, preservando esquemas legados."""
+    pasta = Path(__file__).with_name("migrations")
+    arquivos = []
+    for arquivo in sorted(pasta.glob("*.sql")):
+        versao = re.fullmatch(r"(\d{4})_.+\.sql", arquivo.name)
+        if not versao:
+            raise ValueError(f"Nome inválido para migração: {arquivo.name}")
+        arquivos.append((int(versao[1]), arquivo))
+    if [versao for versao, _ in arquivos] != list(range(2, len(arquivos) + 2)):
+        raise ValueError("As versões das migrações precisam ser consecutivas.")
+
+    with conexao.transaction(), conexao.cursor() as cursor:
+        cursor.execute("SELECT pg_advisory_xact_lock(52731, hashtext(current_schema()))")
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS studyhub_migracoes (
+                versao INTEGER PRIMARY KEY,
+                aplicada_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cursor.execute("SELECT versao FROM studyhub_migracoes")
+        aplicadas = {linha["versao"] for linha in cursor.fetchall()}
+        if 1 not in aplicadas:
+            _migracao_inicial(cursor)
+            cursor.execute("INSERT INTO studyhub_migracoes (versao) VALUES (1)")
+        for versao, arquivo in arquivos:
+            if versao not in aplicadas:
+                cursor.execute(arquivo.read_text(encoding="utf-8"))
+                cursor.execute("INSERT INTO studyhub_migracoes (versao) VALUES (%s)", (versao,))
+
+
+def criar_tabelas():
+    with conectar() as conexao:
+        aplicar_migracoes(conexao)
 
 
 if __name__ == "__main__":
     criar_tabelas()
-

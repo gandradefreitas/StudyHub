@@ -238,3 +238,11 @@ body {
 .sh-areas progress::-webkit-progress-value { background: var(--cor-primaria); }
 .sh-areas progress::-moz-progress-bar { background: var(--cor-primaria); }
 .sh-total-questoes { margin-bottom: 1.25rem; }
+
+.sh-dados-evolucao { margin-top: 1rem; }
+.sh-dados-evolucao summary { cursor: pointer; }
+.sh-dados-evolucao table { width: min(100%, 25rem); margin-block: .5rem; }
+.sh-dados-evolucao th,
+.sh-dados-evolucao td { padding: .35rem .6rem; text-align: start; }
+.sh-grafico-dia:focus-visible,
+.tabela-wrapper:focus-visible { outline: 2px solid var(--cor-primaria); outline-offset: 2px; }

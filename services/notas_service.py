@@ -1,3 +1,4 @@
+from services.resumo_discursivas import resumir_correcao_discursiva
 import csv
 from collections import Counter, defaultdict
 from functools import lru_cache
@@ -109,7 +110,8 @@ def carregar_notas(usuario_id):
             })
 
     ita_discursivas = [
-        tentativa for tentativa in listar_tentativas_discursivas_usuario(usuario_id)
+        {**tentativa, **resumir_correcao_discursiva(tentativa)}
+        for tentativa in listar_tentativas_discursivas_usuario(usuario_id)
         if tentativa["instituicao"] == "ITA" and tentativa["status"] in ("finalizada", "corrigida")
     ]
     return {"enem": enem, "ita_objetivas": ita_objetivas, "ita_discursivas": ita_discursivas}

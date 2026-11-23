@@ -26,3 +26,14 @@ class Questao:
     resposta: int
 
     comentario: str
+
+    @property
+    def dados_aplicacao(self) -> dict:
+        return {
+            "numero": self.numero,
+            "lingua": self.lingua,
+            "enunciado": self.enunciado,
+            "pergunta": self.pergunta,
+            "imagem": self.imagem,
+            "alternativas": self.alternativas,
+        }

@@ -590,105 +590,76 @@ def obter_segundos_restantes_tentativa(
 
 
 def salvar_resultado_correcao_discursiva(
-    tentativa_id, usuario_id, pacote, status, nota=None, nota_maxima=None
+    tentativa_id, usuario_id, pacote, status, nota=None, nota_maxima=None, *,
+    reivindicada_ate, tentar_em=None,
 ):
-    import json
+    from psycopg.types.json import Jsonb
 
-    conexao = conectar()
-    try:
-        cursor = conexao.cursor()
-        cursor.execute(
-            """
+    with conectar() as conexao:
+        return conexao.execute("""
             UPDATE tentativas_provas_discursivas
-            SET resultado_correcao = %s::jsonb,
-                status = %s,
-                nota_total = %s,
-                nota_maxima = %s,
-                proxima_tentativa_correcao = CASE
-                    WHEN %s = 'indisponivel'
-                    THEN CURRENT_TIMESTAMP + INTERVAL '5 minutes'
-                    ELSE NULL END,
+            SET resultado_correcao = %s, status = %s, nota_total = %s, nota_maxima = %s,
+                proxima_tentativa_correcao = CURRENT_TIMESTAMP + %s * INTERVAL '1 second',
                 correcao_reivindicada_ate = NULL,
-                data_correcao = CASE WHEN %s = 'corrigida'
-                    THEN CURRENT_TIMESTAMP ELSE NULL END
-            WHERE id = %s AND usuario_id = %s
-              AND disciplina IN ('Matemática', 'Física', 'Química')
-              AND status IN ('finalizada', 'corrigida')
-            RETURNING id
-            """,
-            (
-                json.dumps(pacote, ensure_ascii=False), status, nota,
-                nota_maxima, pacote.get("status"), status,
-                tentativa_id, usuario_id,
-            ),
-        )
-        salvo = cursor.fetchone()
-        if salvo is None:
-            conexao.rollback()
-            return False
-        conexao.commit()
-        return True
-    except Exception:
-        conexao.rollback()
-        raise
-    finally:
-        conexao.close()
+                data_correcao = CASE WHEN %s = 'corrigida' THEN CURRENT_TIMESTAMP END
+            WHERE id = %s AND usuario_id = %s AND status = 'finalizada'
+              AND correcao_reivindicada_ate = %s
+              AND correcao_reivindicada_ate > CURRENT_TIMESTAMP
+        """, (Jsonb(pacote), status, nota, nota_maxima, tentar_em, status,
+              tentativa_id, usuario_id, reivindicada_ate)).rowcount == 1
 
 
-def buscar_correcao_discursiva_pendente():
-    conexao = conectar()
-    try:
-        cursor = conexao.cursor()
-        cursor.execute(
-            """
-            SELECT id, usuario_id, disciplina
-            FROM tentativas_provas_discursivas
-            WHERE status = 'finalizada'
-              AND disciplina IN ('Matemática', 'Física', 'Química')
-              AND (resultado_correcao IS NULL OR resultado_correcao->>'status' = 'indisponivel')
-              AND (proxima_tentativa_correcao IS NULL
-                   OR proxima_tentativa_correcao <= CURRENT_TIMESTAMP)
-              AND (correcao_reivindicada_ate IS NULL
-                   OR correcao_reivindicada_ate <= CURRENT_TIMESTAMP)
-            ORDER BY proxima_tentativa_correcao NULLS FIRST, id
-            LIMIT 1
-            """
-        )
-        return cursor.fetchone()
-    finally:
-        conexao.close()
+def reivindicar_correcao_discursiva(tentativa_id=None, usuario_id=None):
+    """Reserva apenas uma tentativa elegível, inclusive com workers concorrentes."""
+    from database.fila_redacoes_repository import MAX_TENTATIVAS
 
-
-def reivindicar_correcao_discursiva(tentativa_id, usuario_id):
-    """Adquire uma lease para evitar correções duplicadas em paralelo."""
-    conexao = conectar()
-    try:
-        cursor = conexao.cursor()
-        cursor.execute(
-            """
-            UPDATE tentativas_provas_discursivas
-            SET correcao_reivindicada_ate = CURRENT_TIMESTAMP + INTERVAL '30 minutes',
+    with conectar() as conexao:
+        return conexao.execute("""
+            WITH candidata AS (
+                SELECT id FROM tentativas_provas_discursivas
+                WHERE status = 'finalizada'
+                  AND disciplina IN ('Matemática', 'Física', 'Química')
+                  AND (resultado_correcao IS NULL OR resultado_correcao->>'status' = 'indisponivel')
+                  AND tentativas_correcao < %s
+                  AND (%s::integer IS NULL OR id = %s)
+                  AND (%s::integer IS NULL OR usuario_id = %s)
+                  AND (proxima_tentativa_correcao IS NULL OR proxima_tentativa_correcao <= CURRENT_TIMESTAMP)
+                  AND (correcao_reivindicada_ate IS NULL OR correcao_reivindicada_ate <= CURRENT_TIMESTAMP)
+                ORDER BY data_finalizacao NULLS LAST, id
+                LIMIT 1 FOR UPDATE SKIP LOCKED
+            )
+            UPDATE tentativas_provas_discursivas AS t
+            SET correcao_reivindicada_ate = CURRENT_TIMESTAMP + INTERVAL '10 minutes',
                 tentativas_correcao = tentativas_correcao + 1
-            WHERE id = %s AND usuario_id = %s
-              AND status = 'finalizada'
-              AND disciplina IN ('Matemática', 'Física', 'Química')
+            FROM candidata WHERE t.id = candidata.id
+            RETURNING t.id, t.usuario_id, t.disciplina, t.tentativas_correcao, t.correcao_reivindicada_ate
+        """, (MAX_TENTATIVAS, tentativa_id, tentativa_id, usuario_id, usuario_id)).fetchone()
+
+
+def reagendar_correcao_discursiva(tentativa_id, usuario_id):
+    with conectar() as conexao:
+        return conexao.execute("""
+            UPDATE tentativas_provas_discursivas
+            SET resultado_correcao = NULL, tentativas_correcao = 0,
+                proxima_tentativa_correcao = NULL, correcao_reivindicada_ate = NULL
+            WHERE id = %s AND usuario_id = %s AND status = 'finalizada'
+              AND resultado_correcao->>'status' = 'falha_definitiva'
+        """, (tentativa_id, usuario_id)).rowcount == 1
+
+
+def recuperar_discursivas_esgotadas():
+    from database.fila_redacoes_repository import MAX_TENTATIVAS
+
+    with conectar() as conexao:
+        conexao.execute("""
+            UPDATE tentativas_provas_discursivas
+            SET resultado_correcao = '{"status":"falha_definitiva"}'::jsonb,
+                correcao_reivindicada_ate = NULL, proxima_tentativa_correcao = NULL
+            WHERE status = 'finalizada' AND disciplina IN ('Matemática', 'Física', 'Química')
+              AND tentativas_correcao >= %s
               AND (resultado_correcao IS NULL OR resultado_correcao->>'status' = 'indisponivel')
-              AND (proxima_tentativa_correcao IS NULL
-                   OR proxima_tentativa_correcao <= CURRENT_TIMESTAMP)
-              AND (correcao_reivindicada_ate IS NULL
-                   OR correcao_reivindicada_ate <= CURRENT_TIMESTAMP)
-            RETURNING id
-            """,
-            (tentativa_id, usuario_id),
-        )
-        reivindicada = cursor.fetchone() is not None
-        conexao.commit()
-        return reivindicada
-    except Exception:
-        conexao.rollback()
-        raise
-    finally:
-        conexao.close()
+              AND (correcao_reivindicada_ate IS NULL OR correcao_reivindicada_ate <= CURRENT_TIMESTAMP)
+        """, (MAX_TENTATIVAS,))
 
 
 def listar_tentativas_discursivas_usuario(

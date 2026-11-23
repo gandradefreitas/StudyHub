@@ -108,9 +108,9 @@
                     <p>{{ tentativa.disciplina }}</p>
                     <p class="notas-data">{{ tentativa.data_finalizacao.strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else '' }}</p>
                     {% if tentativa.nota_total is not none and tentativa.nota_maxima is not none %}
-                        <p class="notas-valor">Nota <strong>{{ '%g' | format(tentativa.nota_total) }}/{{ '%g' | format(tentativa.nota_maxima) }}</strong></p>
+                        <p class="notas-valor">{{ 'Nota provisória' if tentativa.situacao == 'Correção provisória' else 'Nota' }} <strong>{{ '%g' | format(tentativa.nota_total) }}/{{ '%g' | format(tentativa.nota_maxima) }}</strong></p>
                     {% else %}
-                        <p>Aguardando nota final</p>
+                        <p>{{ tentativa.situacao }}</p>
                     {% endif %}
                 </article>
             {% endfor %}

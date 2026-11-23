@@ -505,7 +505,7 @@ Dashboard | StudyHub
 
 {% block scripts %}
 
-<script>
+<script nonce="{{ nonce_csp() }}">
 document.addEventListener("DOMContentLoaded", () => {
 
     const canvas = document.getElementById("graficoProgresso");

@@ -2,6 +2,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from database.conexao import conectar
+from database.provas_objetivas_repository import TentativaObjetivaEncerrada
 from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 from services.provas_service import obter_prova, listar_provas
 
@@ -466,30 +467,25 @@ def obter_desempenho_por_area(usuario_id, *, por_prova=False):
     conexao.close()
 
     desempenho = {}
-
+    provas_indexadas = {}
     for resposta in respostas:
-
         prova_id = resposta["prova_id"]
-        numero = resposta["questao_numero"]
+        if prova_id not in provas_indexadas:
+            prova = obter_prova(prova_id)
+            provas_indexadas[prova_id] = (
+                (prova.tipo, {questao.numero: questao for questao in prova.questoes})
+                if prova else (None, {})
+            )
+        tipo, questoes = provas_indexadas[prova_id]
+        questao = questoes.get(resposta["questao_numero"])
         correta = resposta["correta"]
-
-        prova = obter_prova(prova_id)
-
-        if prova is None:
-            continue
-
-        questao = next(
-            (
-                q for q in prova.questoes
-                if q.numero == numero
-            ),
-            None
-        )
 
         if questao is None:
             continue
 
-        area = (prova.tipo, "Matemática" if questao.area == "Matematica" else questao.area) if por_prova else questao.area
+        area = questao.area
+        if por_prova:
+            area = (tipo, "Matemática" if area == "Matematica" else area)
 
         if area not in desempenho:
 
@@ -717,6 +713,8 @@ def salvar_resultado_com_respostas(
     resultado,
     questoes,
     respostas,
+    *,
+    tentativa_id=None,
 ):
     """
     Salva o resultado de uma prova objetiva e suas respostas
@@ -730,6 +728,14 @@ def salvar_resultado_com_respostas(
 
     try:
         cursor = conexao.cursor()
+        if tentativa_id is not None:
+            cursor.execute("""
+                SELECT id FROM tentativas_provas_objetivas
+                WHERE usuario_id = %s AND prova_id = %s AND id = %s AND resultado_id IS NULL
+                FOR UPDATE
+            """, (resultado["usuario_id"], resultado["prova_id"], tentativa_id))
+            if cursor.fetchone() is None:
+                raise TentativaObjetivaEncerrada("Esta tentativa não está mais aberta para esta conta.")
 
         # ------------------------------------------------
         # 1. VALIDA OS DADOS BÁSICOS
@@ -900,6 +906,10 @@ def salvar_resultado_com_respostas(
         # 6. CONFIRMA A TRANSAÇÃO
         # ------------------------------------------------
 
+        if tentativa_id is not None:
+            cursor.execute("""
+                UPDATE tentativas_provas_objetivas SET resultado_id = %s WHERE id = %s
+            """, (resultado_id, tentativa_id))
         conexao.commit()
 
         return resultado_id

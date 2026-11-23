@@ -10,7 +10,13 @@ from psycopg.rows import dict_row
 from database.criar_banco import criar_tabelas
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(autouse=True)
+def proteger_banco_de_testes(request):
+    if request.node.get_closest_marker("matematica") is None:
+        request.getfixturevalue("verificar_banco_de_testes")
+
+
+@pytest.fixture(scope="session")
 def verificar_banco_de_testes():
     database_url = os.environ.get("DATABASE_URL")
 
@@ -40,7 +46,7 @@ def verificar_banco_de_testes():
 
 
 @pytest.fixture
-def dados_discursivos():
+def dados_discursivos(verificar_banco_de_testes):
     database_url = os.environ["DATABASE_URL"]
 
     identificador = uuid.uuid4().hex

@@ -36,7 +36,11 @@ def test_enem_faixas(area, total, maximo):
 
 def concluir(cliente, prova_id, limites, idioma=None):
     prova = obter_prova(prova_id)
-    assert cliente.get(f"/provas/{prova_id}").status_code == 200
+    from tests.test_protecao_contas import identificar_tentativa
+
+    pagina = cliente.get(f"/provas/{prova_id}")
+    assert pagina.status_code == 200
+    tentativa_id = identificar_tentativa(pagina)
     questoes = [q for q in prova.questoes if idioma is None or not q.lingua or q.lingua == idioma]
     acertos = Counter()
     respostas = {}
@@ -46,7 +50,7 @@ def concluir(cliente, prova_id, limites, idioma=None):
             acertos[questao.area] += 1
 
     resposta = cliente.post("/provas/resultado", json={
-        "prova_id": prova_id, "questoes": [{"numero": q.numero} for q in questoes],
+        "prova_id": prova_id, "tentativa_id": tentativa_id, "questoes": [{"numero": q.numero} for q in questoes],
         "respostas": respostas, "lingua": idioma,
     })
     assert resposta.status_code == 200, resposta.json

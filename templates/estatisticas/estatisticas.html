@@ -3,7 +3,7 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXV3F6JX2D"></script>
-    <script>
+    <script nonce="{{ nonce_csp() }}">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -174,7 +174,7 @@
 
 
                         <strong id="mes-atual-grafico" class="mes-atual-grafico">
-                            Agosto 2026
+                            Carregando mês…
                         </strong>
 
 
@@ -188,9 +188,17 @@
 
                 <div class="grafico-estatisticas-estudos">
 
-                    <canvas id="grafico-estatisticas-estudos"></canvas>
+                    <canvas id="grafico-estatisticas-estudos" role="img" aria-label="Gráfico mensal do tempo de estudo"></canvas>
 
                 </div>
+                <details class="sh-dados-evolucao">
+                    <summary>Ver tempo por dia</summary>
+                    <table>
+                        <caption id="evolucao-tabela-mes">Evolução do mês</caption>
+                        <thead><tr><th scope="col">Dia</th><th scope="col">Tempo estudado</th></tr></thead>
+                        <tbody id="evolucao-tabela-dias"></tbody>
+                    </table>
+                </details>
 
             </section>
 

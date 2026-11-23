@@ -3,7 +3,7 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXV3F6JX2D"></script>
-    <script>
+    <script nonce="{{ nonce_csp() }}">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -55,7 +55,7 @@
 
         <section id="historico-simulados" class="historico-card">
 
-            <div class="tabela-wrapper">
+            <div class="tabela-wrapper" tabindex="0" role="region" aria-label="Tabela de provas realizadas">
 
                 <table>
 

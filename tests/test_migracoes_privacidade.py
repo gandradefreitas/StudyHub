@@ -1,0 +1,99 @@
+from uuid import uuid4
+
+from psycopg import sql
+
+from controllers.web import autenticacao_controller
+from database.conexao import conectar
+from database.criar_banco import aplicar_migracoes
+from tests.app_de_teste import modulo
+
+
+def test_migra_esquema_anterior_sem_apagar_redacoes():
+    with conectar() as conexao:
+        esquema = sql.Identifier(f"migracao_{uuid4().hex}")
+        conexao.execute(sql.SQL("CREATE SCHEMA {}").format(esquema))
+        conexao.execute(sql.SQL("SET LOCAL search_path TO {}").format(esquema))
+        conexao.execute("""
+            CREATE TABLE usuarios(
+                id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                nome TEXT NOT NULL, email TEXT NOT NULL UNIQUE, senha TEXT, tema TEXT, google_id TEXT UNIQUE
+            );
+            CREATE TABLE redacoes(
+                id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                usuario_id INTEGER NOT NULL REFERENCES usuarios(id),
+                tema TEXT NOT NULL, ano INTEGER NOT NULL, texto TEXT NOT NULL,
+                notas JSONB, nota INTEGER, criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+            INSERT INTO usuarios (nome, email) VALUES ('Legado', 'legado@example.invalid');
+            INSERT INTO redacoes (usuario_id, tema, ano, texto, nota)
+            VALUES (1, 'Tema legado', 2025, 'Texto preservado', 640);
+        """)
+        aplicar_migracoes(conexao)
+        aplicar_migracoes(conexao)
+        assert conexao.execute("SELECT texto, nota, instituicao FROM redacoes").fetchone() == {
+            "texto": "Texto preservado", "nota": 640, "instituicao": "ENEM",
+        }
+        assert conexao.execute("SELECT to_regclass('tentativas_provas_objetivas') AS tabela").fetchone()["tabela"]
+        versoes = conexao.execute("SELECT versao FROM studyhub_migracoes ORDER BY versao").fetchall()
+        assert [linha["versao"] for linha in versoes][:3] == [1, 2, 3]
+        conexao.rollback()
+
+
+def test_limpeza_inclui_idiomas_so_com_autorizacao(dados_discursivos, monkeypatch):
+    app = modulo.app
+    monkeypatch.setitem(app.config, "TESTING", True)
+    monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
+    usuario, outro = dados_discursivos["usuarios"]
+    with conectar() as conexao:
+        conexao.execute("""
+            INSERT INTO leituras_idiomas (usuario_id, texto_id, palavras, acertos)
+            VALUES (%s, 'texto', 120, 8), (%s, 'texto', 120, 8)
+        """, (usuario, outro))
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        caminho = "/configuracoes/dados/limpar"
+        assert cliente.post(caminho).status_code == 302
+        with conectar() as conexao:
+            assert conexao.execute(
+                "SELECT 1 FROM leituras_idiomas WHERE usuario_id = %s", (usuario,),
+            ).fetchone()
+        assert cliente.post(caminho, data={"incluir_leituras": "1"}).status_code == 302
+        with conectar() as conexao:
+            assert conexao.execute(
+                "SELECT usuario_id FROM leituras_idiomas WHERE usuario_id = ANY(%s)",
+                ([usuario, outro],),
+            ).fetchall() == [{"usuario_id": outro}]
+
+
+def test_exclusao_conta_google_exige_identidade_vinculada(dados_discursivos, monkeypatch):
+    app = modulo.app
+    monkeypatch.setitem(app.config, "TESTING", True)
+    monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
+    usuario, outro = dados_discursivos["usuarios"]
+    google_id = uuid4().hex
+    with conectar() as conexao:
+        conexao.execute("UPDATE usuarios SET senha = NULL, google_id = %s WHERE id = %s", (google_id, usuario))
+
+    def iniciar(redirect_uri, *, state, prompt):
+        assert redirect_uri.endswith("/login/google/callback")
+        assert prompt == "select_account"
+        return modulo.redirect(f"/login/google/callback?state={state}")
+
+    monkeypatch.setattr(autenticacao_controller.google, "authorize_redirect", iniciar)
+    info = {"sub": "outra-identidade", "email": "teste@example.invalid", "email_verified": True}
+    monkeypatch.setattr(autenticacao_controller.google, "authorize_access_token", lambda: {"userinfo": info})
+
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        caminho = "/configuracoes/excluir-conta/google"
+        callback = cliente.post(caminho).location
+        assert cliente.get(callback).location.endswith("/configuracoes")
+        callback = cliente.post(caminho).location
+        info["sub"] = google_id
+        assert cliente.get(callback).location.endswith("/login")
+    with conectar() as conexao:
+        assert conexao.execute("SELECT id FROM usuarios WHERE id = ANY(%s)", ([usuario, outro],)).fetchall() == [
+            {"id": outro}
+        ]

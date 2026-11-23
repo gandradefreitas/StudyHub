@@ -1,42 +1,25 @@
-from calendar import monthrange
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, Response, \
     send_from_directory, abort
 
-import io
-
 import json
 
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import (
-    getSampleStyleSheet,
-    ParagraphStyle
-)
-from reportlab.lib.units import cm
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Table,
-    TableStyle,
-)
 
 import os
+from uuid import UUID
 
 from flask_wtf.csrf import CSRFProtect
 
-from authlib.integrations.flask_client import OAuth
 
 from database.conexao import conectar
-from database.respostas_discursivas_repository import obter_respostas, obter_tentativa_discursiva_por_id, \
-    listar_tentativas_discursivas_usuario, salvar_resultado_correcao_discursiva, \
-    reivindicar_correcao_discursiva, obter_segundos_restantes_tentativa
-from security.limite_login import (
-    verificar_bloqueio,
-    registrar_tentativa_falha,
-    limpar_tentativas
+from database.provas_objetivas_repository import (
+    TentativaObjetivaEncerrada,
+    obter_inicio_tentativa_objetiva,
+    obter_ou_criar_tentativa_objetiva,
 )
+from security.respostas import configurar_protecao_http
+from database.respostas_discursivas_repository import obter_respostas, obter_tentativa_discursiva_por_id, \
+    listar_tentativas_discursivas_usuario, reagendar_correcao_discursiva, \
+    obter_segundos_restantes_tentativa
 
 from controllers.web.configuracoes_controller import (
     carregar_configuracoes,
@@ -44,7 +27,6 @@ from controllers.web.configuracoes_controller import (
     alterar_senha,
     atualizar_metas_configuracoes,
     atualizar_tema,
-    excluir_conta as excluir_conta_controller
 )
 
 from controllers.prova_discursiva_controller import (
@@ -54,9 +36,6 @@ from controllers.prova_discursiva_controller import (
     salvar_respostas_tentativa,
 )
 
-from services.correcao_por_resposta_final import (
-    corrigir_tentativa_resposta_final,
-)
 
 from controllers.estudo_controller import (
     iniciar_estudo_controller,
@@ -73,20 +52,16 @@ from controllers.web.tarefa_controller import (
 )
 
 from controllers.web.cadastro_controller import realizar_cadastro
-from controllers.web.login_controller import realizar_login
+from controllers.web.autenticacao_controller import registrar_autenticacao
+from controllers.web.estatisticas_controller import registrar_estatisticas
+from controllers.web.exportacoes_controller import registrar_exportacoes
 from controllers.resultados_controller import obter_historico
-from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 from controllers.dados_controller import (
-    obter_dados_exportacao,
     limpar_historico
 )
 
 from database.usuario_repository import (
     obter_usuario_por_id,
-    buscar_por_email,
-    buscar_por_google_id,
-    salvar_usuario_google,
-    vincular_google
 )
 from database.tarefa_repository import (
     listar_tarefas,
@@ -97,19 +72,14 @@ from database.tarefa_repository import (
 
 from database.estudos_repository import (
     obter_estudos_por_data,
-    obter_total_segundos,
-    obter_estudos_por_periodo,
     obter_estudos_por_mes
 )
 
 from database.resultados_repository import (
     obter_resultados_por_data,
-    obter_provas_por_periodo,
-    obter_segundos_provas,
     obter_resumo_usuario,
     listar_resultados_usuario,
     obter_resultados_por_mes,
-    obter_desempenho_por_area,
     converter_tempo_para_segundos, obter_respostas_por_resultado, obter_resultado_por_id, salvar_resultado_com_respostas
 )
 
@@ -124,15 +94,12 @@ from database.questoes_repository import (
     registrar_resposta_questao,
     obter_ordem_questoes, calcular_intervalo_revisao, obter_numero_tentativa, obter_questoes_para_revisao,
     obter_questoes_filtradas, obter_areas_questoes, obter_dificuldades_questoes, obter_competencias_questoes,
-    obter_habilidades_questoes, obter_linguas_questoes, obter_desempenho_questoes_por_area, obter_desempenho_questoes
+    obter_habilidades_questoes, obter_linguas_questoes
 )
 
 from controllers.idiomas_controller import idiomas
 from controllers.redacoes_controller import listar_envios, redacoes
 from database.idiomas_repository import obter_progresso
-from services.fila_discursivas import iniciar_correcao_em_segundo_plano
-from database.criar_banco import criar_tabelas
-from services.autenticacao import autenticar
 from services.configuracoes import definir_senha_usuario
 from services.dashboard_service import carregar_dashboard
 from services.notas_service import carregar_notas
@@ -151,33 +118,17 @@ app.secret_key = os.environ.get("SECRET_KEY")
 if not app.secret_key:
     raise RuntimeError("SECRET_KEY não configurada.")
 
-oauth = OAuth(app)
-
-google = oauth.register(
-    name="google",
-    client_id=os.environ.get("GOOGLE_CLIENT_ID"),
-    client_secret=os.environ.get("GOOGLE_CLIENT_SECRET"),
-    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    client_kwargs={
-        "scope": "openid email profile"
-    }
-)
-
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
 
 csrf = CSRFProtect(app)
+configurar_protecao_http(app)
 app.register_blueprint(idiomas)
 app.register_blueprint(redacoes)
-
-criar_tabelas()
-
-
-@app.before_request
-def ativar_fila_discursiva():
-    if not app.testing and session.get("usuario_id"):
-        iniciar_correcao_em_segundo_plano(app)
+registrar_autenticacao(app)
+registrar_estatisticas(app)
+registrar_exportacoes(app)
 
 
 @app.context_processor
@@ -265,201 +216,6 @@ def dashboard():
         mostrar_perfil=True
     )
 
-
-# ==========================
-# LOGOUT
-# ==========================
-
-@app.route("/logout", methods=["POST"])
-def logout():
-
-    session.clear()
-
-    flash(
-        "Você saiu da sua conta.",
-        "mensagem-erro"
-    )
-
-    return redirect(
-        url_for("pagina_login")
-    )
-
-# ==========================
-# LOGIN
-# ==========================
-
-@app.route("/login/google")
-def login_google():
-    redirect_uri = url_for("google_callback", _external=True)
-    return google.authorize_redirect(redirect_uri)
-
-@app.route("/login/google/callback")
-def google_callback():
-
-    token = google.authorize_access_token()
-
-    userinfo = token.get("userinfo")
-
-    if not userinfo:
-        return "Não foi possível obter os dados da conta Google.", 400
-
-    google_id = userinfo.get("sub")
-    email = userinfo.get("email")
-    nome = userinfo.get("name")
-    email_verificado = userinfo.get("email_verified")
-
-    if not google_id or not email:
-        return "O Google não forneceu os dados necessários.", 400
-
-    if not email_verificado:
-        return "O e-mail da conta Google não foi verificado.", 400
-
-    # 1. Procurar uma conta já vinculada ao Google
-    usuario = buscar_por_google_id(google_id)
-
-    if usuario:
-
-        session["usuario_id"] = usuario["id"]
-        session["nome"] = usuario["nome"]
-
-        return redirect(
-            url_for("dashboard")
-        )
-
-    # 2. Procurar uma conta existente pelo e-mail
-    usuario = buscar_por_email(email)
-
-    if usuario:
-        session["google_vinculo_email"] = email
-        session["google_vinculo_id"] = google_id
-
-        return redirect(
-            url_for("vincular_google_conta")
-        )
-
-    # 3. Criar uma nova conta Google
-    usuario_id = salvar_usuario_google(
-        nome,
-        email,
-        google_id
-    )
-
-    session["usuario_id"] = usuario_id
-    session["nome"] = nome
-
-    return redirect(
-        url_for("dashboard")
-    )
-
-@app.route("/login/google/vincular", methods=["GET", "POST"])
-def vincular_google_conta():
-
-    if request.method == "POST":
-
-        email = session.get("google_vinculo_email")
-        google_id = session.get("google_vinculo_id")
-
-        if not email or not google_id:
-
-            return redirect(
-                url_for("pagina_login")
-            )
-
-        senha = request.form.get("senha")
-
-        usuario = autenticar(
-            email,
-            senha
-        )
-
-        if not usuario:
-
-            flash(
-                "Senha incorreta.",
-                "mensagem-erro"
-            )
-
-            return render_template(
-                "vincular_google.html"
-            )
-
-        vincular_google(
-            usuario["id"],
-            google_id
-        )
-
-        session.pop(
-            "google_vinculo_email",
-            None
-        )
-
-        session.pop(
-            "google_vinculo_id",
-            None
-        )
-
-        session["usuario_id"] = usuario["id"]
-        session["nome"] = usuario["nome"]
-
-        return redirect(
-            url_for("dashboard")
-        )
-
-    return render_template(
-        "vincular_google.html"
-    )
-
-@app.route("/login", methods=["GET", "POST"])
-def pagina_login():
-
-    if request.method == "POST":
-
-        email = request.form.get("email")
-        senha = request.form.get("senha")
-
-        ip = request.remote_addr or "desconhecido"
-
-        chave = f"{email.lower().strip()}|{ip}"
-
-        if verificar_bloqueio(chave):
-
-            flash(
-                "Muitas tentativas de login. "
-                "Tente novamente mais tarde.",
-                "mensagem-erro"
-            )
-
-            return render_template(
-                "pagina_login.html"
-            )
-
-        usuario, mensagem = realizar_login(
-            email,
-            senha
-        )
-
-        if usuario:
-
-            limpar_tentativas(chave)
-
-            session["usuario_id"] = usuario["id"]
-
-            session["nome"] = usuario["nome"]
-
-            return redirect(
-                url_for("dashboard")
-            )
-
-        registrar_tentativa_falha(chave)
-
-        flash(
-            mensagem,
-            "mensagem-erro"
-        )
-
-    return render_template(
-        "pagina_login.html"
-    )
 
 # ==========================
 # TAREFAS
@@ -1144,11 +900,8 @@ def visualizar_resultado_discursivo(tentativa_id):
         abort(404)
 
     respostas = obter_respostas(tentativa_id)
-    proxima_tentativa = tentativa.get("proxima_tentativa_correcao")
     reivindicada_ate = tentativa.get("correcao_reivindicada_ate")
     agora_utc = datetime.now(timezone.utc)
-    if proxima_tentativa is not None and proxima_tentativa.tzinfo is None:
-        proxima_tentativa = proxima_tentativa.replace(tzinfo=timezone.utc)
     if reivindicada_ate is not None and reivindicada_ate.tzinfo is None:
         reivindicada_ate = reivindicada_ate.replace(tzinfo=timezone.utc)
     tentativa["correcao_em_andamento"] = bool(
@@ -1156,12 +909,7 @@ def visualizar_resultado_discursivo(tentativa_id):
     )
     tentativa["pode_tentar_correcao"] = bool(
         tentativa["status"] == "finalizada"
-        and (tentativa.get("resultado_correcao") or {}).get("status") == "indisponivel"
-        and (proxima_tentativa is None or proxima_tentativa <= agora_utc)
-        and (
-            tentativa.get("correcao_reivindicada_ate") is None
-            or tentativa["correcao_reivindicada_ate"] <= agora_utc
-        )
+        and (tentativa.get("resultado_correcao") or {}).get("status") == "falha_definitiva"
     )
 
     respostas_esperadas = {}
@@ -1199,51 +947,10 @@ def tentar_correcao_discursiva(tentativa_id):
         return redirect(url_for("pagina_login"))
 
     tentativa = obter_tentativa_discursiva_por_id(tentativa_id, usuario_id)
-    if (
-        tentativa is None
-        or tentativa["disciplina"] not in ("Matemática", "Física", "Química")
-        or tentativa["status"] != "finalizada"
-        or (tentativa.get("resultado_correcao") or {}).get("status") != "indisponivel"
-    ):
+    if tentativa is None:
         abort(404)
-
-    if not reivindicar_correcao_discursiva(tentativa_id, usuario_id):
-        flash(
-            "Uma nova tentativa de correção já está programada ou em andamento.",
-            "info",
-        )
-        return redirect(
-            url_for("visualizar_resultado_discursivo", tentativa_id=tentativa_id)
-        )
-
-    try:
-        pacote = corrigir_tentativa_resposta_final(
-            tentativa_id, obter_respostas(tentativa_id),
-            disciplina=tentativa["disciplina"],
-        )
-        salvo = salvar_resultado_correcao_discursiva(
-            tentativa_id, usuario_id, pacote,
-            "corrigida" if pacote["status"] == "corrigida" else "finalizada",
-            pacote["nota"], pacote["nota_maxima"],
-        )
-        if not salvo:
-            abort(404)
-        flash(
-            "Correção concluída." if pacote["status"] == "corrigida"
-            else "Correção concluída com itens encaminhados para revisão humana.",
-            "success" if pacote["status"] == "corrigida" else "warning",
-        )
-    except Exception:
-        app.logger.exception("Falha ao repetir correção discursiva da tentativa %s", tentativa_id)
-        indisponivel = {
-            "status": "indisponivel",
-            "mensagem": "O serviço de correção está temporariamente indisponível. Tente novamente mais tarde.",
-        }
-        salvar_resultado_correcao_discursiva(
-            tentativa_id, usuario_id, indisponivel, "finalizada"
-        )
-        flash(indisponivel["mensagem"], "error")
-
+    if reagendar_correcao_discursiva(tentativa_id, usuario_id):
+        flash("A prova foi reenviada para a fila de correção.", "info")
     return redirect(url_for("visualizar_resultado_discursivo", tentativa_id=tentativa_id))
 
 @app.route(
@@ -1307,21 +1014,16 @@ def visualizar_prova(id_prova):
         )
 
 
-    # Registra o início da prova no servidor
-    session["prova_inicio"] = {
-        "prova_id": prova.id,
-        "inicio": datetime.now(
-            timezone.utc
-        ).isoformat()
-    }
-
-
+    tentativa = obter_ou_criar_tentativa_objetiva(session["usuario_id"], prova.id)
+    duracao = converter_tempo_para_segundos(prova.tempo)
+    agora = datetime.now(timezone.utc)
     return render_template(
         "provas/prova.html",
         prova=prova,
-        questao_atual=prova.questoes[0]
+        questao_atual=prova.questoes[0],
+        tentativa_id=str(tentativa["id"]),
+        tempo_restante=max(0, duracao - (agora - tentativa["inicio"]).total_seconds()),
     )
-
 
 
 @app.route(
@@ -1577,55 +1279,18 @@ def resultado_prova():
         # CALCULA O TEMPO NO SERVIDOR
         # ------------------------------------------------
 
-        prova_inicio = session.get(
-            "prova_inicio"
-        )
-
-
-        if (
-            not prova_inicio
-            or prova_inicio.get("prova_id") != prova_id
-        ):
-
-            return jsonify({
-                "erro": "Início da prova não encontrado."
-            }), 400
-
-
         try:
+            tentativa_id = UUID(dados.get("tentativa_id", ""))
+        except (ValueError, TypeError, AttributeError):
+            return jsonify(erro="Tentativa inválida. Reabra a prova para continuar."), 400
 
-            inicio = datetime.fromisoformat(
-                prova_inicio["inicio"]
-            )
+        inicio = obter_inicio_tentativa_objetiva(usuario_id, prova_id, tentativa_id)
+        if inicio is None:
+            return jsonify(erro="Esta tentativa não está mais aberta para esta conta."), 409
 
-        except (
-            TypeError,
-            ValueError
-        ):
-
-            session.pop(
-                "prova_inicio",
-                None
-            )
-
-            return jsonify({
-                "erro": "Horário de início da prova inválido."
-            }), 400
-
-
-        fim = datetime.now(
-            timezone.utc
-        )
-
-
-        duracao = fim - inicio
-
-
-        segundos = max(
-            0,
-            int(duracao.total_seconds())
-        )
-
+        duracao = datetime.now(timezone.utc) - inicio
+        limite = converter_tempo_para_segundos(prova.tempo)
+        segundos = min(limite, max(0, int(duracao.total_seconds())))
 
         horas = segundos // 3600
 
@@ -1687,7 +1352,11 @@ def resultado_prova():
                 resultado=resultado,
                 questoes=questoes_realizadas,
                 respostas=respostas,
+                tentativa_id=tentativa_id,
             )
+
+        except TentativaObjetivaEncerrada as erro:
+            return jsonify(erro=str(erro)), 409
 
         except Exception:
 
@@ -1701,11 +1370,6 @@ def resultado_prova():
                     "Tente novamente."
                 )
             }), 500
-
-        session.pop(
-            "prova_inicio",
-            None
-        )
 
         # ------------------------------------------------
         # RESULTADO DA SESSÃO
@@ -2601,395 +2265,6 @@ def indicadores_calendario():
 # ESTATÍSTICAS
 # ==========================
 
-@app.route("/estatisticas")
-def pagina_estatisticas():
-
-    usuario_id = session.get(
-        "usuario_id"
-    )
-
-    if not usuario_id:
-        return redirect(
-            url_for("pagina_login")
-        )
-
-    return render_template("estatisticas/estatisticas.html", **_desempenho_objetivo(usuario_id))
-
-
-def _desempenho_objetivo(usuario_id):
-    grupos = {prova: {} for prova in ("ENEM", "ITA")}
-    for (prova, area), dados in obter_desempenho_por_area(usuario_id, por_prova=True).items():
-        if prova in grupos:
-            grupos[prova][area] = dados
-
-    areas = [
-        (prova, area, dados["acertos"] * 100 / dados["questoes"])
-        for prova, disciplinas in grupos.items()
-        for area, dados in disciplinas.items()
-        if dados["questoes"]
-    ]
-    areas.sort(key=lambda item: item[2], reverse=True)
-    total_questoes = sum(dados["questoes"] for disciplinas in grupos.values() for dados in disciplinas.values())
-    total_acertos = sum(dados["acertos"] for disciplinas in grupos.values() for dados in disciplinas.values())
-
-    return dict(
-        desempenho_provas=grupos,
-        total_questoes=total_questoes,
-        total_acertos=total_acertos,
-        ponto_forte=areas[0] if areas else None,
-        ponto_atencao=areas[-1] if areas else None,
-    )
-
-
-@app.route("/estatisticas/resumo")
-def estatisticas_resumo():
-
-    usuario_id = session.get(
-        "usuario_id"
-    )
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    resultado = obter_resumo_usuario(
-        usuario_id
-    )
-
-    segundos_estudo = obter_total_segundos(
-        usuario_id
-    )
-
-    segundos_provas = obter_segundos_provas(
-        usuario_id
-    )
-
-    total_segundos = (
-        segundos_estudo
-        + segundos_provas
-    )
-
-    provas = resultado["provas"]
-    questoes = resultado["questoes"]
-    acertos = resultado["acertos"]
-    erros = resultado["erros"]
-    nao_respondidas = resultado["nao_respondidas"]
-
-    respondidas = (
-        acertos + erros
-    )
-
-    if respondidas > 0:
-
-        porcentagem = (
-            acertos / respondidas
-        ) * 100
-
-    else:
-
-        porcentagem = 0
-
-    return jsonify({
-
-        "horas_estudadas":
-            total_segundos,
-
-        "provas":
-            provas,
-
-        "questoes":
-            questoes,
-
-        "respondidas":
-            respondidas,
-
-        "acertos":
-            acertos,
-
-        "erros":
-            erros,
-
-        "nao_respondidas":
-            nao_respondidas,
-
-        "porcentagem":
-            round(
-                porcentagem,
-                1
-            )
-    })
-
-
-@app.route("/estatisticas/evolucao")
-def estatisticas_evolucao():
-
-    usuario_id = session.get(
-        "usuario_id"
-    )
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    hoje = date.today()
-    if "dias" in request.args:
-        dias = request.args.get("dias", type=int)
-        if dias is None or not 1 <= dias <= 366:
-            return jsonify({"erro": "Período inválido."}), 400
-        inicio = hoje - timedelta(days=dias - 1)
-        fim = hoje
-    else:
-        ano = request.args.get("ano", default=hoje.year, type=int)
-        mes = request.args.get("mes", default=hoje.month, type=int)
-        if not 1 <= ano <= 9999 or not 1 <= mes <= 12:
-            return jsonify({"erro": "Ano ou mês inválido."}), 400
-        inicio = date(ano, mes, 1)
-        fim = date(ano, mes, monthrange(ano, mes)[1])
-
-    return jsonify(_evolucao_estudos(usuario_id, inicio, fim))
-
-
-def _evolucao_estudos(usuario_id, inicio, fim):
-    estudos = obter_estudos_por_periodo(
-        usuario_id,
-        inicio.isoformat(),
-        fim.isoformat()
-    )
-
-    estudos_por_data = {}
-
-    for estudo in estudos:
-
-        data = estudo["data"]
-
-        if isinstance(data, date):
-
-            data = data.isoformat()
-
-        estudos_por_data[data] = (
-            estudo["duracao"]
-        )
-
-    provas = obter_provas_por_periodo(
-        usuario_id,
-        inicio.isoformat(),
-        fim.isoformat()
-    )
-
-    provas_por_data = {}
-
-    for prova in provas:
-
-        data = prova["data"]
-
-        if isinstance(data, date):
-
-            data = data.isoformat()
-
-        segundos = converter_tempo_para_segundos(
-            prova["tempo_gasto"]
-        )
-
-        provas_por_data[data] = (
-            provas_por_data.get(data, 0)
-            + segundos
-        )
-
-    for dia in obter_duracao_provas_escritas_por_dia(usuario_id, inicio, fim):
-        data = dia["data"].isoformat()
-        provas_por_data[data] = provas_por_data.get(data, 0) + dia["duracao"]
-
-    resultado = []
-
-    data_atual = inicio
-
-    while data_atual <= fim:
-
-        data_formatada = (
-            data_atual.isoformat()
-        )
-
-        duracao_estudos = (
-            estudos_por_data.get(
-                data_formatada,
-                0
-            )
-        )
-
-        duracao_provas = (
-            provas_por_data.get(
-                data_formatada,
-                0
-            )
-        )
-
-        duracao_total = (
-            duracao_estudos
-            + duracao_provas
-        )
-
-        resultado.append({
-
-            "data":
-                data_formatada,
-
-            "duracao":
-                duracao_total
-        })
-
-        if data_atual == fim:
-            break
-        data_atual += timedelta(days=1)
-
-    return resultado
-
-
-@app.route("/estatisticas/provas")
-def estatisticas_provas():
-
-    usuario_id = session.get(
-        "usuario_id"
-    )
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    resultados = listar_resultados_usuario(
-        usuario_id
-    )
-
-    provas = []
-
-    for resultado in resultados:
-
-        id_prova = int(
-            resultado["prova_id"]
-        )
-
-        catalogo = obter_catalogo_por_id(
-            id_prova
-        )
-
-        if catalogo is None:
-            continue
-
-        provas.append({
-
-            "id":
-                id_prova,
-
-            "nome":
-                catalogo["nome"],
-
-            "dia":
-                catalogo["dia"],
-
-            "acertos":
-                resultado["acertos"],
-
-            "erros":
-                resultado["erros"],
-
-            "nao_respondidas":
-                resultado["nao_respondidas"],
-
-            "total":
-                resultado["total"],
-
-            "tempo_gasto":
-                resultado["tempo_gasto"],
-
-            "porcentagem":
-                resultado["porcentagem"],
-
-            "data":
-                resultado["data_realizacao"]
-        })
-
-    return jsonify(provas)
-
-
-@app.route("/estatisticas/areas")
-def estatisticas_areas():
-
-    usuario_id = session.get(
-        "usuario_id"
-    )
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    desempenho = obter_desempenho_por_area(
-        usuario_id
-    )
-
-    return jsonify(desempenho)
-
-
-@app.route("/estatisticas/questoes-areas")
-def estatisticas_questoes_areas():
-
-    usuario_id = session.get("usuario_id")
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    desempenho = obter_desempenho_questoes_por_area(
-        usuario_id
-    )
-
-    return jsonify(desempenho)
-
-
-@app.route("/estatisticas/questoes-detalhadas")
-def estatisticas_questoes_detalhadas():
-
-    usuario_id = session.get("usuario_id")
-
-    if not usuario_id:
-
-        return jsonify({
-            "erro": "Usuário não autenticado."
-        }), 401
-
-    criterio = request.args.get("criterio", "dificuldade")
-
-    criterios_permitidos = {
-        "dificuldade",
-        "competencia",
-        "habilidade",
-        "lingua"
-    }
-
-    if criterio not in criterios_permitidos:
-
-        return jsonify({
-            "erro": "Critério de análise inválido."
-        }), 400
-
-    desempenho = obter_desempenho_questoes(
-        usuario_id,
-        criterio
-    )
-
-    return jsonify(desempenho)
-
-
-
-
 # ==========================
 # CONFIGURAÇÕES
 # ==========================
@@ -3257,966 +2532,6 @@ def atualizar_metas_configuracoes_rota():
     )
 
 
-def _dados_relatorio(usuario_id):
-    dados = obter_dados_exportacao(usuario_id)
-    catalogo = {prova["id"]: prova for prova in listar_provas()}
-    for chave in ("resultados_provas", "respostas_provas"):
-        for registro in dados[chave]:
-            prova_id = registro["prova_id"]
-            prova = catalogo.get(prova_id)
-            if prova:
-                dia = {"Primeiro Dia": "Dia 1", "Segundo Dia": "Dia 2"}.get(prova["dia"], prova["dia"])
-                registro["prova"] = f'{prova["nome"]} — {dia}' if dia else prova["nome"]
-                registro["instituicao"] = prova["tipo"]
-            else:
-                registro["prova"] = f"Prova {prova_id}"
-                registro["instituicao"] = None
-
-    hoje = date.today()
-    inicio = hoje.replace(day=1)
-    fim = hoje.replace(day=monthrange(hoje.year, hoje.month)[1])
-    dados["estatisticas"] = {
-        **_desempenho_objetivo(usuario_id),
-        "resumo": obter_resumo_usuario(usuario_id),
-        "tempo_total_segundos": obter_total_segundos(usuario_id) + obter_segundos_provas(usuario_id),
-        "evolucao_mensal": _evolucao_estudos(usuario_id, inicio, fim),
-        "questoes_praticadas_por_area": obter_desempenho_questoes_por_area(usuario_id),
-        "analise_questoes_praticadas": {
-            criterio: obter_desempenho_questoes(usuario_id, criterio)
-            for criterio in ("dificuldade", "competencia", "habilidade", "lingua")
-        },
-    }
-    return dados
-
-
-@app.route(
-    "/configuracoes/dados/exportar",
-    methods=["GET"]
-)
-def exportar_dados():
-
-    if "usuario_id" not in session:
-        return redirect(
-            url_for("pagina_login")
-        )
-
-    dados = _dados_relatorio(
-        session["usuario_id"]
-    )
-
-    arquivo = json.dumps(
-        dados,
-        ensure_ascii=False,
-        indent=4,
-        default=str
-    )
-
-    return Response(
-        arquivo,
-        mimetype="application/json",
-        headers={
-            "Content-Disposition":
-                "attachment; filename=studyhub_dados.json"
-        }
-    )
-
-@app.route(
-    "/configuracoes/dados/exportar/pdf",
-    methods=["GET"]
-)
-def exportar_dados_pdf():
-
-    if "usuario_id" not in session:
-        return redirect(url_for("pagina_login"))
-
-    dados = _dados_relatorio(
-        session["usuario_id"]
-    )
-
-    if not isinstance(dados, dict):
-        return "Não foi possível gerar o relatório.", 500
-
-    memoria = io.BytesIO()
-
-    documento = SimpleDocTemplate(
-        memoria,
-        pagesize=A4,
-        rightMargin=1.7 * cm,
-        leftMargin=1.7 * cm,
-        topMargin=1.7 * cm,
-        bottomMargin=2 * cm,
-        title="Relatório de dados - StudyHub",
-        author="StudyHub"
-    )
-
-    estilos = getSampleStyleSheet()
-
-    estilos.add(
-        ParagraphStyle(
-            name="TituloStudyHub",
-            parent=estilos["Title"],
-            fontName="Helvetica-Bold",
-            fontSize=24,
-            leading=29,
-            alignment=TA_CENTER,
-            textColor=colors.HexColor("#2563EB"),
-            spaceAfter=5
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="SubtituloStudyHub",
-            parent=estilos["Normal"],
-            fontSize=10,
-            alignment=TA_CENTER,
-            textColor=colors.HexColor("#64748B"),
-            spaceAfter=18
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="SecaoStudyHub",
-            parent=estilos["Heading2"],
-            fontName="Helvetica-Bold",
-            fontSize=13,
-            leading=17,
-            textColor=colors.HexColor("#1E293B"),
-            spaceBefore=13,
-            spaceAfter=8,
-            keepWithNext=True
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="TextoStudyHub",
-            parent=estilos["BodyText"],
-            fontName="Helvetica",
-            fontSize=8.5,
-            leading=12,
-            textColor=colors.HexColor("#334155"),
-            wordWrap="LTR"
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="TextoPequenoStudyHub",
-            parent=estilos["BodyText"],
-            fontName="Helvetica",
-            fontSize=7.5,
-            leading=10,
-            textColor=colors.HexColor("#334155"),
-            wordWrap="LTR"
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="CabecalhoTabelaStudyHub",
-            parent=estilos["TextoPequenoStudyHub"],
-            fontName="Helvetica-Bold",
-            textColor=colors.white
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="IndicadorValorStudyHub",
-            parent=estilos["Heading2"],
-            fontName="Helvetica-Bold",
-            fontSize=19,
-            leading=23,
-            alignment=TA_CENTER,
-            textColor=colors.HexColor("#2563EB"),
-            spaceAfter=4
-        )
-    )
-
-    estilos.add(
-        ParagraphStyle(
-            name="IndicadorRotuloStudyHub",
-            parent=estilos["Normal"],
-            fontSize=8,
-            leading=11,
-            alignment=TA_CENTER,
-            textColor=colors.HexColor("#64748B")
-        )
-    )
-
-    elementos = []
-
-    # --------------------------------------------------
-    # FUNÇÕES AUXILIARES
-    # --------------------------------------------------
-
-    def formatar_texto(valor):
-
-        if valor is None or valor == "":
-            return "—"
-
-        if isinstance(valor, bool):
-            return "Sim" if valor else "Não"
-
-        if isinstance(valor, datetime):
-            return valor.strftime("%d/%m/%Y %H:%M")
-
-        if hasattr(valor, "strftime"):
-            return valor.strftime("%d/%m/%Y")
-
-        texto = str(valor)
-
-        # Evita que caracteres especiais sejam interpretados
-        # como tags HTML pelo ReportLab.
-        from xml.sax.saxutils import escape
-
-        return escape(texto)
-
-    def formatar_data(valor, incluir_hora=False):
-
-        if valor is None:
-            return "—"
-
-        if isinstance(valor, datetime):
-            formato = (
-                "%d/%m/%Y %H:%M"
-                if incluir_hora
-                else "%d/%m/%Y"
-            )
-
-            return valor.strftime(formato)
-
-        if hasattr(valor, "strftime"):
-            return valor.strftime("%d/%m/%Y")
-
-        texto = str(valor)
-
-        try:
-            data = datetime.fromisoformat(texto)
-
-            formato = (
-                "%d/%m/%Y %H:%M"
-                if incluir_hora
-                else "%d/%m/%Y"
-            )
-
-            return data.strftime(formato)
-
-        except (ValueError, TypeError):
-            return texto
-
-    def formatar_duracao(valor):
-
-        if valor is None:
-            return "—"
-
-        if isinstance(valor, str):
-
-            partes = valor.split(":")
-
-            try:
-                if len(partes) == 3:
-                    horas, minutos, segundos = map(int, partes)
-
-                    total_segundos = (
-                        horas * 3600
-                        + minutos * 60
-                        + segundos
-                    )
-
-                elif len(partes) == 2:
-                    minutos, segundos = map(int, partes)
-
-                    total_segundos = (
-                        minutos * 60
-                        + segundos
-                    )
-
-                else:
-                    total_segundos = int(valor)
-
-            except ValueError:
-                return valor
-
-        else:
-            try:
-                total_segundos = int(valor)
-            except (ValueError, TypeError):
-                return str(valor)
-
-        horas, resto = divmod(total_segundos, 3600)
-        minutos, segundos = divmod(resto, 60)
-
-        partes_formatadas = []
-
-        if horas:
-            partes_formatadas.append(f"{horas}h")
-
-        if minutos:
-            partes_formatadas.append(f"{minutos}min")
-
-        if segundos and not horas:
-            partes_formatadas.append(f"{segundos}s")
-
-        return " ".join(partes_formatadas) or "0min"
-
-    def adicionar_secao(titulo):
-
-        elementos.append(
-            Paragraph(
-                titulo,
-                estilos["SecaoStudyHub"]
-            )
-        )
-
-    def adicionar_tabela(cabecalho, linhas, larguras):
-
-        if not linhas:
-            return
-
-        dados_tabela = [
-            [
-                Paragraph(
-                    formatar_texto(coluna),
-                    estilos["CabecalhoTabelaStudyHub"]
-                )
-                for coluna in cabecalho
-            ]
-        ]
-
-        for linha in linhas:
-
-            dados_tabela.append([
-                Paragraph(
-                    formatar_texto(valor),
-                    estilos["TextoPequenoStudyHub"]
-                )
-                for valor in linha
-            ])
-
-        tabela = Table(
-            dados_tabela,
-            colWidths=larguras,
-            repeatRows=1,
-            hAlign="LEFT"
-        )
-
-        tabela.setStyle(
-            TableStyle([
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (-1, 0),
-                    colors.HexColor("#1E40AF")
-                ),
-                (
-                    "TEXTCOLOR",
-                    (0, 0),
-                    (-1, 0),
-                    colors.white
-                ),
-                (
-                    "FONTNAME",
-                    (0, 0),
-                    (-1, 0),
-                    "Helvetica-Bold"
-                ),
-                (
-                    "VALIGN",
-                    (0, 0),
-                    (-1, -1),
-                    "TOP"
-                ),
-                (
-                    "GRID",
-                    (0, 0),
-                    (-1, -1),
-                    0.35,
-                    colors.HexColor("#E2E8F0")
-                ),
-                (
-                    "ROWBACKGROUNDS",
-                    (0, 1),
-                    (-1, -1),
-                    [
-                        colors.white,
-                        colors.HexColor("#F8FAFC")
-                    ]
-                ),
-                (
-                    "LEFTPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    6
-                ),
-                (
-                    "RIGHTPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    6
-                ),
-                (
-                    "TOPPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    6
-                ),
-                (
-                    "BOTTOMPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    6
-                )
-            ])
-        )
-
-        elementos.append(tabela)
-        elementos.append(Spacer(1, 0.25 * cm))
-
-    def adicionar_indicadores(indicadores):
-
-        celulas = []
-
-        for valor, rotulo in indicadores:
-            valor_formatado = Paragraph(
-                formatar_texto(valor),
-                estilos["IndicadorValorStudyHub"]
-            )
-
-            rotulo_formatado = Paragraph(
-                formatar_texto(rotulo),
-                estilos["IndicadorRotuloStudyHub"]
-            )
-
-            celulas.append([
-                valor_formatado,
-                rotulo_formatado
-            ])
-
-        if not celulas:
-            return
-
-        largura_disponivel = A4[0] - 3.4 * cm
-        largura_celula = largura_disponivel / len(celulas)
-
-        tabela = Table(
-            [celulas],
-            colWidths=[largura_celula] * len(celulas),
-            hAlign="LEFT"
-        )
-
-        tabela.setStyle(
-            TableStyle([
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (-1, -1),
-                    colors.HexColor("#F1F5F9")
-                ),
-                (
-                    "BOX",
-                    (0, 0),
-                    (-1, -1),
-                    0.5,
-                    colors.HexColor("#E2E8F0")
-                ),
-                (
-                    "INNERGRID",
-                    (0, 0),
-                    (-1, -1),
-                    0.5,
-                    colors.HexColor("#E2E8F0")
-                ),
-                (
-                    "VALIGN",
-                    (0, 0),
-                    (-1, -1),
-                    "MIDDLE"
-                ),
-                (
-                    "LEFTPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    5
-                ),
-                (
-                    "RIGHTPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    5
-                ),
-                (
-                    "TOPPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    10
-                ),
-                (
-                    "BOTTOMPADDING",
-                    (0, 0),
-                    (-1, -1),
-                    10
-                )
-            ])
-        )
-
-        elementos.append(tabela)
-        elementos.append(Spacer(1, 0.35 * cm))
-
-    # --------------------------------------------------
-    # DADOS DO USUÁRIO
-    # --------------------------------------------------
-
-    usuario = dados.get("usuario")
-    configuracoes = dados.get("configuracoes")
-
-    if usuario:
-        nome = usuario["nome"]
-        email = usuario["email"]
-    else:
-        nome = "Usuário"
-        email = None
-
-    if configuracoes:
-        tema = configuracoes["tema"]
-        meta_estudo = configuracoes["meta_estudo"]
-        meta_questoes = configuracoes["meta_questoes"]
-    else:
-        tema = "sistema"
-        meta_estudo = 60
-        meta_questoes = 20
-
-    estudos = dados.get("estudos") or []
-    tarefas = dados.get("tarefas") or []
-    anotacoes = dados.get("anotacoes") or []
-    resultados_provas = dados.get("resultados_provas") or []
-
-    # --------------------------------------------------
-    # CABEÇALHO
-    # --------------------------------------------------
-
-    elementos.append(
-        Paragraph(
-            "StudyHub",
-            estilos["TituloStudyHub"]
-        )
-    )
-
-    elementos.append(
-        Paragraph(
-            "Relatório de desempenho acadêmico",
-            estilos["SubtituloStudyHub"]
-        )
-    )
-
-    elementos.append(
-        Paragraph(
-            f"Exportado em {datetime.now().strftime('%d/%m/%Y às %H:%M')}",
-            estilos["TextoStudyHub"]
-        )
-    )
-
-    elementos.append(Spacer(1, 0.3 * cm))
-
-    adicionar_secao("Identificação")
-
-    adicionar_tabela(
-        ["Informação", "Valor"],
-        [
-            ["Nome", nome],
-            ["E-mail", email],
-            [
-                "Meta diária de estudo",
-                f"{meta_estudo} minutos"
-            ],
-            [
-                "Meta diária de questões",
-                f"{meta_questoes} questões"
-            ]
-        ],
-        [5 * cm, 10 * cm]
-    )
-
-    # --------------------------------------------------
-    # RESUMO DO DESEMPENHO
-    # --------------------------------------------------
-
-    adicionar_secao("Resumo do desempenho")
-
-    usuario_id = session["usuario_id"]
-
-    estatisticas = dados["estatisticas"]
-    resumo = estatisticas["resumo"]
-    tempo_total = estatisticas["tempo_total_segundos"]
-
-    total_questoes = (
-            resumo["acertos"]
-            + resumo["erros"]
-    )
-
-    total_provas = resumo["provas"]
-
-    if total_questoes > 0:
-        taxa_acerto = (
-                              resumo["acertos"] / total_questoes
-                      ) * 100
-    else:
-        taxa_acerto = 0
-
-    adicionar_indicadores([
-        (
-            total_questoes,
-            "Questões resolvidas"
-        ),
-        (
-            total_provas,
-            "Provas realizadas"
-        ),
-        (
-            f"{taxa_acerto:.1f}%".replace(".", ","),
-            "Taxa de acerto"
-        ),
-        (
-            formatar_duracao(tempo_total),
-            "Tempo total"
-        )
-    ])
-
-    # --------------------------------------------------
-    # DESEMPENHO EM QUESTÕES
-    # --------------------------------------------------
-
-    adicionar_secao("Desempenho total de questões objetivas")
-    questoes_respondidas = estatisticas["total_questoes"]
-    acertos = estatisticas["total_acertos"]
-    aproveitamento = acertos * 100 / questoes_respondidas if questoes_respondidas else 0
-    adicionar_indicadores([
-        (questoes_respondidas, "Questões resolvidas"),
-        (acertos, "Acertos"),
-        (questoes_respondidas - acertos, "Erros"),
-        (f"{aproveitamento:.1f}%".replace(".", ","), "Aproveitamento"),
-    ])
-
-    evolucao = estatisticas["evolucao_mensal"]
-    if evolucao:
-        mes = date.fromisoformat(evolucao[0]["data"]).strftime("%m/%Y")
-        adicionar_secao(f"Evolução dos estudos — {mes}")
-        dias_com_atividade = [
-            [formatar_data(dia["data"]), formatar_duracao(dia["duracao"])]
-            for dia in evolucao if dia["duracao"]
-        ]
-        if dias_com_atividade:
-            adicionar_tabela(["Dia", "Tempo estudado"], dias_com_atividade, [8 * cm, 8 * cm])
-        else:
-            elementos.append(Paragraph("Nenhum tempo registrado neste mês.", estilos["TextoStudyHub"]))
-
-    # --------------------------------------------------
-    # DESEMPENHO POR ÁREA — PROVAS
-    # --------------------------------------------------
-
-    for prova, areas in estatisticas["desempenho_provas"].items():
-        adicionar_secao(f"{prova} — Questões objetivas por área")
-        if not areas:
-            elementos.append(Paragraph("Nenhuma questão respondida.", estilos["TextoStudyHub"]))
-            continue
-        adicionar_tabela(
-            ["Área", "Questões", "Acertos", "Erros", "Aproveitamento"],
-            [[area, item["questoes"], item["acertos"], item["questoes"] - item["acertos"],
-              f'{item["acertos"] * 100 / item["questoes"]:.1f}%'.replace(".", ",")]
-             for area, item in sorted(areas.items())],
-            [6 * cm, 2 * cm, 2 * cm, 2 * cm, 4 * cm],
-        )
-
-    # --------------------------------------------------
-    # DESEMPENHO NAS QUESTÕES PRATICADAS
-    # --------------------------------------------------
-
-    adicionar_secao("Desempenho nas questões")
-
-    desempenho_questoes = estatisticas["questoes_praticadas_por_area"]
-
-    if desempenho_questoes:
-
-        linhas = []
-
-        for area, resultado in sorted(
-                desempenho_questoes.items(),
-                key=lambda item: item[1]["porcentagem"],
-                reverse=True
-        ):
-            linhas.append([
-                area,
-                resultado["questoes"],
-                resultado["acertos"],
-                resultado["erros"],
-                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
-            ])
-
-        adicionar_tabela(
-            [
-                "Área do conhecimento",
-                "Questões",
-                "Acertos",
-                "Erros",
-                "Aproveitamento"
-            ],
-            linhas,
-            [
-                5.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                3.0 * cm
-            ]
-        )
-
-    else:
-
-        elementos.append(
-            Paragraph(
-                "Ainda não há questões praticadas suficientes "
-                "para apresentar esta análise.",
-                estilos["TextoStudyHub"]
-            )
-        )
-
-        elementos.append(Spacer(1, 0.25 * cm))
-
-    # --------------------------------------------------
-    # ANÁLISE DETALHADA DAS QUESTÕES
-    # --------------------------------------------------
-
-    adicionar_secao("Análise detalhada das questões")
-
-    criterios = [
-        ("dificuldade", "Desempenho por dificuldade"),
-        ("competencia", "Desempenho por competência"),
-        ("habilidade", "Desempenho por habilidade"),
-        ("lingua", "Desempenho por idioma")
-    ]
-
-    for criterio, titulo in criterios:
-
-        desempenho = estatisticas["analise_questoes_praticadas"][criterio]
-
-        if not desempenho:
-            continue
-
-        adicionar_secao(titulo)
-
-        linhas = []
-
-        for categoria, resultado in sorted(
-                desempenho.items(),
-                key=lambda item: item[1]["porcentagem"],
-                reverse=True
-        ):
-            linhas.append([
-                categoria,
-                resultado["questoes"],
-                resultado["acertos"],
-                resultado["erros"],
-                f'{resultado["porcentagem"]:.1f}%'.replace(".", ",")
-            ])
-
-        adicionar_tabela(
-            [
-                "Categoria",
-                "Questões",
-                "Acertos",
-                "Erros",
-                "Aproveitamento"
-            ],
-            linhas,
-            [
-                5.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                2.0 * cm,
-                3.0 * cm
-            ]
-        )
-
-    # --------------------------------------------------
-    # ANÁLISE DO DESEMPENHO
-    # --------------------------------------------------
-
-    adicionar_secao("Análise do desempenho")
-
-    destaques = []
-    for rotulo, chave in (("Ponto forte", "ponto_forte"), ("Ponto de atenção", "ponto_atencao")):
-        if estatisticas[chave]:
-            prova, area, percentual = estatisticas[chave]
-            destaques.append([rotulo, f"{prova} — {area} — {percentual:.1f}%".replace(".", ",")])
-    if destaques:
-        adicionar_tabela(["Indicador", "Resultado"], destaques, [6 * cm, 10 * cm])
-    else:
-        elementos.append(Paragraph("Nenhuma questão respondida.", estilos["TextoStudyHub"]))
-
-    # --------------------------------------------------
-    # RESULTADOS DAS PROVAS
-    # --------------------------------------------------
-
-    if resultados_provas:
-
-        adicionar_secao("Resultados das provas")
-
-        linhas = []
-
-        for resultado in resultados_provas:
-            acertos = resultado["acertos"]
-            erros = resultado["erros"]
-            nao_respondidas = resultado["nao_respondidas"]
-            total = resultado["total"]
-            tempo_gasto = resultado["tempo_gasto"]
-            porcentagem = resultado["porcentagem"]
-            data_realizacao = resultado["data_realizacao"]
-
-            linhas.append([
-                resultado["prova"],
-                f"{acertos}/{total}",
-                erros,
-                nao_respondidas,
-                f"{float(porcentagem):.2f}%".replace(".", ","),
-                formatar_duracao(tempo_gasto),
-                formatar_data(
-                    data_realizacao,
-                    incluir_hora=True
-                )
-            ])
-
-        adicionar_tabela(
-            [
-                "Prova",
-                "Acertos",
-                "Erros",
-                "Em branco",
-                "Aproveitamento",
-                "Duração",
-                "Realização"
-            ],
-            linhas,
-            [
-                3.0 * cm,
-                1.5 * cm,
-                1.2 * cm,
-                1.5 * cm,
-                2.0 * cm,
-                1.5 * cm,
-                3.3 * cm
-            ]
-        )
-
-    # --------------------------------------------------
-    # RODAPÉ
-    # --------------------------------------------------
-
-    def adicionar_rodape(canvas, doc):
-
-        canvas.saveState()
-
-        largura, altura = A4
-
-        canvas.setStrokeColor(
-            colors.HexColor("#CBD5E1")
-        )
-
-        canvas.line(
-            1.7 * cm,
-            1.5 * cm,
-            largura - 1.7 * cm,
-            1.5 * cm
-        )
-
-        canvas.setFont("Helvetica", 8)
-
-        canvas.setFillColor(
-            colors.HexColor("#64748B")
-        )
-
-        canvas.drawString(
-            1.7 * cm,
-            1 * cm,
-            "StudyHub | Relatório pessoal"
-        )
-
-        canvas.drawRightString(
-            largura - 1.7 * cm,
-            1 * cm,
-            f"Página {doc.page}"
-        )
-
-        canvas.restoreState()
-
-    discursivas = [prova for prova in dados["provas_discursivas"] if prova["data_finalizacao"]]
-    if discursivas:
-        adicionar_secao("Resultados das provas discursivas")
-        linhas = []
-        for prova in discursivas:
-            parecer = prova["resultado_correcao"] or {}
-            provisoria = parecer.get("status") == "provisoria"
-            nota = parecer.get("nota_provisoria") if provisoria else prova["nota_total"]
-            maxima = prova["nota_maxima"]
-            if maxima is None:
-                maxima = parecer.get("nota_maxima")
-            if nota is not None and maxima is not None:
-                resultado = f"{nota:g} / {maxima:g}" + (" (provisória)" if provisoria else "")
-            elif parecer.get("correcao"):
-                resultado = "Parecer disponível"
-            else:
-                resultado = "Correção pendente"
-            linhas.append([
-                f'{prova["instituicao"]} {prova["ano"]} — {prova["fase"]} — {prova["disciplina"]}',
-                resultado,
-                formatar_data(prova["data_finalizacao"], incluir_hora=True),
-            ])
-        adicionar_tabela(["Prova", "Resultado", "Finalização"], linhas, [8 * cm, 4 * cm, 4 * cm])
-
-    adicionar_secao("Leitura e produção de texto")
-    leituras = dados.get("leituras_idiomas") or []
-    redacoes_concluidas = dados.get("redacoes") or []
-    adicionar_tabela(
-        ["Indicador", "Total"],
-        [
-            ["Leituras concluídas", len(leituras)],
-            ["Palavras lidas", sum(leitura["palavras"] for leitura in leituras)],
-            ["Redações enviadas", len(redacoes_concluidas)],
-            ["Provas discursivas finalizadas", sum(
-                prova["data_finalizacao"] is not None for prova in dados.get("provas_discursivas", [])
-            )],
-        ],
-        [11 * cm, 5.5 * cm],
-    )
-    if redacoes_concluidas:
-        adicionar_tabela(
-            ["Prova", "Tema", "Nota estimada"],
-            [[envio["instituicao"], envio["tema"], "Pendente" if envio["nota"] is None else
-              (f'{envio["nota"] / 10:g} / 10' if envio["instituicao"] == "ITA" else f'{envio["nota"]} / 1000')]
-             for envio in redacoes_concluidas],
-            [2.5 * cm, 10.5 * cm, 3.5 * cm],
-        )
-
-    documento.build(
-        elementos,
-        onFirstPage=adicionar_rodape,
-        onLaterPages=adicionar_rodape
-    )
-
-    memoria.seek(0)
-
-    return Response(
-        memoria.getvalue(),
-        mimetype="application/pdf",
-        headers={
-            "Content-Disposition":
-                'attachment; filename="studyhub_relatorio.pdf"',
-            "Cache-Control": "no-store"
-        }
-    )
-
-
 @app.route(
     "/configuracoes/dados/limpar",
     methods=["POST"]
@@ -4229,7 +2544,8 @@ def limpar_historico_rota():
         )
 
     resultado, mensagem = limpar_historico(
-        session["usuario_id"]
+        session["usuario_id"],
+        incluir_leituras=request.form.get("incluir_leituras") == "1",
     )
 
     flash(
@@ -4241,50 +2557,6 @@ def limpar_historico_rota():
 
     return redirect(
         url_for("pagina_configuracoes")
-    )
-
-
-@app.route(
-    "/configuracoes/excluir-conta",
-    methods=["POST"]
-)
-def excluir_conta_configuracoes():
-
-    if "usuario_id" not in session:
-        return redirect(
-            url_for("pagina_login")
-        )
-
-    senha_atual = request.form.get(
-        "senha_atual",
-        ""
-    )
-
-    sucesso, mensagem = excluir_conta_controller(
-        session["usuario_id"],
-        senha_atual
-    )
-
-    if not sucesso:
-
-        flash(
-            mensagem,
-            "erro"
-        )
-
-        return redirect(
-            url_for("pagina_configuracoes")
-        )
-
-    session.clear()
-
-    flash(
-        "Sua conta foi excluída com sucesso.",
-        "sucesso"
-    )
-
-    return redirect(
-        url_for("pagina_login")
     )
 
 

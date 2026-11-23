@@ -483,6 +483,10 @@ ITEM DA QUESTÃO
     --cor-resultado: #318c58;
 }
 
+.resultado-resposta-final--inconclusiva {
+    --cor-resultado: var(--cor-texto-secundario);
+}
+
 .resultado-resposta-final > h3,
 .resultado-resposta-final > p {
     color: var(--cor-texto);

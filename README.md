@@ -278,11 +278,15 @@ Para utilizar a autenticação com Google, também é necessário configurar as 
 
 ### 5. Execute a aplicação
 
-Execute a aplicação em ambiente de desenvolvimento:
+Aplique as migrações antes de iniciar a aplicação:
 
 ```bash
+python -m database.criar_banco
 python app.py
 ```
+
+Para corrigir provas e redações, inicie também o processo descrito no
+[guia da fila de correções](docs/fila-correcoes.md).
 
 Após a inicialização, a aplicação estará disponível no endereço local configurado pelo Flask.
 
@@ -296,8 +300,10 @@ Para executar a suíte inteira, configure `DATABASE_URL` para o banco PostgreSQL
 nome do banco antes de aplicar o esquema e usam usuários criados para os próprios
 testes.
 
-Os testes do motor matemático podem ser executados sem PostgreSQL. Por exemplo,
-`python -m pytest tests/test_expressoes.py tests/test_sistemas_lineares.py`.
+Os testes do motor matemático podem ser executados sem PostgreSQL com
+`python -m pytest -m matematica`. Execute somente os testes web com
+`python -m pytest -m "not matematica"` e `DATABASE_URL` apontando para `studyhub_test`.
+Confira os procedimentos de publicação e recuperação no [guia de operação](docs/operacao.md).
 
 ## Deploy
 
@@ -307,7 +313,9 @@ A aplicação é executada utilizando **Gunicorn** e utiliza **PostgreSQL** como
 
 As informações sensíveis são configuradas através das variáveis de ambiente da plataforma de hospedagem.
 
-Comando utilizado para iniciar a aplicação:
+Aplique `python -m database.criar_banco` como etapa separada antes da
+publicação do código. Depois, inicie o serviço web com o comando abaixo e
+mantenha o [worker de correções](docs/fila-correcoes.md) como processo dedicado.
 
 ```bash
 gunicorn app:app

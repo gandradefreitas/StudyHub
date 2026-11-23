@@ -1,5 +1,6 @@
 import os
 from google import genai
+from google.genai import types
 
 MODELO_GEMINI = "gemini-3.5-flash-lite"
 
@@ -11,22 +12,23 @@ def criar_cliente():
             "A variável de ambiente GEMINI_API_KEY não foi configurada."
         )
 
-    return genai.Client(api_key=api_key)
+    return genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(timeout=60_000, retry_options=types.HttpRetryOptions(attempts=1)),
+    )
 
 def enviar_mensagem(mensagem):
-    cliente = criar_cliente()
-
     try:
-        resposta = cliente.models.generate_content(
-            model=MODELO_GEMINI,
-            contents=mensagem
-        )
-
-        return resposta.text
+        with criar_cliente() as cliente:
+            resposta = cliente.models.generate_content(
+                model=MODELO_GEMINI,
+                contents=mensagem,
+            )
+            return resposta.text
 
     except Exception as erro:
         raise RuntimeError(
-            f"Erro ao comunicar com a API Gemini: {erro}"
+            "Erro ao comunicar com a API Gemini."
         ) from erro
 
 

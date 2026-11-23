@@ -510,9 +510,20 @@ async function carregarEvolucao() {
         );
 
 
-        renderizarGraficoEstudos(
-            dados
-        );
+        const caption = document.getElementById("evolucao-tabela-mes");
+        const corpo = document.getElementById("evolucao-tabela-dias");
+        caption.textContent = document.getElementById("mes-atual-grafico").textContent;
+        corpo.replaceChildren(...dados.map(dia => {
+            const linha = document.createElement("tr");
+            const data = document.createElement("th");
+            data.scope = "row";
+            data.textContent = formatarDataGrafico(dia.data);
+            const duracao = document.createElement("td");
+            duracao.textContent = formatarDuracao(dia.duracao);
+            linha.append(data, duracao);
+            return linha;
+        }));
+        if (window.Chart) renderizarGraficoEstudos(dados);
 
 
     } catch (erro) {

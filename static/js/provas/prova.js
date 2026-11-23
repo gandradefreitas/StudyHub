@@ -3,7 +3,16 @@ const csrfToken =
         'meta[name="csrf-token"]'
     ).getAttribute("content");
 
-const CHAVE_PROVA = `prova_${prova.id}`;
+const CHAVE_PROVA = "studyhub:prova:" + tentativa.id;
+
+// Rascunhos de versões anteriores compartilhavam a chave entre contas.
+const chaveLegada = "prova_" + prova.id;
+for (const sufixo of ["", "_questao", "_lingua", "_fim"]) {
+    localStorage.removeItem(chaveLegada + sufixo);
+}
+window.addEventListener("pageshow", evento => {
+    if (evento.persisted) window.location.reload();
+});
 
 let questaoAtual = Number(
     localStorage.getItem(`${CHAVE_PROVA}_questao`)
@@ -270,7 +279,7 @@ function carregarConteudoQuestao(questao) {
     enunciado.className =
         "enunciado";
 
-    enunciado.innerHTML =
+    enunciado.textContent =
         questao.enunciado;
 
     container.appendChild(enunciado);
@@ -317,7 +326,7 @@ function carregarConteudoQuestao(questao) {
         pergunta.className =
             "pergunta";
 
-        pergunta.innerHTML =
+        pergunta.textContent =
             questao.pergunta;
 
         container.appendChild(pergunta);
@@ -326,117 +335,14 @@ function carregarConteudoQuestao(questao) {
 
 }
 
-function obterEstatisticas(){
-
-    let acertos = 0;
-    let respondidas = 0;
-    let questoesErradas = [];
-
-
-    questoesProva.forEach((questao)=>{
-
-
-        if(respostas[questao.numero] !== undefined){
-
-            respondidas++;
-
-
-            if(respostas[questao.numero] === questao.resposta){
-
-                acertos++;
-
-            } else {
-
-                questoesErradas.push({
-
-                    numero: questao.numero,
-
-                    enunciado: questao.enunciado,
-
-                    alternativas: questao.alternativas,
-
-                    respostaUsuario:
-                        respostas[questao.numero],
-
-                    respostaCorreta:
-                        questao.resposta,
-
-                    comentario: questao.comentario
-
-                });
-
-            }
-
-        }
-
-    });
-
-
-    return {
-
-        acertos: acertos,
-
-        erros: respondidas - acertos,
-
-        naoRespondidas:
-            questoesProva.length - respondidas,
-
-        total:
-            questoesProva.length,
-
-        questoesErradas:
-            questoesErradas
-
-    };
-
-}
-
-
-function converterTempo(tempo){
-
-    const partes = tempo.split(":");
-
-    const horas = Number(partes[0]);
-    const minutos = Number(partes[1]);
-    const segundos = Number(partes[2]);
-
-
-    return (horas * 3600) + (minutos * 60) + segundos;
-
-}
-
 function iniciarCronometro() {
-
-    const chaveCronometro =
-        `${CHAVE_PROVA}_fim`;
-
-    let fimProva =
-        localStorage.getItem(chaveCronometro);
-
-
-    if (!fimProva) {
-
-        fimProva =
-            Date.now() +
-            converterTempo(tempoProva) * 1000;
-
-        localStorage.setItem(
-            chaveCronometro,
-            fimProva
-        );
-
-    } else {
-
-        fimProva = Number(fimProva);
-
-    }
-
+    const fimProva = tentativa.prazo;
 
     let avisoFimExibido = false;
 
     function contarTempo() {
 
-        const agora = Date.now();
+        const agora = performance.now();
 
 
         tempoRestante =
@@ -498,53 +404,12 @@ questoesProva.forEach(questao => {
 
 });
 
-// Calcula as estatísticas usando as respostas válidas.
-let acertos = 0;
-let erros = 0;
-
-questoesProva.forEach(questao => {
-
-    const resposta = respostasValidas[questao.numero];
-
-    if (resposta === undefined) {
-        return;
-    }
-
-    if (resposta === questao.resposta) {
-        acertos++;
-    } else {
-        erros++;
-    }
-
-});
-
-const estatisticas = {
-    acertos: acertos,
-    erros: erros,
-    naoRespondidas: questoesProva.length - Object.keys(respostasValidas).length,
-    total: questoesProva.length
-};
-
 const dadosResultado = {
-
     prova_id: prova.id,
-
+    tentativa_id: tentativa.id,
     lingua: linguaEscolhida,
-
-    acertos: estatisticas.acertos,
-
-    erros: estatisticas.erros,
-
-    naoRespondidas: estatisticas.naoRespondidas,
-
-    total: estatisticas.total,
-
     respostas: respostasValidas,
-
-    questoes: questoesProva,
-
-    tempoGasto: converterTempoGasto()
-
+    questoes: questoesProva.map(({ numero }) => ({ numero }))
 };
 
 fetch("/provas/resultado", {
@@ -586,7 +451,6 @@ fetch("/provas/resultado", {
     localStorage.removeItem(CHAVE_PROVA);
     localStorage.removeItem(`${CHAVE_PROVA}_questao`);
     localStorage.removeItem(`${CHAVE_PROVA}_lingua`);
-    localStorage.removeItem(`${CHAVE_PROVA}_fim`);
 
     window.location.href = "/provas/resultado";
 
@@ -627,28 +491,6 @@ function atualizarCronometro(){
         `${String(segundos).padStart(2,"0")}`;
 
 }
-function converterTempoGasto(){
-
-    const tempoUtilizado =
-        converterTempo(tempoProva) - tempoRestante;
-
-    const horas =
-        Math.floor(tempoUtilizado / 3600);
-
-    const minutos =
-        Math.floor((tempoUtilizado % 3600) / 60);
-
-    const segundos =
-        tempoUtilizado % 60;
-
-    return (
-        String(horas).padStart(2,"0") + ":" +
-        String(minutos).padStart(2,"0") + ":" +
-        String(segundos).padStart(2,"0")
-    );
-
-}
-
 function carregarQuestao() {
 
     if (

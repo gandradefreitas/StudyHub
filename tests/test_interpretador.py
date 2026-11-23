@@ -5,10 +5,7 @@ import verificador_matematico as vm
 from tests.math_test_support import assert_legacy_equal, assert_legacy_error
 
 
-@pytest.fixture(autouse=True)
-def verificar_banco_de_testes():
-    # This pure mathematical module does not use the database fixture in conftest.
-    return None
+pytestmark = pytest.mark.matematica
 
 
 x = sp.Symbol("x", real=True)

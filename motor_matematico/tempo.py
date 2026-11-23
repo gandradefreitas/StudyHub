@@ -113,11 +113,10 @@ def _executar_no_filho(modulo, nome, args, kwargs, conexao):
     _EM_PROCESSO_ISOLADO = True
 
     try:
-        # A partida (importações) terminou: o pai começa a contar.
-        conexao.send(("pronto", None))
-
         funcao = getattr(importlib.import_module(modulo), nome).__wrapped__
 
+        # A partida (importações) terminou: o pai começa a contar.
+        conexao.send(("pronto", None))
         conexao.send(("ok", _executar_protegido(funcao, args, kwargs)))
 
     except Exception as erro:
@@ -146,6 +145,7 @@ def _executar_com_limite(funcao, args, kwargs, segundos):
             else "spawn"
         )
 
+    recebe = envia = None
     try:
         contexto = multiprocessing.get_context(metodo)
         recebe, envia = contexto.Pipe(duplex=False)
@@ -165,9 +165,12 @@ def _executar_com_limite(funcao, args, kwargs, segundos):
 
         processo.start()
 
-    except (OSError, ValueError, RuntimeError):
-        # Sem isolamento disponível: executa direto, sem limite.
-        return _executar_protegido(funcao, args, kwargs)
+    except (AssertionError, OSError, ValueError, RuntimeError) as erro:
+        if recebe is not None:
+            recebe.close()
+        if envia is not None:
+            envia.close()
+        return _resultado_erro_interno("FalhaNoIsolamento", type(erro).__name__)
 
     envia.close()
 

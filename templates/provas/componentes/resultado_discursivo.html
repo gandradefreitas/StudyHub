@@ -24,6 +24,8 @@
             {% elif tentativa.status == 'finalizada' %}
                 {% if tentativa.resultado_correcao and tentativa.resultado_correcao.status == 'revisao_necessaria' %}
                     Revisão humana necessária
+                {% elif tentativa.pode_tentar_correcao %}
+                    Correção indisponível
                 {% elif tentativa.resultado_correcao and tentativa.resultado_correcao.status == 'provisoria' %}
                     Correção provisória
                 {% else %}
@@ -58,9 +60,15 @@
 
         {% elif tentativa.status == 'finalizada' %}
             {% set pacote = tentativa.resultado_correcao %}
-            {% if pacote and pacote.status == 'indisponivel' %}
+            {% if tentativa.pode_tentar_correcao %}
+                <p>As tentativas automáticas de correção se esgotaram.</p>
+                <form method="post" action="{{ url_for('tentar_correcao_discursiva', tentativa_id=tentativa.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit">Tentar correção novamente</button>
+                </form>
+            {% elif pacote and pacote.status == 'indisponivel' %}
                 <p>{{ pacote.mensagem }}</p>
-                <p>O StudyHub tentará corrigir esta prova automaticamente a cada 5 minutos.</p>
+                <p>Uma nova tentativa automática está programada.</p>
                 <p>Tentativas automáticas realizadas: {{ tentativa.tentativas_correcao or 0 }}.</p>
                 {% if tentativa.correcao_em_andamento %}
                     <p>Uma tentativa de correção está em andamento.</p>
@@ -114,7 +122,7 @@
                         {% set situacao = 'incompleta' %}
                     {% endif %}
                 {% endif %}
-                <article class="item-discursivo{% if somente_resposta_final %} resultado-resposta-final{% endif %}{% if situacao %} resultado-resposta-final--{{ situacao }}{% endif %}">
+                <article class="item-discursivo{% if somente_resposta_final %} resultado-resposta-final{% endif %}{% if situacao %} resultado-resposta-final--{{ situacao }}{% elif somente_resposta_final %} resultado-resposta-final--inconclusiva{% endif %}">
                     <h3>Questão {{ item.letra }}</h3>
                     <p><strong>Pontuação:</strong>
                         {% if resultado_item and resultado_item.status == 'avaliado' %}
@@ -127,7 +135,7 @@
                     </p>
                     {% if somente_resposta_final %}
                         {% set esperada = respostas_esperadas.get(item.letra) %}
-                        <p>{% if situacao %}Resposta final {{ situacao }}.{% else %}Comparação inconclusiva.{% endif %}
+                        <p>{% if situacao %}Resposta final {{ situacao }}.{% else %}<strong>Comparação inconclusiva.</strong> A pontuação do item precisa de revisão.{% endif %}
                            {% if esperada %}Resposta esperada: <span class="resposta-esperada">{{ esperada }}</span>{% if not esperada.endswith('.') %}.{% endif %}
                            {% else %}Gabarito indisponível para esta questão.{% endif %}</p>
                     {% else %}

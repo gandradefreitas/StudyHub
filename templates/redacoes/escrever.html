@@ -32,7 +32,11 @@
 {% else %}{% include "redacoes/instrucoes_enem.html" %}{% endif %}
 <form method="post"{% if surpresa %} data-registrar-tempo="{{ url_for('redacoes.salvar_tempo_surpresa', instituicao=instituicao) }}"
     data-restante="{{ limite - surpresa.segundos }}" data-revisao="{{ surpresa.revisao }}"{% endif %}>
-    {% if surpresa %}<input type="hidden" name="chave" value="{{ surpresa.chave }}">{% endif %}
+    {% if surpresa %}
+        <input type="hidden" name="chave" value="{{ surpresa.chave }}">
+    {% else %}
+        <input type="hidden" name="chave_envio" value="{{ chave_envio }}">
+    {% endif %}
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <p id="aviso-linhas" class="redacoes-aviso">{% if ita %}No ITA, a redação deve ter de 25 a 35 linhas manuscritas. As 35 pautas são uma referência visual. A quebra do texto digitado varia conforme a tela e pode ocupar outra quantidade de linhas no papel.{% else %}No ENEM, a folha oficial tem até 30 linhas manuscritas. As 30 pautas abaixo são uma referência visual. A quebra do texto digitado varia com o tamanho da tela e pode ocupar uma quantidade diferente de linhas no papel.{% endif %}</p>
     <h2><label for="texto-redacao">Folha de redação</label></h2>

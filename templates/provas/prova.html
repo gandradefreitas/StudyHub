@@ -3,7 +3,7 @@
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXV3F6JX2D"></script>
-    <script>
+    <script nonce="{{ nonce_csp() }}">
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -171,19 +171,22 @@
 
     </main>
 
-<script>
-    const questoes = {{ prova.questoes | tojson }};
+<script nonce="{{ nonce_csp() }}">
+    const questoes = {{ prova.questoes | map(attribute='dados_aplicacao') | list | tojson }};
 </script>
 
-<script>
-    const tempoProva = "{{ prova.tempo }}";
+<script nonce="{{ nonce_csp() }}">
+    const tentativa = {
+        id: {{ tentativa_id | tojson }},
+        prazo: performance.now() + {{ tempo_restante | tojson }} * 1000
+    };
 </script>
 
-<script>
+<script nonce="{{ nonce_csp() }}">
     const STATIC_URL = "{{ url_for('static', filename='') }}";
 </script>
 
-<script>
+<script nonce="{{ nonce_csp() }}">
     const prova = {id: {{ prova.id }},tipo: {{ prova.tipo | tojson }},dia: {{ prova.dia | tojson }},areas: {{ prova.areas | tojson }}};
 </script>
 

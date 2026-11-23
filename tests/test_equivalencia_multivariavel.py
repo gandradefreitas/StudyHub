@@ -5,9 +5,7 @@ import verificador_matematico as vm
 from tests.math_test_support import assert_legacy_equal
 
 
-@pytest.fixture(autouse=True)
-def verificar_banco_de_testes():
-    return None
+pytestmark = pytest.mark.matematica
 
 
 x, y = sp.symbols("x y", real=True)

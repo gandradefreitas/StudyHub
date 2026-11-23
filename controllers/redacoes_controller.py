@@ -1,16 +1,19 @@
-from uuid import uuid4
+from datetime import datetime, timezone
+from uuid import UUID, uuid4
 
 from flask import Blueprint, abort, current_app, redirect, render_template, request, session, url_for
-from psycopg.types.json import Jsonb
+from flask_wtf.csrf import generate_csrf
 
 from database.conexao import conectar
 from database.redacoes_surpresa_repository import (
     avancar_surpresa, estado_atual, gravar_estado, obter_tentativa, preparar_tentativa,
 )
-from gemini_client import enviar_mensagem
+from database.fila_redacoes_repository import (
+    obter_envio_repetido, reagendar_redacao, registrar_envio,
+)
 from services.redacoes_surpresa_service import LIMITES, obter_tema_surpresa
 from services.redacoes_service import (
-    COMPETENCIAS, CRITERIOS_ITA, TEMAS, estimar_notas, estimar_notas_ita,
+    COMPETENCIAS, CRITERIOS_ITA, TEMAS,
 )
 
 redacoes = Blueprint("redacoes", __name__, url_prefix="/redacoes")
@@ -19,7 +22,7 @@ redacoes = Blueprint("redacoes", __name__, url_prefix="/redacoes")
 def listar_envios(usuario_id):
     with conectar() as conexao:
         return conexao.execute("""
-            SELECT id, tema, ano, criado_em, nota, instituicao, tempo_segundos FROM redacoes
+            SELECT id, tema, ano, criado_em, nota, instituicao, tempo_segundos, correcao_falhou FROM redacoes
             WHERE usuario_id = %s ORDER BY criado_em DESC, id DESC
         """, (usuario_id,)).fetchall()
 
@@ -59,25 +62,32 @@ def escrever(tema_id):
     instituicao = tema.get("instituicao", "ENEM")
     ita = instituicao == "ITA"
     texto = titulo = ""
+    chave_envio = uuid4()
     if request.method == "POST":
+        try:
+            chave_envio = UUID(request.form.get("chave_envio", ""))
+        except ValueError:
+            abort(400)
         texto = request.form.get("texto", "").strip()
         titulo = request.form.get("titulo", "").strip() if ita else ""
         if texto and len(texto) <= 6000 and (not ita or 0 < len(titulo) <= 200):
             with conectar() as conexao:
-                envio = conexao.execute("""
-                    INSERT INTO redacoes (usuario_id, tema, ano, texto, instituicao, titulo)
-                    VALUES (%s, %s, %s, %s, %s, %s) RETURNING id
-                """, (session["usuario_id"], tema["titulo"], tema["ano"], texto, instituicao, titulo)).fetchone()
-            return corrigir(envio["id"])
+                envio_id = registrar_envio(
+                    conexao, session["usuario_id"], tema["titulo"], tema["ano"],
+                    texto, instituicao, titulo, chave_envio=chave_envio,
+                )
+            return redirect(url_for("redacoes.resultado", envio_id=envio_id), code=303)
     return render_template("redacoes/escrever.html", tema=tema, texto=texto, titulo=titulo,
-                           instituicao=instituicao, ita=ita,
+                           instituicao=instituicao, ita=ita, chave_envio=chave_envio,
                            invalido=request.method == "POST"), 422 if request.method == "POST" else 200
 
 
 def obter_envio(envio_id):
     with conectar() as conexao:
         envio = conexao.execute("""
-            SELECT tema, ano, texto, notas, nota, criado_em, instituicao, titulo, tempo_segundos FROM redacoes
+            SELECT tema, ano, texto, notas, nota, criado_em, instituicao, titulo, tempo_segundos,
+                   correcao_falhou, correcao_tentar_apos, correcao_reivindicada_ate
+            FROM redacoes
             WHERE id = %s AND usuario_id = %s
         """, (envio_id, session["usuario_id"])).fetchone()
     if envio is None:
@@ -87,21 +97,8 @@ def obter_envio(envio_id):
 
 @redacoes.post("/resultado/<int:envio_id>/corrigir")
 def corrigir(envio_id):
-    envio = obter_envio(envio_id)
-    if envio["nota"] is None:
-        try:
-            if envio["instituicao"] == "ITA":
-                notas = estimar_notas_ita(enviar_mensagem, envio["tema"], envio["titulo"], envio["texto"])
-            else:
-                notas = estimar_notas(enviar_mensagem, envio["tema"], envio["texto"])
-        except (RuntimeError, ValueError):
-            current_app.logger.warning("Estimativa da redação %s indisponível.", envio_id)
-        else:
-            with conectar() as conexao:
-                conexao.execute("""
-                    UPDATE redacoes SET notas = %s, nota = %s
-                    WHERE id = %s AND usuario_id = %s AND nota IS NULL
-                """, (Jsonb(notas), sum(notas), envio_id, session["usuario_id"]))
+    obter_envio(envio_id)
+    reagendar_redacao(envio_id, session["usuario_id"])
     return redirect(url_for("redacoes.resultado", envio_id=envio_id), code=303)
 
 
@@ -112,8 +109,17 @@ def resultado(envio_id):
     nomes = [nome for nome, _ in CRITERIOS_ITA] if ita else COMPETENCIAS
     divisor = 10 if ita else 1
     competencias = [(nome, nota / divisor) for nome, nota in zip(nomes, envio["notas"] or [])]
+    agora = datetime.now(timezone.utc)
+    reserva = envio["correcao_reivindicada_ate"]
+    estado = "pendente"
+    if envio["correcao_falhou"]:
+        estado = "falhou"
+    elif reserva and reserva > agora:
+        estado = "processando"
+    elif envio["correcao_tentar_apos"] and envio["correcao_tentar_apos"] > agora:
+        estado = "reagendada"
     return render_template("redacoes/resultado.html", envio=envio,
-                           envio_id=envio_id, competencias=competencias,
+                           envio_id=envio_id, competencias=competencias, estado=estado,
                            maximo=10 if ita else 1000, nota_maxima=2 if ita else 200, divisor=divisor)
 
 
@@ -126,9 +132,16 @@ def surpresa(instituicao):
     if request.method == "GET":
         tentativa = preparar_tentativa(usuario_id, instituicao, limite, uuid4().hex)
     else:
+        try:
+            chave_envio = UUID(request.form.get("chave", ""))
+        except ValueError:
+            abort(400)
         with conectar() as conexao:
             tentativa = obter_tentativa(conexao, usuario_id, instituicao)
-            if not tentativa or tentativa["chave"] != request.form.get("chave"):
+            repetido = obter_envio_repetido(conexao, usuario_id, chave_envio)
+            if repetido:
+                return redirect(url_for("redacoes.resultado", envio_id=repetido["id"]), code=303)
+            if not tentativa or tentativa["chave"] != chave_envio.hex:
                 return redirect(url_for("redacoes.surpresa", instituicao=instituicao), code=303)
             estado = estado_atual(tentativa, limite, "pausar",
                                   request.form.get("texto", "")[:6000].strip(),
@@ -140,13 +153,13 @@ def surpresa(instituicao):
                 gravar_estado(conexao, usuario_id, instituicao, estado)
                 tentativa.update(estado)
                 return renderizar_surpresa(instituicao, tentativa, invalido=True), 422
-            envio = conexao.execute("""
-                INSERT INTO redacoes (usuario_id, tema, ano, texto, instituicao, titulo, tempo_segundos)
-                VALUES (%s, %s, 0, %s, %s, %s, %s) RETURNING id
-            """, (usuario_id, tema["titulo"], estado["texto"], instituicao,
-                  estado["titulo"] if instituicao == "ITA" else "", int(estado["segundos"]))).fetchone()
+            envio_id = registrar_envio(
+                conexao, usuario_id, tema["titulo"], 0, estado["texto"], instituicao,
+                estado["titulo"] if instituicao == "ITA" else "", chave_envio=chave_envio,
+                tempo_segundos=int(estado["segundos"]),
+            )
             avancar_surpresa(conexao, usuario_id, instituicao)
-        return corrigir(envio["id"])
+        return redirect(url_for("redacoes.resultado", envio_id=envio_id), code=303)
     return renderizar_surpresa(instituicao, tentativa)
 
 
@@ -177,11 +190,13 @@ def encerrar_surpresa(instituicao):
     return redirect(url_for("redacoes.surpresa", instituicao=instituicao), code=303)
 
 
-@redacoes.post("/surpresa/<instituicao>/tempo")
+@redacoes.route("/surpresa/<instituicao>/tempo", methods=["GET", "POST"])
 def salvar_tempo_surpresa(instituicao):
     limite = LIMITES.get(instituicao)
     if limite is None:
         abort(404)
+    if request.method == "GET":
+        return {"csrf_token": generate_csrf()}, 200, {"Cache-Control": "no-store"}
     usuario_id = session["usuario_id"]
     acao = request.form.get("acao")
     revisao = request.form.get("revisao", type=int)
@@ -202,4 +217,5 @@ def salvar_tempo_surpresa(instituicao):
             WHERE usuario_id = %s AND instituicao = %s
         """, (revisao, usuario_id, instituicao))
     return {"restante": limite - estado["segundos"],
-            "texto": estado["texto"], "titulo": estado["titulo"]}
+            "texto": estado["texto"], "titulo": estado["titulo"],
+            "csrf_token": generate_csrf()}

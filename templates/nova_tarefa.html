@@ -32,7 +32,7 @@ Nova tarefa | StudyHub
 
 </section>
 
-<script>
+<script nonce="{{ nonce_csp() }}">
     document.getElementById("form-nova-tarefa").addEventListener("submit", function () {
         const botao = document.getElementById("botao-salvar");
 

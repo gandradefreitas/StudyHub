@@ -100,6 +100,9 @@ def validar_senha(senha):
     if len(senha) > 64:
         return False, "A senha deve possuir no máximo 64 caracteres."
 
+    if len(senha.encode("utf-8")) > 72:
+        return False, "A senha é muito longa para os caracteres usados."
+
     if " " in senha:
         return False, "A senha não pode conter espaços."
 

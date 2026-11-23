@@ -33,7 +33,7 @@ data-tema="{{ usuario['tema'] if usuario else 'sistema' }}"
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script nonce="{{ nonce_csp() }}">
     window.setTimeout(function () {
         window.location.replace({{ url_menu | tojson }});
     }, 8000);

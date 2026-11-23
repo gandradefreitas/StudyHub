@@ -1,9 +1,28 @@
+from concurrent.futures import ThreadPoolExecutor
+import re
+
 import pytest
 
-from controllers import redacoes_controller
+import worker_correcao_discursiva as worker
+from database.conexao import conectar
+from database.fila_redacoes_repository import encerrar_redacao, reivindicar_redacao
 from database.dados_repository import limpar_historico
 from services.redacoes_service import estimar_notas
 from tests.app_de_teste import app
+
+
+def preparar_envio(cliente, caminho, **campos):
+    pagina = cliente.get(caminho).get_data(as_text=True)
+    chave = re.search(r'name="chave_envio" value="([^"]+)"', pagina)[1]
+    return {"chave_envio": chave, **campos}
+
+
+def processar_envio(caminho):
+    envio_id = int(caminho.rsplit("/", 1)[-1])
+    envio = reivindicar_redacao(envio_id)
+    assert envio
+    worker.processar_redacao(envio)
+
 
 
 @pytest.mark.parametrize("resposta", ["[40, 80]", "[41,80,120,160,200]", "[true,80,120,160,200]", "{}"])
@@ -20,7 +39,7 @@ def test_redacao_salva_antes_da_estimativa_e_aparece_no_historico(monkeypatch, d
     def indisponivel(_):
         raise RuntimeError("Falha simulada")
 
-    monkeypatch.setattr(redacoes_controller, "enviar_mensagem", indisponivel)
+    monkeypatch.setattr(worker, "enviar_mensagem", indisponivel)
     with app.test_client() as cliente:
         assert cliente.get("/redacoes").status_code == 302
         with cliente.session_transaction() as sessao:
@@ -31,21 +50,34 @@ def test_redacao_salva_antes_da_estimativa_e_aparece_no_historico(monkeypatch, d
         assert '<body class="sidebar-toggle"' in folha
         assert 'id="aviso-linhas" class="redacoes-aviso"' in folha
         assert folha.index("30 pautas") < folha.index("Folha de redação")
-        assert cliente.post("/redacoes/tema/sus-2026", data={"texto": " "}).status_code == 422
-        envio = cliente.post("/redacoes/tema/sus-2026", data={"texto": "Minha redação."})
+        tema = "/redacoes/tema/sus-2026"
+        dados = preparar_envio(cliente, tema, texto="Minha redação.")
+        assert cliente.post(tema, data={**dados, "texto": " "}).status_code == 422
+        envio = cliente.post(tema, data=dados)
         assert envio.status_code == 303
         caminho = envio.location
-        assert "Sua redação foi salva" in cliente.get(caminho).get_data(as_text=True)
+        assert cliente.post(tema, data=dados).location == caminho
+        assert "fila de processamento" in cliente.get(caminho).get_data(as_text=True)
         assert "primeira correção" in cliente.get("/redacoes").get_data(as_text=True)
+        processar_envio(caminho)
+        assert "agendada" in cliente.get(caminho).get_data(as_text=True)
+        assert "agendada" in cliente.post(caminho + "/corrigir", follow_redirects=True).get_data(as_text=True)
 
-        monkeypatch.setattr(redacoes_controller, "enviar_mensagem", lambda _: "[40, 80, 120, 160, 200]")
-        resposta = cliente.post(caminho + "/corrigir", follow_redirects=True).get_data(as_text=True)
+        with conectar() as conexao:
+            conexao.execute(
+                "UPDATE redacoes SET correcao_tentar_apos = CURRENT_TIMESTAMP WHERE id = %s",
+                (int(caminho.rsplit("/", 1)[-1]),),
+            )
+        monkeypatch.setattr(worker, "enviar_mensagem", lambda _: "[40, 80, 120, 160, 200]")
+        processar_envio(caminho)
+        resposta = cliente.get(caminho).get_data(as_text=True)
         assert '<body class="sidebar-toggle"' in resposta
         assert resposta.count('<meter min="0" max="200"') == 5
         assert "600 / 1000" in resposta
         assert "Minha redação." in resposta
         assert "600,0 / 1000" in cliente.get("/redacoes").get_data(as_text=True)
-        outro_envio = cliente.post("/redacoes/tema/teatro-2025", data={"texto": "Outro texto."})
+        outro_tema = "/redacoes/tema/teatro-2025"
+        outro_envio = cliente.post(outro_tema, data=preparar_envio(cliente, outro_tema, texto="Outro texto."))
         assert outro_envio.status_code == 303
         assert caminho in cliente.get("/provas/historico").get_data(as_text=True)
 
@@ -86,7 +118,7 @@ def test_ita_usa_titulo_rubrica_e_escala_proprios(monkeypatch, dados_discursivos
         assert "Meu título" in prompt
         return "[20, 18, 16, 15, 17]"
 
-    monkeypatch.setattr(redacoes_controller, "enviar_mensagem", corrigir)
+    monkeypatch.setattr(worker, "enviar_mensagem", corrigir)
     with app.test_client() as cliente:
         with cliente.session_transaction() as sessao:
             sessao["usuario_id"] = dados_discursivos["usuarios"][0]
@@ -99,9 +131,11 @@ def test_ita_usa_titulo_rubrica_e_escala_proprios(monkeypatch, dados_discursivos
         assert "Critérios de avaliação do ITA 2027" not in pagina
         assert "25 a 35 linhas" in pagina
         assert 'style="--linhas: 35"' in pagina
-        assert cliente.post(caminho, data={"texto": "Um argumento."}).status_code == 422
-        resposta = cliente.post(caminho, data={"titulo": "Meu título", "texto": "Um argumento."},
-                                follow_redirects=True).get_data(as_text=True)
+        dados = preparar_envio(cliente, caminho, texto="Um argumento.")
+        assert cliente.post(caminho, data=dados).status_code == 422
+        resultado = cliente.post(caminho, data={**dados, "titulo": "Meu título"})
+        processar_envio(resultado.location)
+        resposta = cliente.get(resultado.location).get_data(as_text=True)
         assert "8,6 / 10" in resposta
         assert "1,8 / 2" in resposta
         assert "Meu título" in resposta
@@ -114,8 +148,6 @@ def test_ita_usa_titulo_rubrica_e_escala_proprios(monkeypatch, dados_discursivos
     ("ITA", 3000, "[16, 16, 16, 16, 16]", "8,0 / 10"),
 ])
 def test_surpresa_pausa_salva_e_alterna(prova, limite, notas, media, monkeypatch, dados_discursivos):
-    import re
-
     from database import redacoes_surpresa_repository
     from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
     from services.redacoes_surpresa_service import TEMAS_SURPRESA
@@ -124,7 +156,7 @@ def test_surpresa_pausa_salva_e_alterna(prova, limite, notas, media, monkeypatch
     temas = TEMAS_SURPRESA[prova]
     agora = 100.0
     monkeypatch.setattr(redacoes_surpresa_repository, "time", lambda: agora)
-    monkeypatch.setattr(redacoes_controller, "enviar_mensagem", lambda _: notas)
+    monkeypatch.setattr(worker, "enviar_mensagem", lambda _: notas)
     monkeypatch.setitem(app.config, "TESTING", True)
     monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
 
@@ -156,10 +188,66 @@ def test_surpresa_pausa_salva_e_alterna(prova, limite, notas, media, monkeypatch
         dados["chave"] = chave(pagina)
         cliente.post(caminho + "/tempo", data=dict(dados, acao="ativo", revisao=3))
         agora += 5
-        envio = cliente.post(caminho, data=dados, follow_redirects=True)
-        assert "00:12" in envio.get_data(as_text=True)
+        envio = cliente.post(caminho, data=dados)
+        assert cliente.post(caminho, data=dados).location == envio.location
+        processar_envio(envio.location)
+        assert "00:12" in cliente.get(envio.location).get_data(as_text=True)
         assert temas[1]["titulo"] in cliente.get(caminho).get_data(as_text=True)
         assert media in cliente.get("/redacoes").get_data(as_text=True)
         assert "00:12" in cliente.get("/provas/historico").get_data(as_text=True)
         assert sum(d["duracao"] for d in obter_duracao_provas_escritas_por_dia(usuario, hoje=True)) == 12
         assert not obter_duracao_provas_escritas_por_dia(outro)
+
+
+def test_reserva_redacao_expirada_nao_grava_resultado(monkeypatch, dados_discursivos):
+    usuario = dados_discursivos["usuarios"][0]
+    monkeypatch.setitem(app.config, "TESTING", True)
+    monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        tema = "/redacoes/tema/sus-2026"
+        anterior = cliente.post(tema, data=preparar_envio(cliente, tema, texto="Um argumento."))
+        envio_id = int(anterior.location.rsplit("/", 1)[-1])
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            reservas = list(executor.map(reivindicar_redacao, (envio_id, envio_id)))
+        unica = [reserva for reserva in reservas if reserva]
+        assert len(unica) == 1
+
+        with conectar() as conexao:
+            conexao.execute("""
+                UPDATE redacoes SET correcao_reivindicada_ate = CURRENT_TIMESTAMP - INTERVAL '1 second'
+                WHERE id = %s
+            """, (envio_id,))
+        reserva_nova = reivindicar_redacao(envio_id)
+        assert reserva_nova["correcao_tentativas"] == 2
+        assert not encerrar_redacao(unica[0], [200] * 5)
+        assert encerrar_redacao(reserva_nova, [120] * 5)
+        assert "600 / 1000" in cliente.get(anterior.location).get_data(as_text=True)
+
+
+def test_redacao_esgotada_pode_ser_reenfileirada(monkeypatch, dados_discursivos):
+    usuario = dados_discursivos["usuarios"][0]
+    monkeypatch.setitem(app.config, "TESTING", True)
+    monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        tema = "/redacoes/tema/sus-2026"
+        anterior = cliente.post(tema, data=preparar_envio(cliente, tema, texto="Redação salva."))
+        envio_id = int(anterior.location.rsplit("/", 1)[-1])
+        with conectar() as conexao:
+            conexao.execute("""
+                UPDATE redacoes SET correcao_tentativas = %s,
+                    correcao_reivindicada_ate = CURRENT_TIMESTAMP - INTERVAL '1 second'
+                WHERE id = %s
+            """, (worker.MAX_TENTATIVAS, envio_id))
+
+        worker.recuperar_redacoes_esgotadas()
+        assert not reivindicar_redacao(envio_id)
+        assert "Tentar correção novamente" in cliente.get(anterior.location).get_data(as_text=True)
+        assert {item["fila"] for item in worker.status_filas()} == {"discursivas", "redacoes"}
+        assert cliente.post(anterior.location + "/corrigir").status_code == 303
+        reserva = reivindicar_redacao(envio_id)
+        assert reserva["texto"] == "Redação salva."
+        assert reserva["correcao_tentativas"] == 1

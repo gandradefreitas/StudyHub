@@ -675,21 +675,20 @@ def adaptar_schema_gemini(schema):
 
 
 def gerar_correcao(dados):
-    cliente = criar_cliente()
-
     prompt = construir_prompt_correcao(dados)
 
     schema = carregar_schema_saida()
     schema_gemini = adaptar_schema_gemini(schema)
 
-    resposta = cliente.models.generate_content(
-        model=MODELO_GEMINI,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_json_schema=schema_gemini
+    with criar_cliente() as cliente:
+        resposta = cliente.models.generate_content(
+            model=MODELO_GEMINI,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_json_schema=schema_gemini,
+            ),
         )
-    )
 
     resultado = json.loads(resposta.text)
 

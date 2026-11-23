@@ -1,6 +1,6 @@
+from services.metricas_estudo import obter_tempo_total_estudado
 from database.estudos_repository import (
     obter_segundos_estudados_hoje,
-    obter_total_segundos,
     obter_segundos_provas_hoje, obter_questoes_hoje
 )
 
@@ -107,22 +107,7 @@ def carregar_dashboard(usuario_id):
         usuario_id
     )
 
-    segundos_estudo = obter_total_segundos(
-        usuario_id
-    )
-
-    segundos_provas = obter_segundos_provas(
-        usuario_id
-    )
-
-    segundos_totais = (
-        segundos_estudo +
-        segundos_provas
-    )
-
-    tempo_estudado_total = formatar_duracao(
-        segundos_totais
-    )
+    tempo_estudado_total = formatar_duracao(obter_tempo_total_estudado(usuario_id))
 
     if respondidas > 0:
 

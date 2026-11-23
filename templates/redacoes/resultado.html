@@ -25,12 +25,18 @@
                 </div>
             {% endfor %}
         </dl>
-    {% else %}
+    {% elif estado == "falhou" %}
         <p>Sua redação foi salva. A estimativa está indisponível no momento.</p>
         <form method="post" action="{{ url_for('redacoes.corrigir', envio_id=envio_id) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit">Tentar correção novamente</button>
         </form>
+    {% else %}
+        <p role="status">Sua redação foi salva.
+            {% if estado == "processando" %}A correção está em andamento.
+            {% elif estado == "reagendada" %}Uma nova tentativa de correção está agendada.
+            {% else %}A correção está na fila de processamento.{% endif %}
+        </p>
     {% endif %}
 </section>
 <section class="redacoes-cartao">
@@ -39,4 +45,10 @@
     <div class="redacoes-texto">{{ envio.texto }}</div>
 </section>
 <a href="{{ url_for('historico_provas', _anchor='historico-redacoes') }}">Ver Histórico</a>
+{% endblock %}
+
+{% block scripts %}
+{% if envio.nota is none and estado != "falhou" %}
+    <script src="{{ url_for('static', filename='js/provas/atualizar_correcao.js') }}" defer></script>
+{% endif %}
 {% endblock %}

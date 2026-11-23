@@ -7,9 +7,7 @@ import verificador_matematico as vm
 from tests.math_test_support import assert_legacy_equal
 
 
-@pytest.fixture(autouse=True)
-def verificar_banco_de_testes():
-    return None
+pytestmark = pytest.mark.matematica
 
 
 @pytest.mark.parametrize("name,e1,e2,expected", [
@@ -128,3 +126,27 @@ def test_interface_dominio_entrada_invalida():
 def test_interface_serializavel_json(name, call):
     json.dumps(call())
     assert_legacy_equal(name, True, True)
+
+
+def test_interface_expressoes_com_isolamento_spawn(monkeypatch):
+    from motor_matematico import tempo
+
+    monkeypatch.setitem(tempo._configuracao_de_tempo, "metodo", "spawn")
+    resultado = vm.avaliar_equivalencia_expressoes("(x + 1)^2", "x² + 2x + 1")
+
+    assert resultado["status"] == "correct", resultado
+    assert resultado["resultado"] is True
+
+
+def test_interface_preserva_limite_quando_isolamento_falha(monkeypatch):
+    from motor_matematico import tempo
+
+    def processo_indisponivel(_):
+        raise OSError("processo indisponível")
+
+    monkeypatch.setattr(tempo.multiprocessing, "get_context", processo_indisponivel)
+    resultado = vm.avaliar_equivalencia_expressoes("x + x", "2x")
+
+    assert resultado["status"] == "indeterminate"
+    assert resultado["resultado"] is None
+    assert resultado["detalhes"]["erro_interno"] == "FalhaNoIsolamento"

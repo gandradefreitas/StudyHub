@@ -54,8 +54,11 @@ def test_cartoes_usam_gabarito_cadastrado(monkeypatch, disciplina, slug):
         assert "Resposta esperada:" in cartao
         assert escape(gabarito[letra]).replace("&#x27;", "&#39;").replace("&quot;", "&#34;") in cartao
         assert (f"Resposta final {situacao}." if situacao else "Comparação inconclusiva.") in cartao
-        if situacao:
-            assert f'resultado-resposta-final--{situacao}' in html
+        variante = situacao or "inconclusiva"
+        assert f'resultado-resposta-final--{variante}' in html
+        if situacao is None:
+            assert "A pontuação do item precisa de revisão." in cartao
+            assert "Resposta final incorreta." not in cartao
     for texto in ("Comparação das respostas finais", "Pontos a melhorar",
                  "Justificativa redundante", "Evidência do aluno"):
         assert texto not in html
