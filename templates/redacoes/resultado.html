@@ -29,7 +29,7 @@
         <p>Sua redação foi salva. A estimativa está indisponível no momento.</p>
         <form method="post" action="{{ url_for('redacoes.corrigir', envio_id=envio_id) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit">Tentar correção novamente</button>
+            <button type="submit" class="botao-repetir-correcao">Tentar correção novamente</button>
         </form>
     {% else %}
         <p role="status">Sua redação foi salva.

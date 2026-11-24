@@ -64,7 +64,7 @@
                 <p>As tentativas automáticas de correção se esgotaram.</p>
                 <form method="post" action="{{ url_for('tentar_correcao_discursiva', tentativa_id=tentativa.id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit">Tentar correção novamente</button>
+                    <button type="submit" class="botao-repetir-correcao">Tentar correção novamente</button>
                 </form>
             {% elif pacote and pacote.status == 'indisponivel' %}
                 <p>{{ pacote.mensagem }}</p>

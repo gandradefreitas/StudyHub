@@ -246,3 +246,24 @@ body {
 .sh-dados-evolucao td { padding: .35rem .6rem; text-align: start; }
 .sh-grafico-dia:focus-visible,
 .tabela-wrapper:focus-visible { outline: 2px solid var(--cor-primaria); outline-offset: 2px; }
+
+button.botao-repetir-correcao {
+    margin-top: .65rem;
+    padding: .65rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--cor-primaria) 55%, var(--cor-borda));
+    border-radius: .65rem;
+    background: color-mix(in srgb, var(--cor-primaria) 14%, var(--cor-card));
+    color: var(--cor-texto);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+button.botao-repetir-correcao:hover {
+    background: color-mix(in srgb, var(--cor-primaria) 22%, var(--cor-card));
+}
+
+button.botao-repetir-correcao:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 3px;
+}
