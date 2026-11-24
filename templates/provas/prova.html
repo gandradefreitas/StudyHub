@@ -20,6 +20,7 @@
     <title>Avaliação</title>
     <script src="{{ url_for('static', filename='js/aviso_studyhub.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
 </head>
 <body  data-tema="{{ usuario['tema'] }}">
 
@@ -27,6 +28,7 @@
 
     {% include "componentes/header_dashboard.html" %}
     <main class="pagina-prova">
+        {% include "componentes/flash_messages.html" %}
         {% if prova.dia == "Primeiro Dia" %}
         <section class="selecao-lingua" id="selecao-lingua">
 

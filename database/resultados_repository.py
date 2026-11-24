@@ -1,5 +1,4 @@
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from utils.horario import horario_studyhub
 
 from database.conexao import conectar
 from database.provas_objetivas_repository import TentativaObjetivaEncerrada
@@ -61,33 +60,7 @@ def salvar_resultado(resultado):
 
 
 def formatar_data_realizacao(data):
-
-    fuso_fortaleza = ZoneInfo("America/Fortaleza")
-
-    if isinstance(data, datetime):
-
-        data_local = data
-
-    else:
-
-        data_local = datetime.fromisoformat(data)
-
-    # Interpreta datas sem fuso como horário de Fortaleza.
-    if data_local.tzinfo is None:
-
-        data_local = data_local.replace(
-            tzinfo=fuso_fortaleza
-        )
-
-    else:
-
-        data_local = data_local.astimezone(
-            fuso_fortaleza
-        )
-
-    return data_local.strftime(
-        "%d/%m/%Y às %H:%M"
-    )
+    return horario_studyhub(data).strftime("%d/%m/%Y às %H:%M")
 
 
 def listar_resultados_usuario(usuario_id):

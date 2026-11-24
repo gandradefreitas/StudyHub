@@ -9,6 +9,25 @@
 5. Inicie `gunicorn app:app` e o processo indicado no [guia da fila de correções](fila-correcoes.md). Confira o endpoint `/health`, o login e as páginas autenticadas, e verifique o estado da fila.
 6. Configure `STUDYHUB_PROXY_HTTPS=1` somente quando o servidor não puder ser acessado diretamente e houver exatamente um proxy confiável que substitua o cabeçalho de protocolo dos clientes. Confirme HTTPS, HSTS e a política de segurança de conteúdo no endereço publicado.
 
+### Render e Neon
+
+No Render, coloque a migração no **Pre-Deploy Command** se o plano disponibilizar esse campo:
+
+```sh
+python -m database.criar_banco
+```
+
+Mantenha `gunicorn app:app` como **Start Command**. Se o serviço não oferecer a etapa de pré-publicação, use este **Start Command**:
+
+```sh
+python -m database.criar_banco && exec gunicorn app:app
+```
+
+Os comandos usam o `DATABASE_URL` configurado no serviço e aplicam as versões pendentes na ordem.
+Configure `/health` como **Health Check Path**. O endpoint exige conexão com o banco e um esquema atualizado.
+Se o painel falhar com uma coluna ausente em `redacoes`, a migração `0002_fila_correcao.sql`
+é a que adiciona os campos da fila. Execute o migrador completo para registrar as versões corretamente.
+
 ## Recuperação
 
 O backup JSON em Configurações é uma exportação pessoal. Para restaurar o serviço, use um backup do PostgreSQL ou a restauração do provedor. Restaure primeiro em outro banco, confira a versão das migrações e faça uma rodada de validação antes de apontar o serviço para o banco recuperado. Mantenha as credenciais fora de arquivos versionados e logs.

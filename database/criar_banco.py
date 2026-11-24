@@ -465,6 +465,23 @@ def aplicar_migracoes(conexao):
                 cursor.execute("INSERT INTO studyhub_migracoes (versao) VALUES (%s)", (versao,))
 
 
+def verificar_esquema_web(conexao):
+    """Confere o esquema sem gravar dados nem executar migrações."""
+    conexao.execute("""
+        SELECT r.correcao_falhou, r.correcao_tentativas, r.correcao_reivindicada_ate,
+               r.correcao_tentar_apos, r.chave_envio, t.usuario_id
+        FROM redacoes AS r
+        CROSS JOIN tentativas_provas_objetivas AS t
+        CROSS JOIN estudos AS e
+        WHERE e.inicio_segmento IS NOT DISTINCT FROM e.ultima_atividade
+        LIMIT 0
+    """)
+    encontradas = conexao.execute("SELECT versao FROM studyhub_migracoes").fetchall()
+    pasta = Path(__file__).with_name("migrations")
+    esperadas = {1, *(int(arquivo.name[:4]) for arquivo in pasta.glob("*.sql"))}
+    return esperadas <= {linha["versao"] for linha in encontradas}
+
+
 def criar_tabelas():
     with conectar() as conexao:
         aplicar_migracoes(conexao)

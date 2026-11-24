@@ -42,12 +42,12 @@
 
         <p>
             <strong>Início:</strong>
-            {{ tentativa.data_inicio.strftime('%d/%m/%Y às %H:%M') if tentativa.data_inicio else 'Não registrado' }}
+            {{ (tentativa.data_inicio | horario_studyhub).strftime('%d/%m/%Y às %H:%M') if tentativa.data_inicio else 'Não registrado' }}
         </p>
 
         <p>
             <strong>Finalização:</strong>
-            {{ tentativa.data_finalizacao.strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else 'Ainda não finalizada' }}
+            {{ (tentativa.data_finalizacao | horario_studyhub).strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else 'Ainda não finalizada' }}
         </p>
 
         {% if tentativa.status == 'corrigida' %}

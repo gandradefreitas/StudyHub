@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             inicio,
             Math.min(inicio + simbolo.length + deslocamento, campo.value.length)
         );
+        if (window.matchMedia("(max-width: 640px)").matches) paleta.open = false;
         campo.focus();
         campo.setSelectionRange(posicaoCursor, posicaoCursor);
         campo.dispatchEvent(new Event("input", { bubbles: true }));

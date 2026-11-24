@@ -22,3 +22,16 @@ O cliente HTTP do Gemini usa limite de 60 segundos por chamada, sem repetição 
 
 Para verificar uma correção de cada modalidade em ambiente de testes ou manutenção, use `python worker_correcao_discursiva.py --uma-vez`. Esse comando processa itens reais do banco apontado por `DATABASE_URL`.
 
+
+### Serviço web sem worker separado
+
+Configure `STUDYHUB_BANCO_WORKER` com o nome do banco Neon (por exemplo `neondb`) e
+`GEMINI_API_KEY` no serviço web. Use este **Start Command** após publicar o código:
+
+```sh
+python -m database.criar_banco && exec python executar_local.py --render
+```
+
+O Gunicorn usa a porta do Render e o worker consome a mesma fila. Enquanto o serviço
+web estiver suspenso, os envios podem permanecer pendentes. Use o worker separado
+quando precisar de processamento independente do ciclo de vida do site.

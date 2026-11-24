@@ -6,7 +6,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Seja z = a + 2i um número complexo, em que a ∈ R é positivo. O valor de\na para que as representações de 1; z e z² no plano de Argand-Gauss formem um triângulo\nde área 200 é\n",
+        "enunciado": "Seja z = a + 2i um número complexo, em que a ∈ R é positivo. O valor de a para que as representações de 1; z e z² no plano de Argand-Gauss formem um triângulo de área 200 é\n",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -66,7 +66,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Sejam f(x) e g(x) funções reais definidas para todo x ∈ R. Se para todo x > 0\nvale a igualdade g(x²) = f (2x² − x + 1), podemos afirmar que",
+        "enunciado": "Sejam f(x) e g(x) funções reais definidas para todo x ∈ R. Se para todo x > 0 vale a igualdade g(x²) = f (2x² − x + 1), podemos afirmar que",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -126,7 +126,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Sejam m; n e k números reais. Considere os sistemas abaixo:\n\nI : {x + y + z = 1; x + 2y − z = 2; 2x + y + 4z = 1}, II : {x + y + z = 1; x + my + nz = 5; kx + y − z = 3m + 2n}\n\nSabendo-se que os dois sistemas são equivalentes (isto é, possuem o mesmo conjunto\nsolução), o valor de k é\n",
+        "enunciado": "Sejam m; n e k números reais. Considere os sistemas abaixo:\n\nI : {x + y + z = 1; x + 2y − z = 2; 2x + y + 4z = 1}, II : {x + y + z = 1; x + my + nz = 5; kx + y − z = 3m + 2n}\n\nSabendo-se que os dois sistemas são equivalentes (isto é, possuem o mesmo conjunto solução), o valor de k é\n",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -146,7 +146,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Considere a função\nf (x) = √2sen (2x) + 2sen (x) − 2 cos(x) − 1 / 8(cos(2x) + 1)\n\nSeja I = (a; b) o intervalo de maior comprimento contido em [−π; 2π] tal que f (x) está\ndefinida para todo x ∈ I. O valor de a + b é\n",
+        "enunciado": "Considere a função f (x) = √2sen (2x) + 2sen (x) − 2 cos(x) − 1 / 8(cos(2x) + 1)\n\nSeja I = (a; b) o intervalo de maior comprimento contido em [−π; 2π] tal que f (x) está definida para todo x ∈ I. O valor de a + b é\n",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -166,7 +166,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Duas circunferências C₁ e C₂ de centros O₁ e O₂, respectivamente, têm raio\nigual a 5 cm e se interceptam nos pontos P e Q, determinando uma corda comum PQ de\ntamanho 6 cm. As interseções de cada circunferência com o segmento O₁O₂ determinam\nos pontos R em C₁ e S em C₂. O volume do sólido de revolução obtido pela rotação do\ntriângulo PO₁R em torno da reta O₁O₂ é, em cm3\n, igual a",
+        "enunciado": "Duas circunferências C₁ e C₂ de centros O₁ e O₂, respectivamente, têm raio igual a 5 cm e se interceptam nos pontos P e Q, determinando uma corda comum PQ de tamanho 6 cm. As interseções de cada circunferência com o segmento O₁O₂ determinam os pontos R em C₁ e S em C₂. O volume do sólido de revolução obtido pela rotação do triângulo PO₁R em torno da reta O₁O₂ é, em cm3\n, igual a",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -206,7 +206,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Seja H uma hipérbole no plano cartesiano cujos focos são comuns aos focos\nda elipse E : x²/4 + y² = 1. Seja P um ponto de intersecção de E e H no primeiro quadrante\ne O a origem do sistema cartesiano. Sabendo que OP forma um ângulo θ com o eixo horizontal Ox , com tan(θ) = √3/6, a excentricidade de H é",
+        "enunciado": "Seja H uma hipérbole no plano cartesiano cujos focos são comuns aos focos da elipse E : x²/4 + y² = 1. Seja P um ponto de intersecção de E e H no primeiro quadrante e O a origem do sistema cartesiano. Sabendo que OP forma um ângulo θ com o eixo horizontal Ox , com tan(θ) = √3/6, a excentricidade de H é",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -246,7 +246,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Difícil",
-        "enunciado": "Considere uma partícula cuja posição e dada pela função ao horária\n\nx(t) = √D² + (Vt-D)²\nem que V e D sao constantes positivas, com unidades adequadas. Seja v(t) a velocidade\nmédia do móvel entre o instante inicial t0 = 0 s e um instante arbitrário t. Assinale a alternativa que contém a distância percorrida pela partícula desde o início do movimento até o \ninstante no qual v(t) = 0 m/s. ",
+        "enunciado": "Considere uma partícula cuja posição e dada pela função ao horária\n\nx(t) = √D² + (Vt-D)² em que V e D sao constantes positivas, com unidades adequadas. Seja v(t) a velocidade média do móvel entre o instante inicial t0 = 0 s e um instante arbitrário t. Assinale a alternativa que contém a distância percorrida pela partícula desde o início do movimento até o \ninstante no qual v(t) = 0 m/s. ",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -726,7 +726,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Média",
-        "enunciado": "Leia o texto a seguir para responder às questões de 37 a 39.\n“In recent years, no more than a week goes by without news of a cosmic discovery\nworthy of banner headlines. While media gatekeepers may have developed an interest in the\nuniverse, this rise in coverage likely comes from a genuine increase in the public’s appetite for\nscience. Evidence for this abounds, from hit television shows inspired or informed by science,\nto the success of science fiction films starring marquee actors, and brought to the screens by\ncelebrated producers and directors. And lately, theatrical release biopics featuring important\nscientists have become a genre unto itself. There´s also widespread interest around the\nworld in science festivals, science fiction conventions, and documentaries for television.\nThe highest grossing film of all time is by a famous director who set his story on a planet\norbiting a distant star. And it features a famous actress who plays an astrobiologist. While\nmost branches of science have ascended in this era, the field of astrophysics persistently\nrises to the top. I think I know why. At one time or another every one of us has looked up at\nnight sky and wondered: What does it all mean? How does it all work? And, what is my place\nin the universe? [. . . ]”\n\nDe acordo com as informações encontradas no texto (Astrophysics for people in a hurry), é CORRETO afirmar que",
+        "enunciado": "Leia o texto a seguir para responder às questões de 37 a 39.\n“In recent years, no more than a week goes by without news of a cosmic discovery worthy of banner headlines. While media gatekeepers may have developed an interest in the universe, this rise in coverage likely comes from a genuine increase in the public’s appetite for science. Evidence for this abounds, from hit television shows inspired or informed by science, to the success of science fiction films starring marquee actors, and brought to the screens by celebrated producers and directors. And lately, theatrical release biopics featuring important scientists have become a genre unto itself. There´s also widespread interest around the world in science festivals, science fiction conventions, and documentaries for television.\nThe highest grossing film of all time is by a famous director who set his story on a planet orbiting a distant star. And it features a famous actress who plays an astrobiologist. While most branches of science have ascended in this era, the field of astrophysics persistently rises to the top. I think I know why. At one time or another every one of us has looked up at night sky and wondered: What does it all mean? How does it all work? And, what is my place in the universe? [. . . ]”\n\nDe acordo com as informações encontradas no texto (Astrophysics for people in a hurry), é CORRETO afirmar que",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -846,7 +846,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Média",
-        "enunciado": "Leia o texto a seguir para responder às questões 43 e 44.\nThe early development of radar was driven primarily by military imperatives, and the\ntargets that were to be detected were mainly aircraft and ships. It was no surprise that echoes\nwere also received from terrain and from rainstorms, but the discovery, during World War\nII, that birds were often detectable was less expected. As the technology developed, and\nspecially after transmission at the shorter ‘microwave’ wavelengths became commonplace,\nechoes from insects were also identified. In the late 1940’s and the 1950’s, radar technology\nwas adapted rapidly to the needs of meteorologists, while ornithologists pioneered the use of\ndefence and air-traffic control radars to study bird migration.\nRadar observations of insects, however, were relatively sparse until the early 1960’s,\nwhen radar meteorologists became rather intensely interested in a type of warm-weather echo\nthat appeared, puzzlingly from their perspective, when there was not a cloud in sight. Perhaps\nspurred by the meteorologists’ observations, entomologists began their own exploitation of\nthe technology in 1968, when a rather modest radar, built by G.W. Schaefer specifically for\ninsect observation and operated in West Africa just south of the Sahara, proved to be very\neffective.\n\n\nDe acordo com o texto (Radar Entomology), uma descoberta que causou surpresa aos usuários de radares durante a Segunda Guerra Mundial foi a capacidade do radar em detectar",
+        "enunciado": "Leia o texto a seguir para responder às questões 43 e 44.\nThe early development of radar was driven primarily by military imperatives, and the targets that were to be detected were mainly aircraft and ships. It was no surprise that echoes were also received from terrain and from rainstorms, but the discovery, during World War\nII, that birds were often detectable was less expected. As the technology developed, and specially after transmission at the shorter ‘microwave’ wavelengths became commonplace, echoes from insects were also identified. In the late 1940’s and the 1950’s, radar technology was adapted rapidly to the needs of meteorologists, while ornithologists pioneered the use of defence and air-traffic control radars to study bird migration.\nRadar observations of insects, however, were relatively sparse until the early 1960’s, when radar meteorologists became rather intensely interested in a type of warm-weather echo that appeared, puzzlingly from their perspective, when there was not a cloud in sight. Perhaps spurred by the meteorologists’ observations, entomologists began their own exploitation of the technology in 1968, when a rather modest radar, built by G.W. Schaefer specifically for insect observation and operated in West Africa just south of the Sahara, proved to be very effective.\n\n\nDe acordo com o texto (Radar Entomology), uma descoberta que causou surpresa aos usuários de radares durante a Segunda Guerra Mundial foi a capacidade do radar em detectar",
         "pergunta": null,
         "imagem": null,
         "alternativas": [
@@ -886,7 +886,7 @@
         "habilidade": "",
         "competencia": "",
         "dificuldade": "Média",
-        "enunciado": "Leia o texto a seguir para responder às questões de 45 a 48.\nAs scientists explore AI-written text, journals hammer out policies\nMany ask authors to disclose use of ChatGPT and other generative artificial intelligence\n“It’s all we’ve been talking about since November,” says Patrick Franzen, publishing\ndirector for SPIE, the international society for optics and photonics. He’s referring to ChatGPT,\nthe artificial intelligence (AI) - powered chatbot unveiled that month. In response to a prompt,\nChatGPT can spin out fluent and seemingly well-informed reports, essays — and scientific\nmanuscripts. Worried about the ethics and accuracy of such content, Franzen and managers\nat other journals are scrambling to protect the scholarly literature from a potential flood of\nmanuscripts written in whole or part by computer programs.\nSome publishers have not yet formulated policies. Most of those that have avoid an\noutright ban on AI-generated text, but ask authors to disclose their use of the automated\ntools, as SPIE is likely to do. For now, editors and peer reviewers have few alternatives, as\nthey lack enforcement tools. No software so far can consistently detect the synthetic text the\nmajority of the time.[. . . ]\nIn some cases, the resulting text is indistinguishable from what people would write.\n19\nFor example, researchers who read medical journal abstracts generated by ChatGPT failed\nto identify one-third of them as written by machine, according to a December 2022 preprint.\nAI developers are expected to create even more powerful versions, including ones trained\nspecifi-cally on scientific literature - a prospect that has sent a shock wave through the\nscholarly publishing industry.\nSo far, scientists report playing around with ChatGPT to explore its capabilities,\nand a few have listed ChatGPT as a co-author on manuscripts. Publishing experts worry\nsuch limited use could morph into a spike of manuscripts containing substantial chunks of\nAI-written text.\n\nAccording to the text (As scientists explore AI-written text...), some publishers of scientific journals are concerned about the",
+        "enunciado": "Leia o texto a seguir para responder às questões de 45 a 48.\nAs scientists explore AI-written text, journals hammer out policies\nMany ask authors to disclose use of ChatGPT and other generative artificial intelligence\n“It’s all we’ve been talking about since November,” says Patrick Franzen, publishing director for SPIE, the international society for optics and photonics. He’s referring to ChatGPT, the artificial intelligence (AI) - powered chatbot unveiled that month. In response to a prompt,\nChatGPT can spin out fluent and seemingly well-informed reports, essays — and scientific manuscripts. Worried about the ethics and accuracy of such content, Franzen and managers at other journals are scrambling to protect the scholarly literature from a potential flood of manuscripts written in whole or part by computer programs.\nSome publishers have not yet formulated policies. Most of those that have avoid an outright ban on AI-generated text, but ask authors to disclose their use of the automated tools, as SPIE is likely to do. For now, editors and peer reviewers have few alternatives, as they lack enforcement tools. No software so far can consistently detect the synthetic text the majority of the time.[. . . ]\nIn some cases, the resulting text is indistinguishable from what people would write.\n19\nFor example, researchers who read medical journal abstracts generated by ChatGPT failed to identify one-third of them as written by machine, according to a December 2022 preprint.\nAI developers are expected to create even more powerful versions, including ones trained specifi-cally on scientific literature - a prospect that has sent a shock wave through the scholarly publishing industry.\nSo far, scientists report playing around with ChatGPT to explore its capabilities, and a few have listed ChatGPT as a co-author on manuscripts. Publishing experts worry such limited use could morph into a spike of manuscripts containing substantial chunks of\nAI-written text.\n\nAccording to the text (As scientists explore AI-written text...), some publishers of scientific journals are concerned about the",
         "pergunta": null,
         "imagem": null,
         "alternativas": [

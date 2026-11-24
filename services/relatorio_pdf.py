@@ -3,6 +3,8 @@
 import io
 from datetime import date, datetime
 
+from utils.horario import SAO_PAULO, horario_studyhub
+
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
@@ -148,7 +150,7 @@ def gerar_relatorio_pdf(dados):
             return "Sim" if valor else "Não"
 
         if isinstance(valor, datetime):
-            return valor.strftime("%d/%m/%Y %H:%M")
+            return horario_studyhub(valor).strftime("%d/%m/%Y %H:%M")
 
         if hasattr(valor, "strftime"):
             return valor.strftime("%d/%m/%Y")
@@ -173,7 +175,7 @@ def gerar_relatorio_pdf(dados):
                 else "%d/%m/%Y"
             )
 
-            return valor.strftime(formato)
+            return horario_studyhub(valor).strftime(formato)
 
         if hasattr(valor, "strftime"):
             return valor.strftime("%d/%m/%Y")
@@ -189,7 +191,7 @@ def gerar_relatorio_pdf(dados):
                 else "%d/%m/%Y"
             )
 
-            return data.strftime(formato)
+            return (horario_studyhub(data) if incluir_hora else data).strftime(formato)
 
         except (ValueError, TypeError):
             return texto
@@ -500,7 +502,7 @@ def gerar_relatorio_pdf(dados):
 
     elementos.append(
         Paragraph(
-            f"Exportado em {datetime.now().strftime('%d/%m/%Y às %H:%M')}",
+            f"Exportado em {datetime.now(SAO_PAULO).strftime('%d/%m/%Y às %H:%M')}",
             estilos["TextoStudyHub"]
         )
     )

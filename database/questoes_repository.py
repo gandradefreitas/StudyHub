@@ -110,7 +110,6 @@ def obter_ordem_questoes(usuario_id, total_questoes=50):
     agora = datetime.now()
 
     questoes_disponiveis = []
-    questoes_bloqueadas = []
 
     # =====================================================
     # MAPEAR A ÚLTIMA RESPOSTA DE CADA QUESTÃO
@@ -179,23 +178,8 @@ def obter_ordem_questoes(usuario_id, total_questoes=50):
 
             questoes_disponiveis.append(numero)
 
-        # -------------------------------------------------
-        # AINDA BLOQUEADA
-        # -------------------------------------------------
+    return questoes_disponiveis
 
-        else:
-
-            questoes_bloqueadas.append(numero)
-
-    # =====================================================
-    # DISPONÍVEIS PRIMEIRO
-    # BLOQUEADAS NO FINAL
-    # =====================================================
-
-    return (
-        questoes_disponiveis
-        + questoes_bloqueadas
-    )
 
 def calcular_intervalo_revisao(
     correta,

@@ -33,7 +33,7 @@ def configurar_protecao_http(app):
                 "https://www.googletagmanager.com; "
                 "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
                 "font-src 'self' https://cdn.jsdelivr.net; "
-                "img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; "
+                "img-src 'self' data: https://res.cloudinary.com https://*.google-analytics.com https://www.googletagmanager.com; "
                 "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com "
                 "https://www.googletagmanager.com"
             ))

@@ -556,6 +556,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     ============================================= */
 
                     resultado.hidden = false;
+                    const conclusao = document.getElementById("continuar-questoes");
+                    if (conclusao) conclusao.hidden = false;
 
 
                     /* =============================================

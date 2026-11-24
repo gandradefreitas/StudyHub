@@ -107,13 +107,14 @@ function renderizarAtividades() {
        ESTUDOS
     ===================================================== */
 
-    if (dadosDia.estudos.length > 0) {
+    const estudosComTempo = dadosDia.estudos.filter(estudo => Number(estudo.duracao) >= 60);
+    if (estudosComTempo.length > 0) {
 
         html += `
 
-            <div class="atividade-secao">
+            <details class="atividade-secao">
 
-                <div class="titulo-atividade">
+                <summary class="titulo-atividade">
 
                     <i class="bi bi-clock-history"></i>
 
@@ -121,7 +122,7 @@ function renderizarAtividades() {
                         Estudos
                     </span>
 
-                </div>
+                </summary>
 
 
                 <div class="lista-atividade">
@@ -129,7 +130,7 @@ function renderizarAtividades() {
         `;
 
 
-        dadosDia.estudos.forEach((estudo) => {
+        estudosComTempo.forEach((estudo) => {
 
             html += `
 
@@ -156,7 +157,7 @@ function renderizarAtividades() {
 
                 </div>
 
-            </div>
+            </details>
 
         `;
 
@@ -232,9 +233,9 @@ function renderizarAtividades() {
 
         html += `
 
-            <div class="atividade-secao">
+            <details class="atividade-secao">
 
-                <div class="titulo-atividade">
+                <summary class="titulo-atividade">
 
                     <i class="bi bi-file-earmark-text"></i>
 
@@ -242,7 +243,7 @@ function renderizarAtividades() {
                         Provas realizadas
                     </span>
 
-                </div>
+                </summary>
 
 
                 <div class="lista-atividade">
@@ -293,7 +294,7 @@ function renderizarAtividades() {
 
                 </div>
 
-            </div>
+            </details>
 
         `;
 

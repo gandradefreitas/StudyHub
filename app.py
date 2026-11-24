@@ -10,7 +10,10 @@ from uuid import UUID
 from flask_wtf.csrf import CSRFProtect
 
 
+from psycopg import Error as ErroPostgres
+
 from database.conexao import conectar
+from database.criar_banco import verificar_esquema_web
 from database.provas_objetivas_repository import (
     TentativaObjetivaEncerrada,
     obter_inicio_tentativa_objetiva,
@@ -111,7 +114,10 @@ from services.provas_service import (
 
 from datetime import datetime, date, timedelta, timezone
 
+from utils.horario import horario_studyhub
+
 app = Flask(__name__)
+app.jinja_env.filters["horario_studyhub"] = horario_studyhub
 
 app.secret_key = os.environ.get("SECRET_KEY")
 
@@ -2579,21 +2585,10 @@ def questoes_inicio():
         usuario_id
     )
 
-    if not ordem_questoes:
-
-        flash(
-            "Nenhuma questão está disponível no momento.",
-            "info"
-        )
-
-        return redirect(
-            url_for("dashboard")
-        )
-
     return redirect(
         url_for(
             "questoes",
-            numero=ordem_questoes[0]
+            numero=ordem_questoes[0] if ordem_questoes else 1
         )
     )
 
@@ -2712,6 +2707,7 @@ def questoes(numero):
             usuario=usuario,
 
             questao=None,
+            questoes_concluidas=bool(questoes),
 
             tem_anterior=False,
 
@@ -3380,7 +3376,13 @@ def pagina_cadastro():
 
 @app.route("/health")
 def health():
-    return "OK", 200
+    try:
+        with conectar(connect_timeout=2, options="-c statement_timeout=2000") as conexao:
+            if verificar_esquema_web(conexao):
+                return "OK", 200
+    except (ErroPostgres, KeyError):
+        pass
+    return "Serviço indisponível", 503
 
 if __name__ == "__main__":
 

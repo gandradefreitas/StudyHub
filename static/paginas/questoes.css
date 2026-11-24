@@ -1812,3 +1812,25 @@
     }
 
 }
+#cronometro-questoes,
+#status-cronometro-questoes,
+#bloqueio-questao,
+#continuar-questoes[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 640px) {
+    .questoes-filtros form {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: .85rem;
+    }
+    .questoes-filtros-grupo { min-width: 0; }
+    .questoes-filtros label {
+        position: static;
+        display: block;
+        line-height: 1.35;
+        white-space: normal;
+    }
+    .questoes-filtros select { width: 100%; max-width: 100%; }
+}

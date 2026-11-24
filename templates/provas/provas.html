@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='global.css') }}">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
 </head>
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
@@ -26,6 +27,7 @@
     {% include "componentes/header_dashboard.html" %}
 
     <main class="container-provas">
+        {% include "componentes/flash_messages.html" %}
 
         <section class="cabecalho-provas">
             <div class="cabecalho-provas-texto">

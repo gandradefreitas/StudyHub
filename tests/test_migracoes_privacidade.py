@@ -1,10 +1,11 @@
 from uuid import uuid4
 
-from psycopg import sql
+import pytest
+from psycopg import errors, sql
 
 from controllers.web import autenticacao_controller
 from database.conexao import conectar
-from database.criar_banco import aplicar_migracoes
+from database.criar_banco import aplicar_migracoes, verificar_esquema_web
 from tests.app_de_teste import modulo
 
 
@@ -24,18 +25,35 @@ def test_migra_esquema_anterior_sem_apagar_redacoes():
                 tema TEXT NOT NULL, ano INTEGER NOT NULL, texto TEXT NOT NULL,
                 notas JSONB, nota INTEGER, criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
+            CREATE TABLE estudos (
+                id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                usuario_id INTEGER NOT NULL REFERENCES usuarios(id),
+                inicio TIMESTAMP NOT NULL, fim TIMESTAMP, duracao INTEGER DEFAULT 0, ativa INTEGER DEFAULT 1
+            );
             INSERT INTO usuarios (nome, email) VALUES ('Legado', 'legado@example.invalid');
             INSERT INTO redacoes (usuario_id, tema, ano, texto, nota)
             VALUES (1, 'Tema legado', 2025, 'Texto preservado', 640);
         """)
+        conexao.execute("CREATE TABLE tentativas_provas_objetivas (usuario_id INTEGER)")
+        with pytest.raises(errors.UndefinedColumn), conexao.transaction():
+            verificar_esquema_web(conexao)
+        conexao.execute("DROP TABLE tentativas_provas_objetivas")
         aplicar_migracoes(conexao)
         aplicar_migracoes(conexao)
+        assert verificar_esquema_web(conexao)
         assert conexao.execute("SELECT texto, nota, instituicao FROM redacoes").fetchone() == {
             "texto": "Texto preservado", "nota": 640, "instituicao": "ENEM",
         }
         assert conexao.execute("SELECT to_regclass('tentativas_provas_objetivas') AS tabela").fetchone()["tabela"]
         versoes = conexao.execute("SELECT versao FROM studyhub_migracoes ORDER BY versao").fetchall()
-        assert [linha["versao"] for linha in versoes][:3] == [1, 2, 3]
+        assert {1, 2, 3, 4} <= {linha["versao"] for linha in versoes}
+        registro = conexao.execute("""
+            INSERT INTO estudos (usuario_id, inicio, inicio_segmento, ultima_atividade)
+            VALUES (1, LOCALTIMESTAMP, LOCALTIMESTAMP, LOCALTIMESTAMP)
+            RETURNING inicio_segmento, ultima_atividade
+        """).fetchone()
+        assert registro["inicio_segmento"] is not None
+        assert registro["inicio_segmento"] == registro["ultima_atividade"]
         conexao.rollback()
 
 
@@ -97,3 +115,16 @@ def test_exclusao_conta_google_exige_identidade_vinculada(dados_discursivos, mon
         assert conexao.execute("SELECT id FROM usuarios WHERE id = ANY(%s)", ([usuario, outro],)).fetchall() == [
             {"id": outro}
         ]
+
+
+def test_health_sinaliza_esquema_invalido(monkeypatch):
+    with modulo.app.test_client() as cliente:
+        assert cliente.get("/health").status_code == 200
+
+        def coluna_ausente(_):
+            raise errors.UndefinedColumn("coluna correcao_falhou não existe")
+
+        monkeypatch.setattr(modulo, "verificar_esquema_web", coluna_ausente)
+        resposta = cliente.get("/health")
+        assert resposta.status_code == 503
+        assert b"correcao_falhou" not in resposta.data

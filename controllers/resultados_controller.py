@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from utils.horario import horario_studyhub
 
 from database.resultados_repository import listar_resultados_usuario
 from services.resumo_discursivas import resumir_correcao_discursiva
@@ -70,7 +71,7 @@ def obter_historico(usuario_id):
         data_para_ordenacao = data_historico
 
         if data_historico is not None:
-            data_historico = data_historico.strftime("%d/%m/%Y às %H:%M")
+            data_historico = horario_studyhub(data_historico).strftime("%d/%m/%Y às %H:%M")
 
         historico.append({
             "id": tentativa_id,

@@ -20,12 +20,14 @@
     <title>Questões</title>
     <script src="{{ url_for('static', filename='js/aviso_studyhub.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
 </head>
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
     {% include "componentes/sidebar.html" %}
 
     <main class="questoes">
+        {% include "componentes/flash_messages.html" %}
 
         {% include "componentes/header_dashboard.html" %}
 
@@ -435,6 +437,9 @@
                                 Próxima
                             </a>
 
+                        {% elif not modo_revisao %}
+                            <a href="{{ request.full_path }}"
+                               id="continuar-questoes" class="questoes-botao questoes-botao-proxima" hidden>Ver conclusão</a>
                         {% elif ultima_questao_revisao %}
 
                             <a
@@ -455,7 +460,12 @@
             {% else %}
 
                 <div class="questoes-sem-resultados">
-                    <h2>Nenhuma questão encontrada</h2>
+                    {% if not modo_revisao and questoes_concluidas %}
+                        <h2>Parabéns, você chegou ao fim das questões disponíveis!</h2>
+                        <p>Seu progresso foi salvo. Volte depois para continuar praticando.</p>
+                        <a href="{{ url_for('dashboard') }}">Voltar ao Menu</a>
+                    {% else %}
+                        <h2>Nenhuma questão disponível</h2>
 
                     <p>
                         Não encontramos questões que correspondam a todos os filtros selecionados.
@@ -464,6 +474,7 @@
                     <p>
                         Tente alterar algum filtro ou remover critérios para ampliar os resultados.
                     </p>
+                    {% endif %}
                 </div>
 
             {% endif %}

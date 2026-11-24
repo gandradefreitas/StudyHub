@@ -1562,3 +1562,6 @@
     }
 
 }
+details.atividade-secao > summary { cursor: pointer; }
+details.atividade-secao > summary::after { content: "▸"; margin-inline-start: auto; }
+details.atividade-secao[open] > summary::after { content: "▾"; }

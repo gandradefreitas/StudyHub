@@ -12,18 +12,6 @@
 
 <main class="prova-discursiva-container">
 
-    {% with mensagens = get_flashed_messages(with_categories=true) %}
-        {% if mensagens %}
-            <div class="mensagens-flash" role="status" aria-live="polite">
-                {% for categoria, mensagem in mensagens %}
-                    <div class="mensagem-flash mensagem-{{ categoria }}">
-                        {{ mensagem }}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-
     <header class="prova-discursiva-header">
 
         <p class="prova-discursiva-instituicao">

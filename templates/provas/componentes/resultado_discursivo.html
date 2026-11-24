@@ -38,12 +38,12 @@
 
         <p>
             <strong>Início:</strong>
-            {{ tentativa.data_inicio.strftime('%d/%m/%Y às %H:%M') if tentativa.data_inicio else 'Não registrado' }}
+            {{ (tentativa.data_inicio | horario_studyhub).strftime('%d/%m/%Y às %H:%M') if tentativa.data_inicio else 'Não registrado' }}
         </p>
 
         <p>
             <strong>Finalização:</strong>
-            {{ tentativa.data_finalizacao.strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else 'Ainda não finalizada' }}
+            {{ (tentativa.data_finalizacao | horario_studyhub).strftime('%d/%m/%Y às %H:%M') if tentativa.data_finalizacao else 'Ainda não finalizada' }}
         </p>
 
         {% if tentativa.status == 'corrigida' %}
@@ -73,7 +73,7 @@
                 {% if tentativa.correcao_em_andamento %}
                     <p>Uma tentativa de correção está em andamento.</p>
                 {% elif tentativa.proxima_tentativa_correcao %}
-                    <p>Próxima tentativa prevista para: {{ tentativa.proxima_tentativa_correcao.strftime('%d/%m/%Y às %H:%M') }}.</p>
+                    <p>Próxima tentativa prevista para: {{ (tentativa.proxima_tentativa_correcao | horario_studyhub).strftime('%d/%m/%Y às %H:%M') }}.</p>
                 {% endif %}
             {% elif pacote and pacote.status == 'revisao_necessaria' %}
                 <p>A correção automática foi concluída, mas requer revisão humana.</p>

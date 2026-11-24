@@ -798,3 +798,22 @@ ACESSIBILIDADE
     transition: none;
 }
 }
+
+@media (max-width: 640px) {
+    .paleta-simbolos[open] {
+        inset-inline: .65rem;
+        bottom: max(.65rem, env(safe-area-inset-bottom));
+        width: auto;
+    }
+
+    .paleta-simbolos[open] .paleta-simbolos-conteudo {
+        width: 100%;
+        max-height: min(39dvh, 18rem);
+        padding: .65rem;
+        overscroll-behavior: contain;
+    }
+
+    .paleta-simbolo { min-height: 44px; }
+    .buscar-simbolo-discursivo { font-size: 16px; }
+    textarea[name^="resposta_"] { font-size: 16px; scroll-margin-bottom: 5rem; }
+}
