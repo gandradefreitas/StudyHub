@@ -3377,11 +3377,16 @@ def pagina_cadastro():
 @app.route("/health")
 def health():
     try:
-        with conectar(connect_timeout=2, options="-c statement_timeout=2000") as conexao:
+        with conectar(connect_timeout=3) as conexao:
+            conexao.execute("SET LOCAL statement_timeout = '1500ms'")
             if verificar_esquema_web(conexao):
                 return "OK", 200
-    except (ErroPostgres, KeyError):
-        pass
+            app.logger.warning("Health check: há migrações pendentes.")
+    except (ErroPostgres, KeyError) as erro:
+        app.logger.warning(
+            "Health check: %s (SQLSTATE %s).",
+            type(erro).__name__, getattr(erro, "sqlstate", None),
+        )
     return "Serviço indisponível", 503
 
 if __name__ == "__main__":
