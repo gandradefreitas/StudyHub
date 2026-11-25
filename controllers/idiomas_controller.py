@@ -44,17 +44,23 @@ def leitura(texto_id):
                 respostas[numero] = int(selecao[0])
         if len(respostas) == len(questoes):
             acertos = sum(respostas[n] == q["correta"] for n, q in enumerate(questoes, 1))
-            registrar_leitura(usuario_id, texto_id, texto["palavras"], acertos)
-            return redirect(url_for("idiomas.leitura", texto_id=texto_id, _anchor="resultado"), code=303)
+            if registrar_leitura(usuario_id, texto_id, texto["palavras"], acertos):
+                return redirect(url_for("idiomas.leitura", texto_id=texto_id, _anchor="resultado"), code=303)
         erro = True
 
     _, progresso = obter_progresso(usuario_id)
+    resultado = progresso.get(texto_id)
+    espera = resultado["espera_segundos"] if resultado else 0
+    bloqueado = bool(espera and request.method == "POST")
     return render_template(
         "idiomas/leitura.html",
         texto=texto,
         idioma=IDIOMAS[texto["idioma"]],
         respostas=respostas,
-        erro=erro,
-        resultado=progresso.get(texto_id),
+        erro=erro and not espera,
+        resultado=resultado,
+        espera_minutos=(espera + 59) // 60,
         classe_body="sidebar-toggle",
-    ), 422 if erro else 200
+    ), (429 if bloqueado else 422 if erro else 200), (
+        {"Retry-After": str(espera)} if bloqueado else {}
+    )

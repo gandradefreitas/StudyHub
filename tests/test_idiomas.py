@@ -80,13 +80,23 @@ def test_progresso_de_leitura_por_usuario_sem_contagem_duplicada(
         assert f"<dt>Hoje</dt><dd>{texto['palavras']}</dd>" in lista
         assert f"<dt>Total acumulado</dt><dd>{texto['palavras']}</dd>" in lista
 
+        assert 'type="radio"' not in resposta.get_data(as_text=True)
+        repetida = cliente.post(caminho, data=respostas)
+        assert repetida.status_code == 429
+        assert 1 <= int(repetida.headers["Retry-After"]) <= 600
+        assert "10 de 10" in repetida.get_data(as_text=True)
+        outro_texto = next(chave for chave in TEXTOS if chave != texto["id"])
+        assert 'type="radio"' in cliente.get(f"/idiomas/{outro_texto}").get_data(as_text=True)
+
         with conectar() as conexao:
             primeira = conexao.execute("""
                 SELECT concluido_em FROM leituras_idiomas WHERE usuario_id = %s
             """, (usuario_id,)).fetchone()["concluido_em"]
             anterior = primeira.replace(day=1) - timedelta(days=1)
             conexao.execute("""
-                UPDATE leituras_idiomas SET concluido_em = %s WHERE usuario_id = %s
+                UPDATE leituras_idiomas
+                SET concluido_em = %s, ultimo_envio_em = CURRENT_TIMESTAMP - INTERVAL '10 minutes'
+                WHERE usuario_id = %s
             """, (anterior, usuario_id))
 
         respostas["questao-1"] = str((int(respostas["questao-1"]) + 1) % 4)

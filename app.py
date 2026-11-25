@@ -5,7 +5,8 @@ import json
 
 
 import os
-from uuid import UUID
+from hashlib import blake2b
+from uuid import UUID, uuid4
 
 from flask_wtf.csrf import CSRFProtect
 
@@ -2570,6 +2571,18 @@ def limpar_historico_rota():
 # QUESTÕES
 # ==========================
 
+def questoes_em_ordem_aleatoria(usuario_id):
+    # Ordenar pela chave de cada questão mantém as demais no lugar após uma resposta.
+    semente = session.get("ordem_pratica")
+    if semente is None:
+        semente = uuid4().hex
+        session["ordem_pratica"] = semente
+    return sorted(
+        obter_ordem_questoes(usuario_id),
+        key=lambda numero: blake2b(f"{semente}:{numero}".encode(), digest_size=8).digest(),
+    )
+
+
 @app.route("/questoes")
 def questoes_inicio():
 
@@ -2581,9 +2594,7 @@ def questoes_inicio():
             url_for("pagina_login")
         )
 
-    ordem_questoes = obter_ordem_questoes(
-        usuario_id
-    )
+    ordem_questoes = questoes_em_ordem_aleatoria(usuario_id)
 
     return redirect(
         url_for(
@@ -2648,9 +2659,7 @@ def questoes(numero):
     # OBTER ORDEM DAS QUESTÕES
     # =====================================================
 
-    ordem_questoes = obter_ordem_questoes(
-        usuario_id
-    )
+    ordem_questoes = questoes_em_ordem_aleatoria(usuario_id)
 
     if modo_revisao:
 

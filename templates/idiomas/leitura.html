@@ -17,6 +17,13 @@
 
     <section aria-labelledby="perguntas-leitura">
         <h2 id="perguntas-leitura">Perguntas sobre o texto</h2>
+        {% if espera_minutos %}
+            <p class="idiomas-cartao" role="status">
+                Você poderá refazer este quiz em até {{ espera_minutos }}
+                {{ 'minuto' if espera_minutos == 1 else 'minutos' }}.
+                <a href="{{ url_for('idiomas.leitura', texto_id=texto.id) }}">Verificar disponibilidade</a>
+            </p>
+        {% else %}
         <p>Responda às 10 perguntas para concluir a leitura e ver o resultado.</p>
         {% if erro %}
             <p class="idiomas-erro" role="alert">Selecione uma alternativa válida em cada pergunta.</p>
@@ -40,6 +47,7 @@
             {% endfor %}
             <button type="submit">Ver resultado</button>
         </form>
+        {% endif %}
     </section>
 
     {% if resultado and not erro %}

@@ -267,3 +267,35 @@ button.botao-repetir-correcao:focus-visible {
     outline: 2px solid var(--cor-primaria);
     outline-offset: 3px;
 }
+
+.acoes-discursivas {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-block: 1.25rem;
+}
+
+.acoes-discursivas p { margin: 0; }
+
+.acoes-discursivas .botao-navegacao-discursiva {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .75rem 1.25rem;
+    border: 2px solid var(--cor-primaria);
+    border-radius: 12px;
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.acoes-discursivas .botao-navegacao-discursiva:hover {
+    background: var(--cor-fundo-secundario);
+}
+
+.acoes-discursivas .botao-navegacao-discursiva:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 3px;
+}

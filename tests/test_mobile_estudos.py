@@ -35,3 +35,19 @@ def test_questoes_bloqueadas_dao_lugar_a_conclusao(dados_discursivos):
     finally:
         with conectar() as banco:
             banco.execute("DELETE FROM respostas_questoes WHERE usuario_id = %s", (usuario,))
+
+
+def test_ordem_aleatoria_nao_muda_ao_responder(monkeypatch):
+    import app as modulo
+
+    disponiveis = list(range(1, 11))
+    monkeypatch.setattr(modulo, "obter_ordem_questoes", lambda _: list(disponiveis))
+    with app.test_request_context("/questoes"):
+        primeira = modulo.questoes_em_ordem_aleatoria(1)
+        assert sorted(primeira) == list(range(1, 11))
+        assert primeira == modulo.questoes_em_ordem_aleatoria(1)
+        escolhida = primeira[3]
+        disponiveis.remove(escolhida)
+        assert modulo.questoes_em_ordem_aleatoria(1) == [
+            numero for numero in primeira if numero != escolhida
+        ]

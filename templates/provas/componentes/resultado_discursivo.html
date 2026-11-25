@@ -208,16 +208,16 @@
 
     </section>
 
-    <nav class="acoes-resultado">
+    <nav class="acoes-resultado acoes-discursivas" aria-label="Navegação da prova">
 
         <p>
-            <a href="{{ url_for('historico_provas') }}">
+            <a href="{{ url_for('historico_provas') }}" class="botao-navegacao-discursiva"><i class="bi bi-clock-history" aria-hidden="true"></i>
                 Consultar histórico de provas discursivas
             </a>
         </p>
 
         <p>
-            <a href="{{ url_for('selecionar_provas_ita_segunda_fase') }}">
+            <a href="{{ url_for('selecionar_provas_ita_segunda_fase') }}" class="botao-navegacao-discursiva"><i class="bi bi-arrow-left-circle" aria-hidden="true"></i>
                 Voltar às provas do ITA
             </a>
         </p>
