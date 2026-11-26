@@ -1,3 +1,5 @@
+from psycopg.errors import UniqueViolation
+
 from database.usuario_repository import (obter_usuario_por_id, obter_configuracoes, atualizar_usuario, atualizar_senha,
                                          salvar_tema, salvar_metas, excluir_usuario, obter_senha_usuario, usuario_possui_senha)
 from security.validacoes import (validar_nome,validar_email)
@@ -26,7 +28,7 @@ def obter_dados_configuracoes(usuario_id):
         "possui_senha": possui_senha
     }
 
-def atualizar_dados_conta(usuario_id, nome, email):
+def atualizar_dados_conta(usuario_id, nome, email, *, foto=None):
 
     valido, mensagem = validar_nome(nome)
 
@@ -40,7 +42,11 @@ def atualizar_dados_conta(usuario_id, nome, email):
         return False, mensagem
 
 
-    atualizar_usuario(usuario_id,nome,email)
+    try:
+        if not atualizar_usuario(usuario_id, nome, email, foto=foto):
+            return False, "Usuário não encontrado."
+    except UniqueViolation:
+        return False, "Este e-mail já está em uso."
 
     return True, "Dados atualizados com sucesso."
 

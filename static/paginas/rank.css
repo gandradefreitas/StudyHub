@@ -1,0 +1,126 @@
+.rank {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto 2.5rem;
+    color: var(--cor-texto);
+}
+
+.rank-topo {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.15rem;
+    padding: clamp(1rem, 4vw, 2rem);
+    border: 1px solid var(--cor-borda);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--cor-primaria) 9%, var(--cor-card));
+}
+
+.rank h1 { margin: 0 0 .3rem; font-size: clamp(1.8rem, 5vw, 2.8rem); }
+.rank h2 { margin-block: 1.5rem .85rem; font-size: 1.3rem; }
+.rank p { color: var(--cor-texto-secundario); }
+.rank-filtro { display: flex; align-items: end; gap: .6rem; max-width: 100%; }
+.rank-filtro > div { min-width: 0; }
+.rank-filtro label { display: block; margin-bottom: .35rem; font-weight: 650; }
+.rank-filtro select, .rank-filtro button {
+    min-height: 44px;
+    max-width: 100%;
+    padding: .45rem .65rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-card);
+    color: var(--cor-texto);
+    font: inherit;
+}
+.rank-filtro button { border-color: var(--cor-primaria); cursor: pointer; }
+.rank :focus-visible { outline: 2px solid var(--cor-primaria); outline-offset: 3px; }
+.rank-regra { margin: .85rem 0 0; }
+
+.rank-podio, .rank-lista { margin: 0; padding: 0; list-style: none; }
+.rank-podio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.rank-podio-cartao {
+    --medalha: #d29a2d;
+    min-width: 0;
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: .75rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--medalha) 70%, var(--cor-borda));
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--medalha) 13%, var(--cor-card));
+    text-align: center;
+}
+.rank-posicao-2 { --medalha: #8e9eb5; }
+.rank-posicao-3 { --medalha: #bb7447; }
+.rank-podio-lugar {
+    padding: .25rem .65rem;
+    border: 1px solid color-mix(in srgb, var(--medalha) 65%, var(--cor-borda));
+    border-radius: 999px;
+    font-size: .875rem;
+    font-weight: 700;
+}
+.rank-podio-cartao h3 { margin: 0; font-size: 1.05rem; overflow-wrap: anywhere; }
+
+.rank-avatar {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border: 2px solid var(--medalha, var(--cor-borda));
+    border-radius: 50%;
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto);
+    font-weight: 750;
+    font-size: 1.4rem;
+}
+.rank-avatar img { border-radius: 50%; width: 100%; height: 100%; object-fit: cover; }
+.rank-coroado {
+    margin-top: .6rem;
+    box-shadow: 0 0 0 .23rem var(--cor-card), 0 0 0 .36rem var(--medalha);
+}
+.rank-coroado::before {
+    content: "";
+    position: absolute;
+    top: -.7rem;
+    left: 50%;
+    width: 2rem;
+    height: .95rem;
+    transform: translateX(-50%);
+    background: var(--medalha);
+    clip-path: polygon(0 20%, 27% 50%, 50% 0, 73% 50%, 100% 20%, 83% 100%, 17% 100%);
+}
+
+.rank-lista {
+    overflow: hidden;
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    background: var(--cor-card);
+}
+.rank-linha {
+    display: grid;
+    grid-template-columns: 3ch 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .75rem;
+    padding: .8rem clamp(.7rem, 3vw, 1.2rem);
+}
+.rank-linha + .rank-linha { border-top: 1px solid var(--cor-borda); }
+.rank-linha .rank-avatar { width: 40px; height: 40px; font-size: 1rem; }
+.rank-numero { font-weight: 750; font-variant-numeric: tabular-nums; }
+.rank-nome { overflow-wrap: anywhere; }
+.rank-metrica { display: grid; gap: .15rem; }
+.rank-linha .rank-metrica { text-align: end; }
+.rank-metrica span { color: var(--cor-texto-secundario); font-size: .85rem; }
+.rank-vazio { padding: 1rem; margin-top: 1rem; border: 1px solid var(--cor-borda); border-radius: 12px; }
+
+@media (max-width: 600px) {
+    .rank-topo { align-items: stretch; }
+    .rank-filtro { width: 100%; }
+    .rank-filtro > div { flex: 1; }
+    .rank-filtro select { width: 100%; }
+    .rank-podio { grid-template-columns: 1fr; }
+    .rank-linha { grid-template-columns: 3ch 40px minmax(0, 1fr); row-gap: .25rem; }
+    .rank-linha .rank-metrica { grid-column: 3; text-align: start; }
+}

@@ -1,6 +1,9 @@
 """Migrações explícitas do StudyHub. Execute com python -m database.criar_banco."""
 
+import os
 import re
+
+from psycopg.conninfo import conninfo_to_dict
 from pathlib import Path
 
 from database.conexao import conectar
@@ -485,6 +488,23 @@ def verificar_esquema_web(conexao):
 def criar_tabelas():
     with conectar() as conexao:
         aplicar_migracoes(conexao)
+
+
+def migrar_banco_local():
+    dados = conninfo_to_dict(os.environ["DATABASE_URL"])
+    locais = {"localhost", "127.0.0.1", "::1"}
+    if (
+        dados.get("dbname") not in {"studyhub", "studyhub_test"}
+        or dados.get("host") not in locais
+        or dados.get("hostaddr", "") not in locais | {""}
+        or "service" in dados
+        or os.getenv("PGHOSTADDR")
+    ):
+        return
+    with conectar() as conexao:
+        banco = conexao.execute("SELECT current_database() AS nome").fetchone()["nome"]
+        if banco == dados["dbname"]:
+            aplicar_migracoes(conexao)
 
 
 if __name__ == "__main__":

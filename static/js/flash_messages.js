@@ -1,24 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.querySelectorAll(".mensagens-flash").forEach(grupo => {
+    const mensagens = grupo.querySelectorAll(".flash-mensagem");
+    if (!mensagens.length) return;
 
-    const mensagens =
-        document.querySelectorAll(".flash-mensagem");
+    window.setTimeout(() => {
+        mensagens.forEach(mensagem => mensagem.classList.add("flash-saindo"));
+    }, 2700);
 
-
-    mensagens.forEach((mensagem) => {
-
-        setTimeout(() => {
-
-            mensagem.classList.add("flash-saindo");
-
-
-            setTimeout(() => {
-
-                mensagem.remove();
-
-            }, 300);
-
-        }, 3000);
-
-    });
-
+    window.setTimeout(() => grupo.remove(), 3000);
 });

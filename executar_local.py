@@ -7,6 +7,8 @@ from subprocess import Popen, TimeoutExpired
 import sys
 from time import sleep
 
+from database.criar_banco import migrar_banco_local
+
 
 def encerrar(_sinal, _quadro):
     raise SystemExit(0)
@@ -16,9 +18,11 @@ def executar(*, render=False):
     raiz = Path(__file__).resolve().parent
     processos = []
     try:
+        if not render:
+            migrar_banco_local()
         web = (
             ["-m", "gunicorn", "--bind", f"0.0.0.0:{os.getenv('PORT', '10000')}", "app:app"]
-            if render else [str(raiz / "app.py")]
+            if render else ["-m", "flask", "--app", "app", "run", "--no-reload"]
         )
         for comando in ([str(raiz / "worker_correcao_discursiva.py")], web):
             processos.append(Popen([sys.executable, *comando], cwd=raiz))

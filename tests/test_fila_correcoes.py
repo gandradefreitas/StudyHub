@@ -70,6 +70,14 @@ def test_supervisor_encerra_worker_se_web_falha(monkeypatch):
     fila = Processo(None)
     web = Processo(3)
     processos = iter((fila, web))
-    monkeypatch.setattr(executar_local, "Popen", lambda *args, **kwargs: next(processos))
+    etapas = []
+
+    def iniciar(*args, **kwargs):
+        etapas.append("processo")
+        return next(processos)
+
+    monkeypatch.setattr(executar_local, "migrar_banco_local", lambda: etapas.append("migrar"))
+    monkeypatch.setattr(executar_local, "Popen", iniciar)
     assert executar_local.executar() == 3
+    assert etapas == ["migrar", "processo", "processo"]
     assert fila.encerrado

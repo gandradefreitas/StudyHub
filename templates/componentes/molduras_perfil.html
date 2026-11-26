@@ -1,0 +1,25 @@
+<section class="perfil-molduras" data-molduras-perfil aria-labelledby="titulo-molduras">
+    <h3 id="titulo-molduras">Molduras</h3>
+    <div class="perfil-moldura-controles">
+        <label for="moldura-perfil">Moldura do avatar</label>
+        <select id="moldura-perfil" data-escolher-moldura>
+            <option value="0"{% if not progresso_nivel.moldura_equipada %} selected{% endif %}>Sem moldura</option>
+            {% for marco, nome in molduras.items() %}
+                <option value="{{ marco }}" data-nome="{{ nome }}"
+                    {% if marco == progresso_nivel.moldura_equipada %} selected{% endif %}
+                    {% if marco > progresso_nivel.nivel %} hidden disabled{% endif %}>{{ nome }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" class="perfil-cancelar" data-equipar-perfil disabled>Aplicar moldura</button>
+    </div>
+    <div class="perfil-moldura-meta">
+        {% set marco = progresso_nivel.proxima_moldura %}
+        {% set faltam = marco - progresso_nivel.nivel if marco else 0 %}
+        <span class="moldura-amostra" data-proxima-amostra data-avatar-moldura="{{ marco or 0 }}"
+              aria-hidden="true"{% if not marco %} hidden{% endif %}></span>
+        <p data-proxima-moldura>{% if marco %}Próxima moldura: {{ molduras[marco] }} no nível {{ marco }}.
+            {{ 'Falta 1 nível.' if faltam == 1 else 'Faltam ' ~ faltam ~ ' níveis.' }}
+            {% else %}Você conquistou todas as molduras.{% endif %}</p>
+    </div>
+    <p class="perfil-moldura-status" data-moldura-status role="status"></p>
+</section>

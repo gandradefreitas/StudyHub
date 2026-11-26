@@ -31,9 +31,9 @@ def preparar_exportacao(usuario_id):
 
     return converter_para_json(dados)
 
-def limpar_historico_usuario(usuario_id, *, incluir_leituras=False):
+def limpar_historico_usuario(usuario_id):
 
-    resultado = limpar_historico(usuario_id, incluir_leituras=incluir_leituras)
+    resultado = limpar_historico(usuario_id)
 
     if not resultado:
 

@@ -556,6 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ============================================= */
 
                     resultado.hidden = false;
+                    document.dispatchEvent(new Event("studyhub:experiencia"));
                     const conclusao = document.getElementById("continuar-questoes");
                     if (conclusao) conclusao.hidden = false;
 

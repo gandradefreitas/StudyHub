@@ -1,0 +1,53 @@
+<dialog id="janela-perfil" class="janela-perfil" aria-labelledby="titulo-perfil"
+        {% if erro_perfil %}data-reabrir{% endif %}>
+    <div class="janela-perfil-topo">
+        <h2 id="titulo-perfil">Editar perfil</h2>
+        <button type="button" class="perfil-fechar" aria-label="Fechar perfil">×</button>
+    </div>
+    <form method="post" action="{{ url_for('perfil.atualizar') }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="janela-perfil-identidade">
+            <div class="janela-perfil-foto">
+                <span class="avatar avatar-perfil-grande" aria-hidden="true"
+                      data-avatar-moldura="{{ progresso_nivel.moldura_equipada }}">
+                    <span id="perfil-inicial"{% if tem_foto_perfil %} hidden{% endif %}>{{ usuario.nome[0] }}</span>
+                    <img alt="" id="perfil-foto-preview"
+                         {% if tem_foto_perfil %}src="{{ url_for('perfil.foto') }}"{% else %}hidden{% endif %}>
+                </span>
+                <label class="perfil-escolher-foto" for="perfil-foto">
+                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                    <span class="perfil-texto-acessivel">Escolher foto de perfil</span>
+                </label>
+                <input class="perfil-texto-acessivel" name="foto" id="perfil-foto" type="file"
+                       accept="image/jpeg,image/png,image/webp" aria-describedby="perfil-ajuda-foto">
+            </div>
+            <p class="janela-perfil-nome">{{ usuario.nome }}</p>
+            <p class="janela-perfil-email">{{ usuario.email }}</p>
+            <p id="perfil-ajuda-foto" class="janela-perfil-ajuda">JPEG, PNG ou WebP, até 2 MB.</p>
+        </div>
+        {% if erro_perfil %}<p role="alert" class="perfil-erro">{{ erro_perfil }}</p>{% endif %}
+        <p role="status" id="perfil-status" hidden></p>
+        <section class="perfil-nivel" data-progresso-nivel aria-label="Progresso de nível">
+            <div class="perfil-nivel-extremos">
+                <strong data-nivel-atual>Nível {{ progresso_nivel.nivel }}</strong>
+                <span data-nivel-proximo>Nível {{ progresso_nivel.proximo }}</span>
+            </div>
+            <progress value="{{ progresso_nivel.progresso }}" max="{{ progresso_nivel.necessario }}"
+                      aria-label="Experiência até o próximo nível"></progress>
+            <p data-nivel-exp>{{ ('%g' | format(progresso_nivel.progresso / 10)).replace('.', ',') }}
+                / {{ progresso_nivel.necessario // 10 }} EXP</p>
+        </section>
+        <div class="janela-perfil-campos">
+            <label for="perfil-nome">Nome</label>
+            <input type="text" id="perfil-nome" name="nome" value="{{ usuario.nome }}" autocomplete="name" required>
+            <label for="perfil-email">E-mail</label>
+            <input type="email" id="perfil-email" name="email" value="{{ usuario.email }}" autocomplete="email" required>
+        </div>
+        <div class="janela-perfil-acoes">
+            <button type="button" class="perfil-cancelar">Cancelar</button>
+            <button type="submit" class="perfil-salvar">Salvar alterações</button>
+        </div>
+    </form>
+    {% include "componentes/molduras_perfil.html" %}
+</dialog>
+<script defer src="{{ url_for('static', filename='js/perfil.js') }}"></script>

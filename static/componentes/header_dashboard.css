@@ -116,3 +116,100 @@
     }
 
 }
+button.perfil {
+    border: 1px solid transparent;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    min-width: 0;
+}
+
+.perfil-nome {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.avatar { flex-shrink: 0; overflow: hidden; }
+.avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.avatar img[hidden] { display: none; }
+
+.janela-perfil {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(36rem, calc(100% - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow: auto;
+    padding: clamp(1rem, 4vw, 2rem);
+    color: var(--cor-texto);
+    background: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 1.2rem;
+    box-shadow: 0 20px 60px rgb(0 0 0 / .3);
+}
+
+.janela-perfil::backdrop { background: rgb(8 13 25 / .63); }
+.janela-perfil-topo { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.janela-perfil-topo h2 { margin: 0; font-size: 1.25rem; }
+.janela-perfil-identidade { text-align: center; margin-block: 1rem 1.4rem; }
+.janela-perfil-foto { position: relative; width: fit-content; margin-inline: auto; }
+.avatar-perfil-grande {
+    width: 112px;
+    height: 112px;
+    border: 2px solid var(--cor-borda);
+    background: color-mix(in srgb, var(--cor-primaria) 22%, var(--cor-card));
+    color: var(--cor-texto);
+    font-size: 2.7rem;
+}
+.janela-perfil-nome {
+    margin-top: .7rem;
+    font-size: clamp(1.15rem, 4vw, 1.65rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+.janela-perfil-email, .janela-perfil-ajuda { color: var(--cor-texto-secundario); overflow-wrap: anywhere; }
+.janela-perfil-ajuda { font-size: .85rem; margin-top: .3rem; }
+
+.perfil-fechar, .perfil-escolher-foto, .perfil-cancelar, .perfil-salvar {
+    display: inline-grid;
+    place-items: center;
+    min-height: 44px;
+    border: 1px solid var(--cor-borda);
+    border-radius: .7rem;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 650;
+}
+.perfil-fechar { width: 44px; font-size: 1.4rem; }
+.perfil-escolher-foto { position: absolute; right: 0; bottom: 0; width: 44px; border-radius: 50%; }
+.perfil-cancelar, .perfil-salvar { padding: .55rem .9rem; }
+.perfil-salvar {
+    background: color-mix(in srgb, var(--cor-primaria) 22%, var(--cor-card));
+    border-color: var(--cor-primaria);
+}
+
+.perfil-texto-acessivel { position: absolute; width: 1px !important; height: 1px; padding: 0 !important; overflow: hidden; clip-path: inset(50%); }
+.janela-perfil-foto:focus-within .perfil-escolher-foto,
+.janela-perfil :focus-visible, button.perfil:focus-visible { outline: 2px solid var(--cor-primaria); outline-offset: 3px; }
+.janela-perfil-campos { display: grid; gap: .45rem; }
+.janela-perfil-campos label { font-weight: 650; }
+.janela-perfil-campos input {
+    width: 100%;
+    margin-bottom: .5rem;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
+    font: inherit;
+}
+.janela-perfil-acoes { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+.perfil-erro {
+    padding: .55rem .75rem;
+    margin-bottom: .6rem;
+    border: 1px solid var(--cor-erro);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--cor-erro) 12%, var(--cor-card));
+}
+#perfil-status { margin-bottom: .6rem; }
+

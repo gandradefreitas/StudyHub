@@ -6,17 +6,19 @@
 
     {% if mostrar_perfil %}
 
-    <div class="perfil">
+    <button type="button" class="perfil" id="abrir-perfil" aria-label="Editar perfil"
+            aria-haspopup="dialog" aria-controls="janela-perfil">
+        <span class="perfil-nome">{{ usuario.nome }}</span>
+        <span class="avatar" aria-hidden="true" data-avatar-moldura="{{ progresso_nivel.moldura_equipada }}">
+            {% if tem_foto_perfil %}
+                <img src="{{ url_for('perfil.foto') }}" alt="">
+            {% else %}
+                {{ usuario.nome[0] }}
+            {% endif %}
+        </span>
+    </button>
 
-        <a href="{{ url_for('pagina_configuracoes') }}" class="perfil">
-
-            <span class="perfil-nome">{{ usuario["nome"] }}</span>
-
-            <div class="avatar">{{ usuario["nome"][0] }}</div>
-
-        </a>
-
-    </div>
+    {% include "componentes/janela_perfil.html" %}
 
     {% endif %}
 

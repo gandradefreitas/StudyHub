@@ -14,7 +14,7 @@ from flask_wtf.csrf import CSRFProtect
 from psycopg import Error as ErroPostgres
 
 from database.conexao import conectar
-from database.criar_banco import verificar_esquema_web
+from database.criar_banco import migrar_banco_local, verificar_esquema_web
 from database.provas_objetivas_repository import (
     TentativaObjetivaEncerrada,
     obter_inicio_tentativa_objetiva,
@@ -102,6 +102,13 @@ from database.questoes_repository import (
 )
 
 from controllers.idiomas_controller import idiomas
+from controllers.niveis_controller import niveis
+from database.experiencia_repository import obter_nivel
+from services.molduras_service import MOLDURAS
+from services.experiencia_service import exp_questao
+from controllers.perfil_controller import limitar_upload_perfil, perfil
+from database.usuario_repository import tem_foto_perfil
+from controllers.rank_controller import rank
 from controllers.redacoes_controller import listar_envios, redacoes
 from database.idiomas_repository import obter_progresso
 from services.configuracoes import definir_senha_usuario
@@ -129,9 +136,13 @@ app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = True
 
+app.before_request(limitar_upload_perfil)
 csrf = CSRFProtect(app)
 configurar_protecao_http(app)
 app.register_blueprint(idiomas)
+app.register_blueprint(perfil)
+app.register_blueprint(niveis)
+app.register_blueprint(rank)
 app.register_blueprint(redacoes)
 registrar_autenticacao(app)
 registrar_estatisticas(app)
@@ -217,6 +228,10 @@ def dashboard():
         leituras_concluidas=len(leituras),
         palavras_lidas=sum(leitura["palavras"] for leitura in leituras.values()),
         redacoes_enviadas=len(envios),
+        tem_foto_perfil=tem_foto_perfil(session["usuario_id"]),
+        erro_perfil=session.pop("erro_perfil", None),
+        progresso_nivel=obter_nivel(session["usuario_id"]),
+        molduras=MOLDURAS,
         **dados,
         classe_body="sidebar-toggle",
         mostrar_pesquisa=True,
@@ -2550,10 +2565,7 @@ def limpar_historico_rota():
             url_for("pagina_login")
         )
 
-    resultado, mensagem = limpar_historico(
-        session["usuario_id"],
-        incluir_leituras=request.form.get("incluir_leituras") == "1",
-    )
+    resultado, mensagem = limpar_historico(session["usuario_id"])
 
     flash(
         mensagem,
@@ -3224,7 +3236,8 @@ def responder_questao():
 
         data_resposta=data_resposta,
 
-        proxima_tentativa=proxima_tentativa
+        proxima_tentativa=proxima_tentativa,
+        exp_decimos=exp_questao(questao.get('dificuldade')),
 
     )
 
@@ -3407,7 +3420,7 @@ def health():
     return "Serviço indisponível", 503
 
 if __name__ == "__main__":
-
+    migrar_banco_local()
     app.run(
         debug=False
     )

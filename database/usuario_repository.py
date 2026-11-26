@@ -149,23 +149,34 @@ def atualizar_configuracoes(
     conexao.close()
 
 
-def atualizar_usuario(usuario_id, nome, email):
+def atualizar_usuario(usuario_id, nome, email, *, foto=None):
+    with conectar() as conexao:
+        atualizado = conexao.execute("""
+            UPDATE usuarios SET nome = %s, email = %s WHERE id = %s
+        """, (nome, email, usuario_id)).rowcount
+        if atualizado and foto is not None:
+            conexao.execute("""
+                INSERT INTO fotos_perfil (usuario_id, imagem)
+                VALUES (%s, %s)
+                ON CONFLICT (usuario_id) DO UPDATE SET imagem = EXCLUDED.imagem
+            """, (usuario_id, foto))
+        return bool(atualizado)
 
-    conexao = conectar()
-    cursor = conexao.cursor()
 
-    cursor.execute("""
-        UPDATE usuarios
-        SET nome = %s, email = %s
-        WHERE id = %s
-    """, (
-        nome,
-        email,
-        usuario_id
-    ))
+def tem_foto_perfil(usuario_id):
+    with conectar() as conexao:
+        return conexao.execute(
+            "SELECT EXISTS (SELECT 1 FROM fotos_perfil WHERE usuario_id = %s) AS tem",
+            (usuario_id,),
+        ).fetchone()["tem"]
 
-    conexao.commit()
-    conexao.close()
+
+def obter_foto_perfil(usuario_id):
+    with conectar() as conexao:
+        foto = conexao.execute(
+            "SELECT imagem FROM fotos_perfil WHERE usuario_id = %s", (usuario_id,),
+        ).fetchone()
+    return foto["imagem"] if foto else None
 
 
 def atualizar_senha(usuario_id, senha):

@@ -1,0 +1,18 @@
+{% if usuario %}
+<dialog id="parabens-nivel" class="parabens-nivel" aria-labelledby="titulo-parabens-nivel"
+        data-url="{{ url_for('niveis.progresso') }}" data-csrf="{{ csrf_token() }}"
+        data-url-moldura="{{ url_for('niveis.atualizar_moldura') }}">
+    <div class="parabens-nivel-estrela" aria-hidden="true">★</div>
+    <h2 id="titulo-parabens-nivel"></h2>
+    <p data-mensagem-nivel>Continue praticando e evoluindo no StudyHub.</p>
+    <div data-conquista-moldura hidden>
+        <span class="moldura-amostra" data-moldura-conquistada aria-hidden="true"></span>
+        <div class="moldura-acoes">
+            <button type="button" data-fechar-conquista>Fechar</button>
+            <button type="button" data-equipar-conquista>Equipar agora</button>
+        </div>
+        <p role="status" data-conquista-status></p>
+    </div>
+</dialog>
+<script defer src="{{ url_for('static', filename='js/niveis.js') }}"></script>
+{% endif %}

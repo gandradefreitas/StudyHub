@@ -57,31 +57,47 @@ def test_migra_esquema_anterior_sem_apagar_redacoes():
         conexao.rollback()
 
 
-def test_limpeza_inclui_idiomas_so_com_autorizacao(dados_discursivos, monkeypatch):
+def test_limpeza_apaga_atividades_e_preserva_conquistas(dados_discursivos, monkeypatch):
     app = modulo.app
     monkeypatch.setitem(app.config, "TESTING", True)
     monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
     usuario, outro = dados_discursivos["usuarios"]
-    with conectar() as conexao:
-        conexao.execute("""
-            INSERT INTO leituras_idiomas (usuario_id, texto_id, palavras, acertos)
-            VALUES (%s, 'texto', 120, 8), (%s, 'texto', 120, 8)
-        """, (usuario, outro))
-    with app.test_client() as cliente:
-        with cliente.session_transaction() as sessao:
-            sessao["usuario_id"] = usuario
-        caminho = "/configuracoes/dados/limpar"
-        assert cliente.post(caminho).status_code == 302
+    try:
         with conectar() as conexao:
-            assert conexao.execute(
-                "SELECT 1 FROM leituras_idiomas WHERE usuario_id = %s", (usuario,),
-            ).fetchone()
-        assert cliente.post(caminho, data={"incluir_leituras": "1"}).status_code == 302
+            conexao.execute("""
+                INSERT INTO leituras_idiomas (usuario_id, texto_id, palavras, acertos)
+                VALUES (%s, 'texto', 120, 8), (%s, 'texto', 120, 8)
+            """, (usuario, outro))
+            conexao.execute("""
+                INSERT INTO tarefas (usuario_id, descricao, concluida)
+                VALUES (%s, 'Pendente', 0), (%s, 'Concluída', 1), (%s, 'Pendente de outro', 0)
+            """, (usuario, usuario, outro))
+            conexao.execute("""
+                INSERT INTO experiencia_atividades (usuario_id, origem, referencia, exp_decimos)
+                VALUES (%s, 'idiomas', 'texto', 1000)
+            """, (usuario,))
+        with app.test_client() as cliente:
+            with cliente.session_transaction() as sessao:
+                sessao["usuario_id"] = usuario
+            assert cliente.post("/nivel/progresso").json["celebrar"] is True
+            assert cliente.post("/nivel/moldura", json={"nivel": 1}).status_code == 200
+            for _ in range(2):
+                assert cliente.post("/configuracoes/dados/limpar").status_code == 302
+            progresso = cliente.post("/nivel/progresso").json
+            assert progresso["nivel"] == 1
+            assert progresso["moldura_equipada"] == 1
+            assert progresso["celebrar"] is False
+
         with conectar() as conexao:
-            assert conexao.execute(
-                "SELECT usuario_id FROM leituras_idiomas WHERE usuario_id = ANY(%s)",
-                ([usuario, outro],),
-            ).fetchall() == [{"usuario_id": outro}]
+            for tabela in (sql.Identifier("leituras_idiomas"), sql.Identifier("tarefas")):
+                assert conexao.execute(
+                    sql.SQL("SELECT usuario_id FROM {} WHERE usuario_id = ANY(%s)").format(tabela),
+                    ([usuario, outro],),
+                ).fetchall() == [{"usuario_id": outro}]
+    finally:
+        with conectar() as conexao:
+            conexao.execute("DELETE FROM tarefas WHERE usuario_id = ANY(%s)", ([usuario, outro],))
+
 
 
 def test_exclusao_conta_google_exige_identidade_vinculada(dados_discursivos, monkeypatch):
@@ -128,3 +144,17 @@ def test_health_sinaliza_esquema_invalido(monkeypatch):
         resposta = cliente.get("/health")
         assert resposta.status_code == 503
         assert b"correcao_falhou" not in resposta.data
+
+
+def test_inicializacao_local_nao_migra_banco_remoto(monkeypatch):
+    from database import criar_banco
+
+    chamadas = []
+    monkeypatch.delenv("PGHOSTADDR", raising=False)
+    monkeypatch.setattr(criar_banco, "aplicar_migracoes", lambda conexao: chamadas.append(True))
+    criar_banco.migrar_banco_local()
+    assert chamadas == [True]
+
+    monkeypatch.setenv("DATABASE_URL", "postgresql://remoto.example/studyhub_test")
+    criar_banco.migrar_banco_local()
+    assert chamadas == [True]

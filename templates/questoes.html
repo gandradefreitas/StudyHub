@@ -21,6 +21,7 @@
     <script src="{{ url_for('static', filename='js/aviso_studyhub.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='remodelagem.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='componentes/flash_messages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='componentes/niveis.css') }}">
 </head>
 <body class="sidebar-toggle" data-tema="{{ usuario['tema'] }}">
 
@@ -497,5 +498,6 @@
     <script src="{{ url_for('static', filename='js/cronometro_questoes.js') }}"></script>
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 
+    {% include "componentes/parabens_nivel.html" %}
 </body>
 </html>

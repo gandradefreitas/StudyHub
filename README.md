@@ -278,12 +278,15 @@ Para utilizar a autenticação com Google, também é necessário configurar as 
 
 ### 5. Execute a aplicação
 
-Aplique as migrações antes de iniciar a aplicação:
+Para desenvolvimento com PostgreSQL local, execute:
 
 ```bash
-python -m database.criar_banco
 python app.py
 ```
+
+Com `DATABASE_URL` apontando para `studyhub` ou `studyhub_test` em localhost,
+a inicialização aplica as migrações pendentes. Para outros bancos, aplique-as
+explicitamente com `python -m database.criar_banco` no ambiente correspondente.
 
 Para corrigir provas e redações, inicie também o processo descrito no
 [guia da fila de correções](docs/fila-correcoes.md).

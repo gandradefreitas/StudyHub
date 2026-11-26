@@ -1,4 +1,6 @@
 from database.conexao import conectar
+from database.experiencia_repository import registrar_experiencia
+from services.experiencia_service import exp_redacao
 from psycopg.types.json import Jsonb
 
 MAX_TENTATIVAS = 4
@@ -54,16 +56,23 @@ def encerrar_redacao(envio, notas):
     falhou = notas is None and tentativas >= MAX_TENTATIVAS
     intervalo = PRAZOS_RETRY[tentativas - 1] if notas is None and not falhou else None
     with conectar() as conexao:
-        return conexao.execute("""
+        registro = conexao.execute("""
             UPDATE redacoes
             SET notas = %s, nota = %s, correcao_falhou = %s,
                 correcao_tentar_apos = CURRENT_TIMESTAMP + %s * INTERVAL '1 second',
                 correcao_reivindicada_ate = NULL
             WHERE id = %s AND nota IS NULL AND correcao_reivindicada_ate = %s
               AND correcao_reivindicada_ate > CURRENT_TIMESTAMP
+            RETURNING usuario_id, instituicao, nota
         """, (Jsonb(notas) if notas is not None else None,
               sum(notas) if notas is not None else None, falhou, intervalo,
-              envio["id"], envio["correcao_reivindicada_ate"])).rowcount == 1
+              envio["id"], envio["correcao_reivindicada_ate"])).fetchone()
+        if registro is not None and registro["nota"] is not None:
+            registrar_experiencia(
+                conexao, registro["usuario_id"], "redacao", envio["id"],
+                exp_redacao(registro["nota"], registro["instituicao"]),
+            )
+        return registro is not None
 
 
 def reagendar_redacao(envio_id, usuario_id):

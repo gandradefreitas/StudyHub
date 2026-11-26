@@ -1,6 +1,7 @@
 from contextlib import closing
 
 from database.conexao import conectar
+from database.experiencia_repository import registrar_experiencia
 
 
 def obter_progresso(usuario_id):
@@ -30,4 +31,6 @@ def registrar_leitura(usuario_id, texto_id, palavras, acertos):
                OR EXCLUDED.ultimo_envio_em >= leituras_idiomas.ultimo_envio_em + INTERVAL '10 minutes'
             RETURNING texto_id
         """, (usuario_id, texto_id, palavras, acertos)).fetchone()
+        if envio is not None:
+            registrar_experiencia(conexao, usuario_id, "idiomas", texto_id, palavras)
         return envio is not None

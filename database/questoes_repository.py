@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from database.conexao import conectar
+from database.experiencia_repository import registrar_experiencia
 
 
 def registrar_resposta_questao(
@@ -11,15 +12,25 @@ def registrar_resposta_questao(
     tentativa,
     intervalo_revisao,
     data_resposta,
-    proxima_tentativa
+    proxima_tentativa,
+    *,
+    exp_decimos=0,
 ):
 
-    conexao = conectar()
-
-    cursor = conexao.cursor()
-
-    cursor.execute("""
-        INSERT INTO respostas_questoes (
+    with conectar() as conexao:
+        conexao.execute("""
+            INSERT INTO respostas_questoes (
+                usuario_id,
+                questao_numero,
+                resposta,
+                correta,
+                tentativa,
+                intervalo_revisao,
+                data_resposta,
+                proxima_tentativa
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
             usuario_id,
             questao_numero,
             resposta,
@@ -28,22 +39,8 @@ def registrar_resposta_questao(
             intervalo_revisao,
             data_resposta,
             proxima_tentativa
-        )
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-    """, (
-        usuario_id,
-        questao_numero,
-        resposta,
-        correta,
-        tentativa,
-        intervalo_revisao,
-        data_resposta,
-        proxima_tentativa
-    ))
-
-    conexao.commit()
-
-    conexao.close()
+        ))
+        registrar_experiencia(conexao, usuario_id, "estudos", questao_numero, exp_decimos)
 
 
 def obter_ultima_resposta_questao(

@@ -111,6 +111,8 @@ def obter_dados_exportacao(usuario_id):
         "respostas_discursivas": """SELECT r.tentativa_id, r.questao_numero, r.item_letra, r.resposta
             FROM respostas_discursivas r JOIN tentativas_provas_discursivas t ON t.id = r.tentativa_id
             WHERE t.usuario_id = %s ORDER BY r.id""",
+        "experiencia": """SELECT origem, referencia, exp_decimos, registrado_em
+            FROM experiencia_atividades WHERE usuario_id = %s ORDER BY registrado_em, origem, referencia""",
         "leituras_idiomas": """SELECT texto_id, palavras, concluido_em, acertos
             FROM leituras_idiomas WHERE usuario_id = %s ORDER BY concluido_em, texto_id""",
         "redacoes": """SELECT instituicao, ano, tema, titulo, texto, notas, nota, tempo_segundos, criado_em
@@ -136,7 +138,7 @@ def obter_dados_exportacao(usuario_id):
     }
 
 
-def limpar_historico(usuario_id, *, incluir_leituras=False):
+def limpar_historico(usuario_id):
 
     conexao = conectar()
     cursor = conexao.cursor()
@@ -156,8 +158,7 @@ def limpar_historico(usuario_id, *, incluir_leituras=False):
         cursor.execute("DELETE FROM tentativas_provas_objetivas WHERE usuario_id = %s", (usuario_id,))
         cursor.execute("DELETE FROM respostas_questoes WHERE usuario_id = %s", (usuario_id,))
         cursor.execute("DELETE FROM resultados_questoes WHERE usuario_id = %s", (usuario_id,))
-        if incluir_leituras:
-            cursor.execute("DELETE FROM leituras_idiomas WHERE usuario_id = %s", (usuario_id,))
+        cursor.execute("DELETE FROM leituras_idiomas WHERE usuario_id = %s", (usuario_id,))
 
         # As respostas discursivas são removidas pela chave estrangeira.
         cursor.execute("""
@@ -188,9 +189,9 @@ def limpar_historico(usuario_id, *, incluir_leituras=False):
         cursor.execute("""
             DELETE FROM tarefas
             WHERE usuario_id = %s
-            AND concluida = 1
         """, (usuario_id,))
 
+        # EXP, avisos de nível e molduras são conquistas da conta.
         conexao.commit()
 
         return True

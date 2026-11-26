@@ -2,7 +2,7 @@ from database.conexao import conectar
 
 
 # Limite das provas discursivas do ITA 2025, inclusive para envios tardios.
-_DURACAO_DISCURSIVA_SQL = """
+DURACAO_DISCURSIVA_SQL = """
     CASE
         WHEN status IN ('finalizada', 'corrigida')
              AND data_inicio IS NOT NULL AND data_finalizacao IS NOT NULL
@@ -685,7 +685,7 @@ def listar_tentativas_discursivas_usuario(
                 data_finalizacao,
                 data_correcao,
                 resultado_correcao,
-                {_DURACAO_DISCURSIVA_SQL} AS duracao_segundos
+                {DURACAO_DISCURSIVA_SQL} AS duracao_segundos
             FROM tentativas_provas_discursivas
             WHERE usuario_id = %s
             ORDER BY data_inicio DESC, id DESC
@@ -705,7 +705,7 @@ def obter_duracao_discursiva_por_dia(usuario_id, inicio=None, fim=None, *, hoje=
         return conexao.execute(
             f"""
             SELECT data_finalizacao::date AS data,
-                   SUM({_DURACAO_DISCURSIVA_SQL}) AS duracao
+                   SUM({DURACAO_DISCURSIVA_SQL}) AS duracao
             FROM tentativas_provas_discursivas
             WHERE usuario_id = %s
               AND status IN ('finalizada', 'corrigida')

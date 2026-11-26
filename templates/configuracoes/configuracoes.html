@@ -575,10 +575,12 @@
 
 
                     <p>
-                        Serão apagados o tempo de estudo, as questões praticadas, as provas e
-                        suas respostas, as redações e seus rascunhos, as anotações e as tarefas
-                        concluídas. As tarefas pendentes e as configurações da conta serão mantidas.
-                        Essa ação é permanente.
+                        Esta ação apaga permanentemente seus registros de estudo, questões, provas
+                        e suas respostas, redações e rascunhos, progresso em Idiomas, anotações
+                        e todas as tarefas, inclusive as pendentes.
+                    </p>
+                    <p>
+                        Seu EXP, nível e molduras serão preservados, junto com o perfil e as configurações da conta.
                     </p>
 
                     <form method="POST" action="{{ url_for('limpar_historico_rota') }}">
@@ -588,9 +590,6 @@
                             name="csrf_token"
                             value="{{ csrf_token() }}"
                         >
-
-                        <p><label><input type="checkbox" name="incluir_leituras" value="1">
-                            Apagar também meu progresso em Idiomas</label></p>
 
                         <div class="acoes-modal-configuracoes">
 
@@ -737,9 +736,6 @@
         defer
     ></script>
 
-    <script
-        src="{{ url_for('static', filename='js/flash_messages.js') }}"
-    ></script>
 
 </body>
 </html>

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block titulo %}Rank · StudyHub{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paginas/rank.css') }}">
+{% endblock %}
+
+{% macro avatar(pessoa, coroa=false) %}
+    <div class="rank-avatar{% if coroa %} rank-coroado{% endif %}" aria-hidden="true">
+        {% if pessoa.foto %}
+            <img src="{{ pessoa.foto }}" alt="" loading="lazy" width="72" height="72">
+        {% else %}
+            <span>{{ pessoa.nome[:1] | upper }}</span>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro metrica(pessoa, criterio) %}
+    {% if criterio == 'tempo' %}
+        <strong>{{ pessoa.tempo }}</strong>
+    {% elif criterio == 'nivel' %}
+        <strong>Nível {{ pessoa.nivel }}</strong>
+        <span>{{ pessoa.exp }} EXP</span>
+    {% else %}
+        <strong>{{ '{:,}'.format(pessoa.resolvidas).replace(',', '.') }} {% if pessoa.resolvidas == 1 %}questão{% else %}questões{% endif %}</strong>
+        <span>{{ pessoa.taxa }}% de aproveitamento</span>
+    {% endif %}
+{% endmacro %}
+
+{% block conteudo %}
+<div class="rank">
+    <header class="rank-topo">
+        <div>
+            <h1>Rank</h1>
+            <p>Os 50 primeiros do StudyHub pelo total acumulado.</p>
+        </div>
+        <form class="rank-filtro" method="get" action="{{ url_for('rank.listar') }}">
+            <div>
+                <label for="criterio-rank">Classificar por</label>
+                <select name="criterio" id="criterio-rank">
+                    <option value="questoes"{% if criterio == 'questoes' %} selected{% endif %}>Questões resolvidas e aproveitamento</option>
+                    <option value="tempo"{% if criterio == 'tempo' %} selected{% endif %}>Tempo de estudo</option>
+                    <option value="nivel"{% if criterio == 'nivel' %} selected{% endif %}>Nível</option>
+                </select>
+            </div>
+            <button type="submit">Aplicar</button>
+        </form>
+    </header>
+
+    {% if criterio == 'questoes' %}
+        <p class="rank-regra">Conta as respostas em Estudos e nas provas objetivas. O aproveitamento desempata totais iguais.</p>
+    {% elif criterio == 'tempo' %}
+        <p class="rank-regra">Soma o tempo registrado em Estudos, provas e redações cronometradas.</p>
+    {% else %}
+        <p class="rank-regra">O EXP acumulado desempata participantes do mesmo nível.</p>
+    {% endif %}
+
+    {% if colocados %}
+        <section aria-labelledby="rank-podio">
+            <h2 id="rank-podio">Pódio</h2>
+            <ol class="rank-podio">
+                {% for pessoa in colocados[:3] %}
+                    <li class="rank-podio-cartao rank-posicao-{{ pessoa.posicao }}">
+                        <span class="rank-podio-lugar">{{ pessoa.posicao }}º lugar</span>
+                        {{ avatar(pessoa, pessoa.posicao == 1) }}
+                        <h3>{{ pessoa.nome }}</h3>
+                        <div class="rank-metrica">{{ metrica(pessoa, criterio) }}</div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+
+        <section aria-labelledby="rank-classificacao">
+            <h2 id="rank-classificacao">Classificação</h2>
+            <ol class="rank-lista">
+                {% for pessoa in colocados %}
+                    <li class="rank-linha">
+                        <span class="rank-numero" aria-label="{{ pessoa.posicao }}º lugar">#{{ pessoa.posicao }}</span>
+                        {{ avatar(pessoa) }}
+                        <strong class="rank-nome">{{ pessoa.nome }}</strong>
+                        <div class="rank-metrica">{{ metrica(pessoa, criterio) }}</div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+    {% else %}
+        <p class="rank-vazio">Ainda não há atividade registrada para este critério.</p>
+    {% endif %}
+</div>
+{% endblock %}
