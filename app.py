@@ -3265,10 +3265,6 @@ def revisar_questoes():
             url_for("pagina_login")
         )
 
-    usuario = obter_usuario_por_id(
-        usuario_id
-    )
-
     area = request.args.get("area")
 
     dificuldade = request.args.get("dificuldade")
@@ -3303,9 +3299,21 @@ def revisar_questoes():
             if resposta["questao_numero"] in numeros_filtrados
         ]
 
+    if questoes_revisao:
+        return redirect(url_for(
+            "questoes",
+            numero=questoes_revisao[0]["questao_numero"],
+            revisao=1,
+            area=area,
+            dificuldade=dificuldade,
+            competencia=competencia,
+            habilidade=habilidade,
+            lingua=lingua,
+        ))
+
     return render_template(
         "revisar_questoes.html",
-        usuario=usuario,
+        usuario=obter_usuario_por_id(usuario_id),
         questoes_revisao=questoes_revisao,
         area=area,
         dificuldade=dificuldade,

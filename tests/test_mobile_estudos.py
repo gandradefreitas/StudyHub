@@ -51,3 +51,34 @@ def test_ordem_aleatoria_nao_muda_ao_responder(monkeypatch):
         assert modulo.questoes_em_ordem_aleatoria(1) == [
             numero for numero in primeira if numero != escolhida
         ]
+
+
+def test_revisao_abre_primeira_questao_filtrada_e_oculta_idioma_inexistente(dados_discursivos, monkeypatch):
+    import app as modulo
+
+    catalogo = modulo.obter_questoes_filtradas()
+    sem_idioma = next(q for q in catalogo if not q.get("lingua") and q["area"] != "Linguagens")
+    com_idioma = next(q for q in catalogo if q.get("lingua") and q["area"] != sem_idioma["area"])
+    pendentes = [{"questao_numero": com_idioma["numero"]}, {"questao_numero": sem_idioma["numero"]}]
+    monkeypatch.setattr(modulo, "obter_questoes_para_revisao", lambda _: pendentes)
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = dados_discursivos["usuarios"][0]
+        acesso = cliente.get("/questoes/revisar", query_string={"area": sem_idioma["area"]}, follow_redirects=True)
+        assert acesso.status_code == 200
+        assert len(acesso.history) == 1
+        assert acesso.request.path == f"/questoes/{sem_idioma['numero']}"
+        assert acesso.request.args["revisao"] == "1"
+        assert acesso.request.args["area"] == sem_idioma["area"]
+        html = acesso.get_data(as_text=True)
+        assert '<span class="questoes-tag">None</span>' not in html
+        assert "Voltar para questões" in html
+
+        html = cliente.get("/questoes/revisar", follow_redirects=True).get_data(as_text=True)
+        assert f'<span class="questoes-tag">{com_idioma["lingua"]}</span>' in html
+
+        pendentes.clear()
+        vazia = cliente.get("/questoes/revisar")
+        assert vazia.status_code == 200
+        assert "Todas as suas questões estão em dia." in vazia.get_data(as_text=True)
+        assert "Começar revisão" not in vazia.get_data(as_text=True)

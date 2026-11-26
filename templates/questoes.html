@@ -262,6 +262,11 @@
 
                 </form>
 
+                {% if modo_revisao %}
+                <a href="{{ url_for('questoes_inicio') }}" class="botao-revisar">
+                    ← Voltar para questões
+                </a>
+                {% else %}
                 <a
                     href="{{ url_for(
                         'revisar_questoes',
@@ -275,6 +280,7 @@
                 >
                     📚 Revisar questões
                 </a>
+                {% endif %}
 
             </div>
 
@@ -314,7 +320,9 @@
 
                     <div class="questoes-classificacao">
 
-                        <span class="questoes-tag">{{ questao.lingua }}</span>
+                        {% if questao.lingua and questao.lingua | trim | lower not in ('', 'none', 'null') %}
+                            <span class="questoes-tag">{{ questao.lingua }}</span>
+                        {% endif %}
 
                         <span class="questoes-tag">Habilidade {{ questao.habilidade }}</span>
 
@@ -460,7 +468,9 @@
             {% else %}
 
                 <div class="questoes-sem-resultados">
-                    {% if not modo_revisao and questoes_concluidas %}
+                    {% if modo_revisao %}
+                        <h2>Todas as suas questões estão em dia.</h2>
+                    {% elif questoes_concluidas %}
                         <h2>Parabéns, você chegou ao fim das questões disponíveis!</h2>
                         <p>Seu progresso foi salvo. Volte depois para continuar praticando.</p>
                         <a href="{{ url_for('dashboard') }}">Voltar ao Menu</a>
