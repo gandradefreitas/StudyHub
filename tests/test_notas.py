@@ -99,3 +99,97 @@ def app_de_teste(monkeypatch):
     monkeypatch.setitem(app.config, "TESTING", True)
     monkeypatch.setitem(app.config, "WTF_CSRF_ENABLED", False)
     return app
+
+
+
+def test_enem_2026_carrega_imagens_e_corrige_gabarito_em_letras(app_de_teste, dados_discursivos):
+    from tests.test_protecao_contas import identificar_tentativa
+
+    usuario, _ = dados_discursivos["usuarios"]
+    prova = obter_prova(5)
+    assert prova.total_questoes == 90
+    assert len(prova.questoes) == 95
+    for idioma, gabarito in (("ingles", "BAEDC"), ("espanhol", "AACBD")):
+        selecionadas = [q for q in prova.questoes if not q.lingua or q.lingua == idioma]
+        assert [q.numero for q in selecionadas] == list(range(1, 91))
+        assert "".join("ABCDE"[q.resposta] for q in selecionadas[:5]) == gabarito
+
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        try:
+            html = cliente.get("/provas").get_data(as_text=True)
+            assert "ENEM 2026" in html
+            assert 'href="/provas/5"' in html
+            pagina = cliente.get("/provas/5")
+            assert pagina.status_code == 200
+            assert "ENEM 2026" in pagina.get_data(as_text=True)
+            assert '"resposta"' not in pagina.get_data(as_text=True)
+            resposta = cliente.post("/provas/resultado", json={
+                "prova_id": 5, "tentativa_id": identificar_tentativa(pagina), "lingua": "espanhol",
+                "questoes": [{"numero": numero} for numero in range(1, 91)],
+                "respostas": {"1": 1, "2": 0},
+            })
+            assert resposta.status_code == 200, resposta.json
+            imagem = "https://res.cloudinary.com/nwfhf2sc/image/upload/v1795785082/q01-espanhol.png"
+            assert imagem in pagina.get_data(as_text=True)
+            html = cliente.get("/provas/resultado").get_data(as_text=True)
+            assert f'src="{imagem}"' in html
+            assert "DZWONIK" in html
+            with conectar() as banco:
+                resultado = banco.execute("""
+                    SELECT acertos, erros, nao_respondidas FROM resultados_provas
+                    WHERE usuario_id = %s AND prova_id = 5
+                """, (usuario,)).fetchone()
+                assert resultado == {"acertos": 1, "erros": 1, "nao_respondidas": 88}
+        finally:
+            with conectar() as banco:
+                banco.execute("DELETE FROM respostas_provas WHERE usuario_id = %s", (usuario,))
+                banco.execute("DELETE FROM resultados_provas WHERE usuario_id = %s", (usuario,))
+
+
+
+def test_enem_2026_dia2_classifica_e_exclui_a_anulada(app_de_teste, dados_discursivos):
+    from services.provas_service import carregar_questoes
+    from tests.test_protecao_contas import identificar_tentativa
+
+    usuario, _ = dados_discursivos["usuarios"]
+    dados = carregar_questoes("enem/2026_dia2.json")
+    prova = obter_prova(6)
+    assert [q["numero"] for q in dados] == list(range(91, 181))
+    assert dados[159 - 91]["resposta"] is None
+    assert all(q["habilidade"] and q["competencia"] and q["dificuldade"] for q in dados)
+    assert prova.questoes_anuladas == (159,)
+    assert prova.total_questoes == len(prova.questoes) == 89
+    assert Counter(q.area for q in prova.questoes) == {"Natureza": 45, "Matematica": 44}
+    assert 159 not in {q.numero for q in prova.questoes}
+
+    with app.test_client() as cliente:
+        with cliente.session_transaction() as sessao:
+            sessao["usuario_id"] = usuario
+        try:
+            catalogo = cliente.get("/provas").get_data(as_text=True)
+            assert 'href="/provas/6"' in catalogo
+            pagina = cliente.get("/provas/6")
+            assert pagina.status_code == 200
+            assert "159 foi anulada" in pagina.get_data(as_text=True)
+            resposta = cliente.post("/provas/resultado", json={
+                "prova_id": 6, "tentativa_id": identificar_tentativa(pagina),
+                "questoes": [{"numero": q.numero} for q in prova.questoes],
+                "respostas": {"91": 2, "97": 0, "180": 4},
+            })
+            assert resposta.status_code == 200, resposta.json
+            revisao = cliente.get("/provas/resultado").get_data(as_text=True)
+            imagem = "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-d.png"
+            assert imagem in pagina.get_data(as_text=True)
+            assert f'src="{imagem}"' in revisao
+            with conectar() as banco:
+                resultado = banco.execute("""
+                    SELECT acertos, erros, nao_respondidas, total FROM resultados_provas
+                    WHERE usuario_id = %s AND prova_id = 6
+                """, (usuario,)).fetchone()
+                assert resultado == {"acertos": 2, "erros": 1, "nao_respondidas": 86, "total": 89}
+        finally:
+            with conectar() as banco:
+                banco.execute("DELETE FROM respostas_provas WHERE usuario_id = %s", (usuario,))
+                banco.execute("DELETE FROM resultados_provas WHERE usuario_id = %s", (usuario,))

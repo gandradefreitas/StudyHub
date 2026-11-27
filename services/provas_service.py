@@ -57,7 +57,8 @@ def obter_prova(id_prova):
         return None
 
     dados = carregar_questoes(catalogo["arquivo"])
-    questoes = criar_questoes(dados)
+    questoes = criar_questoes([questao for questao in dados if not questao.get("anulada")])
+    anuladas = tuple(questao["numero"] for questao in dados if questao.get("anulada"))
 
     return Prova(
         id=catalogo["id"],
@@ -66,8 +67,9 @@ def obter_prova(id_prova):
         dia=catalogo.get("dia"),
         areas=catalogo["areas"],
         tempo=catalogo["tempo"],
-        total_questoes=len(questoes),
-        questoes=questoes
+        total_questoes=catalogo.get("total_questoes", len(questoes)),
+        questoes=questoes,
+        questoes_anuladas=anuladas,
     )
 
 
@@ -76,6 +78,11 @@ def criar_questoes(dados):
     questoes = []
 
     for questao in dados:
+        resposta = questao["resposta"]
+        if isinstance(resposta, str):
+            if len(resposta) != 1 or resposta not in "ABCDE":
+                raise ValueError(f'Gabarito inválido na questão {questao["numero"]}.')
+            resposta = "ABCDE".index(resposta)
 
         questoes.append(
             Questao(
@@ -89,8 +96,9 @@ def criar_questoes(dados):
                 pergunta=questao.get("pergunta"),
                 imagem=questao["imagem"],
                 alternativas=questao["alternativas"],
-                resposta=questao["resposta"],
-                comentario=questao["comentario"]
+                resposta=resposta,
+                comentario=questao["comentario"],
+                enunciado_apos_imagem=questao.get("enunciado_apos_imagem"),
             )
         )
 

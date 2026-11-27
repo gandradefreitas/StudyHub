@@ -91,11 +91,11 @@ def test_rank_nivel_ordena_por_exp_e_exibe_nivel(dados_discursivos):
     with conectar() as banco:
         banco.execute("""
             INSERT INTO experiencia_atividades (usuario_id, origem, referencia, exp_decimos)
-            VALUES (%s, 'teste', 'a', 1000), (%s, 'teste', 'a', 1000), (%s, 'teste', 'b', 251)
+            VALUES (%s, 'teste', 'a', 4000), (%s, 'teste', 'a', 4000), (%s, 'teste', 'b', 251)
         """, (primeiro, segundo, segundo))
 
     colocados = [p for p in ranking_nivel() if p["id"] in (primeiro, segundo)]
-    assert [(p["id"], p["exp_decimos"]) for p in colocados] == [(segundo, 1251), (primeiro, 1000)]
+    assert [(p["id"], p["exp_decimos"]) for p in colocados] == [(segundo, 4251), (primeiro, 4000)]
 
     with app.test_client() as cliente:
         with cliente.session_transaction() as sessao:
@@ -105,5 +105,5 @@ def test_rank_nivel_ordena_por_exp_e_exibe_nivel(dados_discursivos):
         html = pagina.get_data(as_text=True)
         assert '<option value="nivel" selected>Nível</option>' in html
         assert "Nível 1" in html
-        assert "125,1 EXP" in html
-        assert html.index("125,1 EXP") < html.index("100 EXP")
+        assert "425,1 EXP" in html
+        assert html.index("425,1 EXP") < html.index("400 EXP")

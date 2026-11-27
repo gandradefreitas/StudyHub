@@ -1546,6 +1546,7 @@ def resultado_prova():
                     "enunciado": questao.enunciado,
 
                     "imagem": questao.imagem,
+                    "enunciado_apos_imagem": questao.enunciado_apos_imagem,
 
                     "pergunta": questao.pergunta,
 
@@ -1617,6 +1618,11 @@ def preparar_alternativa_revisao(alternativa):
             "tipo": "imagem",
             "conteudo": alternativa
         }
+
+    if alternativa.startswith("imagens/") and alternativa.lower().endswith(
+        (".png", ".jpg", ".jpeg", ".webp", ".gif")
+    ):
+        return {"tipo": "imagem", "conteudo": url_for("static", filename=alternativa)}
 
     # Caso seja texto comum.
     return {
@@ -1746,6 +1752,7 @@ def visualizar_resultado_historico(resultado_id):
             "enunciado": questao.enunciado,
 
             "imagem": questao.imagem,
+            "enunciado_apos_imagem": questao.enunciado_apos_imagem,
 
             "pergunta": questao.pergunta,
 

@@ -2,7 +2,7 @@ from utils.horario import horario_studyhub
 
 from database.conexao import conectar
 from database.experiencia_repository import registrar_experiencia
-from services.experiencia_service import exp_questao
+from services.experiencia_service import exp_resposta_prova
 from database.provas_objetivas_repository import TentativaObjetivaEncerrada
 from database.tempo_provas_escritas import obter_duracao_provas_escritas_por_dia
 from services.provas_service import obter_prova, listar_provas
@@ -745,7 +745,6 @@ def salvar_resultado_com_respostas(
         erros = 0
         nao_respondidas = 0
         respostas_processadas = []
-        exp_por_questao = {}
 
         for questao in questoes:
 
@@ -781,7 +780,6 @@ def salvar_resultado_com_respostas(
             else:
                 erros += 1
 
-            exp_por_questao[questao.numero] = exp_questao(getattr(questao, "dificuldade", None))
             respostas_processadas.append(
                 (
                     resultado["usuario_id"],
@@ -887,10 +885,9 @@ def salvar_resultado_com_respostas(
             cursor.execute("""
                 UPDATE tentativas_provas_objetivas SET resultado_id = %s WHERE id = %s
             """, (resultado_id, tentativa_id))
-        for numero, exp_decimos in sorted(exp_por_questao.items()):
+        for usuario_id, prova_id, numero, _, correta in sorted(respostas_processadas):
             registrar_experiencia(
-                conexao, resultado["usuario_id"], "prova_objetiva",
-                f'{resultado["prova_id"]}:{numero}', exp_decimos,
+                conexao, usuario_id, "prova_objetiva", f"{prova_id}:{numero}", exp_resposta_prova(correta),
             )
 
         conexao.commit()

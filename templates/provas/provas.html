@@ -66,58 +66,28 @@
 
                 <div class="pasta-conteudo">
 
-                    <details class="pasta-ano">
-
-                        <summary class="pasta-ano-cabecalho">
-                            <span class="pasta-icone" aria-hidden="true"><i class="bi bi-calendar3"></i></span>
-                            <span>2025</span>
-                            <span class="pasta-seta">⌄</span>
-                        </summary>
-
-                        <div class="provas-disponiveis">
-
-                            {% for prova in provas %}
-
-                                {% if prova.tipo == "ENEM" %}
-
+                    {% for edicao in provas | selectattr('tipo', 'equalto', 'ENEM') | groupby('nome') | reverse %}
+                        <details class="pasta-ano">
+                            <summary class="pasta-ano-cabecalho">
+                                <span class="pasta-icone" aria-hidden="true"><i class="bi bi-calendar3"></i></span>
+                                <span>{{ edicao.grouper.split()[-1] }}</span>
+                                <span class="pasta-seta">⌄</span>
+                            </summary>
+                            <div class="provas-disponiveis">
+                                {% for prova in edicao.list %}
                                     <article class="item-prova">
-
                                         <div class="item-prova-informacoes">
-
                                             <h3>{{ prova.nome }}</h3>
-
-                                            <p>
-                                                {{ prova.dia }}
-                                                ·
-                                                {{ prova.total_questoes }} questões
-                                            </p>
-
-                                            <p>
-                                                Duração: {{ prova.tempo }}
-                                            </p>
-
+                                            <p>{{ prova.dia }} · {{ prova.total_questoes }} questões</p>
+                                            <p>Duração: {{ prova.tempo }}</p>
                                         </div>
-
-                                        <a
-                                            href="{{ url_for(
-                                                'visualizar_prova',
-                                                id_prova=prova.id
-                                            ) }}"
-                                            class="botao-iniciar"
-                                        >
-                                            Iniciar
-                                        </a>
-
+                                        <a href="{{ url_for('visualizar_prova', id_prova=prova.id) }}"
+                                           class="botao-iniciar">Iniciar</a>
                                     </article>
-
-                                {% endif %}
-
-                            {% endfor %}
-
-                        </div>
-
-                    </details>
-
+                                {% endfor %}
+                            </div>
+                        </details>
+                    {% endfor %}
                 </div>
 
             </details>

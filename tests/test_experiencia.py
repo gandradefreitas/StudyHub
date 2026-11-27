@@ -21,7 +21,7 @@ def test_faixas_e_curva_de_experiencia():
     assert exp_redacao(75, "ITA") == 1250
     for nivel in range(100):
         inicio = total_para_nivel(nivel)
-        custo = 10 * (100 + 20 * nivel + 2 * nivel**2)
+        custo = 40 * (100 + 20 * nivel + 2 * nivel**2)
         assert calcular_progresso(inicio)["necessario"] == custo
         assert calcular_progresso(inicio + custo - 1)["nivel"] == nivel
         assert calcular_progresso(inicio + custo)["nivel"] == nivel + 1
@@ -43,13 +43,13 @@ def test_atividades_geram_experiencia_uma_vez_e_nivel_e_notificado(dados_discurs
                 usuario, 1, "B", 0, tentativa, 3, data, data + timedelta(days=3), exp_decimos=100,
             )
             salvar_resultado_com_respostas(resultado, [questao], {"1": 0})
-        assert registrar_leitura(usuario, "leitura-teste", 301, 7)
+        assert registrar_leitura(usuario, "leitura-teste", 3001, 7)
         with conectar() as banco:
             banco.execute("""
                 UPDATE leituras_idiomas SET ultimo_envio_em = CURRENT_TIMESTAMP - INTERVAL '11 minutes'
                 WHERE usuario_id = %s AND texto_id = 'leitura-teste'
             """, (usuario,))
-        assert registrar_leitura(usuario, "leitura-teste", 301, 9)
+        assert registrar_leitura(usuario, "leitura-teste", 3001, 9)
         with conectar() as banco:
             envio = banco.execute("""
                 INSERT INTO redacoes (usuario_id, tema, ano, texto, instituicao)
@@ -63,7 +63,7 @@ def test_atividades_geram_experiencia_uma_vez_e_nivel_e_notificado(dados_discurs
                 SELECT origem, exp_decimos FROM experiencia_atividades WHERE usuario_id = %s
             """, (usuario,)).fetchall()
             assert {item["origem"]: item["exp_decimos"] for item in eventos} == {
-                "estudos": 100, "prova_objetiva": 200, "idiomas": 301, "redacao": 1250,
+                "estudos": 100, "prova_objetiva": 25, "idiomas": 3001, "redacao": 1250,
             }
             assert len(eventos) == 4
         with app.test_client() as cliente:
@@ -71,7 +71,7 @@ def test_atividades_geram_experiencia_uma_vez_e_nivel_e_notificado(dados_discurs
             with cliente.session_transaction() as sessao:
                 sessao["usuario_id"] = usuario
             esperado = {
-                "nivel": 1, "proximo": 2, "progresso": 851, "necessario": 1220, "celebrar": True,
+                "nivel": 1, "proximo": 2, "progresso": 376, "necessario": 4880, "celebrar": True,
             }
             assert cliente.post("/nivel/progresso").json == esperado | {
                 "moldura_equipada": 0,
@@ -86,7 +86,7 @@ def test_atividades_geram_experiencia_uma_vez_e_nivel_e_notificado(dados_discurs
             }
             html = cliente.get("/dashboard").get_data(as_text=True)
             assert 'data-progresso-nivel' in html
-            assert 'value="851" max="1220"' in html
+            assert 'value="376" max="4880"' in html
             with cliente.session_transaction() as sessao:
                 sessao["usuario_id"] = outro
             assert cliente.post("/nivel/progresso").json["nivel"] == 0
@@ -128,3 +128,29 @@ def test_molduras_respeitam_marcos_e_escolha_persistente(dados_discursivos, monk
             sessao["usuario_id"] = outro
         assert cliente.post("/nivel/moldura", json={"nivel": 1}).status_code == 400
         assert cliente.post("/nivel/progresso").json["moldura_equipada"] == 0
+
+
+
+def test_duas_provas_enem_completas_levam_ao_nivel_um(dados_discursivos):
+    usuario = dados_discursivos["usuarios"][0]
+    questoes = [
+        SimpleNamespace(numero=numero, alternativas=["A", "B"], resposta=0)
+        for numero in range(1, 91)
+    ]
+    respostas = {str(questao.numero): questao.numero % 2 for questao in questoes}
+    resultado = {
+        "usuario_id": usuario, "acertos": 45, "erros": 45, "nao_respondidas": 0,
+        "total": 90, "tempo_gasto": "02:00:00", "porcentagem": 50,
+    }
+    try:
+        for prova_id, total, nivel in ((1, 2160, 0), (1, 2160, 0), (2, 4320, 1)):
+            salvar_resultado_com_respostas(dict(resultado, prova_id=prova_id), questoes, respostas)
+            with conectar() as banco:
+                exp = banco.execute("""
+                    SELECT SUM(exp_decimos) AS total FROM experiencia_atividades WHERE usuario_id = %s
+                """, (usuario,)).fetchone()["total"]
+            assert exp == total
+            assert calcular_progresso(exp)["nivel"] == nivel
+    finally:
+        with conectar() as banco:
+            banco.execute("DELETE FROM resultados_provas WHERE usuario_id = %s", (usuario,))

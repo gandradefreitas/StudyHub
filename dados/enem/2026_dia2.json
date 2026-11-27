@@ -1,0 +1,1746 @@
+[
+    {
+        "numero": 91,
+        "area": "Natureza",
+        "habilidade": "H18",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "A química dos povos indígenas da América do Sul\n\nA mandioca, alimento que se destaca na culinária brasileira, possui em seus tubos leitosos o glicosídeo de ácido cianídrico, chamado linamarina. A variedade mandioca-brava é venenosa, pois contém doses de ácido cianídrico acima de 100 mg por quilograma de polpa. A ingestão de 200 g a 500 g desse tubérculo fresco já seria letal. No entanto, esse é um dos principais alimentos de grupos indígenas da América do Sul. Para um consumo seguro, eles realizam a fervura da mandioca com água.\n\nSOENTGEN, Jens; HILBERT, Klaus. A química dos povos indígenas da América do Sul. Química Nova, n. 9, 2016 (adaptado).\n\nOs esquemas reacionais envolvidos nesse processo estão representados a seguir.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q91.png",
+        "pergunta": "Esse processo, como um todo, garante o consumo seguro porque",
+        "alternativas": [
+            "a linamarina é transformada em compostos pouco tóxicos para os seres vivos.",
+            "o ácido cianídrico produzido na reação de hidrólise reduz a atividade da enzima.",
+            "o ácido cianídrico obtido durante as etapas do tratamento é volátil e solúvel em água.",
+            "a linamarina é um composto que interage com a água e é evaporada juntamente com ela.",
+            "a linamarina é hidrolisada com o aquecimento que atua como catalisador na reação química."
+        ],
+        "resposta": "C",
+        "comentario": "",
+        "enunciado_apos_imagem": "NDUBUISI, Njoku D.; CHIDIEBERE, Ano C. U. Cyanide in Cassava: A Review. International Journal of Genomics and Data Mining, n. 118, 2018 (adaptado)."
+    },
+    {
+        "numero": 92,
+        "area": "Natureza",
+        "habilidade": "H24",
+        "competencia": "C7",
+        "dificuldade": "Fácil",
+        "enunciado": "O intemperismo é um fenômeno que também ocorre com o petróleo, modificando suas características, quando ele é misturado com a água do mar. Os diversos processos que acontecem durante o fenômeno estão ilustrados na figura. O estudo do intemperismo é fundamental para entender o comportamento das manchas que aparecem no mar quando ocorre vazamento de petróleo e para minimizar danos ao meio ambiente.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q92.png",
+        "pergunta": "Dentre os processos ilustrados, aquele que corresponde a uma transformação química é o",
+        "alternativas": [
+            "I.",
+            "II.",
+            "III.",
+            "IV.",
+            "V."
+        ],
+        "resposta": "C",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: www.marinha.mil.br. Acesso em: 1 dez. 2019 (adaptado)."
+    },
+    {
+        "numero": 93,
+        "area": "Natureza",
+        "habilidade": "H9",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "A cientista brasileira Mariangela Hungria, pesquisadora da Embrapa Soja, foi laureada em 2025 com o Prêmio Mundial de Alimentação, o World Food Prize (WFP), reconhecido como o “Nobel” da agricultura. Sua pesquisa inclui plantas cultivadas, como a soja, inoculadas com bactérias simbióticas que formam nódulos em suas raízes. Graças a essas associações, os agricultores têm gastos menores com fertilizantes nitrogenados.\n\nLANDGRAF, Lebna. Disponível em: www.embrapa.br. Acesso em: 8 abr. 2026 (adaptado).",
+        "imagem": null,
+        "pergunta": "Essa economia acontece porque os microrganismos citados",
+        "alternativas": [
+            "auxiliam o processo de absorção de nitritos do solo pelas plantas.",
+            "capturam íons de nitrogênio em formas orgânicas absorvíveis pelas plantas.",
+            "convertem nitrogênio atmosférico em compostos assimiláveis pelas plantas.",
+            "aceleram a decomposição de grandes moléculas nitrogenadas para as plantas.",
+            "transformam moléculas orgânicas nitrogenadas em formas inorgânicas para as plantas."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 94,
+        "area": "Natureza",
+        "habilidade": "H8",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "Para obtenção do princípio ativo a partir das folhas de uma planta medicinal, um pesquisador as colocou em um béquer, adicionou água e aqueceu a mistura a 100 °C. Após dez minutos de aquecimento, a mistura foi separada com auxílio de funil e algodão. A parte líquida, por conter ainda pequenas partículas, foi submetida a um processo de separação a intensa rotação, e o sobrenadante, recolhido para avaliação da atividade biológica.",
+        "imagem": null,
+        "pergunta": "A sequência dos procedimentos utilizados pelo pesquisador foi:",
+        "alternativas": [
+            "Filtração, decantação e extração.",
+            "Extração, filtração e centrifugação.",
+            "Destilação, filtração e precipitação.",
+            "Centrifugação, extração e decantação.",
+            "Precipitação, decantação e centrifugação."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 95,
+        "area": "Natureza",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Difícil",
+        "enunciado": "Em uma maquete de uma sala, foram instaladas duas lâmpadas (A e B) nas paredes e duas lâmpadas (C e D) no teto, conforme a figura. Essas lâmpadas são alimentadas por duas baterias idênticas em série. Todas as lâmpadas são incandescentes e brilham igualmente quando conectadas individualmente a uma das baterias. Considere ideais todos os elementos do circuito. Os amperímetros indicam a corrente elétrica que passa no fio no qual estão inseridos.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q95.png",
+        "pergunta": "As correntes medidas nos amperímetros serão iguais e não nulas quando a(s)",
+        "alternativas": [
+            "lâmpadas A, B, C e D estiverem ligadas.",
+            "lâmpada A estiver queimada.",
+            "lâmpada B estiver queimada.",
+            "lâmpada C estiver queimada.",
+            "lâmpada D estiver queimada."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 96,
+        "area": "Natureza",
+        "habilidade": "H28",
+        "competencia": "C8",
+        "dificuldade": "Fácil",
+        "enunciado": "Ao longo do tempo evolutivo, surgiram características que permitiram que os répteis se tornassem o primeiro grupo de animais vertebrados tipicamente terrestres. Uma delas é a pele grossa e rica em queratina.",
+        "imagem": null,
+        "pergunta": "Evolutivamente, essa adaptação do grupo contribuiu para a",
+        "alternativas": [
+            "melhoria da eficiência locomotora.",
+            "manutenção da temperatura corporal.",
+            "diminuição do risco de ressecamento.",
+            "ampliação de trocas gasosas pela pele.",
+            "excreção de compostos menos tóxicos."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 97,
+        "area": "Natureza",
+        "habilidade": "H20",
+        "competencia": "C6",
+        "dificuldade": "Difícil",
+        "enunciado": "O modelo de Rutherford para o átomo consiste em um núcleo bastante denso, pequeno e carregado positivamente, ao redor do qual orbitam partículas negativas. A interação atrativa entre o núcleo e os elétrons foi explicada posteriormente pela existência de uma força centrípeta de origem elétrica, cujo módulo, segundo a lei de Coulomb, é proporcional à constante eletrostática e ao quadrado da carga elementar, e inversamente proporcional ao quadrado da distância entre o núcleo e os elétrons. No entanto, o modelo planetário proposto por Rutherford não concorda com a teoria eletromagnética clássica, segundo a qual os elétrons descreveriam um movimento em espiral e se chocariam com o núcleo, o que não corresponde à realidade.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q97.png",
+        "pergunta": "Qual gráfico apresenta a força de atração entre o núcleo e o elétron, em função do tempo para o átomo de hidrogênio, levando em consideração a teoria eletromagnética clássica?",
+        "alternativas": [
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-a.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-b.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-c.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-d.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q97-e.png"
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 98,
+        "area": "Natureza",
+        "habilidade": "H21",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "O quadro lista o resultado da simulação feita por uma engenheira para dimensionar as fontes de calor no interior de um escritório onde trabalham 20 pessoas. Todos os equipamentos e as pessoas dissipam calor de acordo com os valores no quadro. Para manter constante a temperatura do escritório, ela precisa de um aparelho de ar-condicionado o mais econômico possível. Considere as paredes isolantes e o fator de conversão 1 Btu/h = 0,3 W.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q98.png",
+        "pergunta": "Qual é a capacidade de refrigeração, em British thermal unit por hora, do aparelho selecionado?",
+        "alternativas": [
+            "7 000 Btu/h",
+            "10 000 Btu/h",
+            "12 000 Btu/h",
+            "24 000 Btu/h",
+            "30 000 Btu/h"
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 99,
+        "area": "Natureza",
+        "habilidade": "H23",
+        "competencia": "C6",
+        "dificuldade": "Difícil",
+        "enunciado": "Resíduos sólidos urbanos\n\nSegundo a Associação Brasileira de Resíduos e Meio Ambiente, em 2022, foram geradas cerca de 211 mil toneladas de resíduos sólidos urbanos (RSU) por dia no país. Aproximadamente 93% desses resíduos são coletados, o que equivale a 196 mil toneladas de RSU por dia. Desse montante, os resíduos secos recicláveis representam 34%, e os resíduos orgânicos são a maioria e representam 45% do total coletado. A situação parece sob controle, se desconsiderarmos que 40% dos RSU coletados são dispostos irregularmente em lixões ou a céu aberto, enquanto 60% é encaminhado para aterros sanitários.\n\nNos aterros sanitários, parte dos RSU podem ser utilizados na produção de biogás para alimentar usinas termelétricas. Cerca de 20 kg de resíduos orgânicos produzem 1 metro cúbico de biogás, o qual pode gerar 1,2 kWh de energia elétrica.\n\nDisponível em: www.abrema.org.br. Acesso em: 9 abr. 2026 (adaptado).",
+        "imagem": null,
+        "pergunta": "Se todos os resíduos orgânicos coletados fossem utilizados para geração de biogás, aproximadamente quanta energia elétrica, em quilowatt-hora, poderia ser gerada por dia?",
+        "alternativas": [
+            "1,2 × 10⁷ kWh",
+            "7,1 × 10⁶ kWh",
+            "5,3 × 10⁶ kWh",
+            "3,2 × 10⁶ kWh",
+            "2,1 × 10⁶ kWh"
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 100,
+        "area": "Natureza",
+        "habilidade": "H25",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "Durante uma aula de química, o professor discorre sobre propriedades intensivas e cita como exemplo a concentração. Ele afirma que, para a água pura a 20 °C, a concentração, em mol/L, é a mesma em 25,0 mL e em 500,0 mL. Nessa condição, a densidade da água é igual a 1,0 g/mL, e as massas molares, em g/mol, do hidrogênio e do oxigênio são, respectivamente, iguais a 1 e 16.",
+        "imagem": null,
+        "pergunta": "A concentração de água, em mol/L, em qualquer um desses exemplos, é mais próxima de",
+        "alternativas": [
+            "0,055 mol/L.",
+            "1,4 mol/L.",
+            "18 mol/L.",
+            "28 mol/L.",
+            "56 mol/L."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 101,
+        "area": "Natureza",
+        "habilidade": "H18",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "A nanotecnologia vem possibilitando o desenvolvimento de materiais sintéticos que imitam modelos naturais para o crescimento de ossos. Nos sistemas vivos, os ossos crescem por adesão de células especializadas a grupos funcionais ao longo de um material natural fibroso, o colágeno. Tanto nos sistemas vivos quanto nos sistemas sintéticos, o crescimento dos ossos depende da forma como as espécies químicas interagem entre si. A molécula a seguir, preparada em laboratório, apresenta três regiões (I, II e III) com propriedades estruturais diferenciadas. Inicialmente, essas moléculas se autoagrupam por interações apolares, formando um agregado tubular. Em outra região da molécula, existem grupos funcionais que interagem com o cálcio e as células, imitando",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q101.png",
+        "pergunta": "Considerando as regiões I, II e III dessa molécula sintética, o início do processo do crescimento de ossos envolve o estabelecimento de",
+        "alternativas": [
+            "dipolo instantâneo-dipolo induzido entre os grupos funcionais da região II.",
+            "interações íon-dipolo entre grupos funcionais da região III e grupos da região II.",
+            "interações de van der Waals por meio da parte alquílica hidrofóbica da região I.",
+            "ligações covalentes entre as moléculas por meio de grupos funcionais da região III.",
+            "ligações de hidrogênio entre os grupos funcionais da região II e a parte alquílica da região I."
+        ],
+        "resposta": "C",
+        "comentario": "",
+        "enunciado_apos_imagem": "SOLOMONS, T.W. Graham; FRYHLE, Craig B. Química orgânica. Rio de Janeiro: LTC, 2009 (adaptado)."
+    },
+    {
+        "numero": 102,
+        "area": "Natureza",
+        "habilidade": "H26",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "Etanol: crise e oportunidades\n\nNo cenário de crises mundiais, o etanol brasileiro se destaca principalmente por ser uma alternativa aos combustíveis fósseis no processo de descarbonização. Ele pode ser considerado um protagonista e uma resposta nacional e renovável à crescente demanda mundial por diversificação de combustíveis.\n\nDisponível em: www.etanoleficiente.org.br. Acesso em: 9 abr. 2026 (adaptado).",
+        "imagem": null,
+        "pergunta": "Do ponto de vista ambiental, qual aspecto pode ser considerado vantajoso na produção do referido combustível?",
+        "alternativas": [
+            "A plantação de cana-de-açúcar retira poucos nutrientes do solo, pois essa planta tem curto ciclo de desenvolvimento.",
+            "A cana-de-açúcar, quando queimada, promove o aumento na fertilidade do solo, pois favorece a diversidade microbiana.",
+            "O ciclo de produção do etanol favorece a redução da poluição atmosférica, pois não há geração de gases com potencial efeito estufa.",
+            "A cana-de-açúcar pode ser plantada em grandes extensões de terra sem prejuízo para a fauna e a flora, pois é uma planta endêmica no país.",
+            "As emissões decorrentes da combustão do etanol são utilizadas no desenvolvimento da cana-de-açúcar, pois são incorporadas ao ciclo do carbono."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 103,
+        "area": "Natureza",
+        "habilidade": "H29",
+        "competencia": "C8",
+        "dificuldade": "Média",
+        "enunciado": "A figura apresenta os efeitos da técnica de transgenia, em uma população de lagartas, para a introdução no milho do gene Bt, transferido do Bacillus thuringiensis.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q103.png",
+        "pergunta": "Para a população humana, a vantagem da aplicação da técnica ilustrada é",
+        "alternativas": [
+            "diminuir o custo do replantio do milho.",
+            "aumentar a produtividade da lavoura de milho.",
+            "diminuir a quantidade de lagartas transgênicas.",
+            "aumentar a necessidade do uso de praguicidas.",
+            "diminuir o uso de fertilizantes na cultura de milho."
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: https://agro.genica.com.br. Acesso em: 3 jun. 2026 (adaptado)."
+    },
+    {
+        "numero": 104,
+        "area": "Natureza",
+        "habilidade": "H1",
+        "competencia": "C1",
+        "dificuldade": "Média",
+        "enunciado": "O comprimento da parte oscilante da corda de um violão determina a nota musical emitida. No braço do violão, são colocadas peças metálicas espaçadas chamadas trastes. Quando as cordas são pressionadas entre os trastes, os comprimentos de suas partes oscilantes são reduzidos, gerando ondas de diferentes frequências. Algumas notas com os valores aproximados de suas frequências são apresentadas no quadro. A figura ilustra um violão com cordas de comprimento total vibrante (Lₜ) igual a 60 cm. Considere o modo de vibração fundamental (n = 1) e que as frequências de vibração são inversamente proporcionais ao comprimento da parte oscilante da corda. Sabe-se que a primeira corda oscila com frequência de 660 Hz (a nota mi) quando não pressionada (corda livre).",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q104.png",
+        "pergunta": "Ao pressionar a primeira corda, de forma que a sua parte oscilante tenha 45 centímetros, e fazê-la vibrar, qual é a nota emitida pela corda?",
+        "alternativas": [
+            "Dó.",
+            "Mi.",
+            "Sol.",
+            "Lá.",
+            "Si."
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "OLIVEIRA, Leonardo M.; VEIT, Eliane A.; SCHNEIDER, Claúdio. Oitavas e notas. Disponível em: www.if.ufrgs.br. Acesso em: 6 nov. 2023 (adaptado)."
+    },
+    {
+        "numero": 105,
+        "area": "Natureza",
+        "habilidade": "H25",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "A produção do biodiesel, por meio da modificação química de óleos vegetais, leva à formação de uma mistura de compostos químicos que, junto com o reagente excedente, estão presentes no produto bruto. Entre os métodos mais comuns de purificação do biodiesel, destaca-se a lavagem do produto bruto com água. Geralmente esse processo é realizado de três a quatro vezes, por causa da diferença de solubilidade dos vários componentes no solvente. Alguns constituintes dessa mistura estão representados na figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q105.png",
+        "pergunta": "O composto remanescente desse processo de lavagem é o",
+        "alternativas": [
+            "I.",
+            "II.",
+            "III.",
+            "IV.",
+            "V."
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: www.ccbioenergia.ufv.br. Acesso em: 25 maio 2026 (adaptado)."
+    },
+    {
+        "numero": 106,
+        "area": "Natureza",
+        "habilidade": "H23",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "A busca por fontes alternativas de energia é uma das grandes preocupações da humanidade devido ao possível esgotamento dos combustíveis fósseis e à degradação ambiental causada por eles. Como a demanda de energia cresce significativamente, há um grande investimento em outros tipos de geração de energia, tais como hidrelétrica, nuclear, solar, termelétrica a biomassa e eólica.\n\nBIZERRA, Ayla M. C.; QUEIROZ, Jorge L. A.; COUTINHO, Demétrios A. M. O impacto ambiental dos combustíveis fósseis e dos biocombustíveis: as concepções de estudantes do ensino médio sobre o tema. Revbea, n. 3, 2018 (adaptado).",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q106.png",
+        "pergunta": "Dentre as fontes de energia citadas, o tipo de energia oriunda de uma fonte não renovável, que independe das condições climáticas para ser obtida, é a",
+        "alternativas": [
+            "nuclear, gerada pela fissão nuclear do urânio.",
+            "hidrelétrica, gerada pela movimentação da água.",
+            "solar, gerada pelo uso de células fotovoltaicas.",
+            "termelétrica, produzida pela combustão de biomassa.",
+            "eólica, produzida pelo movimento das pás de aerogeradores."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 107,
+        "area": "Natureza",
+        "habilidade": "H19",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Regiões de manguezal estão sujeitas ao acúmulo de poluentes, como metais pesados, resultantes de atividades industriais. Essas áreas são fonte de recursos pesqueiros, sendo a avaliação da qualidade ambiental importante para a manutenção da saúde dos consumidores e da renda das famílias de pescadores.",
+        "imagem": null,
+        "pergunta": "Para realizar a avaliação citada, um pesquisador deve optar pelo uso do seguinte organismo como indicador ambiental:",
+        "alternativas": [
+            "Robalo, peixe predador de pequenos peixes.",
+            "Viuvinha, ave predadora de pequenos animais.",
+            "Sururu, molusco filtrador de partículas da água.",
+            "Aratu, caranguejo que se alimenta de folhas e insetos.",
+            "Jacaré-do-papo-amarelo, réptil predador de pequenas aves."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 108,
+        "area": "Natureza",
+        "habilidade": "H21",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "A água é uma substância essencial à vida e pode ser encontrada na natureza em três estados físicos: sólido, líquido e gasoso. As propriedades físico-químicas que definem cada um desses estados estão representadas no diagrama de fases, em que as curvas em vermelho representam o estado de equilíbrio entre duas fases. Por meio dele, é possível determinar qual é o estado físico de uma substância em um dado valor de pressão (p) e de temperatura (T).",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q108.png",
+        "pergunta": "Qual é a mudança de estado físico que ocorre com a água quando, à pressão constante, a temperatura varia de A para B ao longo do trajeto tracejado?",
+        "alternativas": [
+            "Fusão, a água muda do estado sólido para o líquido.",
+            "Ebulição, a água muda do estado líquido para o gasoso.",
+            "Sublimação, a água muda do estado sólido para o gasoso.",
+            "Solidificação, a água muda do estado líquido para o sólido.",
+            "Condensação, a água muda do estado gasoso para o líquido."
+        ],
+        "resposta": "C",
+        "comentario": "",
+        "enunciado_apos_imagem": "ATKINS, Peter; JONES, Loretta. P rincípios de q uímica: questionando a vida moderna e o meio ambiente. Porto Alegre: Bookman, 2006 (adaptado)."
+    },
+    {
+        "numero": 109,
+        "area": "Natureza",
+        "habilidade": "H16",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "“Como um júri, a seleção natural atua nas possibilidades trazidas à sua presença.”\n\nKARDONG, Kenneth V. Vertebrados: anatomia comparada, função e evolução. São Paulo: Roca, 2010.",
+        "imagem": null,
+        "pergunta": "O trecho “possibilidades trazidas à sua presença”, na citação, refere-se",
+        "alternativas": [
+            "ao fluxo gênico.",
+            "aos caracteres adquiridos.",
+            "às diferenças nos hábitats.",
+            "à variação dos indivíduos.",
+            "à capacidade de agrupamento."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 110,
+        "area": "Natureza",
+        "habilidade": "H24",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "O elemento nitrogênio é encontrado na atmosfera e na litosfera, participando de importantes ciclos biogeoquímicos da vida no planeta. Na figura são apresentadas as espécies iônicas e moleculares mais comumente encontradas para esse elemento, as quais estão em diferentes estados de oxidação.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q110.png",
+        "pergunta": "Em quais espécies presentes na atmosfera e na litosfera, respectivamente, o elemento nitrogênio encontra-se no menor estado de oxidação?",
+        "alternativas": [
+            "NH₃ e NH₄⁺",
+            "NO₂ e NO₂⁻",
+            "N₂O e NO₃⁻",
+            "NH₃ e NO₃⁻",
+            "NO₂ e NH₄⁺"
+        ],
+        "resposta": "A",
+        "comentario": "",
+        "enunciado_apos_imagem": "MARTINS, Claudia R. et al. Ciclos globais de carbono, nitrogênio e enxofre: a importância na química atmosférica. Química Nova na Escola, n. 5, nov. 2003 (adaptado)."
+    },
+    {
+        "numero": 111,
+        "area": "Natureza",
+        "habilidade": "H20",
+        "competencia": "C6",
+        "dificuldade": "Difícil",
+        "enunciado": "Em um reator de fusão nuclear, é necessário produzir plasma a um milhão de graus centígrados para desencadear reações de fusão nuclear controladas. O plasma é formado por um gás ionizado que contém inicialmente deutério D⁺ e trítio T⁺ (isótopos do hidrogênio, com um e dois nêutrons, respectivamente). Nesse plasma, a energia térmica é suficientemente alta para desencadear uma reação de fusão nuclear na qual o núcleo do deutério, partícula D⁺ , e o núcleo de trítio, partícula T⁺ , colidem para formar uma partícula α e um nêutron n. A representação dessa reação de fusão é\n\nD⁺ + T⁺ → α + n\n\nA partícula α é formada por dois prótons e dois nêutrons. A energia liberada pela fusão é dividida na forma de energia cinética entre a partícula α e o nêutron n. Considere as massas do próton e do nêutron iguais, que o momento linear total das partículas reagentes é nulo e também que a energia cinética dos produtos é de 20 MeV.\n\nDisponível em: www.scientificamerican.com. Acesso em: 11 nov. 2019 (adaptado).",
+        "imagem": null,
+        "pergunta": "Nessa reação de fusão, a energia cinética do nêutron, em megaelétron-volt, é",
+        "alternativas": [
+            "4,0 MeV.",
+            "10 MeV.",
+            "13 MeV.",
+            "15 MeV.",
+            "16 MeV."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 112,
+        "area": "Natureza",
+        "habilidade": "H5",
+        "competencia": "C2",
+        "dificuldade": "Difícil",
+        "enunciado": "A mudança da resistência elétrica de alguns materiais em função da temperatura é utilizada para construir sensores que podem medir desde a temperatura ambiente até a de fornos. A figura representa um circuito elétrico usado para fazer a correspondência entre temperatura e tensão elétrica, na qual a resistência elétrica Rₛ varia com a temperatura segundo a expressão Rₛ = 20[1 + 0,002(T − 300)]. A temperatura é medida em Kelvin.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q112.png",
+        "pergunta": "A tensão elétrica, em volt, entre os pontos A e B da figura, quando o sensor estiver à temperatura de 800 K é de",
+        "alternativas": [
+            "5,0 V.",
+            "4,0 V.",
+            "3,0 V.",
+            "2,0 V.",
+            "1,0 V."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 113,
+        "area": "Natureza",
+        "habilidade": "H1",
+        "competencia": "C1",
+        "dificuldade": "Média",
+        "enunciado": "Uma instalação de radar, usada para rastrear aviões, emite ondas eletromagnéticas com velocidade estimada de 300 mil quilômetros por segundo. Um avião que saiu da rota foi localizado em um raio de 75 quilômetros do aeroporto onde fica o radar. O operador usou o tempo dispendido para enviar e receber a resposta com a finalidade de estimar a localização do avião.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q113.png",
+        "pergunta": "O tempo, em segundo, medido foi de",
+        "alternativas": [
+            "2,0 × 10³ s.",
+            "4,0 × 10⁰ s.",
+            "5,0 × 10⁻¹ s.",
+            "1,5 × 10⁻³ s.",
+            "5,0 × 10⁻⁴ s."
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: www.pasternack.com. Acesso em: 1 abr. 2026 (adaptado)."
+    },
+    {
+        "numero": 114,
+        "area": "Natureza",
+        "habilidade": "H10",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "Em documentos do século XVII, já era possível observar a preocupação com a devastação do meio ambiente em regiões do Reino Unido próximas de onde se fazia a extração do carvão. Entre as ações que alteram o ambiente, podemos destacar o processo de extração, refino e utilização de combustíveis fósseis, descarte incorreto de resíduos industriais e residenciais, emprego de compostos contendo enxofre, uso de pesticidas e técnicas rudimentares na agricultura, entre outros.\n\nJARDIM, Wilson F. Introdução à Química Ambiental. Cadernos Temáticos de Química Nova na Escola, edição especial, maio 2001 (adaptado).",
+        "imagem": null,
+        "pergunta": "Dentre as atividades citadas no texto, a que resulta na contaminação do lençol freático é o(a)",
+        "alternativas": [
+            "utilização de combustíveis fósseis.",
+            "liberação de derivados de enxofre na atmosfera.",
+            "descarte inadequado de pilhas e baterias usadas.",
+            "extração e derramamento do petróleo em alto-mar.",
+            "utilização de práticas agrícolas com base em queimadas."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 115,
+        "area": "Natureza",
+        "habilidade": "H25",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "Para recuperar o cromo nos resíduos de um laboratório, realizou-se a reação de 5,2 g de Cr³⁺ do efluente com hidróxido de sódio, obtendo hidróxido de cromo(III) como precipitado, o qual foi separado e calcinado até óxido de cromo(III). O processo teve rendimento de 90%. As equações químicas relativas ao processo são apresentadas a seguir:\n\nCr³⁺ (aq) + 3 NaOH (aq) → Cr(OH)₃ (s) + 3 Na⁺ (aq)\n\n2 Cr(OH)₃ (s) → Cr₂O₃ (s) + 3 H₂O (g)\n\nDados: massas molares (g·mol⁻¹): Cr = 52; O = 16.",
+        "imagem": null,
+        "pergunta": "A massa, em grama, do composto Cr₂O₃ obtida nessa reação é mais próxima de",
+        "alternativas": [
+            "3,2 g.",
+            "6,8 g.",
+            "7,6 g.",
+            "8,4 g.",
+            "13,7 g."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 116,
+        "area": "Natureza",
+        "habilidade": "H17",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "A figura ilustra uma forma de medir a densidade relativa de dois líquidos, A e B, imiscíveis, colocando-os em um tubo em forma de U. Atingido o equilíbrio hidrostático, medem-se as alturas, h(A₁) e h(B₁), das colunas dos líquidos, a partir de sua superfície até o nível da linha de separação entre eles. Considere que um volume adicional de líquido A é colocado na coluna esquerda do tubo, conforme a figura. Após o equilíbrio ser restabelecido, medem-se as novas alturas, h(A₂) e h(B₂), da mesma maneira, comparando-as com as alturas anteriores.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q116.png",
+        "pergunta": "A comparação entre as novas alturas e as anteriores revela que",
+        "alternativas": [
+            "h(A₂) = h(A₁) e h(B₂) = h(B₁).",
+            "h(A₂) > h(A₁) e h(B₂) = h(B₁).",
+            "h(A₂) > h(A₁) e h(B₂) > h(B₁).",
+            "h(A₂) < h(A₁) e h(B₂) > h(B₁).",
+            "h(A₂) = h(A₁) e h(B₂) > h(B₁)."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 117,
+        "area": "Natureza",
+        "habilidade": "H29",
+        "competencia": "C8",
+        "dificuldade": "Média",
+        "enunciado": "O algodão é uma fibra celulósica de origem vegetal tradicionalmente utilizado na indústria têxtil. Alternativamente, por processo biotecnológico, pode-se utilizar a bactéria Gluconacetobacter xylinus para produzir celulose, ligando unidades de glicose em cadeia. Esse processo de obtenção de celulose de origem bacteriana apresenta algumas desvantagens relacionadas às condições laboratoriais, tais como temperatura, nutrientes e energia, além do custo ainda elevado para produção em escala industrial.\n\nTORTORA, Gerard J.; FUNKE, Berdell R.; CASE, Christine L. Microbiologia. Rio de Janeiro: Artmed, 2016 (adaptado).",
+        "imagem": null,
+        "pergunta": "Esse processo biotecnológico difere da produção de algodão tradicional porque",
+        "alternativas": [
+            "envolve o sequestro de carbono da atmosfera.",
+            "acelera a liberação de O₂ pela fotólise da água.",
+            "forma polissacarídeos por reação de hidratação.",
+            "utiliza carboidratos como fonte primária de carbono.",
+            "realiza reações catabólicas de síntese de macromoléculas."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 118,
+        "area": "Natureza",
+        "habilidade": "H13",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "Um casal tentou ter filhos naturalmente por muito tempo. Sem sucesso, resolveram procurar uma clínica de reprodução e fazer uso de técnicas de fertilização in vitro. Em um primeiro procedimento, conseguiram produzir um único embrião. O médico sugeriu o congelamento desse embrião e a repetição do processo, que originou um segundo embrião. Esses dois embriões foram então implantados no útero em um único procedimento e, para felicidade do casal, seguiu-se uma gestação gemelar com sucesso.",
+        "imagem": null,
+        "pergunta": "Nessa situação, os gêmeos são",
+        "alternativas": [
+            "dizigóticos, obrigatoriamente do mesmo sexo.",
+            "monozigóticos, obrigatoriamente do mesmo sexo.",
+            "dizigóticos, obrigatoriamente de sexos diferentes.",
+            "dizigóticos, do mesmo sexo ou de sexos diferentes.",
+            "monozigóticos, do mesmo sexo ou de sexos diferentes."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 119,
+        "area": "Natureza",
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "O quadro foi retirado de um manual que apresenta as especificações e a potência de um aparelho de TV.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q119.png",
+        "pergunta": "Se uma pessoa assistiu à TV durante 4 horas e no restante do dia o aparelho permaneceu em espera, qual é a porcentagem da energia utilizada em espera quando comparada com o total de energia utilizado?",
+        "alternativas": [
+            "0,2%",
+            "0,6%",
+            "1,0%",
+            "3,0%",
+            "20%"
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 120,
+        "area": "Natureza",
+        "habilidade": "H14",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "Para sintetizar ATP, as células musculares podem utilizar a glicose, proveniente do sangue, ou o glicogênio. Em ambos os processos, é produzido piruvato, que, na respiração anaeróbica, é convertido em lactato e, na respiração aeróbica, é transportado para as mitocôndrias. Essas diferentes vias de obtenção de energia pelas células podem afetar o rendimento de atletas profissionais. Frequentemente, corredores de maratona realizam seus treinamentos em locais de maior altitude, onde o ar rarefeito condiciona o organismo a uma menor disponibilidade de oxigênio para sua atividade física. Esse condicionamento auxilia as células musculares a obterem a maior parte de sua energia durante o esforço físico pelo processo de respiração aeróbica, cujo rendimento energético é maior em relação à respiração anaeróbica.\n\nFURLAN, Julia P. et al. Saúde e Pesquisa, n. 1, jan.-abr. 2017 (adaptado).",
+        "imagem": null,
+        "pergunta": "O sucesso desse condicionamento pode ser avaliado com o monitoramento de parâmetros sanguíneos em um teste de esforço físico. Nesse caso, a análise das amostras de sangue devem indicar",
+        "alternativas": [
+            "aumento da taxa de glicemia.",
+            "redução no teor de proteínas.",
+            "redução nos níveis de lactato.",
+            "redução no número de hemácias.",
+            "aumento da concentração de piruvato."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 121,
+        "area": "Natureza",
+        "habilidade": "H26",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "Um dos problemas ambientais relacionados à queima de combustíveis para obtenção de energia reside na produção de gases tóxicos, como CO, NOₓ e SOₓ, e materiais particulados como fuligem. O quadro apresenta valores de entalpia de reação da combustão de cinco fontes energéticas.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q121.png",
+        "pergunta": "Qual é o combustível mais eficiente em relação à quantidade de energia gerada por quantidade de matéria, em mol, de carbono?",
+        "alternativas": [
+            "Etanol.",
+            "Metano.",
+            "Metanol.",
+            "Acetileno (etino).",
+            "Carvão (antracito)."
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "ATKINS, Peter; JONES, Loretta. Princípios de química: questionando a vida moderna e o meio ambiente. Porto Alegre: Bookman, 2006 (adaptado)."
+    },
+    {
+        "numero": 122,
+        "area": "Natureza",
+        "habilidade": "H17",
+        "competencia": "C5",
+        "dificuldade": "Fácil",
+        "enunciado": "Uma fabricante de automóveis anunciou o plano de eletrificar toda a sua frota até o ano 2030. Determinado protótipo é parte fundamental dessa estratégia por ter autonomia de 1 000 km e um gasto energético de 1 kWh para cada 10 km, quando ocupado por quatro pessoas. O gráfico apresenta, para vários meios de transporte, o gasto energético por passageiro, considerado como um dos fatores determinantes para o desenvolvimento de políticas públicas de regulação dos meios de transporte.\n\nGasto energético dos transportes",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q122.png",
+        "pergunta": "De acordo com o gráfico, quantos meios de transporte apresentam maior eficiência energética que esse protótipo?",
+        "alternativas": [
+            "1",
+            "2",
+            "4",
+            "5",
+            "7"
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: https://quatrorodas.abril.com.br. Acesso em: 2 dez. 2021 (adaptado)."
+    },
+    {
+        "numero": 123,
+        "area": "Natureza",
+        "habilidade": "H13",
+        "competencia": "C4",
+        "dificuldade": "Difícil",
+        "enunciado": "As cores das flores podem variar em função de características genéticas que determinam os pigmentos de suas pétalas. Na via metabólica hipotética, representada no esquema, o gene A é epistático sobre o gene B e, quando em homozigose recessiva, impede a produção de pigmentos. O gene B, em homozigose recessiva, impossibilita a formação do pigmento vermelho.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q123.png",
+        "pergunta": "Um dos possíveis genótipos de uma planta rosa é",
+        "alternativas": [
+            "AaBb.",
+            "aabb.",
+            "AABB.",
+            "Aabb.",
+            "aaBb."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 124,
+        "area": "Natureza",
+        "habilidade": "H14",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "Um agricultor, interessado em iniciar um cultivo orgânico, decidiu avaliar o efeito da ação das lagartas sobre plantas jovens de feijão. O experimento consistiu em plantio de sementes de feijão em canteiro com solo fértil e úmido. As sementes germinaram após alguns dias e originaram plantas saudáveis. Quando essas plantas estavam com quatro pares de folhas definitivas, o agricultor adicionou lagartas que predaram apenas a gema apical dessas plantas.",
+        "imagem": null,
+        "pergunta": "Após sete dias, as plantas estavam",
+        "alternativas": [
+            "mortas.",
+            "murchas.",
+            "com brotações laterais.",
+            "com nova gema apical.",
+            "sem crescimento aparente."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 125,
+        "area": "Natureza",
+        "habilidade": "H22",
+        "competencia": "C6",
+        "dificuldade": "Difícil",
+        "enunciado": "Um estudante acende uma lâmpada de 6 W de luz vermelha (comprimento de onda igual a 650 nm) em um quarto escuro. A 1,0 m de distância dessa lâmpada, encontra-se uma planta cujas folhas têm área de 4,0 cm². Em uma rápida pesquisa na internet, o estudante verifica que plantas dessa mesma espécie possuem espectro de absorção conforme ilustrado no gráfico, que apresenta a porcentagem de luz incidente absorvida em função do comprimento de onda.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q125.png",
+        "pergunta": "Com base nessas informações e no gráfico, qual é o valor mais próximo da energia, em joule, que cada folha absorverá a cada segundo?",
+        "alternativas": [
+            "3,8 × 10⁻⁴ J",
+            "4,8 × 10⁻⁴ J",
+            "2,0 × 10⁻⁴ J",
+            "1,8 × 10⁻⁴ J",
+            "1,2 × 10⁻⁴ J"
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "Considere a lâmpada como uma fonte puntiforme cuja intensidade luminosa é dada pela razão entre a sua potência e a área da superfície esférica formada a uma distância r da fonte.\n\nUtilize 3 como valor aproximado para π."
+    },
+    {
+        "numero": 126,
+        "area": "Natureza",
+        "habilidade": "H13",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "A produção de um clone, por clonagem reprodutiva animal, envolveu três ovelhas e seguiu três etapas:\n\n1. retirada do núcleo do gameta da ovelha A;\n\n2. transferência do núcleo diploide de uma célula somática da ovelha B para o gameta anucleado da ovelha A;\n\n3. implantação do “zigoto” formado no útero da ovelha C.",
+        "imagem": null,
+        "pergunta": "Caso esse clone apresentasse uma característica indesejada, resultante da homozigose de alelos recessivos, esses alelos seriam oriundos do(s) organismo(s)",
+        "alternativas": [
+            "A.",
+            "B.",
+            "C.",
+            "A e C.",
+            "A ou B."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 127,
+        "area": "Natureza",
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "A qualidade do leite, controlada pelos institutos de saúde pública, é realizada por meio de testes específicos, para determinar densidade, teor de gordura, rancidez, acidez, presença de aditivos usados para conservação e materiais estranhos ao leite, por exemplo, adulterantes. Para mascarar a adição indevida de água ao leite, o adulterante mais utilizado é o amido.\n\nBOSSOLANI, Monique; LISBÔA, Julio C. F. Tipos de leite, substâncias estranhas e obtenção de plástico. Química Nova na Escola, n. 6, nov. 1997 (adaptado).",
+        "imagem": null,
+        "pergunta": "A adição desse adulterante tem como objetivo mascarar qual teste de controle?",
+        "alternativas": [
+            "Densidade, uma vez que o amido atua como soluto.",
+            "Teor de gordura, uma vez que o amido é um lipídeo.",
+            "Acidez, uma vez que o amido tem propriedade básica.",
+            "Rancidez, uma vez que o amido tem ação antimicrobiana.",
+            "Presença de conservantes, uma vez que o amido é antioxidante."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 128,
+        "area": "Natureza",
+        "habilidade": "H4",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "Estraté g ia de conserv aç ã o recupera estoq ue natural de peix es na reg iã o do M é dio S olimõ es\n\nO pirarucu (Arapaima gigas) é um dos maiores peixes de água doce do mundo e um importante recurso pesqueiro para comunidades ribeirinhas. Ele está na lista da convenção internacional de espécies com risco de extinção. Mas, na região do Médio Solimões, desde que o Instituto Mamirauá presta assistência à pesca, a população de pirarucu aumentou 620%. A captura do pirarucu é realizada da segunda quinzena de outubro até 30 de novembro, data limite para a autorização da pesca. Isso porque o período de dezembro a maio compreende o defeso para a reprodução dos peixes. Na região, o tamanho médio desses animais inclusive aumentou, com a média passando de 1,27 m em 1998 para 1,80 m em 2022.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q128.png",
+        "pergunta": "Qual estratégia de conservação está sendo utilizada nessa região?",
+        "alternativas": [
+            "Extrativismo sustentável.",
+            "Criação de novos ambientes.",
+            "Seleção artificial de indivíduos.",
+            "Eliminação de predadores naturais.",
+            "Programa de reprodução em cativeiro."
+        ],
+        "resposta": "A",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: www.gov.br/mcti. Acesso em: 23 abr. 2024 (adaptado)."
+    },
+    {
+        "numero": 129,
+        "area": "Natureza",
+        "habilidade": "H12",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "Atualmente, muito se discute a respeito da necessidade crescente de produção de energia elétrica. As usinas hidrelétricas são consideradas fontes de energia limpa, sustentável e renovável. Entretanto, toda intervenção humana no ambiente gera impactos. O alagamento de grandes áreas devido à construção de usinas, entre outras consequências, pode interferir no equilíbrio da flora e da fauna locais. No caso de espécies endêmicas, o impacto pode ser ainda maior, levando até mesmo à sua extinção.",
+        "imagem": null,
+        "pergunta": "Nesse contexto, para o manejo após o impacto, é importante que estudos prévios sejam feitos com o objetivo de",
+        "alternativas": [
+            "avaliar a potabilidade da água.",
+            "monitorar a biodiversidade local.",
+            "estimular a introdução de espécies exóticas.",
+            "promover a variedade de espécies lacustres.",
+            "favorecer a emigração das espécies silvestres."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 130,
+        "area": "Natureza",
+        "habilidade": "H30",
+        "competencia": "C8",
+        "dificuldade": "Fácil",
+        "enunciado": "Em 2012, durante várias campanhas de combate à dengue, uma das ações de prevenção foi a eliminação de espécimes de plantas epífitas conhecidas como bromélias, por facilitarem o acúmulo de água parada em suas folhas sobrepostas.\n\nDisponível em: www.ensp.fiocruz.br. Acesso em: 28 fev. 2012 (adaptado).",
+        "imagem": null,
+        "pergunta": "A eliminação dessas plantas foi justificada para o combate à dengue porque",
+        "alternativas": [
+            "os mosquitos adultos das espécies vetoras se abrigam entre as suas folhas sobrepostas.",
+            "a disposição de suas folhas propicia o ambiente ideal para o acasalamento do Aedes aegypti.",
+            "o tipo de ambiente que se forma com a água acumulada é favorável ao desenvolvimento das larvas do Aedes aegypti.",
+            "os mosquitos transmissores da doença se alimentam dos nutrientes solubilizados na água acumulada em suas folhas.",
+            "a água acumulada é o ambiente propício para que o vírus da dengue se espalhe entre os mosquitos transmissores da doença."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 131,
+        "area": "Natureza",
+        "habilidade": "H14",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "A figura representa uma resposta imune secundária à presença de determinadas bactérias.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q131.png",
+        "pergunta": "A célula 2 do sistema imunológico representada na figura é um",
+        "alternativas": [
+            "basófilo, porque libera heparina e histamina.",
+            "linfócito T auxiliar, porque reconhece o invasor.",
+            "macrófago, porque fagocita as bactérias invasoras.",
+            "linfócito T citotóxico, porque destrói a célula infectada.",
+            "plasmócito, porque produz anticorpos contra as bactérias."
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: https://cienciaviva.org.br. Acesso em: 6 jul. 2026 (adaptado)."
+    },
+    {
+        "numero": 132,
+        "area": "Natureza",
+        "habilidade": "H22",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "Ao trafegar à noite, é necessário manter os faróis dos veículos acesos. Quando a umidade relativa do ar é baixa, o motorista consegue ter boa visibilidade da pista. No entanto, em noites em que há neblina, essa visibilidade é reduzida.",
+        "imagem": null,
+        "pergunta": "Nessa situação, a visibilidade reduzida deve-se à",
+        "alternativas": [
+            "dispersão da luz pelas gotículas de água suspensas no ar.",
+            "polarização da luz pelas gotículas de água dispersas no ar.",
+            "condensação das gotículas de água na superfície do farol.",
+            "solubilização das gotículas de água presentes no ar.",
+            "redução da potência da luz emitida pelo farol."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 133,
+        "area": "Natureza",
+        "habilidade": "H24",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "A vanilina, C₈H₈O₃, é um composto orgânico responsável pelo odor característico do extrato da semente de baunilha, aromatizante largamente utilizado em alimentos, bebidas, perfumes e fármacos. Sua estrutura química está representada por esferas com cores distintas para destacar os diferentes átomos.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q133.png",
+        "pergunta": "Os grupos funcionais 1, 2 e 3 são, respectivamente,",
+        "alternativas": [
+            "aldeído, éter e fenol.",
+            "cetona, éster e enol.",
+            "cetona, éster e fenol.",
+            "aldeído, éter e álcool.",
+            "cetona, amina e álcool."
+        ],
+        "resposta": "A",
+        "comentario": "",
+        "enunciado_apos_imagem": "PACHECO, Sabrina M. V.; DAMASIO, Felipe. Vanilina: origem, propriedades e produção. Química Nova na Escola, n. 4, nov. 2010 (adaptado)."
+    },
+    {
+        "numero": 134,
+        "area": "Natureza",
+        "habilidade": "H20",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Um jardineiro está irrigando as plantas de um jardim com uma mangueira. Ele estica completamente a mangueira para se aproximar de algumas flores mais afastadas, sem, no entanto, alcançá-las. Daí, ocorre-lhe que obstruir a extremidade da mangueira com o polegar faz com que o jato de água atinja uma distância maior, comparativamente com a situação sem essa ação, permitindo-lhe molhar aquelas flores mais afastadas.",
+        "imagem": null,
+        "pergunta": "Essa alteração no alcance do jato de água deve-se ao aumento do(a)",
+        "alternativas": [
+            "velocidade da água lançada.",
+            "densidade da água lançada.",
+            "volume da água lançada.",
+            "massa da água lançada.",
+            "vazão da água lançada."
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 135,
+        "area": "Natureza",
+        "habilidade": "H24",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "Uma célula a combustível fornece energia elétrica por meio de uma reação química, conforme representação a seguir.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q135.png",
+        "pergunta": "A equação química global desse processo é:",
+        "alternativas": [
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q135-a.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q135-b.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q135-c.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q135-d.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q135-e.png"
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "GONICK, Lawrence; CRIDDLE, Craig. The Cartoon Guide to Chemistry. New York: Collins Reference, 2005 (adaptado)."
+    },
+    {
+        "numero": 136,
+        "area": "Matematica",
+        "habilidade": "H28",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "Em um jogo, o participante deve arremessar um disco sobre um tabuleiro. Esse tabuleiro é formado por 4 círculos de raio 10 cm, que se tangenciam, e a região de cor verde delimitada por eles, conforme figura. Os círculos estão dispostos de maneira que seus centros possam ser vértices de um quadrado.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q136.png",
+        "pergunta": "A medida mínima de r, em centímetro, a ser escolhida é",
+        "alternativas": [
+            "2.",
+            "4.",
+            "5.",
+            "6.",
+            "8."
+        ],
+        "resposta": "A",
+        "comentario": "",
+        "enunciado_apos_imagem": "Uma jogada é considerada válida somente se o centro do disco cair sobre o tabuleiro. O participante vence apenas se o disco cair inteiramente sobre um dos círculos.\n\nO criador desse jogo escolherá um valor inteiro para a medida r do raio do disco, de maneira que a probabilidade de vitória em uma jogada válida seja inferior a 60%.\n\nUtilize 3 como aproximação para π."
+    },
+    {
+        "numero": 137,
+        "area": "Matematica",
+        "habilidade": "H16",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "Para diminuir custos com transporte, uma pessoa venderá seu carro à combustão para comprar um carro elétrico, entre dois modelos disponíveis. As especificações de consumo de energia de cada um desses modelos são:\n• carro I: consumo de 20 MJ (megajoules) para percorrer 48 km na cidade ou 32 km na estrada;\n• carro II: consumo de 25 MJ (megajoules) para percorrer 50 km na cidade ou 45 km na estrada.\n\nEla comprará o carro que apresentar menor consumo de energia para percorrer 3 000 km, sendo 1 200 km percorridos em trechos de cidade e 1 800 km em trechos de estrada.",
+        "imagem": null,
+        "pergunta": "Ela comprará o carro",
+        "alternativas": [
+            "I, pois o consumo de energia será de 81,25 MJ.",
+            "I, pois o consumo de energia será de 600 MJ.",
+            "I, pois o consumo de energia será de 1 625 MJ.",
+            "II, pois o consumo de energia será de 64 MJ.",
+            "II, pois o consumo de energia será de 1 600 MJ."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 138,
+        "area": "Matematica",
+        "habilidade": "H12",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "O deslocamento de carro entre duas cidades pode ser feito por dois trajetos, cujos comprimentos e velocidades médias nesses trajetos são:\n• I: 100 km e 50 km/h;\n• II: 120 km e 80 km/h.\n\nUma pessoa se deslocará de carro entre essas cidades e escolherá o trajeto que pode ser percorrido no menor tempo ao adotar a respectiva velocidade média.",
+        "imagem": null,
+        "pergunta": "Essa pessoa escolherá o trajeto",
+        "alternativas": [
+            "I, pois é o trajeto que apresenta o menor comprimento.",
+            "I, pois precisará de 30 minutos para realizar esse deslocamento.",
+            "I, pois é o trajeto que apresenta a menor soma entre comprimento e velocidade.",
+            "II, pois é o trajeto que apresenta a menor diferença entre comprimento e velocidade.",
+            "II, pois precisará de 90 minutos para realizar esse deslocamento."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 139,
+        "area": "Matematica",
+        "habilidade": "H16",
+        "competencia": "C4",
+        "dificuldade": "Média",
+        "enunciado": "Uma empresa foi fundada por 3 sócios, que combinaram que iriam distribuir o lucro obtido ao final de 18 meses. Essa distribuição será feita em partes diretamente proporcionais ao investimento feito por sócio e ao tempo em que cada um deles permanecer como sócio. Passados 6 meses da criação dessa empresa, o sócio que havia investido R$ 5 000,00 saiu da sociedade. Os outros dois sócios, um que investiu R$ 4 000,00 e o outro que investiu R$ 6 000,00, permaneceram os 18 meses. Ao final desse período, o lucro total de R$ 21 000,00 foi distribuído.",
+        "imagem": null,
+        "pergunta": "A parte do lucro, em real, destinada ao sócio que saiu da sociedade foi",
+        "alternativas": [
+            "1 000,00.",
+            "2 333,33.",
+            "3 000,00.",
+            "3 620,70.",
+            "7 000,00."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 140,
+        "area": "Matematica",
+        "habilidade": "H27",
+        "competencia": "C7",
+        "dificuldade": "Fácil",
+        "enunciado": "O dono de uma loja de importados realizou o balanço das vendas realizadas no primeiro semestre deste ano. A tabela apresenta a quantidade de tablets de um modelo vendido em cada mês desse período.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q140.png",
+        "pergunta": "A mediana das quantidades mensais de tablets desse modelo vendidos no primeiro semestre é",
+        "alternativas": [
+            "44.",
+            "46.",
+            "50.",
+            "51.",
+            "52."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 141,
+        "area": "Matematica",
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "A bancada na cozinha de um imóvel tem um fogão cooktop e uma pia com torneira, conforme a figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q141.png",
+        "pergunta": "A distância entre o fogão e o bojo da pia deverá ser aumentada em quantos centímetros?",
+        "alternativas": [
+            "21",
+            "44",
+            "49",
+            "65",
+            "70"
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "O proprietário do imóvel decidiu aumentar a distância, que é de 5 cm, entre o bojo da pia e o fogão para ampliar a área do retângulo sombreado, de modo que esta passe a ocupar 35% da área total da bancada. Para isso, colocará um bojo menor na pia."
+    },
+    {
+        "numero": 142,
+        "area": "Matematica",
+        "habilidade": "H24",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "O gráfico apresenta a evolução das temperaturas máxima (Tₘₐₓ) e mínima (Tₘᵢₙ) em uma cidade ao longo dos primeiros 15 dias de um mês.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q142.png",
+        "pergunta": "Os dias em que ocorreram a maior temperatura máxima e a menor temperatura mínima foram, respectivamente,",
+        "alternativas": [
+            "10 e 5.",
+            "10 e 2.",
+            "5 e 15.",
+            "4 e 5.",
+            "4 e 2."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 143,
+        "area": "Matematica",
+        "habilidade": "H3",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "Um adolescente, tendo em vista uma alimentação saudável, consome diariamente 7,5 dL de leite durante 1 mês (30 dias). Sabe-se que o preço de um litro de leite é R$ 1,98.\n\nDisponível em: www.infopedia.pt. Acesso em: 13 jun. 2012 (adaptado).",
+        "imagem": null,
+        "pergunta": "Nessas condições, o custo mensal com o consumo de leite desse adolescente é de",
+        "alternativas": [
+            "R$ 14,85.",
+            "R$ 22,50.",
+            "R$ 44,55.",
+            "R$ 148,50.",
+            "R$ 445,50."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 144,
+        "area": "Matematica",
+        "habilidade": "H1",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "O comprimento de escala de um violão é dado pela distância, em polegada, entre o rastilho e a pestana, conforme figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q144.png",
+        "pergunta": "A representação decimal desse número é",
+        "alternativas": [
+            "25,40.",
+            "22,75.",
+            "21,25.",
+            "16,50.",
+            "6,25."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 145,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "O preço de venda V de um produto, em real, é dado pela expressão V = (M + F) × (1 + L), em que M e F são, respectivamente, os custos dos insumos utilizados e os custos de fabricação, cuja soma representa o custo total do produto, em real, e L é o percentual de lucro sobre o custo total com a venda desse produto.\n\nDurante o último ano, M foi 50% superior a F. Para o ano atual, M teve uma redução de 30% e F, um acréscimo de 45%, ambos em relação ao último ano.",
+        "imagem": null,
+        "pergunta": "Para que o preço de venda V permaneça inalterado, o percentual de lucro no ano atual, em relação ao do último ano, deverá",
+        "alternativas": [
+            "aumentar 15%.",
+            "aumentar 7,5%.",
+            "diminuir 7,5%.",
+            "diminuir 15%.",
+            "manter-se inalterado."
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 146,
+        "area": "Matematica",
+        "habilidade": "H3",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "A imagem representa o cupom fiscal fornecido por um supermercado a um cliente após a realização de sua compra.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q146.png",
+        "pergunta": "Qual é o valor total, em real, correspondente aos impostos pagos nessa compra?",
+        "alternativas": [
+            "2,70",
+            "3,15",
+            "4,50",
+            "5,30",
+            "5,40"
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "Para cada produto, o valor relativo ao imposto é calculado aplicando-se o percentual indicado no cupom sobre o preço por ele cobrado."
+    },
+    {
+        "numero": 147,
+        "area": "Matematica",
+        "habilidade": "H2",
+        "competencia": "C1",
+        "dificuldade": "Média",
+        "enunciado": "Uma cafeteria vende cápsulas de café nas intensidades tradicional, suave, forte e extraforte. Ela comercializa essas cápsulas em kits com 12 unidades, contendo:\n• pelo menos duas cápsulas de café na intensidade tradicional e pelo menos uma cápsula de cada uma das demais intensidades;\n• quantidades iguais de cápsulas de café nas intensidades suave e forte.",
+        "imagem": null,
+        "pergunta": "Quantos kits diferentes podem ser formados?",
+        "alternativas": [
+            "20",
+            "25",
+            "36",
+            "286",
+            "455"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 148,
+        "area": "Matematica",
+        "habilidade": "H28",
+        "competencia": "C7",
+        "dificuldade": "Difícil",
+        "enunciado": "O conceito de grupo sanguíneo se baseia na presença ou ausência de um ou dois antígenos (A e B) na membrana dos glóbulos vermelhos. Com relação a esses dois antígenos, há quatro grupos sanguíneos.\n• A: apenas o antígeno A está presente;\n• B: apenas o antígeno B está presente;\n• AB: ambos os antígenos estão presentes;\n• O: nenhum dos antígenos está presente.\n\nAlém dos antígenos A e B, há outro antígeno envolvido, chamado fator Rh, indicado com o sinal “+” quando está presente, ou com o sinal “−” quando está ausente. Dessa forma, o grupo sanguíneo de uma pessoa é descrito usando-se letras e o sinal indicador do fator Rh, por exemplo: O⁺, A⁺, AB⁻. Há dois grupos sanguíneos que se destacam: AB⁺, denominado “receptor universal”, que em uma transfusão de sangue a pessoa pode receber sangue de qualquer tipo; e O⁻, denominado “doador universal”, cujo sangue pode ser recebido por qualquer pessoa.\n\nDisponível em: http://saude.hsw.uol.com.br. Acesso em: 2 mar. 2012 (adaptado).\n\nEm uma cidade, foi realizado um levantamento dos grupos sanguíneos de todos os moradores, constatando-se que 25% da população apresenta apenas o antígeno tipo A; 25%, apenas o tipo B e 30%, o tipo AB. Além disso, em cada grupo sanguíneo, a ocorrência do fator Rh é de 60%.",
+        "imagem": null,
+        "pergunta": "A probabilidade de uma pessoa dessa cidade, escolhida ao acaso, ser receptora universal ou doadora universal é",
+        "alternativas": [
+            "0,3.",
+            "0,26.",
+            "0,06.",
+            "0,036.",
+            "0,0144."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 149,
+        "area": "Matematica",
+        "habilidade": "H10",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "Um usuário de telefonia móvel quer contratar um serviço de dados 5G e foi informado de que a taxa média de transferência de dados ofertada nesse serviço é 436 Mb/s. Como ele não conhecia essa unidade de medida, pesquisou e verificou que ela relaciona duas grandezas.",
+        "imagem": null,
+        "pergunta": "Qual razão entre as grandezas fornece a taxa média de transferência de dados?",
+        "alternativas": [
+            "Volume de dados / tempo",
+            "Distância / volume de dados",
+            "Tempo / volume de dados",
+            "Velocidade / distância",
+            "Distância / tempo"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 150,
+        "area": "Matematica",
+        "habilidade": "H7",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Um artesão confeccionará um pingente conectando uma pirâmide a um prisma, formando um novo poliedro. Para isso, utiliza uma pirâmide com 10 arestas, cuja base é congruente às bases do prisma. Esses dois poliedros serão colados um ao outro, de forma a coincidirem as arestas da base da pirâmide com as arestas de uma das bases do prisma.",
+        "imagem": null,
+        "pergunta": "Quantas faces terá esse pingente?",
+        "alternativas": [
+            "11",
+            "13",
+            "19",
+            "21",
+            "23"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 151,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "Um jardim, cuja vista superior é o quadrado ABCD, será reformado para dar lugar a um novo jardim cuja vista superior seja a de um círculo. O jardim circular deverá conter a região do jardim original e ter a menor área possível.\n\nPara viabilizar o projeto, foi feita a representação no plano cartesiano do jardim original, em que os eixos foram orientados nas direções sul-norte e oeste-leste e graduados em metro. Os pontos que correspondem aos vértices C e D do jardim original estão com suas coordenadas explicitadas, conforme figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q151.png",
+        "pergunta": "Qual é a equação da circunferência que delimitará a região do novo jardim?",
+        "alternativas": [
+            "x² + y² − 10 = 0",
+            "x² + y² − 8x − 8y + 22 = 0",
+            "x² + y² − 16x − 12y + 90 = 0",
+            "x² + y² − 12x − 10y + 56 = 0",
+            "x² + y² + 8x + 8y + 32 − 10 = 0"
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 152,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Uma padaria vende pizzas de calabresa e de frango. Há 3 funcionários nessa padaria: Ana, Carla e José. No sábado, Ana vendeu 6 pizzas de calabresa e 15 de frango, tendo recebido 780 reais por essas vendas; Carla vendeu 5 pizzas de calabresa e 8 de frango, pelas quais recebeu 470 reais; e José vendeu 4 pizzas de calabresa, porém não anotou a quantidade de pizzas de frango que vendeu, mas sabe que recebeu um total de 520 reais pela venda de pizzas.",
+        "imagem": null,
+        "pergunta": "Qual a quantidade total de pizzas que José vendeu nesse sábado?",
+        "alternativas": [
+            "4",
+            "5",
+            "13",
+            "14",
+            "18"
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 153,
+        "area": "Matematica",
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Em um tipo de mesa de bilhar, sem caçapas, cujo tampo tem o formato de um quadrado com 206 cm de lado e as bolas têm 3 cm de raio, um jogador precisa dar uma tacada na bola branca e fazê-la acertar a bola amarela, sem tocar em outra bola. Para isso, ele considerou uma trajetória poligonal que a bola branca poderia percorrer, rebatendo em três lados distintos da mesa, antes de acertar a bola amarela, conforme indicado na figura, apresentada fora de escala.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q153.png",
+        "pergunta": "Qual deve ser a distância d, em centímetro, indicada na figura, para que a bola branca consiga acertar a bola amarela ao percorrer a trajetória considerada pelo jogador?",
+        "alternativas": [
+            "40",
+            "55",
+            "58",
+            "61",
+            "70"
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 154,
+        "area": "Matematica",
+        "habilidade": "H12",
+        "competencia": "C3",
+        "dificuldade": "Difícil",
+        "enunciado": "Uma equipe de estudantes de engenharia decidiu construir um modelo experimental de um foguete. Esse modelo tem internamente um compartimento na forma de cilindro circular reto, que deve ser protegido externamente com uma manta, formando um novo cilindro circular reto com mesma altura, como indicado na figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q154.png",
+        "pergunta": "A equipe terá menor custo na compra da manta cilíndrica se optar pelo material",
+        "alternativas": [
+            "I, apenas por apresentar a menor espessura.",
+            "I, pois apresenta um custo inferior ao do material II em R$ 6,60.",
+            "II, apenas por apresentar o menor preço por centímetro cúbico.",
+            "II, pois apresenta um custo inferior ao do material I em R$ 2,00.",
+            "II, pois apresenta um custo inferior ao do material I em R$ 5,40."
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "Utilize 3 como aproximação para π."
+    },
+    {
+        "numero": 155,
+        "area": "Matematica",
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Um agricultor possui um terreno plano formado por 4 canteiros, 3 em formato retangular, semelhantes entre si, e 1 em formato triangular, delimitado pelos 3 primeiros,",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q155.png",
+        "pergunta": "Qual é a diferença entre as medidas das áreas, em metro quadrado, dos canteiros II e III?",
+        "alternativas": [
+            "16,00",
+            "17,92",
+            "20,00",
+            "22,40",
+            "28,00"
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "Os maiores lados dos canteiros I e II medem 10 m e 8 m, respectivamente, e a área do canteiro I mede 80 m²."
+    },
+    {
+        "numero": 156,
+        "area": "Matematica",
+        "habilidade": "H28",
+        "competencia": "C7",
+        "dificuldade": "Fácil",
+        "enunciado": "A diretora de uma creche coletou, das cadernetas de vacinação de cinco crianças, a informação sobre o número de doses de vacinas aplicadas nos primeiros quatro semestres de vida. A seguir são apresentadas as sequências das quantidades de doses que cada criança recebeu no 1º, 2º, 3º e 4º semestres, respectivamente:\n• criança I: 10, 5, 5, 5;\n• criança II: 12, 3, 5, 5;\n• criança III: 13, 4, 5, 4;\n• criança IV: 11, 5, 5, 3;\n• criança V: 13, 3, 7, 3.\n\nA diretora fará uma reunião com os pais das crianças dessa creche com o objetivo de conscientizá-los da importância de completarem as doses de vacinas que faltam. Para ilustrar a importância desse assunto, ela escolherá os dados de uma dessas cinco cadernetas para apresentar na reunião. Serão escolhidos os dados da caderneta de vacinação que apresentar a menor média semestral das quantidades de doses de vacinas aplicadas nos primeiros quatro semestres de vida dessas crianças.",
+        "imagem": null,
+        "pergunta": "A caderneta que contém os dados a serem escolhidos pela diretora para a reunião é a da criança",
+        "alternativas": [
+            "I.",
+            "II.",
+            "III.",
+            "IV.",
+            "V."
+        ],
+        "resposta": "D",
+        "comentario": ""
+    },
+    {
+        "numero": 157,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "A Carga Tributária Bruta (CTB) é um índice utilizado por agências de pesquisas econômicas para orientar possíveis investidores. O gráfico ilustra os valores percentuais da CTB de um país em função do tempo t, em ano, sendo que t = 0 corresponde a 2021, t = 1 a 2022, t = 2 a 2023, e assim sucessivamente.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q157.png",
+        "pergunta": "O valor percentual da CTB estimado para 2026, obtido por essa agência, foi",
+        "alternativas": [
+            "25,5.",
+            "27,5.",
+            "30,0.",
+            "33,5.",
+            "35,0."
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "Com base nesses dados, uma agência fez uma extrapolação para estimar o valor percentual da CTB para 2026, considerando que esse índice varia segundo uma função quadrática."
+    },
+    {
+        "numero": 158,
+        "area": "Matematica",
+        "habilidade": "H22",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "Uma empresa que produz sinalizadores realiza um teste de segurança de seus produtos. Esse teste consiste em registrar em um plano cartesiano, com os eixos graduados em metro, a trajetória parabólica do projétil lançado pelo sinalizador, e calcular os valores de dois parâmetros, D₁ (distância entre o ponto de lançamento e o ponto de altura máxima, em metro) e D₂ (distância entre o ponto de lançamento e o ponto de explosão, em metro), conforme representado na figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q158.png",
+        "pergunta": "De acordo com essa classificação, o nível de segurança desse sinalizador foi",
+        "alternativas": [
+            "1.",
+            "2.",
+            "3.",
+            "4.",
+            "5."
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "Em um teste de segurança, a trajetória do projétil lançado por um sinalizador foi modelada pela função y = −0,24x² + 4,8x e apurou-se que k = 15."
+    },
+    {
+        "numero": 159,
+        "area": "Matematica",
+        "habilidade": "H28",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "O quadro apresenta a classificação final dos 6 times que disputaram um campeonato de futebol, com as informações parciais das quantidades de gols marcados e sofridos por esses times.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q159.png",
+        "pergunta": "A soma x + y é igual a",
+        "alternativas": [
+            "32.",
+            "34.",
+            "35.",
+            "42.",
+            "47."
+        ],
+        "resposta": null,
+        "comentario": "",
+        "enunciado_apos_imagem": "A média de gols marcados por time nesse campeonato foi 25 e a mediana de gols sofridos foi 24.",
+        "anulada": true
+    },
+    {
+        "numero": 160,
+        "area": "Matematica",
+        "habilidade": "H3",
+        "competencia": "C1",
+        "dificuldade": "Difícil",
+        "enunciado": "Marcos possui recursos em uma aplicação que rende 1% ao mês a juros compostos. Quando o saldo dessa aplicação alcançar R$ 90 000,00, ele comprará um carro, cujas duas opções de pagamento são:\n• R$ 89 000,00, à vista, no ato da compra;\n• 3 parcelas mensais iguais, no valor de R$ 30 000,00 cada, sendo a primeira paga no ato da compra.\n\nO pagamento por esse carro será feito utilizando somente recursos provenientes dessa aplicação, que serão resgatados nos momentos apropriados e nas quantias necessárias. Ele escolherá a opção de pagamento na qual, 2 meses após a compra do carro, o saldo de sua aplicação seja o maior.",
+        "imagem": null,
+        "pergunta": "Ao final desses 2 meses, o saldo, em real, da aplicação de Marcos será",
+        "alternativas": [
+            "1 000,00.",
+            "1 010,00.",
+            "1 020,10.",
+            "1 509,00.",
+            "1 824,09."
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 161,
+        "area": "Matematica",
+        "habilidade": "H19",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Depreciação é o processo de desvalorização de um bem patrimonial decorrente do uso ou desgaste natural ao longo do tempo. Um carro zero quilômetro é vendido por R$ 80 000,00 e, imediatamente após a venda, ao sair da concessionária, já desvaloriza 10%. A partir daí, há uma depreciação anual de 12%.",
+        "imagem": null,
+        "pergunta": "Qual expressão algébrica relaciona o valor V desse carro, em real, com o tempo de uso t, em ano?",
+        "alternativas": [
+            "V = 72 000 · 0,88ᵗ",
+            "V = 72 000 · 0,12ᵗ",
+            "V = 80 000 · 0,78ᵗ",
+            "V = 80 000 · 0,22ᵗ",
+            "V = 80 000 · 0,12ᵗ"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 162,
+        "area": "Matematica",
+        "habilidade": "H10",
+        "competencia": "C3",
+        "dificuldade": "Fácil",
+        "enunciado": "Um estudante de biologia aprendeu que o diâmetro médio da mitocôndria, organela responsável pela respiração celular, mede 0,75 micrômetro (1 micrômetro equivale à milionésima parte de um metro).\n\nDisponível em: https://brasilescola.uol.com.br. Acesso em: 9 nov. 2022 (adaptado).\n\nPara ter uma ideia do quão pequena é a mitocôndria, o estudante converteu a medida desse diâmetro para a unidade milímetro.",
+        "imagem": null,
+        "pergunta": "A medida do diâmetro médio da mitocôndria, em milímetro, é",
+        "alternativas": [
+            "7,5 × 10⁻¹",
+            "7,5 × 10⁻²",
+            "7,5 × 10⁻⁴",
+            "7,5 × 10⁻⁵",
+            "7,5 × 10⁻⁷"
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 163,
+        "area": "Matematica",
+        "habilidade": "H1",
+        "competencia": "C1",
+        "dificuldade": "Fácil",
+        "enunciado": "No momento do Big Bang, o Universo passou por um crescimento enorme que durou menos de um trilionésimo de segundo. Para se ter uma ideia desse tempo, um trilionésimo é um número que pode ser representado por uma fração em que o numerador é 1 e o denominador é um número inteiro iniciado por 1 seguido apenas de zeros.\n\nDisponível em: http://super.abril.com.br. Acesso em: 16 out. 2015.",
+        "imagem": null,
+        "pergunta": "Representando um trilionésimo por uma fração, quantos zeros após o 1 do denominador existem nessa fração?",
+        "alternativas": [
+            "9",
+            "11",
+            "12",
+            "14",
+            "15"
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 164,
+        "area": "Matematica",
+        "habilidade": "H25",
+        "competencia": "C6",
+        "dificuldade": "Média",
+        "enunciado": "Cinco candidatos, C₁, C₂, C₃, C₄ e C₅, foram selecionados para ocupar vagas para estagiários em uma empresa. Cada um deles foi entrevistado pelos diretores D₁, D₂, D₃, D₄ e D₅, dos cinco departamentos em que serão alocados. Nas entrevistas, os diretores atribuíram notas de 0 a 5 a cada entrevistado. As notas nessas entrevistas estão dispostas em linhas e colunas, conforme a imagem, na qual a nota posicionada na linha i e na coluna j representa a nota recebida pelo candidato Cᵢ, atribuída pelo diretor Dⱼ. Por exemplo, a nota 4 circulada, que está na segunda linha e na quarta coluna, corresponde à nota atribuída ao candidato C₂ pelo diretor D₄.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q164.png",
+        "pergunta": "O candidato a ser escolhido pelo diretor D₅ é o",
+        "alternativas": [
+            "C₁.",
+            "C₂.",
+            "C₃.",
+            "C₄.",
+            "C₅."
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "Ao final das entrevistas, o diretor D₁ escolherá como estagiário o candidato a quem atribuiu a maior nota; em seguida, o diretor D₂ escolherá como estagiário, dentre os restantes, aquele a quem atribuiu a maior nota; e assim sucessivamente."
+    },
+    {
+        "numero": 165,
+        "area": "Matematica",
+        "habilidade": "H19",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "Uma loja de roupas femininas vende apenas blusas e vestidos. O lucro é de R$ 10,00 em cada blusa e de R$ 30,00 em cada vestido, se estes forem comprados com dinheiro em espécie. Contudo, o lucro é 10% menor em cada peça que for comprada utilizando-se um cartão de crédito para o pagamento. Neste mês a loja conseguiu vender um total de 1 800 peças, sendo que todas as blusas e apenas um terço dos vestidos vendidos foram pagos com dinheiro.",
+        "imagem": null,
+        "pergunta": "Se x é a quantidade de blusas vendidas, a expressão que representa o lucro total obtido com as vendas do referido mês é",
+        "alternativas": [
+            "21 600 − 2x",
+            "48 600 − 18x",
+            "50 400 − 18x",
+            "52 200 − 19x",
+            "54 000 − 20x"
+        ],
+        "resposta": "C",
+        "comentario": ""
+    },
+    {
+        "numero": 166,
+        "area": "Matematica",
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Difícil",
+        "enunciado": "A Figura 1 mostra a vista superior de um mobiliário de cozinha, que não pode ser desmembrado, montado na casa de um engenheiro.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q166.png",
+        "pergunta": "Após essa reforma, as medidas das áreas, em metro quadrado, da sala e do quarto, serão",
+        "alternativas": [
+            "9,75 e 37,50.",
+            "9,75 e 16,00.",
+            "19,00 e 10,75.",
+            "19,75 e 10,00.",
+            "2,00 e 3,75."
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "F ig ura 2: Planta baixa para reforma\n\nComo a cozinha do apartamento é muito pequena, decidiu ampliá-la, avançando-a sobre as áreas da sala e do quarto, de modo a manter os formatos retangulares tanto da cozinha quanto do quarto, apenas o necessário para caber o mobiliário da Figura 1 na nova cozinha."
+    },
+    {
+        "numero": 167,
+        "area": "Matematica",
+        "habilidade": "H11",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "Na história da arte brasileira, não há obra tão valiosa quanto o Abaporu, criada em 1928 por Tarsila do Amaral. A figura apresenta essa obra e suas dimensões originais.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q167.png",
+        "pergunta": "Essa obra será representada pela figurinha na escala",
+        "alternativas": [
+            "1 : 2,5",
+            "1 : 3,9",
+            "1 : 5",
+            "1 : 10",
+            "1 : 100"
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "AMARAL, Tarsila do. Abaporu. Óleo sobre tela, 85 cm × 73 cm. Museu de Arte Latino-Americana de Buenos Aires, Buenos Aires, 1928.\n\nUma editora pretende lançar um álbum de figurinhas com as obras de arte brasileira mais famosas e, entre elas, está essa obra de Tarsila do Amaral. O álbum tem um espaço destinado para colar a figurinha da obra Abaporu, em formato retangular, cuja área mede 62,05 cm² e com dimensões proporcionais às da obra de arte original. Após a colagem, essa figurinha deve preencher totalmente o espaço a ela destinado."
+    },
+    {
+        "numero": 168,
+        "area": "Matematica",
+        "habilidade": "H8",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Uma motocicleta tem duas rodas de tamanhos diferentes: a dianteira, com diâmetro externo medindo 0,8 m e, a traseira, cujo diâmetro externo mede 0,6 m. Essa motocicleta foi conduzida por um percurso retilíneo de 3 600 m.\n\nUtilize 3 como aproximação para π.",
+        "imagem": null,
+        "pergunta": "Quantos giros completos a roda traseira deu a mais que a dianteira quando a motocicleta concluiu esse percurso?",
+        "alternativas": [
+            "500",
+            "1 000",
+            "1 500",
+            "2 917",
+            "5 833"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 169,
+        "area": "Matematica",
+        "habilidade": "H29",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "A matemática britânica Hannah Fry explica o falso paradoxo de pessoas com a mesma nota média de atratividade em sites de relacionamento terem diferentes graus de popularidade. Segundo Fry, a popularidade de um usuário desse tipo de site não está relacionada apenas à sua nota média de atratividade, mas também à dispersão das notas. Quanto maior o desvio padrão de suas notas, maior é a sua popularidade. Essas notas podem ser:",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q169.png",
+        "pergunta": "Segundo o critério apresentado por Hannah Fry, o usuário com maior popularidade é o",
+        "alternativas": [
+            "1.",
+            "2.",
+            "3.",
+            "4.",
+            "5."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 170,
+        "area": "Matematica",
+        "habilidade": "H11",
+        "competencia": "C3",
+        "dificuldade": "Média",
+        "enunciado": "Uma arquiteta elaborou um projeto para a construção de uma escola, cuja planta baixa está apresentada sobre uma malha quadriculada, conforme figura.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q170.png",
+        "pergunta": "Após a reelaboração do projeto, a medida da área real do refeitório, em metro quadrado, será",
+        "alternativas": [
+            "160.",
+            "150.",
+            "120.",
+            "96.",
+            "72."
+        ],
+        "resposta": "D",
+        "comentario": "",
+        "enunciado_apos_imagem": "Por questões orçamentárias, a direção dessa escola solicitou que o projeto fosse modificado, reduzindo em 25% a área real do refeitório, que se encontra em destaque, de cor amarela, na figura."
+    },
+    {
+        "numero": 171,
+        "area": "Matematica",
+        "habilidade": "H28",
+        "competencia": "C7",
+        "dificuldade": "Média",
+        "enunciado": "No Brasil, datas são registradas no formato DD/MM, em que os primeiros dois dígitos codificam o dia do mês, e os dois seguintes, o mês do ano. Em alguns países, esses registros se dão no formato MM/DD, no qual se indica primeiro o mês do ano e depois o dia do mês. Por exemplo, a data 9 de maio é registrada, no Brasil, no formato 09/05, enquanto em alguns países, essa mesma data é registrada no formato 05/09.\n\nUm aplicativo gerará aleatoriamente uma data (dia e mês) de um ano não bissexto.",
+        "imagem": null,
+        "pergunta": "Qual é a probabilidade de que a data gerada tenha o mesmo registro nos dois formatos considerados?",
+        "alternativas": [
+            "12/365",
+            "30/365",
+            "144/365",
+            "1/12",
+            "12/30"
+        ],
+        "resposta": "A",
+        "comentario": ""
+    },
+    {
+        "numero": 172,
+        "area": "Matematica",
+        "habilidade": "H6",
+        "competencia": "C2",
+        "dificuldade": "Média",
+        "enunciado": "Um jogo envolve blocos retangulares congruentes empilhados. A figura representa a configuração do empilhamento em uma etapa do jogo, de forma que uma das faces de cada bloco está paralela ao plano a, que é perpendicular ao plano b da base. Faces verticais de mesma cor estão em um mesmo plano.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q172.png",
+        "pergunta": "A figura que representa a projeção ortogonal desse empilhamento sobre o plano a é",
+        "alternativas": [
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q172-a.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q172-b.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q172-c.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q172-d.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q172-e.png"
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 173,
+        "area": "Matematica",
+        "habilidade": "H25",
+        "competencia": "C6",
+        "dificuldade": "Difícil",
+        "enunciado": "Um teste, composto por 5 questões de múltipla escolha, com 5 alternativas de resposta por questão, valendo 1 ponto cada questão, foi aplicado a candidatos de um concurso. Esses candidatos foram classificados em 6 grupos, de acordo com suas notas nesse teste.\n• N0: candidatos com nota 0.\n• N1: candidatos com nota 1.\n• N2: candidatos com nota 2.\n• N3: candidatos com nota 3.\n• N4: candidatos com nota 4.\n• N5: candidatos com nota 5.\n\nTodos os candidatos marcaram uma única alternativa de resposta em cada questão.\n\nNo Gráfico 1, estão descritas as porcentagens com que cada grupo marcou cada alternativa de resposta na questão 1, ficando ausentes as informações dos percentuais dos grupos N4 e N5, que marcaram a alternativa D.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q173.png",
+        "pergunta": "Qual é o percentual de candidatos que acertou a questão 1?",
+        "alternativas": [
+            "10%",
+            "12%",
+            "16%",
+            "25%",
+            "28%"
+        ],
+        "resposta": "E",
+        "comentario": ""
+    },
+    {
+        "numero": 174,
+        "area": "Matematica",
+        "habilidade": "H2",
+        "competencia": "C1",
+        "dificuldade": "Média",
+        "enunciado": "No esquema estão representadas cinco cidades, P, Q, R, S e T, e todas as estradas que conectam as cidades P a Q e S a T. As estradas que conectam as cidades Q a R e R a S foram omitidas no esquema, porém sabe-se que há mais estradas conectando Q a R do que R a S.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q174.png",
+        "pergunta": "A quantidade de estradas que conectam a cidade Q à cidade R é",
+        "alternativas": [
+            "30/(3 × 2)",
+            "30/(3 + 2)",
+            "30/2",
+            "30 − (3 × 2)",
+            "30 − (3 + 2)"
+        ],
+        "resposta": "A",
+        "comentario": "",
+        "enunciado_apos_imagem": "Será realizada uma viagem saindo da cidade P até a cidade T, passando pelas cidades Q, R e S, nessa ordem. Há um total de 30 possíveis rotas para fazer essa viagem."
+    },
+    {
+        "numero": 175,
+        "area": "Matematica",
+        "habilidade": "H24",
+        "competencia": "C6",
+        "dificuldade": "Fácil",
+        "enunciado": "Um colchão deve ser adequado ao biotipo de cada pessoa, sendo confortável e ao mesmo tempo capaz de suportar o peso do corpo. O quadro apresenta as opções recomendadas da densidade (D) do colchão para diversos biotipos, consideradas a massa e a altura da pessoa. Caso existam duas opções de densidade recomendadas para um mesmo biotipo, a apresentada em negrito indica a que é mais adequada.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q175.png",
+        "pergunta": "A densidade mais adequada de um colchão para essa pessoa é",
+        "alternativas": [
+            "D-26.",
+            "D-28.",
+            "D-30.",
+            "D-33.",
+            "D-36."
+        ],
+        "resposta": "C",
+        "comentario": "",
+        "enunciado_apos_imagem": "Disponível em: www.inmetro.gov.br. Acesso em: 28 fev. 2012 (adaptado).\n\nUma pessoa com 71 kg de massa e 1,71 m de altura precisa adquirir um novo colchão."
+    },
+    {
+        "numero": 176,
+        "area": "Matematica",
+        "habilidade": "H9",
+        "competencia": "C2",
+        "dificuldade": "Difícil",
+        "enunciado": "O tampo de uma mesa tem o formato da região de cor amarela na figura. Essa região é obtida pela intersecção de três círculos com centros nos pontos A, B e C, respectivamente, e raios de medidas iguais a 1,20 m.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q176.png",
+        "pergunta": "O modelo a ser comprado é o",
+        "alternativas": [
+            "I.",
+            "II.",
+            "III.",
+            "IV.",
+            "V."
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "Para cobrir essa mesa, pretende-se comprar uma toalha, com a menor área possível, que cubra o tampo e o exceda em pelo menos 20 cm ao longo de todo o seu contorno.\n\nEm uma loja há cinco modelos de toalhas:\n\nI. círculo com diâmetro de medida 1,60 m;\n\nII. círculo com diâmetro de medida 1,76 m;\n\nIII. quadrado com lados de medida 1,60 m;\n\nIV. quadrado com lados de medida 1,76 m;\n\nV. triângulo equilátero com lados de medida 1,60 m.\n\nUtilize 1,7 como aproximação para √3."
+    },
+    {
+        "numero": 177,
+        "area": "Matematica",
+        "habilidade": "H16",
+        "competencia": "C4",
+        "dificuldade": "Difícil",
+        "enunciado": "O volume de água armazenado em um reservatório é dado pela soma do volume útil com o volume de reserva técnica. O volume de reserva técnica só pode ser utilizado após a água do volume útil acabar.\n\nDisponível em: www2.sabesp.com.br. Acesso em: 2 dez. 2017 (adaptado).\n\nEm determinado momento, o reservatório de uma cidade conta com um volume útil de 480 milhões de metros cúbicos e um volume de reserva técnica de 30 milhões de metros cúbicos. Ao se calcular o consumo médio diário de água, concluiu-se que, em um cenário em que o reservatório não seja reabastecido, todo o volume de água armazenado no reservatório seria utilizado em um período de 30 dias. Considerando-se esse cenário, estabeleceu-se a necessidade de redução do volume médio diário de água fornecida atualmente de modo que, ao final desse período de 30 dias, ainda restasse 25% do volume útil no reservatório, além do volume de reserva técnica.",
+        "imagem": null,
+        "pergunta": "Qual deve ser a redução do volume médio diário de água fornecida, em milhão de metros cúbicos, para atender ao que foi estabelecido?",
+        "alternativas": [
+            "5,25",
+            "5,00",
+            "4,25",
+            "4,00",
+            "3,00"
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 178,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Média",
+        "enunciado": "Um pai pretende pintar as quatro paredes e o teto do quarto de sua filha, o qual tem a forma de paralelepípedo reto retângulo, com uma porta e duas janelas de formato retangular. A porta tem dimensões de 1 m por 2,20 m; e as janelas, de 1,5 m por 1 m cada. Ele contrata um pintor e informa que a área a ser pintada mede 41,7 m². O pintor pede detalhes do quarto, e o pai informa as medidas da porta e das janelas, que não serão pintadas. Quanto às dimensões do quarto, a medida da altura é 2,8 m e a da largura é 3 m, mas o pai não se recorda da medida do comprimento do quarto.",
+        "imagem": null,
+        "pergunta": "A medida do comprimento do quarto, em metro, é",
+        "alternativas": [
+            "2,8.",
+            "3,5.",
+            "4,4.",
+            "5,1.",
+            "5,3."
+        ],
+        "resposta": "B",
+        "comentario": ""
+    },
+    {
+        "numero": 179,
+        "area": "Matematica",
+        "habilidade": "H21",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "O gráfico registra, sobre uma malha quadriculada, as quantidades de unidades habitacionais vendidas em um município, nos dois primeiros meses do ano, e a curva que fornece a estimativa E da quantidade de unidades vendidas nesse município, para o segundo semestre do mesmo ano, descrita pela função E(n) = 1 500 + 2 000 × log₁₀(1 + n), com 6 ≤ n ≤ 12,\n\nsendo n o número que identifica o mês. Por exemplo, a estimativa da quantidade de unidades vendidas ao longo do mês de agosto é E(8) = 1 500 + 2 000 × log₁₀(1 + 8).",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q179.png",
+        "pergunta": "Em quantas unidades a média de vendas estimada para o último bimestre superou a média calculada do primeiro bimestre?",
+        "alternativas": [
+            "1 079",
+            "1 193",
+            "3 688",
+            "10 000",
+            "20 000"
+        ],
+        "resposta": "B",
+        "comentario": "",
+        "enunciado_apos_imagem": "Ao final do primeiro bimestre, calculou-se a média mensal de unidades vendidas nesse período e, para projetar o crescimento das vendas nesse ano, estimou-se a média mensal de unidades habitacionais que serão vendidas no último bimestre desse ano comparando-se essas duas médias.\n\nUtilize log₁₀ 12 = 1,079 e log₁₀ 13 = 1,114."
+    },
+    {
+        "numero": 180,
+        "area": "Matematica",
+        "habilidade": "H20",
+        "competencia": "C5",
+        "dificuldade": "Difícil",
+        "enunciado": "Uma câmera P, com ângulo de visão de 90°, leva 30 segundos para se deslocar do ponto M ao ponto N, no sentido horário e em velocidade angular constante, sobre um trilho em formato de um quarto de circunferência, com 2 m de raio e centro no ponto O. Ao iniciar o movimento, ela é ligada e inicia a captura da imagem do segmento OT, que é parte da semirreta s, que tem origem no ponto O e é perpendicular ao segmento OM, conforme os esquemas.",
+        "imagem": "https://res.cloudinary.com/nwfhf2sc/image/upload/q180.png",
+        "pergunta": "O gráfico que descreve a relação entre o comprimento c, em metro, do segmento OT, e o tempo t, em segundo, durante o período em que a câmera fica ligada é",
+        "alternativas": [
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q180-a.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q180-b.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q180-c.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q180-d.png",
+            "https://res.cloudinary.com/nwfhf2sc/image/upload/q180-e.png"
+        ],
+        "resposta": "E",
+        "comentario": "",
+        "enunciado_apos_imagem": "A câmera é desligada no instante em que chega ao ponto N."
+    }
+]

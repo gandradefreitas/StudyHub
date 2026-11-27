@@ -19,3 +19,5 @@ class Prova:
     total_questoes: int
 
     questoes: list[Questao]
+
+    questoes_anuladas: tuple[int, ...] = ()

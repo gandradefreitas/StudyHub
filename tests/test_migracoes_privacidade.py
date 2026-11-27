@@ -46,7 +46,22 @@ def test_migra_esquema_anterior_sem_apagar_redacoes():
         }
         assert conexao.execute("SELECT to_regclass('tentativas_provas_objetivas') AS tabela").fetchone()["tabela"]
         versoes = conexao.execute("SELECT versao FROM studyhub_migracoes ORDER BY versao").fetchall()
-        assert {1, 2, 3, 4} <= {linha["versao"] for linha in versoes}
+        assert {1, 2, 3, 4, 9} <= {linha["versao"] for linha in versoes}
+
+        # Simula saldo e moldura conquistados na versão anterior.
+        conexao.execute("DELETE FROM studyhub_migracoes WHERE versao = 9")
+        conexao.execute("""
+            INSERT INTO experiencia_atividades (usuario_id, origem, referencia, exp_decimos)
+            VALUES (1, 'prova_objetiva', '1:1', 7600);
+            INSERT INTO molduras_equipadas (usuario_id, nivel) VALUES (1, 5)
+        """)
+        aplicar_migracoes(conexao)
+        aplicar_migracoes(conexao)
+        saldo = conexao.execute("SELECT exp_decimos FROM experiencia_atividades").fetchone()["exp_decimos"]
+        from services.experiencia_service import calcular_progresso
+        assert saldo == 30400
+        assert calcular_progresso(saldo)["nivel"] == 5
+        assert conexao.execute("SELECT nivel FROM molduras_equipadas").fetchone()["nivel"] == 5
         registro = conexao.execute("""
             INSERT INTO estudos (usuario_id, inicio, inicio_segmento, ultima_atividade)
             VALUES (1, LOCALTIMESTAMP, LOCALTIMESTAMP, LOCALTIMESTAMP)
@@ -74,7 +89,7 @@ def test_limpeza_apaga_atividades_e_preserva_conquistas(dados_discursivos, monke
             """, (usuario, usuario, outro))
             conexao.execute("""
                 INSERT INTO experiencia_atividades (usuario_id, origem, referencia, exp_decimos)
-                VALUES (%s, 'idiomas', 'texto', 1000)
+                VALUES (%s, 'idiomas', 'texto', 4000)
             """, (usuario,))
         with app.test_client() as cliente:
             with cliente.session_transaction() as sessao:

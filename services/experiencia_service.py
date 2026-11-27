@@ -9,6 +9,11 @@ def exp_questao(dificuldade):
     return EXP_QUESTOES.get(chave, 0)
 
 
+def exp_resposta_prova(correta):
+    # A escala por questão de Estudos daria até vários níveis numa única prova.
+    return 23 + 2 * correta
+
+
 def exp_redacao(nota, instituicao):
     # A aplicação guarda a nota do ITA em décimos (7,5 é armazenado como 75).
     maximo = 100 if instituicao == "ITA" else 1000
@@ -20,8 +25,8 @@ def exp_redacao(nota, instituicao):
 
 
 def total_para_nivel(nivel):
-    # Soma dos custos em décimos, do nível 0 até o nível anterior.
-    return 10 * (100 * nivel + 10 * nivel * (nivel - 1)
+    # Soma dos custos em décimos, com a curva anterior multiplicada por quatro.
+    return 40 * (100 * nivel + 10 * nivel * (nivel - 1)
                  + nivel * (nivel - 1) * (2 * nivel - 1) // 3)
 
 

@@ -9,7 +9,8 @@
             "Ciências Humanas"
         ],
         "tempo": "05:30:00",
-        "arquivo": "enem/2025_dia1.json"
+        "arquivo": "enem/2025_dia1.json",
+        "total_questoes": 90
     },
     {
         "id": 2,
@@ -21,7 +22,8 @@
             "Matemática"
         ],
         "tempo": "05:00:00",
-        "arquivo": "enem/2025_dia2.json"
+        "arquivo": "enem/2025_dia2.json",
+        "total_questoes": 90
     },
     {
         "id": 3,
@@ -43,10 +45,35 @@
         "nome": "ITA 2025 — Segunda Fase",
         "dia": "Português",
         "areas": [
-        "Língua Portuguesa"
+            "Língua Portuguesa"
         ],
         "tempo": "04:00:00",
         "arquivo": "ita/2025/2_fase/portugues.json"
+    },
+    {
+        "id": 5,
+        "tipo": "ENEM",
+        "nome": "ENEM 2026",
+        "dia": "Primeiro Dia",
+        "areas": [
+            "Linguagens",
+            "Ciências Humanas"
+        ],
+        "tempo": "05:30:00",
+        "total_questoes": 90,
+        "arquivo": "enem/2026_dia1.json"
+    },
+    {
+        "id": 6,
+        "tipo": "ENEM",
+        "nome": "ENEM 2026",
+        "dia": "Segundo Dia",
+        "areas": [
+            "Ciências da Natureza",
+            "Matemática"
+        ],
+        "tempo": "05:00:00",
+        "total_questoes": 89,
+        "arquivo": "enem/2026_dia2.json"
     }
 ]
-

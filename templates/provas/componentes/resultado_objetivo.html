@@ -193,11 +193,15 @@
 
                     {% if questao.imagem %}
                         <img
-                            src="{{ questao.imagem }}"
+                            src="{{ questao.imagem if questao.imagem.startswith(('http://', 'https://')) else url_for('static', filename=questao.imagem) }}"
                             alt="Imagem do enunciado da questão {{ questao.numero }}"
                             class="imagem-enunciado-revisao"
                             loading="lazy"
                         >
+                    {% endif %}
+
+                    {% if questao.enunciado_apos_imagem %}
+                        <p>{{ questao.enunciado_apos_imagem }}</p>
                     {% endif %}
 
                     {% if questao.pergunta %}

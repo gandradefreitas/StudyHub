@@ -282,7 +282,7 @@ function carregarConteudoQuestao(questao) {
     enunciado.textContent =
         questao.enunciado;
 
-    container.appendChild(enunciado);
+    if (questao.enunciado) container.appendChild(enunciado);
 
 
     // IMAGEM
@@ -315,6 +315,13 @@ function carregarConteudoQuestao(questao) {
 
     }
 
+
+    if (questao.enunciado_apos_imagem) {
+        const textoAposImagem = document.createElement("p");
+        textoAposImagem.className = "enunciado";
+        textoAposImagem.textContent = questao.enunciado_apos_imagem;
+        container.appendChild(textoAposImagem);
+    }
 
     // PERGUNTA
 

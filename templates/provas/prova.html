@@ -36,7 +36,7 @@
 
                 <div class="cabecalho-selecao-lingua">
 
-                    <span class="etapa-prova">ENEM 2025</span>
+                    <span class="etapa-prova">{{ prova.nome }}</span>
 
                     <h1>Escolha sua língua estrangeira</h1>
 
@@ -114,6 +114,15 @@
 
                         {{ prova.areas | join(" • ") }}
                     </p>
+                    {% if prova.questoes_anuladas %}
+                        <p>
+                            {% if prova.questoes_anuladas | length == 1 %}
+                                A questão {{ prova.questoes_anuladas[0] }} foi anulada e está fora do simulado.
+                            {% else %}
+                                As questões {{ prova.questoes_anuladas | join(", ") }} foram anuladas e estão fora do simulado.
+                            {% endif %}
+                        </p>
+                    {% endif %}
                 </div>
 
                 <div class="status-prova">
